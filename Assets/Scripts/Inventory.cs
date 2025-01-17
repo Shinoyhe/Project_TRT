@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Tilemaps.TilemapRenderer;
 
 public class Inventory : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        clear();
+        Clear();
         cards.AddRange(startingCards);
     }
 
@@ -22,9 +23,9 @@ public class Inventory : MonoBehaviour
         
     }
 
-    #region Public Methods
+    #region ---------- Public Methods ----------
 
-    public void addCard(CardData card)
+    public void AddCard(CardData card)
     {
         
         if (IDtaken(card.id))
@@ -36,18 +37,22 @@ public class Inventory : MonoBehaviour
         cards.Add(card);
     }
 
-    public void removeCard(CardData card)
+    public void RemoveCard(CardData card)
     {
         cards.Remove(card);
     }
 
-    public void clear()
+    public void Clear()
     {
         cards.Clear();
     }
 
-    // Returns the card with the id, null if card cannot be found
-    public CardData getCardByID(string id)
+    /// <summary>
+    /// Returns the card with id, null if one cannot be found
+    /// </summary>
+    /// <param name="id">The id to search for.</param>
+    /// <returns></returns>
+    public CardData GetCardByID(string id)
     {
         foreach (CardData card in cards)
         {
@@ -56,8 +61,12 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    // Returns the first card with the name, null if card cannot be found
-    public CardData getCardByName(string cardName)
+    /// <summary>
+    /// Returns the first card with cardName, null if one cannot be found
+    /// </summary>
+    /// <param name="cardName">The cardName to search for.</param>
+    /// <returns></returns>
+    public CardData GetCardByName(string cardName)
     {
         foreach (CardData card in cards)
         {
@@ -66,8 +75,12 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    // Returns a list of all cards with a given name
-    public List<CardData> getCardsByName(string cardName)
+    /// <summary>
+    /// Returns a List of all cards with cardName
+    /// </summary>
+    /// <param name="cardName">The cardName to search for.</param>
+    /// <returns></returns>
+    public List<CardData> GetCardsByName(string cardName)
     {
         List<CardData> returnList = new List<CardData>();
         foreach (CardData card in cards)
@@ -80,10 +93,60 @@ public class Inventory : MonoBehaviour
         return returnList;
     }
 
+    /// <summary>
+    /// Sorts the cards in the inventory.
+    /// 
+    /// Sort by a given parameter and in a given order
+    /// ex. sort("name", "descending")
+    /// </summary>
+    /// <param name="sortParameter">possible sortParameters: "name", "id"</param>
+    /// <param name="sortOrder">possible sortOrders: "ascending", "descending"</param>
+    /// <returns></returns>
+    public void Sort(string sortParameter, string sortOrder)
+    {
+        List<string> possibleParameters = new List<string> { "name", "id" };
+        List<string> possibleOrders = new List<string> { "ascending", "descending" };
+
+        if (!possibleParameters.Contains(sortParameter))
+        {
+            Debug.LogError("Cannot sort by: " + sortParameter);
+            return;
+        }
+        if (!possibleOrders.Contains(sortOrder)) {
+            Debug.LogError("Cannot sort by: " + sortOrder);
+            return;
+        }
+
+        Comparison<CardData> comparison = null;
+
+        switch (sortParameter)
+        {
+            case "name":
+                comparison = (card1, card2) => string.Compare(card1.cardName, card2.cardName, true);
+                break;
+            case "id":
+                comparison = (card1, card2) => string.Compare(card1.id, card2.id, true);
+                break;
+        }
+
+        // If descending order is selected, reverse the comparison
+        if (sortOrder == "descending")
+        {
+            var originalComparison = comparison;
+            comparison = (card1, card2) => -originalComparison(card1, card2);
+        }
+
+        cards.Sort(comparison);
+    }
+
     #endregion
 
-    #region Private Methods
+    #region ---------- Private Methods ----------
 
+    /// <summary>
+    /// Is the cardID already in use?
+    /// </summary>
+    /// <returns></returns>
     private bool IDtaken(string cardID)
     {
         foreach (CardData card in cards)

@@ -16,7 +16,10 @@ public class DialogueUiManager : MonoBehaviour {
 
     public List<Button> UiButtons;
     public List<TMP_Text> UiButtonsText;
-    public TMP_Text speakerNameText;
+    public TMP_Text SpeakerNameText;
+
+    public Image SpeachBubbleSprite;
+    public Image NameTagSprite;
 
     /// <summary>
     /// Type out a line of text.
@@ -57,6 +60,18 @@ public class DialogueUiManager : MonoBehaviour {
     }
 
     public void AddSpeakerName(string speakerName) {
-        speakerNameText.text = speakerName;
+        SpeakerNameText.text = speakerName;
+    }
+
+    public void LoadNpcProfile(NpcProfile profile) {
+        if (profile == null) return;
+
+        // Load name tag properties
+        NameTagSprite.sprite = profile.NameTagBackground;
+        SpeakerNameText.color = profile.NameTextColor;
+
+        // Load speach bubble properties
+        SpeachBubbleSprite.sprite = profile.SpeachBubbleBackground;
+        SpeechText.color = profile.SpeachTextColor;
     }
 }

@@ -731,7 +731,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 125}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 320, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5793126408290213885
 CanvasRenderer:
@@ -1107,7 +1107,9 @@ MonoBehaviour:
   - {fileID: 8352863889831321518}
   - {fileID: 71559812070914318}
   - {fileID: 8578677685369439610}
-  speakerNameText: {fileID: 6877928250530773684}
+  SpeakerNameText: {fileID: 6877928250530773684}
+  SpeachBubbleSprite: {fileID: 4162851593558891964}
+  NameTagSprite: {fileID: 7677715642631321942}
 --- !u!1 &8831922381009542728
 GameObject:
   m_ObjectHideFlags: 0

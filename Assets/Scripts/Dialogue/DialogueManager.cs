@@ -1,4 +1,5 @@
 using Ink.Runtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +12,13 @@ public class DialogueManager : Singleton<DialogueManager> {
     public GameObject DialogueUiPrefab;
     public TextAsset TestInkFile;
 
+    public List<NpcProfile> NpcProfiles;
+
     private bool _inConversation;
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
+    private Dictionary<string, NpcProfile> _npcProfiles;
 
     private struct ProcessedTags {
         public string speakerName;
@@ -29,6 +33,11 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (Instance != this) return;
 
         _inConversation = false;
+        _npcProfiles = new Dictionary<string, NpcProfile>();
+
+        foreach (NpcProfile profile in NpcProfiles) {
+            _npcProfiles.Add(profile.Name.Trim().ToLower(), profile);
+        }
     }
 
     /// <summary>
@@ -99,8 +108,15 @@ public class DialogueManager : Singleton<DialogueManager> {
 
             ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
-            _dialogueUiManager.AddSpeakerName(foundTags.speakerName);
+            if (foundTags.speakerName != null) {
 
+                _dialogueUiManager.AddSpeakerName(foundTags.speakerName);
+
+                NpcProfile profileToLoad = _npcProfiles[foundTags.speakerName.Trim().ToLower()];
+                if (profileToLoad) {
+                    _dialogueUiManager.LoadNpcProfile(profileToLoad);
+                }
+            }
         }
 
         return canContinue;

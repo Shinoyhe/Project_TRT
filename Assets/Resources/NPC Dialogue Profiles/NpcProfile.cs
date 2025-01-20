@@ -8,6 +8,6 @@ public class NpcProfile : ScriptableObject
     public string Name;
     public Sprite SpeachBubbleBackground;
     public Sprite NameTagBackground;
-    public Color NameTextColor;
-    public Color SpeachTextColor;
+    public Color NameTextColor = Color.black;
+    public Color SpeachTextColor = Color.black;
 }

@@ -59,10 +59,17 @@ public class DialogueUiManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Add speaker name to UI.
+    /// </summary>
     public void AddSpeakerName(string speakerName) {
         SpeakerNameText.text = speakerName;
     }
 
+    /// <summary>
+    /// Update UI to match a NpcProfile struct.
+    /// </summary>
+    /// <param name="profile"> Struct to load into UI.</param>
     public void LoadNpcProfile(NpcProfile profile) {
         if (profile == null) return;
 

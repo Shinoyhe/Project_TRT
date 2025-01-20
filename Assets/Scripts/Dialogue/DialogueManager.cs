@@ -100,28 +100,32 @@ public class DialogueManager : Singleton<DialogueManager> {
     bool ShowNextLine() {
         bool canContinue = _currentStory.canContinue;
 
-        if (canContinue) {
-            string nextLine = _currentStory.Continue();
+        if (!canContinue) return false;
 
-            _dialogueUiManager.DisplayLine(nextLine);
-            _dialogueUiManager.SetupOptions(_currentStory.currentChoices);
+        string nextLine = _currentStory.Continue();
 
-            ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
+        _dialogueUiManager.DisplayLine(nextLine);
+        _dialogueUiManager.SetupOptions(_currentStory.currentChoices);
 
-            if (foundTags.speakerName != null) {
+        ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
-                _dialogueUiManager.AddSpeakerName(foundTags.speakerName);
+        if (foundTags.speakerName == null) return canContinue;
 
-                NpcProfile profileToLoad = _npcProfiles[foundTags.speakerName.Trim().ToLower()];
-                if (profileToLoad) {
-                    _dialogueUiManager.LoadNpcProfile(profileToLoad);
-                }
-            }
+        _dialogueUiManager.AddSpeakerName(foundTags.speakerName);
+
+        NpcProfile profileToLoad = _npcProfiles[foundTags.speakerName.Trim().ToLower()];
+        if (profileToLoad) {
+            _dialogueUiManager.LoadNpcProfile(profileToLoad);
         }
 
-        return canContinue;
+        return true;
     }
 
+    /// <summary>
+    /// Convert ink tags to a ProcessedTag struct.
+    /// </summary>
+    /// <param name="lineTags">Ink tags</param>
+    /// <returns>Our new ProcessedTag struct.</returns>
     ProcessedTags ProcessTags(List<string> lineTags) {
         ProcessedTags foundTags = new ProcessedTags();
 

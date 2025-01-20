@@ -94,12 +94,30 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns a List of all cards of a type
+    /// </summary>
+    /// <param name="cardName">The type to search for.</param>
+    /// <returns></returns>
+    public List<CardData> GetCardsByType(string type)
+    {
+        List<CardData> returnList = new List<CardData>();
+        foreach (CardData card in cards)
+        {
+            if (card.type == type)
+            {
+                returnList.Add(card);
+            }
+        }
+        return returnList;
+    }
+
+    /// <summary>
     /// Sorts the cards in the inventory.
     /// 
     /// Sort by a given parameter and in a given order
     /// ex. sort("name", "descending")
     /// </summary>
-    /// <param name="sortParameter">possible sortParameters: "name", "id"</param>
+    /// <param name="sortParameter">possible sortParameters: "name", "id", "type"</param>
     /// <param name="sortOrder">possible sortOrders: "ascending", "descending"</param>
     /// <returns></returns>
     public void Sort(string sortParameter, string sortOrder)
@@ -126,6 +144,9 @@ public class Inventory : MonoBehaviour
                 break;
             case "id":
                 comparison = (card1, card2) => string.Compare(card1.id, card2.id, true);
+                break;
+            case "type":
+                comparison = (card1, card2) => string.Compare(card1.type, card2.type, true);
                 break;
         }
 

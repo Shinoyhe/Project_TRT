@@ -7,8 +7,8 @@ using static UnityEngine.Tilemaps.TilemapRenderer;
 
 public class Inventory : MonoBehaviour
 {
-    public List<CardData> startingCards;
-    private readonly List<CardData> cards = new();
+    public List<CardData> StartingCards;
+    private List<CardData> cards;
 
     // Enums for Sorting
     public enum SortParameters { NAME, ID, TYPE }
@@ -17,21 +17,19 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cards = new List<CardData>();
 
         Clear();
 
-        foreach (CardData card in startingCards)
+        foreach (CardData card in StartingCards)
         {
             AddCard(card);
         }
-
-        Print();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     #region ---------- Public Methods ----------

@@ -151,8 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb727a303907f9c42a9641fb84d12273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryObject: {fileID: 1650618813}
-  inventory: {fileID: 0}
+  InventoryObject: {fileID: 1650618813}
 --- !u!4 &41386975
 Transform:
   m_ObjectHideFlags: 0
@@ -584,8 +583,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
+      - m_Target: {fileID: 1650618814}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: AddCard
         m_Mode: 2
@@ -598,8 +596,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
+      - m_Target: {fileID: 1650618814}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: Print
         m_Mode: 1
@@ -1186,8 +1183,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
+      - m_Target: {fileID: 1650618814}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: AddCard
         m_Mode: 2
@@ -1200,8 +1196,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
+      - m_Target: {fileID: 1650618814}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: Print
         m_Mode: 1
@@ -1334,8 +1329,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
+      - m_Target: {fileID: 1650618814}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: AddCard
         m_Mode: 2
@@ -1348,8 +1342,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
+      - m_Target: {fileID: 1650618814}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: Print
         m_Mode: 1
@@ -1539,6 +1532,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2040249640}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1650618814 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
+    type: 3}
+  m_PrefabInstance: {fileID: 2040249640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650618813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a51801f099b85cc478c82a4b31b4b623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1782640465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1622,10 +1627,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
+      - m_Target: {fileID: 1650618814}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: RemoveCard
+        m_MethodName: AddCard
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: c203a33f031a98143bf6a8a4500bbafc,
@@ -1636,8 +1640,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
+      - m_Target: {fileID: 1650618814}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: Print
         m_Mode: 1
@@ -1773,19 +1776,6 @@ MonoBehaviour:
       - m_Target: {fileID: 41386974}
         m_TargetAssemblyTypeName: Inventory_Testing, Assembly-CSharp
         m_MethodName: SortTypeDescending
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8297922142905567200, guid: 880c5cf38293fb945aaec1f5a2276d28,
-          type: 3}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: Print
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

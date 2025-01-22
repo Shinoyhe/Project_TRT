@@ -43,12 +43,29 @@ public class Inventory : MonoBehaviour
 
     public void RemoveCard(CardData card)
     {
+        if (!cards.Contains(card))
+        {
+            Debug.LogError("Cannot remove card. Card does not exist.");
+            return;
+        }
+
         cards.Remove(card);
     }
 
     public void Clear()
     {
         cards.Clear();
+    }
+
+    public void ClearExceptType(CardTypes type)
+    {
+        foreach (CardData card in cards)
+        {
+            if (type != card.type)
+            {
+                RemoveCard(card);
+            }
+        }
     }
 
     /// <summary>

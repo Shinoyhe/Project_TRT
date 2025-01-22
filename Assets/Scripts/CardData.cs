@@ -8,11 +8,11 @@ public enum CardTypes { INFO, ITEM }
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/Card", order = 1)]
 public class CardData : ScriptableObject
 {
-    public string cardName;
+    public string CardName;
 
-    public CardTypes type;
+    public CardTypes Type;
 
-    public string id;
-    public string description;
-    public Sprite sprite;
+    public string ID;
+    public string Description;
+    public Sprite Sprite;
 }

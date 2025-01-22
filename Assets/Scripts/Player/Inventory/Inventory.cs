@@ -26,7 +26,6 @@ public class Inventory : MonoBehaviour
         }
 
         Print();
-        Debug.Log(cards.Count);
     }
 
     // Update is called once per frame
@@ -40,9 +39,9 @@ public class Inventory : MonoBehaviour
     public void AddCard(CardData card)
     {
         
-        if (IDtaken(card.id))
+        if (IDtaken(card.ID))
         {
-            Debug.LogError("Card ID: " + card.id + " already exists in inventory. Failed to add");
+            Debug.LogError("Card ID: " + card.ID + " already exists in inventory. Failed to add");
             return;
         }
 
@@ -69,7 +68,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (CardData card in cards)
         {
-            if (type != card.type)
+            if (type != card.Type)
             {
                 RemoveCard(card);
             }
@@ -81,7 +80,7 @@ public class Inventory : MonoBehaviour
         string printString = "[\n";
         foreach (CardData card in cards)
         {
-            printString += $"[{card.name}, {card.id}, {card.type},\"{card.description}\"],\n";
+            printString += $"[{card.name}, {card.ID}, {card.Type},\"{card.Description}\"],\n";
         }
         printString += "]";
         Debug.Log(printString);
@@ -96,7 +95,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (CardData card in cards)
         {
-            if (card.id == id) return card;
+            if (card.ID == id) return card;
         }
         return null;
     }
@@ -143,7 +142,7 @@ public class Inventory : MonoBehaviour
         List<CardData> returnList = new List<CardData>();
         foreach (CardData card in cards)
         {
-            if (card.type == type)
+            if (card.Type == type)
             {
                 returnList.Add(card);
             }
@@ -157,23 +156,13 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     public void Sort(SortParameters sortParameter, SortOrder sortOrder)
     {
-        Comparison<CardData> comparison = null;
-
-        switch (sortParameter)
+        Comparison<CardData> comparison = sortParameter switch
         {
-            case SortParameters.NAME:
-                comparison = (card1, card2) => string.Compare(card1.cardName, card2.cardName, true);
-                break;
-            case SortParameters.ID:
-                comparison = (card1, card2) => string.Compare(card1.id, card2.id, true);
-                break;
-            case SortParameters.TYPE:
-                comparison = (card1, card2) => string.Compare(card1.type.ToString(), card2.type.ToString(), true);
-                break;
-            default:
-                Debug.LogError("Sorted Inventory using impossible parameter.");
-                return;
-        }
+            SortParameters.NAME => (card1, card2) => string.Compare(card1.CardName, card2.CardName, true),
+            SortParameters.ID => (card1, card2) => string.Compare(card1.ID, card2.ID, true),
+            SortParameters.TYPE => (card1, card2) => string.Compare(card1.Type.ToString(), card2.Type.ToString(), true),
+            _ => null
+        };
 
         // If descending order is selected, reverse the comparison
         if (sortOrder == SortOrder.DESCENDING)
@@ -197,7 +186,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (CardData card in cards)
         {
-            if (card.id == cardID) return true;
+            if (card.ID == cardID) return true;
         }
         return false;
     }

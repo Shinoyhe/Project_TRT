@@ -20,6 +20,7 @@ public class Inventory : MonoBehaviour
 
         Clear();
         cards.AddRange(startingCards);
+        Print();
     }
 
     // Update is called once per frame
@@ -71,7 +72,7 @@ public class Inventory : MonoBehaviour
 
     public void Print()
     {
-        string printString = "[";
+        string printString = "[\n";
         foreach (CardData card in cards)
         {
             printString += $"[{card.name}, {card.id}, {card.type},{card.description}],\n";

@@ -8,7 +8,7 @@ using static UnityEngine.Tilemaps.TilemapRenderer;
 public class Inventory : MonoBehaviour
 {
     public List<CardData> startingCards;
-    private List<CardData> cards = new();
+    private readonly List<CardData> cards = new();
 
     // Enums for Sorting
     public enum SortParameters { NAME, ID, TYPE }
@@ -19,8 +19,14 @@ public class Inventory : MonoBehaviour
     {
 
         Clear();
-        cards.AddRange(startingCards);
+
+        foreach (CardData card in startingCards)
+        {
+            AddCard(card);
+        }
+
         Print();
+        Debug.Log(cards.Count);
     }
 
     // Update is called once per frame
@@ -75,7 +81,7 @@ public class Inventory : MonoBehaviour
         string printString = "[\n";
         foreach (CardData card in cards)
         {
-            printString += $"[{card.name}, {card.id}, {card.type},{card.description}],\n";
+            printString += $"[{card.name}, {card.id}, {card.type},\"{card.description}\"],\n";
         }
         printString += "]";
         Debug.Log(printString);

@@ -10,6 +10,10 @@ public class Inventory : MonoBehaviour
     public List<CardData> startingCards;
     private List<CardData> cards;
 
+    // Enums for Sorting
+    public enum SortParameters { NAME, ID, TYPE }
+    public enum SortOrder { ASCENDING, DESCENDING }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -98,7 +102,7 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="cardName">The type to search for.</param>
     /// <returns></returns>
-    public List<CardData> GetCardsByType(string type)
+    public List<CardData> GetCardsByType(CardTypes type)
     {
         List<CardData> returnList = new List<CardData>();
         foreach (CardData card in cards)
@@ -112,46 +116,31 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Sorts the cards in the inventory.
-    /// 
-    /// Sort by a given parameter and in a given order
-    /// ex. sort("name", "descending")
+    /// Sorts the cards in the inventory by a given parameter and in a given order
     /// </summary>
-    /// <param name="sortParameter">possible sortParameters: "name", "id", "type"</param>
-    /// <param name="sortOrder">possible sortOrders: "ascending", "descending"</param>
     /// <returns></returns>
-    public void Sort(string sortParameter, string sortOrder)
+    public void Sort(SortParameters sortParameter, SortOrder sortOrder)
     {
-        List<string> possibleParameters = new List<string> { "name", "id" };
-        List<string> possibleOrders = new List<string> { "ascending", "descending" };
-
-        if (!possibleParameters.Contains(sortParameter))
-        {
-            Debug.LogError("Cannot sort by: " + sortParameter);
-            return;
-        }
-        if (!possibleOrders.Contains(sortOrder)) {
-            Debug.LogError("Cannot sort by: " + sortOrder);
-            return;
-        }
-
         Comparison<CardData> comparison = null;
 
         switch (sortParameter)
         {
-            case "name":
+            case SortParameters.NAME:
                 comparison = (card1, card2) => string.Compare(card1.cardName, card2.cardName, true);
                 break;
-            case "id":
+            case SortParameters.ID:
                 comparison = (card1, card2) => string.Compare(card1.id, card2.id, true);
                 break;
-            case "type":
-                comparison = (card1, card2) => string.Compare(card1.type, card2.type, true);
+            case SortParameters.TYPE:
+                comparison = (card1, card2) => string.Compare(card1.type.ToString(), card2.type.ToString(), true);
                 break;
+            default:
+                Debug.LogError("Sorted Inventory using impossible parameter.");
+                return;
         }
 
         // If descending order is selected, reverse the comparison
-        if (sortOrder == "descending")
+        if (sortOrder == SortOrder.DESCENDING)
         {
             var originalComparison = comparison;
             comparison = (card1, card2) => -originalComparison(card1, card2);

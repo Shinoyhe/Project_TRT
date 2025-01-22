@@ -44,6 +44,37 @@ public class Inventory_Testing : MonoBehaviour
 
     public void SortNameAscending()
     {
+        Debug.Log("----------------------\nBefore Sorting:");
+        Inventory.Print();
         Inventory.Sort(Inventory.SortParameters.NAME, Inventory.SortOrder.ASCENDING);
+        Debug.Log("After Sorting:");
+        Inventory.Print();
+    }
+
+    public void SortNameDescending()
+    {
+        Debug.Log("----------------------\nBefore Sorting:");
+        Inventory.Print();
+        Inventory.Sort(Inventory.SortParameters.NAME, Inventory.SortOrder.DESCENDING);
+        Debug.Log("After Sorting:");
+        Inventory.Print();
+    }
+
+    public void SortIDAscending()
+    {
+        Debug.Log("----------------------\nBefore Sorting:");
+        Inventory.Print();
+        Inventory.Sort(Inventory.SortParameters.ID, Inventory.SortOrder.ASCENDING);
+        Debug.Log("After Sorting:");
+        Inventory.Print();
+    }
+
+    public void SortIDDescending()
+    {
+        Debug.Log("----------------------\nBefore Sorting:");
+        Inventory.Print();
+        Inventory.Sort(Inventory.SortParameters.ID, Inventory.SortOrder.DESCENDING);
+        Debug.Log("After Sorting:");
+        Inventory.Print();
     }
 }

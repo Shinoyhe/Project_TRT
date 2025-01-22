@@ -8,7 +8,7 @@ using static UnityEngine.Tilemaps.TilemapRenderer;
 public class Inventory : MonoBehaviour
 {
     public List<CardData> startingCards;
-    private List<CardData> cards;
+    private List<CardData> cards = new();
 
     // Enums for Sorting
     public enum SortParameters { NAME, ID, TYPE }
@@ -17,6 +17,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Clear();
         cards.AddRange(startingCards);
     }

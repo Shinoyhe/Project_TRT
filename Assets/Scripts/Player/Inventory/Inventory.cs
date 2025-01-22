@@ -68,6 +68,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void Print()
+    {
+        string printString = "[";
+        foreach (CardData card in cards)
+        {
+            printString += $"[{card.name}, {card.id}, {card.type},{card.description}],\n";
+        }
+        printString += "]";
+        Debug.Log(printString);
+    }
+
     /// <summary>
     /// Returns the card with id, null if one cannot be found
     /// </summary>

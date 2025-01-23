@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Ink.Runtime;
-using UnityEngine.InputSystem;
 
 /// <summary>
 /// Manager to display text on screen.
@@ -12,22 +11,59 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class DialogueUiManager : MonoBehaviour {
     [Header("Dependencies")]
-    public TMP_Text SpeechText;
+    public TMP_Text SpeechTextA;
+    public TMP_Text SpeechTextB;
 
     public List<Button> UiButtons;
     public List<TMP_Text> UiButtonsText;
-    public TMP_Text SpeakerNameText;
 
-    public Image SpeachBubbleSprite;
-    public Image NameTagSprite;
+    public GameObject SpeachBubbleA;
+    public GameObject SpeachBubbleB;
+
+    private string _speakerA;
+    private string _speakerB;
+
+    /// <summary>
+    /// Setup UI with two speakers.
+    /// </summary>
+    /// <param name="speakerA"></param>
+    /// <param name="speakerB"></param>
+    public void SetupUi(string speakerA, string speakerB) {
+        _speakerA = speakerA.ToLower().Trim();
+        _speakerB = speakerB.ToLower().Trim();
+
+        SpeachBubbleA.SetActive(false);
+        SpeachBubbleB.SetActive(false);
+    }
 
     /// <summary>
     /// Type out a line of text.
     /// </summary>
     /// <param name="text"> Text to display. </param>
     /// <param name="callback"> Callback after line of text is fully displayed.</param>
-    public void DisplayLine(String text) {
-        SpeechText.text = text;
+    public void DisplayLine(String text, string speakerName) {
+
+        if(speakerName == null) {
+            speakerName = _speakerA;
+        }
+
+        string formattedName = speakerName.ToLower().Trim();
+
+        Debug.Log(formattedName);
+
+        if(_speakerA == formattedName) {
+            SpeechTextA.text = text;
+
+            SpeachBubbleA.SetActive(true);
+            SpeachBubbleB.SetActive(false);
+        }
+
+        if (_speakerB == formattedName) {
+            SpeechTextB.text = text;
+
+            SpeachBubbleA.SetActive(false);
+            SpeachBubbleB.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -57,28 +93,5 @@ public class DialogueUiManager : MonoBehaviour {
             currentButton.gameObject.SetActive(true);
             UiButtonsText[i].text = choices[i].text;
         }
-    }
-
-    /// <summary>
-    /// Add speaker name to UI.
-    /// </summary>
-    public void AddSpeakerName(string speakerName) {
-        SpeakerNameText.text = speakerName;
-    }
-
-    /// <summary>
-    /// Update UI to match a NpcProfile struct.
-    /// </summary>
-    /// <param name="profile"> Struct to load into UI.</param>
-    public void LoadNpcProfile(NpcProfile profile) {
-        if (profile == null) return;
-
-        // Load name tag properties
-        NameTagSprite.sprite = profile.NameTagBackground;
-        SpeakerNameText.color = profile.NameTextColor;
-
-        // Load speach bubble properties
-        SpeachBubbleSprite.sprite = profile.SpeachBubbleBackground;
-        SpeechText.color = profile.SpeachTextColor;
     }
 }

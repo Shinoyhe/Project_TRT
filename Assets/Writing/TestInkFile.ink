@@ -1,7 +1,7 @@
 O hi Mark! #Speaker: B #apples
 Heyy... #Speaker: A
 
- * I want to make a deal. #Speaker: A #Spoken
+ * I want to make a deal. #Speaker: A
  * Run away. #Speaker: A #Action
 
 - They lived happily ever after.

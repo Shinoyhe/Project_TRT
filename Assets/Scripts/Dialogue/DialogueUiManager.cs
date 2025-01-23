@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Ink.Runtime;
+using System.Collections;
 
 /// <summary>
 /// Manager to display text on screen.
@@ -20,8 +21,14 @@ public class DialogueUiManager : MonoBehaviour {
     public GameObject SpeachBubbleA;
     public GameObject SpeachBubbleB;
 
+    [Header("Speaking Settings")]
+    public float TextSpeed = 0.05f;
+
     private string _speakerA;
     private string _speakerB;
+    private TMP_Text _currentText;
+    private int _charactersForThisLine;
+    private bool _finishedTypingText;
 
     /// <summary>
     /// Setup UI with two speakers.
@@ -43,22 +50,31 @@ public class DialogueUiManager : MonoBehaviour {
     /// <param name="callback"> Callback after line of text is fully displayed.</param>
     public void DisplayLine(String text, string speakerName) {
 
-        if(speakerName == null) {
+        if (speakerName == null) {
             speakerName = _speakerA;
         }
 
         string formattedName = speakerName.ToLower().Trim();
 
-        SpeachBubbleA.SetActive(_speakerA == formattedName);
-        SpeachBubbleB.SetActive(_speakerB == formattedName);
+        SpeachBubbleA.SetActive(false);
+        SpeachBubbleB.SetActive(false);
 
         if (_speakerA == formattedName) {
-            SpeechTextA.text = text;
+            _currentText = SpeechTextA;
+            SpeachBubbleA.SetActive(true);
         }
 
         if (_speakerB == formattedName) {
-            SpeechTextB.text = text;
+            _currentText = SpeechTextB;
+            SpeachBubbleB.SetActive(true);
         }
+
+        _currentText.maxVisibleCharacters = 0;
+        _currentText.text = text;
+        _charactersForThisLine = text.Length;
+
+        // Start Printing
+        StartCoroutine("NextCharacter");
     }
 
     /// <summary>
@@ -96,14 +112,43 @@ public class DialogueUiManager : MonoBehaviour {
         }
 
         if (numberOfOptions == 2) {
-            UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-200,0,0);
-            UiButtons[1].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3( 200,0,0);
+            UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-200, 0, 0);
+            UiButtons[1].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(200, 0, 0);
         }
 
         if (numberOfOptions == 3) {
             UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-400, 0, 0);
-            UiButtons[1].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(   0, 0, 0);
-            UiButtons[2].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3( 400, 0, 0);
+            UiButtons[1].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
+            UiButtons[2].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(400, 0, 0);
+        }
+    }
+
+    IEnumerator NextCharacter() {
+
+        int index = Mathf.Clamp(_currentText.maxVisibleCharacters, 0, _currentText.text.Length - 1);
+
+        char currentCharacter = _currentText.text[index];
+
+        float actualTextSpeed = TextSpeed;
+
+        if (currentCharacter == '.') {
+            actualTextSpeed *= 5;
+        }
+
+        yield return new WaitForSeconds(actualTextSpeed);
+
+        // Play sound every other character or if a punctuation
+        if (currentCharacter == '.' || _currentText.maxVisibleCharacters % 2 == 0) {
+            //playTalkSound(currentCharacter);
+        }
+
+        // Show next character
+        _currentText.maxVisibleCharacters += 1;
+
+        if (_currentText.maxVisibleCharacters >= _charactersForThisLine) {
+            _finishedTypingText = true;
+        } else {
+            StartCoroutine("NextCharacter");
         }
     }
 }

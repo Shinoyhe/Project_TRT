@@ -8,11 +8,6 @@ using UnityEngine.UI;
 /// Processes Ink file and controls conversation flow.
 /// </summary>
 public class DialogueManager : Singleton<DialogueManager> {
-    public enum ChoiceType {
-        NotAChoice,
-        Spoken,
-        Action
-    }
 
     public GameObject DialogueUiPrefab;
     public TextAsset TestInkFile;
@@ -25,12 +20,11 @@ public class DialogueManager : Singleton<DialogueManager> {
     private struct ProcessedTags {
 
         public string speakerName;
-        public ChoiceType choiceType;
-    
-        public ProcessedTags(string speakerName = "", 
-                             ChoiceType choiceType = ChoiceType.NotAChoice) {
+        public bool isAction;
+
+        public ProcessedTags(string speakerName = "", bool isAction = false) {
             this.speakerName = speakerName;
-            this.choiceType = choiceType;
+            this.isAction = isAction;
         }
     }
 
@@ -70,7 +64,7 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         LinkUiButtons(ref dialogueUiManager);
 
-        dialogueUiManager.SetupUi("A","B");
+        dialogueUiManager.SetupUi("A","B"); // Need to get these somehow
 
         return dialogueUiManager;
     }
@@ -124,15 +118,8 @@ public class DialogueManager : Singleton<DialogueManager> {
     void ApplyTags(ProcessedTags tagsToApply) {
 
         // Apply Choice Type
-        switch (tagsToApply.choiceType) {
-            case ChoiceType.NotAChoice:
-                break;
-            case ChoiceType.Spoken:
-                Debug.Log("Spoken Chosen");
-                break;
-            case ChoiceType.Action:
-                Debug.Log("Action Chosen");
-                break;
+        if (tagsToApply.isAction) {
+            Debug.Log("Action Chosen");
         }
     }
 
@@ -156,11 +143,8 @@ public class DialogueManager : Singleton<DialogueManager> {
                 case "speaker":
                     foundTags.speakerName = value;
                     break;
-                case "spoken":
-                    foundTags.choiceType = ChoiceType.Spoken;
-                    break;
                 case "action":
-                    foundTags.choiceType = ChoiceType.Action;
+                    foundTags.isAction = true;
                     break;
             }
         }

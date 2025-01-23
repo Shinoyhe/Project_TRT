@@ -49,20 +49,15 @@ public class DialogueUiManager : MonoBehaviour {
 
         string formattedName = speakerName.ToLower().Trim();
 
-        Debug.Log(formattedName);
+        SpeachBubbleA.SetActive(_speakerA == formattedName);
+        SpeachBubbleB.SetActive(_speakerB == formattedName);
 
-        if(_speakerA == formattedName) {
+        if (_speakerA == formattedName) {
             SpeechTextA.text = text;
-
-            SpeachBubbleA.SetActive(true);
-            SpeachBubbleB.SetActive(false);
         }
 
         if (_speakerB == formattedName) {
             SpeechTextB.text = text;
-
-            SpeachBubbleA.SetActive(false);
-            SpeachBubbleB.SetActive(true);
         }
     }
 
@@ -90,8 +85,25 @@ public class DialogueUiManager : MonoBehaviour {
         // Enable all needed buttons
         for (int i = 0; i < numberOfOptions; i++) {
             Button currentButton = UiButtons[i];
+
             currentButton.gameObject.SetActive(true);
             UiButtonsText[i].text = choices[i].text;
+        }
+
+        // Format positions
+        if (numberOfOptions == 1) {
+            UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
+        }
+
+        if (numberOfOptions == 2) {
+            UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-200,0,0);
+            UiButtons[1].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3( 200,0,0);
+        }
+
+        if (numberOfOptions == 3) {
+            UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-400, 0, 0);
+            UiButtons[1].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(   0, 0, 0);
+            UiButtons[2].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3( 400, 0, 0);
         }
     }
 }

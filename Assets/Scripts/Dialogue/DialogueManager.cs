@@ -104,6 +104,9 @@ public class DialogueManager : Singleton<DialogueManager> {
         ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
         _dialogueUiManager.DisplayLine(nextLine, foundTags.speakerName);
+
+        // Wait for callback to show options!
+
         _dialogueUiManager.SetupOptions(_currentStory.currentChoices);
 
         ApplyTags(foundTags);

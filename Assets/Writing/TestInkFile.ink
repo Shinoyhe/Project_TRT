@@ -1,8 +1,8 @@
-Once upon a time... #Speaker: A #apples
-Test #Speaker: B
+O hi Mark! #Speaker: B #apples
+Heyy... #Speaker: A
 
- * There were two choices. #Speaker: A
- * There were four lines of content. #Speaker: A
+ * I want to make a deal. #Speaker: A #Spoken
+ * Run away. #Speaker: A #Action
 
 - They lived happily ever after.
     -> END

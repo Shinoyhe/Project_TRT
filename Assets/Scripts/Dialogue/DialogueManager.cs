@@ -4,27 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 /// <summary>
 /// Processes Ink file and controls conversation flow.
 /// </summary>
 public class DialogueManager : Singleton<DialogueManager> {
+    public enum ChoiceType {
+        NotAChoice,
+        Spoken,
+        Action
+    }
+
     public GameObject DialogueUiPrefab;
     public TextAsset TestInkFile;
-
-    public List<NpcProfile> NpcProfiles;
 
     private bool _inConversation;
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
-    private Dictionary<string, NpcProfile> _npcProfiles;
 
     private struct ProcessedTags {
-        public string speakerName;
 
-        public ProcessedTags(string speakerName = "") {
+        public string speakerName;
+        public ChoiceType choiceType;
+    
+        public ProcessedTags(string speakerName = "", 
+                             ChoiceType choiceType = ChoiceType.NotAChoice) {
             this.speakerName = speakerName;
+            this.choiceType = choiceType;
         }
     }
 
@@ -33,11 +39,6 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (Instance != this) return;
 
         _inConversation = false;
-        _npcProfiles = new Dictionary<string, NpcProfile>();
-
-        foreach (NpcProfile profile in NpcProfiles) {
-            _npcProfiles.Add(profile.Name.Trim().ToLower(), profile);
-        }
     }
 
     /// <summary>
@@ -68,6 +69,8 @@ public class DialogueManager : Singleton<DialogueManager> {
         DialogueUiManager dialogueUiManager = _dialogueUiInstance.GetComponent<DialogueUiManager>();
 
         LinkUiButtons(ref dialogueUiManager);
+
+        dialogueUiManager.SetupUi("A","B");
 
         return dialogueUiManager;
     }
@@ -104,21 +107,33 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         string nextLine = _currentStory.Continue();
 
-        _dialogueUiManager.DisplayLine(nextLine);
-        _dialogueUiManager.SetupOptions(_currentStory.currentChoices);
-
         ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
-        if (foundTags.speakerName == null) return canContinue;
+        _dialogueUiManager.DisplayLine(nextLine, foundTags.speakerName);
+        _dialogueUiManager.SetupOptions(_currentStory.currentChoices);
 
-        _dialogueUiManager.AddSpeakerName(foundTags.speakerName);
-
-        NpcProfile profileToLoad = _npcProfiles[foundTags.speakerName.Trim().ToLower()];
-        if (profileToLoad) {
-            _dialogueUiManager.LoadNpcProfile(profileToLoad);
-        }
+        ApplyTags(foundTags);
 
         return true;
+    }
+
+    /// <summary>
+    /// Apply current dialogue tags to UI.
+    /// </summary>
+    /// <param name="tagsToApply"> The tags to apply to our UI.</param>
+    void ApplyTags(ProcessedTags tagsToApply) {
+
+        // Apply Choice Type
+        switch (tagsToApply.choiceType) {
+            case ChoiceType.NotAChoice:
+                break;
+            case ChoiceType.Spoken:
+                Debug.Log("Spoken Chosen");
+                break;
+            case ChoiceType.Action:
+                Debug.Log("Action Chosen");
+                break;
+        }
     }
 
     /// <summary>
@@ -140,6 +155,12 @@ public class DialogueManager : Singleton<DialogueManager> {
             switch (key) {
                 case "speaker":
                     foundTags.speakerName = value;
+                    break;
+                case "spoken":
+                    foundTags.choiceType = ChoiceType.Spoken;
+                    break;
+                case "action":
+                    foundTags.choiceType = ChoiceType.Action;
                     break;
             }
         }

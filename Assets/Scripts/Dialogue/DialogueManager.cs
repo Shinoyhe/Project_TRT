@@ -53,8 +53,11 @@ public class DialogueManager : Singleton<DialogueManager> {
         ShowNextLine();
     }
 
+    /// <summary>
+    /// Callback to show choices when text finishes displaying.
+    /// </summary>
     public void ShowChoicesCallBack() {
-        _dialogueUiManager.SetupOptions(_currentStory.currentChoices);
+        _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
     }
 
     /// <summary>
@@ -91,7 +94,7 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// <param name="choiceIndex"></param>
     void ProcessDialogueChoice(int choiceIndex) {
         _currentStory.ChooseChoiceIndex(choiceIndex);
-        _dialogueUiManager.ClearButtons();
+        _dialogueUiManager.HideChoices();
         ShowNextLine();
     }
 
@@ -105,12 +108,15 @@ public class DialogueManager : Singleton<DialogueManager> {
             return false;
         }
 
-        if (_currentStory.canContinue == false && _currentStory.currentChoices != null && _currentStory.currentChoices.Count == 0) {
+        bool canContinue = _currentStory.canContinue;
+        bool hasChoices = _currentStory.currentChoices != null && _currentStory.currentChoices.Count != 0;
+
+        if (canContinue == false && hasChoices == false) {
             EndStory();
             return false;
         }
 
-        if (_currentStory.canContinue == false) {
+        if (canContinue == false) {
             return false;
         }
 
@@ -182,6 +188,9 @@ public class DialogueManager : Singleton<DialogueManager> {
         }
     }
 
+    /// <summary>
+    /// Called to kill UI and prep for next dialogue.
+    /// </summary>
     void EndStory() {
         _inConversation = false;
         _currentStory = null;
@@ -193,7 +202,13 @@ public class DialogueManager : Singleton<DialogueManager> {
     private void Update() {
         // Check for Player Input
         if (Input.GetKeyDown(KeyCode.Space)) {
-            ShowNextLine();
+
+            if (_dialogueUiManager.LineFinishedDisplaying()) {
+                ShowNextLine();
+            } else {
+                _dialogueUiManager.SkipLineAnimation();
+            }
+            
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift)) {

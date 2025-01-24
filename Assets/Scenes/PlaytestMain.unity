@@ -685,7 +685,10 @@ MonoBehaviour:
     type: 3}
   ButtonParent: {fileID: 8556444033521823601}
   DistanceBetweenButtons: 200
-  ScenesToCreate: []
+  ScenesToCreate:
+  - Assets/Scenes/SampleScene.unity
+  - Assets/Scenes/Red.unity
+  - Assets/Scenes/Blue.unity
 --- !u!223 &7608514688685901109
 Canvas:
   m_ObjectHideFlags: 0

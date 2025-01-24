@@ -10,7 +10,6 @@ using System;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using System.IO;
-
 public class PlaytestMenu : MonoBehaviour {
     
     public GameObject SceneSelectButtonPrefab;
@@ -43,16 +42,19 @@ public class PlaytestMenu : MonoBehaviour {
 
         // Create button
         var button = Instantiate(SceneSelectButtonPrefab, Vector3.zero, Quaternion.identity, ButtonParent.transform);
+        var buttonManager = button.GetComponent<ButtonManager>();
+
+        if (buttonManager == null) return;
 
         // Align to position
-        button.GetComponent<RectTransform>().localPosition = new Vector3(0, _offset, 0);
+        buttonManager.SetLocalPos(new Vector3(0, _offset, 0));
         _offset -= DistanceBetweenButtons;
 
         // Set name
-        button.GetComponentInChildren<TMP_Text>().text = sceneName;
+        buttonManager.SetText(sceneName);
 
         // Link Button to scene
-        button.GetComponent<Button>().onClick.AddListener(delegate () { SceneManager.LoadScene(scenePath); });
+        buttonManager.SetOnClick(delegate () { SceneManager.LoadScene(scenePath); });
     }
 }
 

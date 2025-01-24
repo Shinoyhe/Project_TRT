@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 4441157169925618479}
   - component: {fileID: 4642323634169415969}
   - component: {fileID: 7446717178732856086}
+  - component: {fileID: 3707367126826946860}
   m_Layer: 5
   m_Name: Scene Select Button
   m_TagString: Untagged
@@ -255,3 +256,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3707367126826946860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8892041904089475651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4436afe87e3e43e43ae179f6de531597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonComponent: {fileID: 7446717178732856086}
+  _buttonText: {fileID: 7202233572410511019}
+  _rectTransform: {fileID: 632527444121702204}

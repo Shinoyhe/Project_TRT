@@ -53,6 +53,10 @@ public class DialogueManager : Singleton<DialogueManager> {
         ShowNextLine();
     }
 
+    public void ShowChoicesCallBack() {
+        _dialogueUiManager.SetupOptions(_currentStory.currentChoices);
+    }
+
     /// <summary>
     /// Instantiate dialogue UI in scene.
     /// </summary>
@@ -87,6 +91,7 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// <param name="choiceIndex"></param>
     void ProcessDialogueChoice(int choiceIndex) {
         _currentStory.ChooseChoiceIndex(choiceIndex);
+        _dialogueUiManager.ClearButtons();
         ShowNextLine();
     }
 
@@ -95,19 +100,19 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// </summary>
     /// <returns> True if a line was available, false otherwise.</returns>
     bool ShowNextLine() {
-        bool canContinue = _currentStory.canContinue;
 
-        if (!canContinue) return false;
+        if (_currentStory.canContinue == false) return false;
 
+        // Get next line properties
         string nextLine = _currentStory.Continue();
-
         ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
-        _dialogueUiManager.DisplayLine(nextLine, foundTags.speakerName);
-
-        // Wait for callback to show options!
-
-        _dialogueUiManager.SetupOptions(_currentStory.currentChoices);
+        // Queue next line
+        if (_currentStory.currentChoices.Count > 0) {
+            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags.speakerName, ShowChoicesCallBack);
+        } else {
+            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags.speakerName);
+        }
 
         ApplyTags(foundTags);
 

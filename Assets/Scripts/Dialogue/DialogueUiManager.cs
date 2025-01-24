@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using Ink.Runtime;
 using System.Collections;
+using static DialogueUiManager;
 
 /// <summary>
 /// Manager to display text on screen.
@@ -24,11 +25,16 @@ public class DialogueUiManager : MonoBehaviour {
     [Header("Speaking Settings")]
     public float TextSpeed = 0.05f;
 
+    [HideInInspector]
+    public delegate void CallAfterLineFinished();
+
     private string _speakerA;
     private string _speakerB;
     private TMP_Text _currentText;
     private int _charactersForThisLine;
     private bool _finishedTypingText;
+
+    private CallAfterLineFinished currentCallBack;
 
     /// <summary>
     /// Setup UI with two speakers.
@@ -41,6 +47,8 @@ public class DialogueUiManager : MonoBehaviour {
 
         SpeachBubbleA.SetActive(false);
         SpeachBubbleB.SetActive(false);
+
+        ClearButtons();
     }
 
     /// <summary>
@@ -48,7 +56,7 @@ public class DialogueUiManager : MonoBehaviour {
     /// </summary>
     /// <param name="text"> Text to display. </param>
     /// <param name="callback"> Callback after line of text is fully displayed.</param>
-    public void DisplayLine(String text, string speakerName) {
+    public void DisplayLineOfText(String text, string speakerName, CallAfterLineFinished callAfterLineFinished = null) {
 
         if (speakerName == null) {
             speakerName = _speakerA;
@@ -73,6 +81,8 @@ public class DialogueUiManager : MonoBehaviour {
         _currentText.text = text;
         _charactersForThisLine = text.Length;
 
+        currentCallBack = callAfterLineFinished;
+
         // Start Printing
         StartCoroutine("NextCharacter");
     }
@@ -94,9 +104,7 @@ public class DialogueUiManager : MonoBehaviour {
         if (numberOfOptions > UiButtons.Count) return;
 
         // Reset buttons
-        foreach (Button button in UiButtons) {
-            button.gameObject.SetActive(false);
-        }
+        ClearButtons();
 
         // Enable all needed buttons
         for (int i = 0; i < numberOfOptions; i++) {
@@ -123,6 +131,13 @@ public class DialogueUiManager : MonoBehaviour {
         }
     }
 
+    public void ClearButtons() {
+        // Reset buttons
+        foreach (Button button in UiButtons) {
+            button.gameObject.SetActive(false);
+        }
+    }
+
     IEnumerator NextCharacter() {
 
         int index = Mathf.Clamp(_currentText.maxVisibleCharacters, 0, _currentText.text.Length - 1);
@@ -146,9 +161,17 @@ public class DialogueUiManager : MonoBehaviour {
         _currentText.maxVisibleCharacters += 1;
 
         if (_currentText.maxVisibleCharacters >= _charactersForThisLine) {
-            _finishedTypingText = true;
+            EndLineOfText();
         } else {
             StartCoroutine("NextCharacter");
+        }
+    }
+
+    void EndLineOfText() {
+        _finishedTypingText = true;
+
+        if (currentCallBack != null) {
+            currentCallBack();
         }
     }
 }

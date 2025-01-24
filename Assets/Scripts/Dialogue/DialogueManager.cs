@@ -124,14 +124,16 @@ public class DialogueManager : Singleton<DialogueManager> {
         string nextLine = _currentStory.Continue();
         ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
+        if(ApplyTags(foundTags) == true) {
+            return true;
+        }
+
         // Queue next line
         if (_currentStory.currentChoices.Count > 0) {
             _dialogueUiManager.DisplayLineOfText(nextLine, foundTags.speakerName, ShowChoicesCallBack);
         } else {
             _dialogueUiManager.DisplayLineOfText(nextLine, foundTags.speakerName);
         }
-
-        ApplyTags(foundTags);
 
         return true;
     }
@@ -140,12 +142,19 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// Apply current dialogue tags to UI.
     /// </summary>
     /// <param name="tagsToApply"> The tags to apply to our UI.</param>
-    void ApplyTags(ProcessedTags tagsToApply) {
+    /// <returns> True if tag causes line to end. </returns>
+    bool ApplyTags(ProcessedTags tagsToApply) {
+
+        bool shouldSkipLine = false;
 
         // Apply Choice Type
         if (tagsToApply.isAction) {
-            Debug.Log("Action Chosen, time to barter!");
+            Debug.Log("Action Chosen!");
+            ShowNextLine(); // Skip saying action in dialogue
+            shouldSkipLine = true;
         }
+
+        return shouldSkipLine;
     }
 
     /// <summary>

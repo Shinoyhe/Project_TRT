@@ -30,11 +30,15 @@ public class DialogueUiManager : MonoBehaviour {
 
     private string _speakerA;
     private string _speakerB;
-    private TMP_Text _currentText;
-    private int _charactersForThisLine;
-    private bool _finishedTypingText;
+    private TMP_Text _currentTextBox;
 
-    private CallAfterLineFinished currentCallBack;
+    private class LineInformation {
+        public int TotalCharacters = 0;
+        public bool FinishedTyping = false;
+        public CallAfterLineFinished Callback = null;
+    }
+    private LineInformation _currentLineData;
+    
 
     /// <summary>
     /// Setup UI with two speakers.
@@ -48,14 +52,15 @@ public class DialogueUiManager : MonoBehaviour {
         SpeachBubbleA.SetActive(false);
         SpeachBubbleB.SetActive(false);
 
-        ClearButtons();
+        HideChoices();
     }
 
     /// <summary>
     /// Type out a line of text.
     /// </summary>
     /// <param name="text"> Text to display. </param>
-    /// <param name="callback"> Callback after line of text is fully displayed.</param>
+    /// <param name="speakerName"> Name of speaker saying line. </param>
+    /// <param name="callAfterLineFinished"> Callback after line of text is fully displayed.</param>
     public void DisplayLineOfText(String text, string speakerName, CallAfterLineFinished callAfterLineFinished = null) {
 
         if (speakerName == null) {
@@ -68,20 +73,21 @@ public class DialogueUiManager : MonoBehaviour {
         SpeachBubbleB.SetActive(false);
 
         if (_speakerA == formattedName) {
-            _currentText = SpeechTextA;
+            _currentTextBox = SpeechTextA;
             SpeachBubbleA.SetActive(true);
         }
 
         if (_speakerB == formattedName) {
-            _currentText = SpeechTextB;
+            _currentTextBox = SpeechTextB;
             SpeachBubbleB.SetActive(true);
         }
 
-        _currentText.maxVisibleCharacters = 0;
-        _currentText.text = text;
-        _charactersForThisLine = text.Length;
+        _currentTextBox.maxVisibleCharacters = 0;
+        _currentTextBox.text = text;
 
-        currentCallBack = callAfterLineFinished;
+        _currentLineData = new LineInformation();
+        _currentLineData.TotalCharacters = text.Length;
+        _currentLineData.Callback = callAfterLineFinished;
 
         // Start Printing
         StartCoroutine("NextCharacter");
@@ -91,20 +97,22 @@ public class DialogueUiManager : MonoBehaviour {
     /// Skip the typing animation of the current line of text.
     /// </summary>
     public void SkipLineAnimation() {
-
+        StopCoroutine("NextCharacter");
+        _currentTextBox.maxVisibleCharacters = _currentLineData.TotalCharacters;
+        EndLineOfText();
     }
 
     /// <summary>
-    /// Enable Option Buttons based on numberOfOptions.
+    /// Create Dialogue Choices from array
     /// </summary>
-    /// <param name="numberOfOptions"> Number of options to toggle on. </param>
-    public void SetupOptions(List<Choice> choices) {
-        int numberOfOptions = choices.Count;
+    /// <param name="choices"> The choices to create buttons for. </param>
+    public void SetupChoices(List<Choice> choices) {
 
+        int numberOfOptions = choices.Count;
         if (numberOfOptions > UiButtons.Count) return;
 
         // Reset buttons
-        ClearButtons();
+        HideChoices();
 
         // Enable all needed buttons
         for (int i = 0; i < numberOfOptions; i++) {
@@ -131,18 +139,28 @@ public class DialogueUiManager : MonoBehaviour {
         }
     }
 
-    public void ClearButtons() {
+    /// <summary>
+    /// Hide all UI buttons in scene.
+    /// </summary>
+    public void HideChoices() {
         // Reset buttons
         foreach (Button button in UiButtons) {
             button.gameObject.SetActive(false);
         }
     }
 
+    public bool LineFinishedDisplaying() {
+        return _currentLineData.FinishedTyping;
+    }
+
+    /// <summary>
+    /// Display next character in dialogue string.
+    /// </summary>
     IEnumerator NextCharacter() {
 
-        int index = Mathf.Clamp(_currentText.maxVisibleCharacters, 0, _currentText.text.Length - 1);
+        int index = Mathf.Clamp(_currentTextBox.maxVisibleCharacters, 0, _currentTextBox.text.Length - 1);
 
-        char currentCharacter = _currentText.text[index];
+        char currentCharacter = _currentTextBox.text[index];
 
         float actualTextSpeed = TextSpeed;
 
@@ -153,25 +171,30 @@ public class DialogueUiManager : MonoBehaviour {
         yield return new WaitForSeconds(actualTextSpeed);
 
         // Play sound every other character or if a punctuation
-        if (currentCharacter == '.' || _currentText.maxVisibleCharacters % 2 == 0) {
+        if (currentCharacter == '.' || _currentTextBox.maxVisibleCharacters % 2 == 0) {
             //playTalkSound(currentCharacter);
         }
 
         // Show next character
-        _currentText.maxVisibleCharacters += 1;
+        _currentTextBox.maxVisibleCharacters += 1;
 
-        if (_currentText.maxVisibleCharacters >= _charactersForThisLine) {
+        if (_currentTextBox.maxVisibleCharacters >= _currentLineData.TotalCharacters) {
             EndLineOfText();
         } else {
             StartCoroutine("NextCharacter");
         }
     }
 
+    /// <summary>
+    /// Calls once line of text finishes displaying.
+    /// </summary>
     void EndLineOfText() {
-        _finishedTypingText = true;
+        if (_currentLineData.FinishedTyping) return; // Don't double end
 
-        if (currentCallBack != null) {
-            currentCallBack();
+        _currentLineData.FinishedTyping = true;
+
+        if (_currentLineData.Callback != null) {
+            _currentLineData.Callback();
         }
     }
 }

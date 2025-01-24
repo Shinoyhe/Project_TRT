@@ -144,7 +144,7 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         // Apply Choice Type
         if (tagsToApply.isAction) {
-            Debug.Log("Action Chosen");
+            Debug.Log("Action Chosen, time to barter!");
         }
     }
 
@@ -178,17 +178,6 @@ public class DialogueManager : Singleton<DialogueManager> {
     }
 
     /// <summary>
-    /// Skip a line of dialogue if available.
-    /// </summary>
-    void SkipLine() {
-        bool canContinue = _currentStory.canContinue;
-
-        if (canContinue) {
-            _currentStory.Continue();
-        }
-    }
-
-    /// <summary>
     /// Called to kill UI and prep for next dialogue.
     /// </summary>
     void EndStory() {
@@ -203,7 +192,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         // Check for Player Input
         if (Input.GetKeyDown(KeyCode.Space)) {
 
-            if (_dialogueUiManager.LineFinishedDisplaying()) {
+            if (_dialogueUiManager.IsLineFinished()) {
                 ShowNextLine();
             } else {
                 _dialogueUiManager.SkipLineAnimation();
@@ -214,7 +203,5 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
             StartConversation(TestInkFile);
         }
-
-        // Skip Text
     }
 }

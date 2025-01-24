@@ -101,7 +101,18 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// <returns> True if a line was available, false otherwise.</returns>
     bool ShowNextLine() {
 
-        if (_currentStory.canContinue == false) return false;
+        if(_currentStory == null) {
+            return false;
+        }
+
+        if (_currentStory.canContinue == false && _currentStory.currentChoices != null && _currentStory.currentChoices.Count == 0) {
+            EndStory();
+            return false;
+        }
+
+        if (_currentStory.canContinue == false) {
+            return false;
+        }
 
         // Get next line properties
         string nextLine = _currentStory.Continue();
@@ -171,13 +182,21 @@ public class DialogueManager : Singleton<DialogueManager> {
         }
     }
 
+    void EndStory() {
+        _inConversation = false;
+        _currentStory = null;
+        _dialogueUiManager = null;
+
+        Destroy(_dialogueUiInstance);
+    }   
+
     private void Update() {
         // Check for Player Input
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space)) {
             ShowNextLine();
         }
 
-        if (Input.GetKey(KeyCode.LeftShift)) {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
             StartConversation(TestInkFile);
         }
 

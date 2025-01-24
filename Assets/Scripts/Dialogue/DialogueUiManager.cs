@@ -149,7 +149,7 @@ public class DialogueUiManager : MonoBehaviour {
         }
     }
 
-    public bool LineFinishedDisplaying() {
+    public bool IsLineFinished() {
         return _currentLineData.FinishedTyping;
     }
 

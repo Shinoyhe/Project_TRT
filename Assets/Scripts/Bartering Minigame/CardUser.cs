@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class CardUser : MonoBehaviour
 {
@@ -10,7 +13,19 @@ public class CardUser : MonoBehaviour
     private int BaseDrawSize = 3;
     [Header("Card Piles")]
     [SerializeField, Tooltip("A list of CardData we have in our deck. Populates our DrawPile.")]
-    private List<CardData> DebugStartingDeck = new();
+    private CardData[] DebugStartingDeck;
+    [SerializeField, Tooltip("list representing our draw pile- where UNUSED and inaccessible cards go.")]
+    private List<CardData> _drawPile = new();
+    // The draw pile as a read-only list.
+    public ReadOnlyCollection<CardData> DrawPileList { get { return _drawPile.AsReadOnly(); }}
+    [SerializeField, Tooltip("The list representing our hand- where cards that can be played go.")]
+    private List<CardData> _hand = new();
+    // The hand as a read-only list.
+    public ReadOnlyCollection<CardData> HandList { get { return _hand.AsReadOnly(); }}
+    [SerializeField, Tooltip("The list representing our discard pile- where USED and inaccessible cards go.")]
+    private List<CardData> _discardPile = new();
+    // The discard pile as a read-only list.
+    public ReadOnlyCollection<CardData> DiscardPileList { get { return _discardPile.AsReadOnly(); }}
 
     // A public enum used as shorthand to identify the three places cards can be- the Draw Pile,
     // the Hand, and the Discard Pile.
@@ -28,31 +43,17 @@ public class CardUser : MonoBehaviour
 
     // Misc Internal Variables ====================================================================
 
-    // The list representing our draw pile- where UNUSED and inaccessible cards go.
-    private List<CardData> _drawPile = null;
-    // The list representing our hand- where cards that can be played go.
-    private List<CardData> _hand = new();
-    // The list representing our discard pile- where USED and inaccessible cards go.
-    private List<CardData> _discardPile = new();
     // Used as a quick converter between our CardPile enum and our actual card lists.
-    private static Dictionary<CardPile, List<CardData>> _pileToList = null;
+    private Dictionary<CardPile, List<CardData>> _pileToList = null;
 
     // Initializers ===============================================================================
 
-    private void Awake()
+    public void Initialize()
     {
         // Initialize _drawPile and _pileToList.
         // ================
 
-        _drawPile = new List<CardData>();
         foreach (CardData data in DebugStartingDeck) {
-
-            /*
-                TODO: 
-                If cards end up being really simple and don't need to hold instance data, DON'T
-                CLONE! It's expensive and pointless if we can just add reference copies instead.
-            */
-
             // Clone cards from our startingDeck into our drawpile.
             CardData dataInstance = Instantiate(data);
             dataInstance.name = data.name;
@@ -60,6 +61,7 @@ public class CardUser : MonoBehaviour
             _drawPile.Add(dataInstance);
         }
 
+        // Initialize _pileToList.
         _pileToList = new() {
             {CardPile.DrawPile, _drawPile},
             {CardPile.Hand, _hand},
@@ -68,29 +70,6 @@ public class CardUser : MonoBehaviour
     }
 
     // Public interface methods ===================================================================
-
-    /// <summary>
-    /// Plays a specified card from our hand. CURRENTLY DOES NOTHING BUT DISCARD.
-    /// </summary>
-    /// <param name="indexInHand">int - the index in our Hand for the played card.</param>
-    public void PlayCard(int indexInHand)
-    {
-        // Play the card at indexInHand to the GameManager.
-        // ================
-
-        if (indexInHand < 0 || indexInHand > _hand.Count) {
-            Debug.LogError($"CardUser Error. UseCard failed. indexInHand {indexInHand} was outside "
-                         + $"the bounds of the list.", this);
-            return;
-        }
-
-        // Make the card do something.
-        /*
-            ... hand[indexInHand] ...
-        */
-
-        Discard(indexInHand);
-    }
 
     /// <summary>
     /// Shuffles the DiscardPile and then pops it to the DrawPile. This way, if we're shuffling
@@ -112,8 +91,8 @@ public class CardUser : MonoBehaviour
     /// <param name="n">int - the number of cards to push. Default 1.</param>
     public void Draw(int n=1)
     {
-        List<CardData> fromList = _pileToList[CardPile.DrawPile];
-        List<CardData> toList = _pileToList[CardPile.Hand];
+        List<CardData> fromList = _drawPile;
+        List<CardData> toList = _hand;
 
         if (_drawPile.Count < n) {
             ShuffleDiscardIntoDrawpile();
@@ -158,14 +137,15 @@ public class CardUser : MonoBehaviour
     public void Shuffle(CardPile pile)
     {
         List<CardData> pileList = _pileToList[pile];
+        int count = pileList.Count;
 
         // Fisher-Yates shuffle
-        for (int i = pileList.Count-1; i > 0; i--) {
-            SwapItems(pileList, i, Random.Range(0,i));
+        for (int i = count-1; i > 0; i--) {
+            SwapItems(pileList, i, Random.Range(0,i+1));
         }
 
         // If the hand got updated, make a new HandDelta and note that cards got moved around...
-        if (pileList == _pileToList[CardPile.Hand]) {
+        if (pileList == _hand) {
             HandDelta delta = new();
             delta.addSource = delta.removedDestination = CardPile.Hand;
             // But since nothing is added or removed, don't fill out those fields.
@@ -174,12 +154,6 @@ public class CardUser : MonoBehaviour
             // representing a shuffle.
         }
     }
-
-    /*
-        TODO:
-        Add a method to return readonly copies of these lists.
-        ...Or make some properties.
-    */
 
     // Pile-editing methods =======================================================================
 
@@ -202,7 +176,7 @@ public class CardUser : MonoBehaviour
 
         if (fromList.Count < n) {
             Debug.LogError($"CardUser Error. PopFromPushTo failed. There are fewer cards in "
-                         + $"fromPile ({fromList.Count}) than the number requested ({n}).", this);
+                         + $"{fromPile} ({fromList.Count}) than the number requested ({n}).", this);
             return;
         }
 
@@ -255,7 +229,7 @@ public class CardUser : MonoBehaviour
         List<CardData> fromList = _pileToList[fromPile];
         List<CardData> toList = _pileToList[toPile];
 
-        if (indexInFromPile < 0 || indexInFromPile > fromList.Count) {
+        if (indexInFromPile < 0 || indexInFromPile >= fromList.Count) {
             Debug.LogError($"CardUser Error. RemoveAtPushTo failed. indexInFromPile "
                          + $"{indexInFromPile} was outside the bounds of the list.", this);
             return;

@@ -6,8 +6,8 @@ public class BarterState_DebugEnd : BarterBaseState
     private readonly float _duration;
     private float _elapsed;
 
-    public BarterState_DebugEnd(string _stateName, BarterStateMachine _machine, float duration)
-           : base(_stateName, _machine)
+    public BarterState_DebugEnd(string stateName, BarterStateMachine machine, float duration)
+           : base(stateName, machine)
     {
         _duration = duration;
         _elapsed = 0;
@@ -15,10 +15,10 @@ public class BarterState_DebugEnd : BarterBaseState
 
     public override void Enter(BarterBaseState previousState)
     {
-        // _machine.PlayerCardUser.DiscardHand();
+        _machine.PlayerCardUser.DiscardHand();
         // _machine.OppCardUser.DiscardHand();
 
-        // _machine.PlayerCardUser.ShuffleDiscardIntoDrawpile();
+        _machine.PlayerCardUser.ShuffleDiscardIntoDrawpile();
         // _machine.OppCardUser.ShuffleDiscardIntoDrawpile();
 
         _elapsed = 0;

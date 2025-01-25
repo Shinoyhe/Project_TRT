@@ -33,6 +33,7 @@ public class BarterDirector : MonoBehaviour
 
     private CardData[] _oppCards = null;
     private CardData[] _playerCards = null;
+    private bool[] _matchArray = null;
     private bool _lastDebugMode = false;
     private BarterStateMachine _machine = null;
 
@@ -65,7 +66,9 @@ public class BarterDirector : MonoBehaviour
 
     public CardData[] GetPlayerCards() { return _playerCards; }
 
-    // Public manipulators ========================================================================
+    public bool[] GetMatchArray() { return _matchArray; }
+
+    // Willingness manipulators ===================================================================
 
     /// <summary>
     /// Initializes Willingness to some value between 0-100. Called at the start of the bartering
@@ -100,6 +103,8 @@ public class BarterDirector : MonoBehaviour
         Willingness = Mathf.Clamp(Willingness+amount, 0, 100);
     }
 
+    // Array manipulators =========================================================================
+
     public void SetOppCards(CardData[] oppCards) 
     {
         // Validate the array. We accept two states:
@@ -124,5 +129,18 @@ public class BarterDirector : MonoBehaviour
         }
 
         _playerCards = playerCards;
+    }
+
+    public void SetMatchArray(bool[] matchArray)
+    {
+        // Validate the array. We accept two states:
+        //  * A null array, signifying 'no matches to show'.
+        //  * An array of length CardsToPlay, signifying 'all matches to show'.
+        if (matchArray != null && matchArray.Length != CardsToPlay) {
+            Debug.LogError($"BarterDirector Error: SetMatchArray failed. Expected {CardsToPlay} "
+                         + $"cards, got {matchArray.Length} instead.");
+        }
+
+        _matchArray = matchArray;
     }
 }

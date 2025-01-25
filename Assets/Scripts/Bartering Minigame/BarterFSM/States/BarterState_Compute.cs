@@ -26,7 +26,7 @@ public class BarterState_Compute : BarterBaseState
         OppBarterResponses responses = _machine.Dir.BarterResponses;
 
         int numCorrect = 0;
-        bool[] correctArray = new bool[oppCards.Length];
+        bool[] matchArray = new bool[oppCards.Length];
 
         for (int i = 0; i < oppCards.Length; i++) {
             // Match up the player cards to the NPC's preferences.
@@ -35,9 +35,9 @@ public class BarterState_Compute : BarterBaseState
             // Store the number of correct matchups.
             if (desiredResponse.Matches(playerCards[i])) {
                 numCorrect++;
-                correctArray[i] = true;
+                matchArray[i] = true;
             } else {
-                correctArray[i] = false;
+                matchArray[i] = false;
             }
         }
 
@@ -46,8 +46,9 @@ public class BarterState_Compute : BarterBaseState
         float incorrectAmount = (oppCards.Length-numCorrect)*_machine.Dir.WillingnessPerFail;
         _machine.Dir.NudgeWillingness(correctAmount+incorrectAmount);
 
-        Debug.Log($"Results: {string.Join(", ", correctArray.Select(b => b ? "Match" : "No Match"))}\n"
+        Debug.Log($"Results: {string.Join(", ", matchArray.Select(b => b ? "Match" : "No Match"))}\n"
                 + $"Willingness changed by {correctAmount+incorrectAmount}!");
+        _machine.Dir.SetMatchArray(matchArray);
 
         DoneComputing();
     }
@@ -68,6 +69,9 @@ public class BarterState_Compute : BarterBaseState
         // This has the side-effect of updating our UI, animating a discard.
         _machine.Dir.SetOppCards(null);
         _machine.Dir.SetPlayerCards(null);
+        // Clear the submitted match array.
+        // TODO: Consider moving this elsewhere, if it makes animating hard.
+        _machine.Dir.SetMatchArray(null);
 
         _machine.PlayerCardUser.DiscardHand();
         _machine.OppCardUser.DiscardHand();

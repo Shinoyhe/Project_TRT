@@ -240,7 +240,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &220699148
+--- !u!1 &592080382
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -248,22 +248,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 220699150}
-  - component: {fileID: 220699149}
+  - component: {fileID: 592080384}
+  - component: {fileID: 592080383}
   m_Layer: 0
-  m_Name: Player Card User
+  m_Name: Autoplayer Card User
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &220699149
+--- !u!114 &592080383
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220699148}
+  m_GameObject: {fileID: 592080382}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7421b6b54404ab4484c9bb74a408336, type: 3}
@@ -272,16 +272,23 @@ MonoBehaviour:
   BaseDrawSize: 3
   DebugStartingDeck:
   - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
+  - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
+  - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
   - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
   - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
+  - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
   - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
---- !u!4 &220699150
+  - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
+  _drawPile: []
+  _hand: []
+  _discardPile: []
+--- !u!4 &592080384
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220699148}
+  m_GameObject: {fileID: 592080382}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -391,7 +398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1147140985}
-  - component: {fileID: 1147140984}
+  - component: {fileID: 1147140986}
   m_Layer: 0
   m_Name: Opp Card User
   m_TagString: Untagged
@@ -399,24 +406,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1147140984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1147140983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7421b6b54404ab4484c9bb74a408336, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BaseDrawSize: 3
-  DebugStartingDeck:
-  - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
-  - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
-  - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
-  - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
 --- !u!4 &1147140985
 Transform:
   m_ObjectHideFlags: 0
@@ -432,6 +421,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1147140986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147140983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7421b6b54404ab4484c9bb74a408336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaseDrawSize: 3
+  DebugStartingDeck:
+  - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
+  - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
+  - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
+  - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
+  - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
+  - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
+  - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
+  - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
+  _drawPile: []
+  _hand: []
+  _discardPile: []
 --- !u!1 &1374954310
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,9 +475,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df59eeaf3d918d4c9e9ed3e2d753c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCardUser: {fileID: 220699149}
-  OppCardUser: {fileID: 1147140984}
-  DebugMode: 1
+  Willingness: 50
+  CardsToPlay: 3
+  DecayPerSecond: 5
+  WillingnessPerMatch: 5
+  WillingnessPerFail: -5
+  DebugMode: 0
+  BarterResponses: {fileID: 11400000, guid: 04c5244b0e9082344b6245b97965364a, type: 2}
+  OppCardUser: {fileID: 1147140986}
+  PlayerCardUser: {fileID: 592080383}
 --- !u!4 &1374954312
 Transform:
   m_ObjectHideFlags: 0
@@ -486,5 +506,5 @@ SceneRoots:
   - {fileID: 1054338407}
   - {fileID: 99101424}
   - {fileID: 1374954312}
-  - {fileID: 220699150}
   - {fileID: 1147140985}
+  - {fileID: 592080384}

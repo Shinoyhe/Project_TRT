@@ -5,7 +5,7 @@ public class BarterStateMachine
     // Parameters and Publics =====================================================================
 
     // The turn director holding us.
-    public BarterDirector Director;
+    public BarterDirector Dir;
     // The card user used by the player.
     public CardUser PlayerCardUser;
     // The card user used by the opposing NPC.
@@ -32,21 +32,29 @@ public class BarterStateMachine
             
             // Cache the old state.
             BarterBaseState lastState = _currentState;
-            // Enter the new one.
             _currentState = value;
-            _currentState.Enter(lastState);
 
-            if (_currentState != null) {
+            // Debug announce that we are changing state.
+            if (_debugMode) {
                 AnnounceState(_currentState, lastState);
             }
 
+            // Actually change state.
+            _currentState.Enter(lastState);
             OnStateChanged?.Invoke(_currentState);
         }
     }
 
     // Define our states.
-    public BarterState_DebugInit InitState;
-    public BarterState_DebugEnd EndState;
+    public BarterState_Init InitState;
+    public BarterState_TurnOpp TurnOppState;
+    // public BarterState_TurnPlayer TurnPlayerState;
+    public BarterState_TurnAutoPlayer DEBUG_TurnAutoPlayerState;
+    public BarterState_Compute ComputeState;
+    // public BarterState_CheckInfo CheckInfoState;
+    public BarterState_EndWin EndWinState;
+    public BarterState_EndLoss EndLossState;
+    
 
     // Misc Internal Variables ====================================================================
 
@@ -60,14 +68,19 @@ public class BarterStateMachine
         // Finish any initialization elsewhere before calling Start().
         // ================
 
-        Director = dir;
+        Dir = dir;
         PlayerCardUser = playerCardUser;
         OppCardUser = oppCardUser;
 
         // Create our states.
 
-        InitState = new BarterState_DebugInit("Init", this, 3);
-        EndState = new BarterState_DebugEnd("End", this, 2);
+        InitState = new("Init", this);
+        TurnOppState = new("Opponent Turn", this);
+        DEBUG_TurnAutoPlayerState = new("Auto Player Turn", this);
+        ComputeState = new("Compute", this);
+        // CheckInfoState = new("Check Info", this);
+        EndWinState = new("Win", this);
+        EndLossState = new("Loss", this);
     }
 
     /// <summary>
@@ -101,17 +114,17 @@ public class BarterStateMachine
     }
 
     /// <summary>
-    /// 
+    /// Wrapper for a debug message, called when we transition state.
     /// </summary>
     /// <param name="newState">BarterBaseState - the state we have just entered.</param>
     /// <param name="previousState">BarterBaseState - the state we have just left.</param>
     public void AnnounceState(BarterBaseState newState, BarterBaseState previousState)
     {
-        string newName = (newState == null) ? "Nothing" : $"{newState.StateName}";
+        string newName = (newState == null) ? "nothing" : $"{newState.StateName}";
         string previousName = (previousState == null) ? "nothing." : $"{previousState.StateName}";
 
         string message = $"BarterStateMachine Message: Entered {newName} from {previousName}";
         
-        Debug.Log(message, Director);
+        Debug.Log(message, Dir);
     }
 }

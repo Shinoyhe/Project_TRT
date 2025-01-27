@@ -92,6 +92,12 @@ public class BarterDirector : MonoBehaviour
     public void DecayWillingness()
     {
         Willingness -= DecayPerSecond * Time.deltaTime;
+
+        // If completely unwilling, we lost.
+        if (Willingness <= 0) {
+            Willingness = 0;
+            _machine.CurrentState = _machine.EndLossState;
+        }
     }
 
     /// <summary>

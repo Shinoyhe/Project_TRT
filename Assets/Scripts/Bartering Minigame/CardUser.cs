@@ -12,20 +12,20 @@ public class CardUser : MonoBehaviour
     [SerializeField, Tooltip("The number of cards we draw each turn by default.\n\nDefault: 3")]
     private int BaseDrawSize = 3;
     [Header("Card Piles")]
-    [SerializeField, Tooltip("A list of CardData we have in our deck. Populates our DrawPile.")]
-    private CardData[] DebugStartingDeck;
+    [SerializeField, Tooltip("A list of PlayingCardData we have in our deck. Populates our DrawPile.")]
+    private PlayingCardData[] DebugStartingDeck;
     [SerializeField, Tooltip("list representing our draw pile- where UNUSED and inaccessible cards go.")]
-    private List<CardData> _drawPile = new();
+    private List<PlayingCardData> _drawPile = new();
     // The draw pile as a read-only list.
-    public ReadOnlyCollection<CardData> DrawPileList { get { return _drawPile.AsReadOnly(); }}
+    public ReadOnlyCollection<PlayingCardData> DrawPileList { get { return _drawPile.AsReadOnly(); }}
     [SerializeField, Tooltip("The list representing our hand- where cards that can be played go.")]
-    private List<CardData> _hand = new();
+    private List<PlayingCardData> _hand = new();
     // The hand as a read-only list.
-    public ReadOnlyCollection<CardData> HandList { get { return _hand.AsReadOnly(); }}
+    public ReadOnlyCollection<PlayingCardData> HandList { get { return _hand.AsReadOnly(); }}
     [SerializeField, Tooltip("The list representing our discard pile- where USED and inaccessible cards go.")]
-    private List<CardData> _discardPile = new();
+    private List<PlayingCardData> _discardPile = new();
     // The discard pile as a read-only list.
-    public ReadOnlyCollection<CardData> DiscardPileList { get { return _discardPile.AsReadOnly(); }}
+    public ReadOnlyCollection<PlayingCardData> DiscardPileList { get { return _discardPile.AsReadOnly(); }}
 
     // A public enum used as shorthand to identify the three places cards can be- the Draw Pile,
     // the Hand, and the Discard Pile.
@@ -44,7 +44,7 @@ public class CardUser : MonoBehaviour
     // Misc Internal Variables ====================================================================
 
     // Used as a quick converter between our CardPile enum and our actual card lists.
-    private Dictionary<CardPile, List<CardData>> _pileToList = null;
+    private Dictionary<CardPile, List<PlayingCardData>> _pileToList = null;
 
     // Initializers ===============================================================================
 
@@ -53,9 +53,9 @@ public class CardUser : MonoBehaviour
         // Initialize _drawPile and _pileToList.
         // ================
 
-        foreach (CardData data in DebugStartingDeck) {
+        foreach (PlayingCardData data in DebugStartingDeck) {
             // Clone cards from our startingDeck into our drawpile.
-            CardData dataInstance = Instantiate(data);
+            PlayingCardData dataInstance = Instantiate(data);
             dataInstance.name = data.name;
 
             _drawPile.Add(dataInstance);
@@ -91,8 +91,8 @@ public class CardUser : MonoBehaviour
     /// <param name="n">int - the number of cards to push. Default 1.</param>
     public void Draw(int n=1)
     {
-        List<CardData> fromList = _drawPile;
-        List<CardData> toList = _hand;
+        List<PlayingCardData> fromList = _drawPile;
+        List<PlayingCardData> toList = _hand;
 
         if (_drawPile.Count < n) {
             ShuffleDiscardIntoDrawpile();
@@ -136,7 +136,7 @@ public class CardUser : MonoBehaviour
     /// <param name="pile">CardPile - the pile to shuffle.</param>
     public void Shuffle(CardPile pile)
     {
-        List<CardData> pileList = _pileToList[pile];
+        List<PlayingCardData> pileList = _pileToList[pile];
         int count = pileList.Count;
 
         // Fisher-Yates shuffle
@@ -171,8 +171,8 @@ public class CardUser : MonoBehaviour
         // n cards from the end of fromPile, and adds them to the start of toPile.
         // ================
 
-        List<CardData> fromList = _pileToList[fromPile];
-        List<CardData> toList = _pileToList[toPile];
+        List<PlayingCardData> fromList = _pileToList[fromPile];
+        List<PlayingCardData> toList = _pileToList[toPile];
 
         if (fromList.Count < n) {
             Debug.LogError($"CardUser Error. PopFromPushTo failed. There are fewer cards in "
@@ -186,7 +186,7 @@ public class CardUser : MonoBehaviour
         HandDelta delta = null;
 
         for (int i = 0; i < n; i++) {
-            CardData card = fromList[^1];
+            PlayingCardData card = fromList[^1];
             int sourceIndex = fromList.Count-1;
             fromList.RemoveAt(sourceIndex);
 
@@ -226,8 +226,8 @@ public class CardUser : MonoBehaviour
         // big or too small.
         // ================
 
-        List<CardData> fromList = _pileToList[fromPile];
-        List<CardData> toList = _pileToList[toPile];
+        List<PlayingCardData> fromList = _pileToList[fromPile];
+        List<PlayingCardData> toList = _pileToList[toPile];
 
         if (indexInFromPile < 0 || indexInFromPile >= fromList.Count) {
             Debug.LogError($"CardUser Error. RemoveAtPushTo failed. indexInFromPile "
@@ -237,7 +237,7 @@ public class CardUser : MonoBehaviour
 
         // Moving the card ================
 
-        CardData card = fromList[indexInFromPile];
+        PlayingCardData card = fromList[indexInFromPile];
         fromList.RemoveAt(indexInFromPile);
         // If adding to the back, insert at the final index, otherwise use the first.
         toList.Insert(addToBack ? toList.Count : 0, card);
@@ -289,15 +289,15 @@ public class CardUser : MonoBehaviour
 
 
         /// <summary>
-        /// Struct representing a single added card, including its CardData and whether it was
+        /// Struct representing a single added card, including its PlayingCardData and whether it was
         /// added to the front or back of our hand.
         /// </summary>
         public struct Added
         {
-            public CardData data;
+            public PlayingCardData data;
             public bool toBack;
 
-            public Added(CardData _data, bool _toBack=true) 
+            public Added(PlayingCardData _data, bool _toBack=true) 
             {
                 data = _data;
                 toBack = _toBack;
@@ -311,15 +311,15 @@ public class CardUser : MonoBehaviour
         }
 
         /// <summary>
-        /// Struct representing a single removed card, including its CardData and its former
+        /// Struct representing a single removed card, including its PlayingCardData and its former
         /// position in our hand.
         /// </summary>
         public struct Removed
         {
-            public CardData _data;
+            public PlayingCardData _data;
             public int _formerIndex;
 
-            public Removed(CardData data, int formerIndex) 
+            public Removed(PlayingCardData data, int formerIndex) 
             {
                 _data = data;
                 _formerIndex = formerIndex;

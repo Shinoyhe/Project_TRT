@@ -31,8 +31,8 @@ public class BarterDirector : MonoBehaviour
 
     // Misc Internal Variables ====================================================================
 
-    private PlayingCardData[] _oppCards = null;
-    private PlayingCardData[] _playerCards = null;
+    private PlayingCard[] _oppCards = null;
+    private PlayingCard[] _playerCards = null;
     private bool[] _matchArray = null;
     private bool _lastDebugMode = false;
     private BarterStateMachine _machine = null;
@@ -62,9 +62,9 @@ public class BarterDirector : MonoBehaviour
 
     public float GetWillingness() { return Willingness; }
 
-    public PlayingCardData[] GetOppCards() { return _oppCards; }
+    public PlayingCard[] GetOppCards() { return _oppCards; }
 
-    public PlayingCardData[] GetPlayerCards() { return _playerCards; }
+    public PlayingCard[] GetPlayerCards() { return _playerCards; }
 
     public bool[] GetMatchArray() { return _matchArray; }
 
@@ -105,7 +105,7 @@ public class BarterDirector : MonoBehaviour
 
     // Array manipulators =========================================================================
 
-    public void SetOppCards(PlayingCardData[] oppCards) 
+    public void SetOppCards(PlayingCard[] oppCards) 
     {
         // Validate the array. We accept two states:
         //  * A null array, signifying 'no cards played'.
@@ -118,7 +118,7 @@ public class BarterDirector : MonoBehaviour
         _oppCards = oppCards;
     }
 
-    public void SetPlayerCards(PlayingCardData[] playerCards) 
+    public void SetPlayerCards(PlayingCard[] playerCards) 
     { 
         // Validate the array. We accept two states:
         //  * A null array, signifying 'no cards played'.

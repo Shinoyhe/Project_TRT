@@ -12,8 +12,8 @@ public class BarterState_Compute : BarterBaseState
     {
         // Because of how the SetCards functions work, we know for a fact these arrays have the
         // same length... or one or both are null.
-        PlayingCardData[] oppCards = _machine.Dir.GetOppCards();
-        PlayingCardData[] playerCards = _machine.Dir.GetPlayerCards();
+        PlayingCard[] oppCards = _machine.Dir.GetOppCards();
+        PlayingCard[] playerCards = _machine.Dir.GetPlayerCards();
 
         if (oppCards == null) {
             Debug.LogError("BarterState_Compute Error: Enter failed. oppCards was null.");
@@ -30,7 +30,7 @@ public class BarterState_Compute : BarterBaseState
 
         for (int i = 0; i < oppCards.Length; i++) {
             // Match up the player cards to the NPC's preferences.
-            PlayingCardData desiredResponse = responses.GetResponse(oppCards[i]);
+            PlayingCard desiredResponse = responses.GetResponse(oppCards[i]);
 
             // Store the number of correct matchups.
             if (desiredResponse.Matches(playerCards[i])) {

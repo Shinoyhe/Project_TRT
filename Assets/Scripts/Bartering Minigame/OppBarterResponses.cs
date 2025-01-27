@@ -11,11 +11,11 @@ public class OppBarterResponses : ScriptableObject
     public string Id;
     [SerializeField, Tooltip("A list of key-value pairs, representing tones the opponent plays VS "
            + "what they want to hear in response.")]
-    private PlayingCardDataPair[] PlayingCardDataPairs;
+    private PlayingCardPair[] PlayingCardPairs;
 
     // Misc Internal Variables ====================================================================
 
-    private readonly Dictionary<string, PlayingCardData> _responseDict = new();
+    private readonly Dictionary<string, PlayingCard> _responseDict = new();
 
     // Manipulator Methods ========================================================================
 
@@ -24,7 +24,7 @@ public class OppBarterResponses : ScriptableObject
         // Clear the dict before populating it.
         _responseDict.Clear();
 
-        foreach (PlayingCardDataPair pair in PlayingCardDataPairs) {
+        foreach (PlayingCardPair pair in PlayingCardPairs) {
             // No double-entries.
             if (_responseDict.ContainsKey(pair.Key.Id)) {
                 Debug.LogError("OppBarterResponses Error: Initialize failed. _responseDict "
@@ -38,7 +38,7 @@ public class OppBarterResponses : ScriptableObject
         // The dict is now initialized and ready to use!
     }
 
-    public PlayingCardData GetResponse(PlayingCardData key)
+    public PlayingCard GetResponse(PlayingCard key)
     {
         if (!_responseDict.ContainsKey(key.Id)) {
             Debug.LogError("OppBarterResponses Error: GetResponse failed. _responseDict does not "
@@ -52,11 +52,11 @@ public class OppBarterResponses : ScriptableObject
     // Helper structs =============================================================================
 
     [System.Serializable]
-    public struct PlayingCardDataPair
+    public struct PlayingCardPair
     {
-        [Tooltip("In a given matchup, the PlayingCardData the opponent plays.")]
-        public PlayingCardData Key;
-        [Tooltip("In a given matchup, the PlayingCardData the player plays in response to the opponent.")]
-        public PlayingCardData Value;
+        [Tooltip("In a given matchup, the PlayingCard the opponent plays.")]
+        public PlayingCard Key;
+        [Tooltip("In a given matchup, the PlayingCard the player plays in response to the opponent.")]
+        public PlayingCard Value;
     }
 }

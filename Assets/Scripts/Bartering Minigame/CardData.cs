@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "New CardData", menuName = "Bartering/CardData")]
-public class CardData : ScriptableObject
+[CreateAssetMenu(fileName = "New PlayingCardData", menuName = "Bartering/PlayingCardData")]
+public class PlayingCardData : ScriptableObject
 {
     [Tooltip("An ID used for debug purposes.")]
     public string Id;
@@ -12,7 +12,7 @@ public class CardData : ScriptableObject
     /// </summary>
     /// <param name="other">CardData - the other card to compare to this one.</param>
     /// <returns>bool - whether or not the two match.</returns>
-    public bool Matches(CardData other)
+    public bool Matches(PlayingCardData other)
     {
         return Id == other.Id;
     }

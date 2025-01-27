@@ -6,7 +6,7 @@ public class BarterState_TurnAutoPlayer : BarterBaseState
 {
     // Misc Internal Variables ====================================================================
 
-    private PlayingCardData[] playedCards = null;
+    private PlayingCard[] playedCards = null;
 
     // State Methods ==============================================================================
 
@@ -28,7 +28,7 @@ public class BarterState_TurnAutoPlayer : BarterBaseState
 
         // Lazily init our card array... or reinit, if cardsToPlay changed.
         if (playedCards == null || playedCards.Length != cardsToPlay) {
-            playedCards = new PlayingCardData[cardsToPlay];   
+            playedCards = new PlayingCard[cardsToPlay];   
         }
         // Enemy picks cards randomly and stores them in an array!
         for (int i = 0; i < cardsToPlay; i++) {

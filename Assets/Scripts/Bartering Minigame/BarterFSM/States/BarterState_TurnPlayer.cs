@@ -50,7 +50,7 @@ public class BarterState_TurnPlayer : BarterBaseState
 
     // Callback Methods ===========================================================================
 
-    private void SubmitPlayerCards(PlayingCardData[] submittedCards)
+    private void SubmitPlayerCards(PlayingCard[] submittedCards)
     {
         // Validate the array.
         if (submittedCards.Length != _machine.Dir.CardsToPlay) {

@@ -20,12 +20,10 @@ public class BarterStateMachine
             return _currentState; 
         }
         set {
-            // TODO: Don't let us exit terminal states.
-            /*
-                if (state is terminal) {
-                    return;
-                }
-            */
+            // Don't let us exit from terminal states!
+            if (_currentState is BarterState_EndLoss || _currentState is BarterState_EndWin) {
+                return;
+            }
 
             // Exit the old state if it exists.
             _currentState?.Exit();

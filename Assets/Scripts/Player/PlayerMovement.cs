@@ -7,25 +7,55 @@ public class PlayerMovement : MonoBehaviour
     [Header("Object Assignment")]
     [SerializeField] private PlayerInputHandler controls;
     private CharacterController characterController;
-    
-    private const float GRAVITY = 9.81f;
-    private float _downwardForce = 0;
 
 
     [Header("Parameters")]
     [SerializeField] private float speed = 5f;
 
-    // Start is called before the first frame update
+
+    private const float GRAVITY = 9.81f;
+    private float _downwardForce = 0;
+    private Vector3 _forwardVector = Vector3.forward;
+
+
+    public void SetForwardVector(Vector3 direction)
+    {
+        direction.Scale(new Vector3(1, 0, 1));
+
+        if (direction == Vector3.zero)
+        {
+            Debug.LogError("SetForwardDirection needs a Vector3 with non-zero x and z values.");
+        }
+
+        _forwardVector = direction;
+        Debug.Log(direction);
+    }
+
+
+
+
+    void Awake()
+    {
+        Player.Movement = this;
+        Player.Object = gameObject;
+        Player.Transform = transform;
+    }
+
+    
     void Start()
     {
         characterController = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         Vector3 input = controls.GetMoveInput();
-        Vector3 direction = transform.right * input.x + transform.forward * input.z;
+
+        Quaternion forwardRot = Quaternion.FromToRotation(Vector3.forward, _forwardVector);
+        // transform.rotation = forwardRot;
+
+        Vector3 direction = forwardRot * input;
         characterController.Move(direction * speed * Time.deltaTime);
 
         if (!characterController.isGrounded)
@@ -38,6 +68,6 @@ public class PlayerMovement : MonoBehaviour
             _downwardForce = 0;
         }
 
-        Debug.Log(_downwardForce * Time.deltaTime);
+        // Debug.Log(_downwardForce * Time.deltaTime);
     }
 }

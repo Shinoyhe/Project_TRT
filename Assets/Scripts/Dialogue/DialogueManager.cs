@@ -9,24 +9,32 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogueManager : Singleton<DialogueManager> {
 
+    // Parameters =================================================================================
+
+    [Header("Dependencies")]
+    public GameObject Player;
     public GameObject DialogueUiPrefab;
-    public TextAsset TestInkFile;
+
+    // Misc Internal Variables ====================================================================
 
     private bool _inConversation;
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
+    private Canvas _canvasUsedByUi;
 
-    private struct ProcessedTags {
+    public struct ProcessedTags {
 
-        public string speakerName;
+        public bool isNpcTalking;
         public bool isAction;
 
-        public ProcessedTags(string speakerName = "", bool isAction = false) {
-            this.speakerName = speakerName;
+        public ProcessedTags(bool isAction = false, bool isNpcTalking = false) {
+            this.isNpcTalking = isNpcTalking;
             this.isAction = isAction;
         }
     }
+
+    // Initializers and Update ================================================================
 
     protected override void Awake() {
         base.Awake();
@@ -35,16 +43,35 @@ public class DialogueManager : Singleton<DialogueManager> {
         _inConversation = false;
     }
 
+    private void Update() {
+
+        if (_inConversation == false) return;
+
+        // Check for Player Input
+        if (Input.GetKeyDown(KeyCode.Space)) { // Can check even if no dialouge happening!
+
+            if (_dialogueUiManager.IsLineFinished()) {
+                ShowNextLine();
+            } else {
+                _dialogueUiManager.SkipLineAnimation();
+            }
+
+        }
+    }
+
+    // Public Utility Methods ====================================================================
+
     /// <summary>
     /// Start a conversation using an Ink JSON file. 
     /// </summary>
     /// <param name="inkJson"> Ink file conversation will use. </param>
-    public void StartConversation(TextAsset inkJson) {
+    /// <param name="npcBubblePos"> Where we want a NPC speech bubble.</param>
+    public void StartConversation(TextAsset inkJson, Vector3 npcBubblePos) {
         if (_inConversation) return;
         _inConversation = true;
 
         // Create UI instance
-        _dialogueUiManager = SetupUi();
+        _dialogueUiManager = SetupUi(npcBubblePos, Player.transform.position);
 
         // Parse Ink File
         _currentStory = new Story(inkJson.text);
@@ -60,18 +87,20 @@ public class DialogueManager : Singleton<DialogueManager> {
         _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
     }
 
+    // Private Helper Methods ====================================================================
+
     /// <summary>
     /// Instantiate dialogue UI in scene.
     /// </summary>
     /// <returns> The Dialogue UI's manager script. </returns>
-    DialogueUiManager SetupUi() {
+    DialogueUiManager SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos) {
         _dialogueUiInstance = Instantiate(DialogueUiPrefab, Vector3.zero, Quaternion.identity);
 
         DialogueUiManager dialogueUiManager = _dialogueUiInstance.GetComponent<DialogueUiManager>();
 
         LinkUiButtons(ref dialogueUiManager);
 
-        dialogueUiManager.SetupUi("A","B"); // Need to get these somehow
+        dialogueUiManager.SetupUi(npcBubblePos,playerBubblePos);
 
         return dialogueUiManager;
     }
@@ -130,9 +159,9 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         // Queue next line
         if (_currentStory.currentChoices.Count > 0) {
-            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags.speakerName, ShowChoicesCallBack);
+            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags, ShowChoicesCallBack);
         } else {
-            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags.speakerName);
+            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags);
         }
 
         return true;
@@ -174,8 +203,8 @@ public class DialogueManager : Singleton<DialogueManager> {
 
             // Process Tag
             switch (key) {
-                case "speaker":
-                    foundTags.speakerName = value;
+                case "npc":
+                    foundTags.isNpcTalking = true;
                     break;
                 case "action":
                     foundTags.isAction = true;
@@ -196,21 +225,4 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         Destroy(_dialogueUiInstance);
     }   
-
-    private void Update() {
-        // Check for Player Input
-        if (Input.GetKeyDown(KeyCode.Space)) {
-
-            if (_dialogueUiManager.IsLineFinished()) {
-                ShowNextLine();
-            } else {
-                _dialogueUiManager.SkipLineAnimation();
-            }
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            StartConversation(TestInkFile);
-        }
-    }
 }

@@ -17,7 +17,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
     // Misc Internal Variables ====================================================================
 
     // AutoPlayerCardslots =======================
-    
+
 
     // MatchSlots =====================
     // Array of MatchSlotUI components, one for each Opp-Player pair of cards submitted.
@@ -39,7 +39,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
     private void Start()
     {
         // Instantiate our match slot objects.
-        _opp
+        // _opp
         _matchSlots = new MatchSlotUI[Director.CardsToPlay];
 
         for (int i=0; i<Director.CardsToPlay; i++) {

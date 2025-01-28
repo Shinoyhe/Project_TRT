@@ -11,11 +11,11 @@ public class DisplayCard : MonoBehaviour
 {
     [Header("Data and References")]
     [SerializeField, Tooltip("The cardData we read from.")]
-    PlayingCard cardData = null;
-    [SerializeField, Tooltip("The main image we write the card color to.")]
-    private Image mainImage;
-    [SerializeField, Tooltip("The main text we write the display name to.")]
-    private TMP_Text titleText;
+    PlayingCard CardData = null;
+    [SerializeField, Tooltip("TEMPORARY IMPLEMENTATION. For now, acts as our card back.")]
+    private Image MainImage;
+    [SerializeField, Tooltip("TEMPORARY IMPLEMENTATION. For now, acts as our card label.")]
+    private TMP_Text MainText;
 
 
 
@@ -29,18 +29,17 @@ public class DisplayCard : MonoBehaviour
     public System.Action<DisplayCard> dragging;
     public System.Action<DisplayCard> doneDragging;
     public System.Action<DisplayCard> doneTransforming;
-    private Canvas canvas;
     private RectTransform rectTransform;
     private Bounds worldBounds;
     private CanvasGroup canvasGroup;
     private Vector3 baseLocalScale;
     private Coroutine transformRoutine = null;
+    private Coroutine lerpOnlySizeRoutine = null;
 
     [HideInInspector] public int indexInHand;
 
     private void Awake()
     {
-        canvas = transform.root.GetComponentInChildren<Canvas>();
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         baseLocalScale = transform.localScale;
@@ -60,7 +59,7 @@ public class DisplayCard : MonoBehaviour
 
     public void Initialize(PlayingCard _cardData, int _indexInHand, float _dragUpdateRate, float _dragAlpha)
     {
-        cardData = _cardData;
+        CardData = _cardData;
         indexInHand = _indexInHand;
         dragUpdateRate = _dragUpdateRate;
         dragAlpha = _dragAlpha;
@@ -69,16 +68,16 @@ public class DisplayCard : MonoBehaviour
 
     public void Repaint()
     {
-        if (cardData) {
-            mainImage.sprite = null;
-            mainImage.color = cardData.DEBUG_COLOR;
+        if (CardData) {
+            MainImage.sprite = null;
+            MainImage.color = CardData.DEBUG_COLOR;
 
-            titleText.text = cardData.Id;
+            MainText.text = CardData.Id;
         } else {
-            mainImage.sprite = null;
-            mainImage.color = Color.white;
+            MainImage.sprite = null;
+            MainImage.color = Color.white;
 
-            titleText.text = "";
+            MainText.text = "";
         }
     }
 
@@ -121,8 +120,8 @@ public class DisplayCard : MonoBehaviour
 
     public void LerpOnlySize(float endScaleFactor, float duration)
     {
-        StopCoroutine(nameof(LerpOnlySizeRoutine));
-        StartCoroutine(LerpOnlySizeRoutine(endScaleFactor, duration));
+        if (lerpOnlySizeRoutine != null) StopCoroutine(lerpOnlySizeRoutine);
+        lerpOnlySizeRoutine = StartCoroutine(LerpOnlySizeRoutine(endScaleFactor, duration));
     }
 
     public IEnumerator LerpOnlySizeRoutine(float endScaleFactor, float duration)
@@ -159,9 +158,9 @@ public class DisplayCard : MonoBehaviour
 
         PointerEventData pointerData = data as PointerEventData;
         // If the mouse is not moving, we can't start a new hover.
-        if (pointerData.delta != Vector2.zero) {
+        // if (pointerData.delta != Vector2.zero) {
             startHovering?.Invoke(this);
-        }
+        // }
     }
 
     public void OnHoverEnd(BaseEventData data)
@@ -172,9 +171,9 @@ public class DisplayCard : MonoBehaviour
 
         PointerEventData pointerData = data as PointerEventData;
         // If the mouse is not moving, we can't end an existing hover.
-        if (pointerData.delta != Vector2.zero) {
+        // if (pointerData.delta != Vector2.zero) {
             doneHovering?.Invoke(this);
-        }
+        // }
     }
 
     // Drag ===========================

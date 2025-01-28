@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2682796919376960292}
   - component: {fileID: 7172770179369202362}
   m_Layer: 5
-  m_Name: Backing
+  m_Name: Main Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,9 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19a602d43e430d48aca5a18a0fcb622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  mainImage: {fileID: 7172770179369202362}
-  titleText: {fileID: 6387521746417489798}
+  CardData: {fileID: 0}
+  MainImage: {fileID: 7172770179369202362}
+  MainText: {fileID: 6387521746417489798}
   indexInHand: 0
 --- !u!114 &6883563561137948970
 MonoBehaviour:
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 7760845263093210072}
   - component: {fileID: 6387521746417489798}
   m_Layer: 5
-  m_Name: Label
+  m_Name: Main Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

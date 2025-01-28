@@ -1528,13 +1528,13 @@ MonoBehaviour:
   discardAnchor: {fileID: 285136328}
   usableRangePerCard: 0.2
   usableRange: 0
-  moveTime: 0.25
+  moveTime: 0.2
   hoverScaleFactor: 1.1
-  dragScaleFactor: 0.9
+  dragScaleFactor: 1
   hoverTime: 0.15
   dragAlpha: 0.5
   alreadyDragging: 0
-  dragUpdateRate: 0.1
+  dragUpdateRate: 0.01
   hand: []
 --- !u!222 &1382696089
 CanvasRenderer:

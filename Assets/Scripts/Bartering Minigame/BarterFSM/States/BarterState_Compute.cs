@@ -71,9 +71,6 @@ public class BarterState_Compute : BarterBaseState
         // This has the side-effect of updating our UI, animating a discard.
         _machine.Dir.SetOppCards(null);
         _machine.Dir.SetPlayerCards(null);
-        // Clear the submitted match array.
-        // TODO: Consider moving this elsewhere, if it makes animating hard.
-        _machine.Dir.SetMatchArray(null);
 
         _machine.PlayerCardUser.DiscardHand();
         _machine.OppCardUser.DiscardHand();

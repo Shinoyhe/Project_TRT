@@ -29,6 +29,8 @@ public class MatchSlotUI : MonoBehaviour
 
     public void SetState(MatchType type)
     {
+        // Add fancy animations here!
+
         icon.sprite = type switch {
             MatchType.Right => rightSprite,
             MatchType.Wrong => wrongSprite,

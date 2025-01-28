@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInteractable
+public abstract class Interactable : MonoBehaviour
 {
-  
+
   /// <summary>
   /// Called when the player can interact with this interactable
   /// </summary>
-  public void Highlight();
+  public abstract void Highlight();
   /// <summary>
   /// Called when the player stops being able to interact with this interactable
   /// </summary>
-  public void UnHighlight();
+  public abstract void UnHighlight();
   /// <summary>
   /// Called when the player interacts with this interactable
   /// </summary>
-  public void Interaction();
+  public abstract void Interaction();
 }

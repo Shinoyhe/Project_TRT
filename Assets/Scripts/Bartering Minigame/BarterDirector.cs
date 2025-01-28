@@ -29,6 +29,11 @@ public class BarterDirector : MonoBehaviour
     [SerializeField, Tooltip("The card user used by the player.")]
     private CardUser PlayerCardUser;
 
+    // Actions for when arrays are updated.
+    public System.Action<PlayingCard[]> OnOppCardsSet;
+    public System.Action<PlayingCard[]> OnPlayerCardsSet;
+    public System.Action<bool[]> OnMatchArraySet;
+
     // Misc Internal Variables ====================================================================
 
     private PlayingCard[] _oppCards = null;
@@ -148,5 +153,7 @@ public class BarterDirector : MonoBehaviour
         }
 
         _matchArray = matchArray;
+
+        OnMatchArraySet?.Invoke(matchArray);
     }
 }

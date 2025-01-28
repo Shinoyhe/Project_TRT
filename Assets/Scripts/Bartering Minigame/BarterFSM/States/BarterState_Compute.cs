@@ -41,14 +41,16 @@ public class BarterState_Compute : BarterBaseState
             }
         }
 
+        // Set the match array before nudging willingness.
+        _machine.Dir.SetMatchArray(matchArray);
+
         // Change willingness based on the result.
         float correctAmount = numCorrect*_machine.Dir.WillingnessPerMatch;
         float incorrectAmount = (oppCards.Length-numCorrect)*_machine.Dir.WillingnessPerFail;
-        _machine.Dir.NudgeWillingness(correctAmount+incorrectAmount);
+        // Debug.Log($"Results: {string.Join(", ", matchArray.Select(b => b ? "Match" : "No Match"))}\n"
+        //         + $"Willingness changed by {correctAmount+incorrectAmount}!");
 
-        Debug.Log($"Results: {string.Join(", ", matchArray.Select(b => b ? "Match" : "No Match"))}\n"
-                + $"Willingness changed by {correctAmount+incorrectAmount}!");
-        _machine.Dir.SetMatchArray(matchArray);
+        _machine.Dir.NudgeWillingness(correctAmount+incorrectAmount);
 
         DoneComputing();
     }

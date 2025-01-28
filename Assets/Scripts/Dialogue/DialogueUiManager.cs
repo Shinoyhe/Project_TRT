@@ -24,6 +24,7 @@ public class DialogueUiManager : MonoBehaviour {
 
     [Header("Speaking Settings")]
     public float TextSpeed = 0.05f;
+    public float VerticalOffset = 2;
 
     [HideInInspector]
     public delegate void CallAfterLineFinished();
@@ -31,8 +32,21 @@ public class DialogueUiManager : MonoBehaviour {
 
     // Misc Internal Variables ====================================================================
     private TMP_Text _currentTextBox;
-    private GameObject _npcSpeechBubble;
-    private GameObject _playerSpeechBubble;
+
+    private SpeechBubble _npcBubble;
+    private SpeechBubble _playerBubble;
+
+    private class SpeechBubble {
+        public GameObject GameObject;
+        public TMP_Text Text;
+
+        public void Hide() {
+            GameObject.SetActive(false);
+        }
+        public void Show() {
+            GameObject.SetActive(true);
+        }
+    }
 
     private class LineInformation {
         public int TotalCharacters = 0;
@@ -50,9 +64,17 @@ public class DialogueUiManager : MonoBehaviour {
     /// <param name="speakerB"></param>
     public void SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos) {
 
-        _npcSpeechBubble = CreateSpeechBubble(npcBubblePos);
-        _playerSpeechBubble = CreateSpeechBubble(playerBubblePos);
+        _npcBubble = new SpeechBubble();
+        _playerBubble = new SpeechBubble();
 
+        // Setup NPC bubble
+        _npcBubble.GameObject = CreateSpeechBubble(npcBubblePos, VerticalOffset);
+        _npcBubble.Text = _npcBubble.GameObject.GetComponentInChildren<TMP_Text>();
+
+        // Setup Player bubble
+        _playerBubble.GameObject = CreateSpeechBubble(playerBubblePos, VerticalOffset);
+        _playerBubble.Text = _playerBubble.GameObject.GetComponentInChildren<TMP_Text>();
+       
         HideChoices();
     }
 
@@ -64,15 +86,15 @@ public class DialogueUiManager : MonoBehaviour {
     /// <param name="callAfterLineFinished"> Callback after line of text is fully displayed.</param>
     public void DisplayLineOfText(String text, ProcessedTags foundTags, CallAfterLineFinished callAfterLineFinished = null) {
 
-        _npcSpeechBubble.SetActive(false);
-        _playerSpeechBubble.SetActive(false);
+        _npcBubble.Hide();
+        _playerBubble.Hide();
 
         if (foundTags.isNpcTalking) {
-            _npcSpeechBubble.SetActive(true);
-            _currentTextBox = _npcSpeechBubble.GetComponentInChildren<TMP_Text>();
+            _npcBubble.Show();
+            _currentTextBox = _npcBubble.Text;
         } else {
-            _playerSpeechBubble.SetActive(true);
-            _currentTextBox = _playerSpeechBubble.GetComponentInChildren<TMP_Text>();
+            _playerBubble.Show();
+            _currentTextBox = _playerBubble.Text;
         }
 
         _currentTextBox.maxVisibleCharacters = 0;
@@ -148,7 +170,7 @@ public class DialogueUiManager : MonoBehaviour {
     /// <param name="call"> Callback for Button Clicks. </param>
     public void PairChoices(CallAfterButtonPress call) {
 
-        for(int i = 0; i < UiButtons.Count; i++) {
+        for (int i = 0; i < UiButtons.Count; i++) {
             Button currentButton = UiButtons[i];
             int currentIndex = i;
             currentButton.onClick.AddListener(delegate { call(currentIndex); });
@@ -186,7 +208,8 @@ public class DialogueUiManager : MonoBehaviour {
         // Show next character
         _currentTextBox.maxVisibleCharacters += 1;
 
-        if (_currentTextBox.maxVisibleCharacters >= _currentLineData.TotalCharacters) {
+        bool textFinished = _currentTextBox.maxVisibleCharacters >= _currentLineData.TotalCharacters;
+        if (textFinished) {
             EndLineOfText();
         } else {
             StartCoroutine("NextCharacter");
@@ -197,7 +220,7 @@ public class DialogueUiManager : MonoBehaviour {
     /// Calls once line of text finishes displaying.
     /// </summary>
     void EndLineOfText() {
-        if (_currentLineData.FinishedTyping) return; // Don't double end
+        if (_currentLineData.FinishedTyping) return;
 
         _currentLineData.FinishedTyping = true;
 
@@ -206,9 +229,15 @@ public class DialogueUiManager : MonoBehaviour {
         }
     }
 
-    GameObject CreateSpeechBubble(Vector3 worldPos) {
+    /// <summary>
+    /// Create a Speech Bubble at set position.
+    /// </summary>
+    /// <param name="worldPos"> Position to create bubble. </param>
+    /// <param name="verticalOffset"> How far above worldPos to create bubble. </param>
+    /// <returns></returns>
+    GameObject CreateSpeechBubble(Vector3 worldPos, float verticalOffset = 0) {
 
-        Vector3 viewportPos = Camera.main.WorldToViewportPoint(worldPos);
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(worldPos + new Vector3(0, verticalOffset, 0));
 
         Vector2 canvasResolution = RenderCanvas.GetComponent<CanvasScaler>().referenceResolution;
         Vector2 canvasPos = new Vector2(viewportPos.x * canvasResolution.x, viewportPos.y * canvasResolution.y);

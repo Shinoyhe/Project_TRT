@@ -91,6 +91,8 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// <summary>
     /// Instantiate dialogue UI in scene.
     /// </summary>
+    /// <param name="npcBubblePos"> World pos of NPC Speech bubble. </param>
+    /// <param name="playerBubblePos"> World pos of Player Speech bubble. </param>
     /// <returns> The Dialogue UI's manager script. </returns>
     DialogueUiManager SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos) {
 
@@ -115,24 +117,35 @@ public class DialogueManager : Singleton<DialogueManager> {
     }
 
     /// <summary>
+    /// Check if _currentStory is over.
+    /// </summary>
+    /// <returns> True if story is over. False otherwise. </returns>
+    bool AtEndOfStory() {
+        bool canContinue = _currentStory.canContinue;
+        bool hasChoices = _currentStory.currentChoices != null && _currentStory.currentChoices.Count != 0;
+
+        return canContinue == false && hasChoices == false;
+    }
+
+    /// <summary>
     /// Show next line of current conversation.
     /// </summary>
     /// <returns> True if a line was available, false otherwise.</returns>
     bool ShowNextLine() {
 
-        if(_currentStory == null) {
+        // Precondition: Must have a story set
+        if (_currentStory == null) {
             return false;
         }
 
-        bool canContinue = _currentStory.canContinue;
-        bool hasChoices = _currentStory.currentChoices != null && _currentStory.currentChoices.Count != 0;
-
-        if (canContinue == false && hasChoices == false) {
+        // Precondition: Has not reached end of story
+        if (AtEndOfStory()) {
             EndStory();
             return false;
         }
 
-        if (canContinue == false) {
+        // Precondition: Must be able to contine
+        if (_currentStory.canContinue == false) {
             return false;
         }
 
@@ -140,37 +153,21 @@ public class DialogueManager : Singleton<DialogueManager> {
         string nextLine = _currentStory.Continue();
         ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
-        if(ApplyTags(foundTags) == true) {
+        // If choice was Action, skip the line.
+        if (foundTags.isAction) {
+            ShowNextLine();
             return true;
         }
 
         // Queue next line
-        if (_currentStory.currentChoices.Count > 0) {
+        bool lineHasChoices = _currentStory.currentChoices.Count > 0;
+        if (lineHasChoices) {
             _dialogueUiManager.DisplayLineOfText(nextLine, foundTags, ShowChoicesCallBack);
         } else {
             _dialogueUiManager.DisplayLineOfText(nextLine, foundTags);
         }
 
         return true;
-    }
-
-    /// <summary>
-    /// Apply current dialogue tags to UI.
-    /// </summary>
-    /// <param name="tagsToApply"> The tags to apply to our UI.</param>
-    /// <returns> True if tag causes line to end. </returns>
-    bool ApplyTags(ProcessedTags tagsToApply) {
-
-        bool shouldSkipLine = false;
-
-        // Apply Choice Type
-        if (tagsToApply.isAction) {
-            Debug.Log("Action Chosen!");
-            ShowNextLine(); // Skip saying action in dialogue
-            shouldSkipLine = true;
-        }
-
-        return shouldSkipLine;
     }
 
     /// <summary>

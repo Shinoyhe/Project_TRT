@@ -14,6 +14,14 @@ public class BarterState_TurnOpp : BarterBaseState
 
     public override void Enter(BarterBaseState previousState)
     {
+        // Clear the submitted match array- important if we're entering from the Compute state.
+        if (previousState == _machine.ComputeState) {
+            // TODO: Consider moving this elsewhere, if it makes animating hard.
+            _machine.Dir.SetMatchArray(null);
+        }
+
+        // ================
+
         // Cache references.
         int cardsToPlay = _machine.Dir.CardsToPlay;
         var handList = _machine.OppCardUser.HandList;

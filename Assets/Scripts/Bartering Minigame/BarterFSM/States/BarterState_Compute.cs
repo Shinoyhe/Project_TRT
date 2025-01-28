@@ -18,25 +18,28 @@ public class BarterState_Compute : BarterBaseState
         if (oppCards == null) {
             Debug.LogError("BarterState_Compute Error: Enter failed. oppCards was null.");
             return;
-        } else if (playerCards == null) {
-            Debug.LogError("BarterState_Compute Error: Enter failed. playerCards was null.");
-            return;
         }
-
-        OppBarterResponses responses = _machine.Dir.BarterResponses;
 
         int numCorrect = 0;
         bool[] matchArray = new bool[oppCards.Length];
+        
+        if (playerCards != null) {
+            OppBarterResponses responses = _machine.Dir.BarterResponses;        
 
-        for (int i = 0; i < oppCards.Length; i++) {
-            // Match up the player cards to the NPC's preferences.
-            PlayingCard desiredResponse = responses.GetResponse(oppCards[i]);
+            for (int i = 0; i < oppCards.Length; i++) {
+                // Match up the player cards to the NPC's preferences.
+                PlayingCard desiredResponse = responses.GetResponse(oppCards[i]);
 
-            // Store the number of correct matchups.
-            if (desiredResponse.Matches(playerCards[i])) {
-                numCorrect++;
-                matchArray[i] = true;
-            } else {
+                // Store the number of correct matchups.
+                if (desiredResponse.Matches(playerCards[i])) {
+                    numCorrect++;
+                    matchArray[i] = true;
+                } else {
+                    matchArray[i] = false;
+                }
+            }
+        } else {
+            for (int i = 0; i < oppCards.Length; i++) {
                 matchArray[i] = false;
             }
         }

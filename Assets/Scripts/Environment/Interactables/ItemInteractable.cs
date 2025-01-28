@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInteractable : MonoBehaviour, IInteractable
+public class ItemInteractable : Interactable
 {
-  public void Interaction() {
+  public override void Interaction() {
     throw new System.NotImplementedException();
   }
-  public void Highlight() {
+  public override void Highlight() {
     throw new System.NotImplementedException();
   }
-  public void UnHighlight() {
+  public override void UnHighlight() {
     throw new System.NotImplementedException();
   }
 }

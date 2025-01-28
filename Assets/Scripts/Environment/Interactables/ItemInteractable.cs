@@ -5,12 +5,13 @@ using UnityEngine;
 public class ItemInteractable : Interactable
 {
   public override void Interaction() {
-    throw new System.NotImplementedException();
+
+    Debug.Log("Interaction called on: " + gameObject.name);
   }
   public override void Highlight() {
-    throw new System.NotImplementedException();
+    Debug.Log("Highlighted " + gameObject.name);
   }
   public override void UnHighlight() {
-    throw new System.NotImplementedException();
+    Debug.Log("UnHighlighted " + gameObject.name);
   }
 }

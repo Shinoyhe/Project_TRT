@@ -506,6 +506,7 @@ GameObject:
   - component: {fileID: 1546801896}
   - component: {fileID: 1546801895}
   - component: {fileID: 1546801894}
+  - component: {fileID: 1546801898}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -599,6 +600,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1546801898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546801892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c458e1f588f88942a756ebd6a7f861f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookSensitivity: 1
+  WebglLookSensitivityMultiplier: 0.25
+  InvertYAxis: 0
+  InvertXAxis: 0
 --- !u!1 &1709870505
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,7 +735,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BubbleSpawnOffset: {x: 0, y: 0.5, z: 0}
-  RectTransform: {fileID: 0}
   InkFile: {fileID: 4900000, guid: 78fae791d8e25a445ac2b2e5cfc5205f, type: 3}
 --- !u!1001 &7745894018368153816
 PrefabInstance:

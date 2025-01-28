@@ -16,8 +16,10 @@ public class DialogueRoot : MonoBehaviour
     private void Update() {
 
         // Check for Player Input
-        if (Input.GetKeyDown(KeyCode.J)) {
+        if (PlayerInputHandler.Instance.GetDebugDown()) {
             OnInteract();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 

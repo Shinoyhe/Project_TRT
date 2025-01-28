@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Ink.Runtime;
 using System.Collections;
 using static DialogueManager;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manager to display text on screen.
@@ -26,6 +27,7 @@ public class DialogueUiManager : MonoBehaviour {
 
     [HideInInspector]
     public delegate void CallAfterLineFinished();
+    public delegate void CallAfterButtonPress(int X);
 
     // Misc Internal Variables ====================================================================
     private TMP_Text _currentTextBox;
@@ -137,6 +139,19 @@ public class DialogueUiManager : MonoBehaviour {
         // Reset buttons
         foreach (Button button in UiButtons) {
             button.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Connect UI dialogue buttons to this manager.
+    /// </summary>
+    /// <param name="call"> Callback for Button Clicks. </param>
+    public void PairChoices(CallAfterButtonPress call) {
+
+        for(int i = 0; i < UiButtons.Count; i++) {
+            Button currentButton = UiButtons[i];
+            int currentIndex = i;
+            currentButton.onClick.AddListener(delegate { call(currentIndex); });
         }
     }
 

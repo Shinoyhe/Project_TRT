@@ -15,14 +15,6 @@ public class DialogueManager : Singleton<DialogueManager> {
     public GameObject Player;
     public GameObject DialogueUiPrefab;
 
-    // Misc Internal Variables ====================================================================
-
-    private bool _inConversation;
-    private Story _currentStory;
-    private DialogueUiManager _dialogueUiManager;
-    private GameObject _dialogueUiInstance;
-    private Canvas _canvasUsedByUi;
-
     public struct ProcessedTags {
 
         public bool isNpcTalking;
@@ -33,6 +25,13 @@ public class DialogueManager : Singleton<DialogueManager> {
             this.isAction = isAction;
         }
     }
+
+    // Misc Internal Variables ====================================================================
+
+    private bool _inConversation;
+    private Story _currentStory;
+    private DialogueUiManager _dialogueUiManager;
+    private GameObject _dialogueUiInstance;
 
     // Initializers and Update ================================================================
 
@@ -48,7 +47,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (_inConversation == false) return;
 
         // Check for Player Input
-        if (Input.GetKeyDown(KeyCode.Space)) { // Can check even if no dialouge happening!
+        if (Input.GetKeyDown(KeyCode.Space)) {
 
             if (_dialogueUiManager.IsLineFinished()) {
                 ShowNextLine();
@@ -94,27 +93,15 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// </summary>
     /// <returns> The Dialogue UI's manager script. </returns>
     DialogueUiManager SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos) {
+
         _dialogueUiInstance = Instantiate(DialogueUiPrefab, Vector3.zero, Quaternion.identity);
 
         DialogueUiManager dialogueUiManager = _dialogueUiInstance.GetComponent<DialogueUiManager>();
 
-        LinkUiButtons(ref dialogueUiManager);
-
+        dialogueUiManager.PairChoices(ProcessDialogueChoice);
         dialogueUiManager.SetupUi(npcBubblePos,playerBubblePos);
 
         return dialogueUiManager;
-    }
-
-    /// <summary>
-    /// Connect UI dialogue buttons to this manager.
-    /// </summary>
-    /// <param name="dialogueUiManager"> Holds the dialoge buttons. </param>
-    void LinkUiButtons(ref DialogueUiManager dialogueUiManager) {
-        for (int i = 0; i < dialogueUiManager.UiButtons.Count; i++) {
-            Button currentButton = dialogueUiManager.UiButtons[i];
-            int choiceIndex = i;
-            currentButton.onClick.AddListener(delegate { ProcessDialogueChoice(choiceIndex); });
-        }
     }
 
     /// <summary>

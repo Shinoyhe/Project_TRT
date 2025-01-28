@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UIElements;
 
 public class PlayerInteractionHandler : MonoBehaviour {
-  
-  [SerializeField]
   private List<Interactable> accessibleInteractables;
+  [SerializeField]
   private Interactable highlightedInteractable;
 
   /// <summary>
@@ -15,14 +16,18 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// </summary>
   void Start()
   {
-    Debug.Assert(GetComponent<Rigidbody>() != null, "PlayerInteractionHandler requires an attatched rigidbody&collider");
+    UnityEngine.Debug.Assert(GetComponent<Rigidbody>() != null, "PlayerInteractionHandler requires an attatched rigidbody&collider");
     accessibleInteractables = new List<Interactable>();
+  }
+  private void Update() {
+    HighlightNearest();
   }
   /// <summary>
   /// calls the interact function on the currently highlighted Interactable
   /// </summary>
   public void Interact() {
-    highlightedInteractable.GetComponent<Interactable>().Interaction();    
+    if (highlightedInteractable == null) return;
+    highlightedInteractable.GetComponent<Interactable>().Interaction();
   }
   /// <summary>
   /// sets the current highlighted Interactable to the closest interactable
@@ -30,10 +35,24 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// calls IInteractable.UnHighlight on the the old highlighted interactable
   /// </summary>
   public void HighlightNearest() {
-    Interactable newInteractable;
+    if (accessibleInteractables.Count == 0) return;
+    Interactable nearestInteractable = highlightedInteractable;
+    float distanceToNearest = float.MaxValue;
+
     foreach(Interactable curInteractable in accessibleInteractables) {
-      
+      float distanceToCurrent = Vector3.Distance(transform.position,curInteractable.transform.position);
+      if( distanceToCurrent < distanceToNearest ) {
+        nearestInteractable = curInteractable;
+        distanceToNearest = distanceToCurrent;
+      }
     }
+
+    if (nearestInteractable == highlightedInteractable) return;
+    if (highlightedInteractable != null) {
+      highlightedInteractable.UnHighlight();
+    }
+    highlightedInteractable = nearestInteractable;
+    highlightedInteractable.Highlight();
   }
   /// <summary>
   /// adds an interactable to the list of accessible interactables
@@ -42,15 +61,15 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// <returns>Returns true if interactable successfully added, false if not</returns>
   public bool AddAccesibleInteractable(Interactable newInteractable) {
     if (newInteractable == null) {
-      Debug.LogError("ERROR: PlayerInteractionHandler: AddAccesibleInteractable: Cannot add null item");
+      UnityEngine.Debug.LogError("ERROR: PlayerInteractionHandler: AddAccesibleInteractable: Cannot add null item");
       return false;
     }
     if (accessibleInteractables.Contains(newInteractable)) {
-      Debug.LogWarning("WARNING: PlayerInteractionHandler: AddAccesibleInteractable: Tried to add duplicate interactable");
+      UnityEngine.Debug.LogWarning("WARNING: PlayerInteractionHandler: AddAccesibleInteractable: Tried to add duplicate interactable");
       return false;
     }
     accessibleInteractables.Add(newInteractable);
-    Debug.Log("added interactable: " + newInteractable);
+    UnityEngine.Debug.Log("added interactable: " + newInteractable);
     return true;
   }
   /// <summary>
@@ -60,20 +79,20 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// <returns>returns true if succesfully removed, and false if there was nothing to remove</returns>
   public bool RemoveAccesibleInteractable(Interactable markedInteractable) {
     if (markedInteractable == null) {
-      Debug.LogError("ERROR: PlayerInteractionHandler: RemoveAccesibleInteractable: Cannot remove null item");
+      UnityEngine.Debug.LogError("ERROR: PlayerInteractionHandler: RemoveAccesibleInteractable: Cannot remove null item");
       return false;
     }
     if (!accessibleInteractables.Contains(markedInteractable)) {
-      Debug.LogWarning("WARNING: PlayerInteractionHandler: RemoveAccesibleInteractable: interactable not found in list");
+      UnityEngine.Debug.LogWarning("WARNING: PlayerInteractionHandler: RemoveAccesibleInteractable: interactable not found in list");
       return false;
     }
-    Debug.Log("removed interactable: " + markedInteractable);
+    UnityEngine.Debug.Log("removed interactable: " + markedInteractable);
     accessibleInteractables.Remove(markedInteractable);
     return true;
   }
 
   private void OnTriggerEnter(Collider other) {
-    Debug.Log("hit somthin");
+    UnityEngine.Debug.Log("hit somthin");
     Interactable otherInteractable = other.GetComponent<Interactable>();
     if (otherInteractable != null) {
       AddAccesibleInteractable(otherInteractable);
@@ -83,7 +102,7 @@ public class PlayerInteractionHandler : MonoBehaviour {
     Interactable otherInteractable = other.GetComponent<Interactable>();
     if (otherInteractable != null && accessibleInteractables.Contains(otherInteractable)) {
       RemoveAccesibleInteractable(otherInteractable);
+      HighlightNearest();
     }
-  }
-  
+  } 
 }

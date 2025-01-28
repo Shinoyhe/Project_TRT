@@ -47,7 +47,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (_inConversation == false) return;
 
         // Check for Player Input
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (PlayerInputHandler.Instance.GetInteractDown()) {
 
             if (_dialogueUiManager.IsLineFinished()) {
                 ShowNextLine();

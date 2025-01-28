@@ -86,14 +86,6 @@ public class BarterState_Compute : BarterBaseState
 
     private void DoneComputing()
     {
-        // if (_machine.Dir.GetWillingness() >= 100) {
-        //     _machine.CurrentState = _machine.EndWinState;
-        // } else /*if (_machine.Director.InfoThresholds > 0) {
-        //     _machine.CurrentState = _machine.CheckInfoState;
-        // } else*/ {
-        //     _machine.CurrentState = _machine.TurnOppState;
-        // }
-
         if (_machine.Dir.GetWillingness() >= 100) {
             _machine.CurrentState = _machine.EndWinState;
         }

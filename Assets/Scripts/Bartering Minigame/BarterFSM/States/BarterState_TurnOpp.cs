@@ -47,7 +47,7 @@ public class BarterState_TurnOpp : BarterBaseState
         // Send the complete array of cards to the director.
         _machine.Dir.SetOppCards(playedCards);
 
-        Debug.Log($"Opp submitted: {string.Join(", ", playedCards.Select(x => x.Id))}");
+        // Debug.Log($"Opp submitted: {string.Join(", ", playedCards.Select(x => x.Id))}");
 
         // _machine.CurrentState = _machine.DEBUG_TurnAutoPlayerState;
         _machine.Dir.StartCoroutine(WaitAndGo());

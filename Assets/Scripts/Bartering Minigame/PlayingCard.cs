@@ -7,6 +7,8 @@ public class PlayingCard : ScriptableObject
     [Tooltip("An ID used for debug purposes.")]
     public string Id;
 
+    public Color DEBUG_COLOR = Color.white;
+
     /// <summary>
     /// Two card data 'match' if they have the same id.
     /// </summary>

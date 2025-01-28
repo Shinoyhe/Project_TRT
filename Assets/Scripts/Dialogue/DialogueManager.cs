@@ -1,8 +1,6 @@
 using Ink.Runtime;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Processes Ink file and controls conversation flow.
@@ -83,6 +81,11 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// Callback to show choices when text finishes displaying.
     /// </summary>
     public void ShowChoicesCallBack() {
+
+        if (_dialogueUiManager == null) {
+            ThrowNullError("ShowChoicesCallBack()", "DialogueUiManager");
+        }
+
         _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
     }
 
@@ -96,7 +99,15 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// <returns> The Dialogue UI's manager script. </returns>
     DialogueUiManager SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos) {
 
+        if (DialogueUiPrefab == null) {
+            ThrowNullError("SetupUi()", "DialogueUiPrefab");
+        }
+
         _dialogueUiInstance = Instantiate(DialogueUiPrefab, Vector3.zero, Quaternion.identity);
+
+        if(_dialogueUiInstance == null) {
+            ThrowNullError("SetupUi()", "DialogueUiInstance");
+        }
 
         DialogueUiManager dialogueUiManager = _dialogueUiInstance.GetComponent<DialogueUiManager>();
 
@@ -111,6 +122,14 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// </summary>
     /// <param name="choiceIndex"></param>
     void ProcessDialogueChoice(int choiceIndex) {
+
+        if (_dialogueUiManager == null) {
+            ThrowNullError("ProcessDialogueChoice()", "dialougeUiManager");
+        }
+        if (_currentStory == null) {
+            ThrowNullError("ProcessDialogueChoice()", "story instance");
+        }
+
         _currentStory.ChooseChoiceIndex(choiceIndex);
         _dialogueUiManager.HideChoices();
         ShowNextLine();
@@ -121,6 +140,10 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// </summary>
     /// <returns> True if story is over. False otherwise. </returns>
     bool AtEndOfStory() {
+        if (_currentStory == null) {
+            Debug.LogError("Called AtEndOfStory() with no story initialized.");
+        }
+
         bool canContinue = _currentStory.canContinue;
         bool hasChoices = _currentStory.currentChoices != null && _currentStory.currentChoices.Count != 0;
 
@@ -131,22 +154,23 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// Show next line of current conversation.
     /// </summary>
     /// <returns> True if a line was available, false otherwise.</returns>
-    bool ShowNextLine() {
+    void ShowNextLine() {
 
         // Precondition: Must have a story set
         if (_currentStory == null) {
-            return false;
+            Debug.LogWarning("Called ShowNextLine() on empty story.");
+            return;
         }
 
         // Precondition: Has not reached end of story
         if (AtEndOfStory()) {
             EndStory();
-            return false;
+            return;
         }
 
         // Precondition: Must be able to contine
         if (_currentStory.canContinue == false) {
-            return false;
+            return;
         }
 
         // Get next line properties
@@ -156,7 +180,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         // If choice was Action, skip the line.
         if (foundTags.isAction) {
             ShowNextLine();
-            return true;
+            return;
         }
 
         // Queue next line
@@ -166,8 +190,6 @@ public class DialogueManager : Singleton<DialogueManager> {
         } else {
             _dialogueUiManager.DisplayLineOfText(nextLine, foundTags);
         }
-
-        return true;
     }
 
     /// <summary>
@@ -176,6 +198,11 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// <param name="lineTags">Ink tags</param>
     /// <returns>Our new ProcessedTag struct.</returns>
     ProcessedTags ProcessTags(List<string> lineTags) {
+
+        if(lineTags == null) {
+            ThrowNullError("ProcessTags()", "tag array");
+        }
+
         ProcessedTags foundTags = new ProcessedTags();
 
         foreach (string tag in lineTags) {
@@ -209,4 +236,8 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         Destroy(_dialogueUiInstance);
     }   
+
+    void ThrowNullError(string functionOrigin, string whatWasNull) {
+        Debug.LogError("Called " + functionOrigin + " with a null " + whatWasNull + ".");
+    }
 }

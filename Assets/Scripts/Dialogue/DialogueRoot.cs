@@ -10,6 +10,7 @@ public class DialogueRoot : MonoBehaviour
     [Header("Traits")]
     public Vector3 BubbleSpawnOffset;
     public TextAsset InkFile;
+    public float VerticalOffset = 0.25f;
 
     // Initializers and Update ================================================================
 
@@ -29,7 +30,7 @@ public class DialogueRoot : MonoBehaviour
     /// Called by interaction mananger to trigger dialogue.
     /// </summary>
     private void OnInteract() {
-        var positionOfBubble = transform.position + BubbleSpawnOffset;
+        var positionOfBubble = transform.position + BubbleSpawnOffset + new Vector3(0,VerticalOffset,0);
         
         DialogueManager.Instance.StartConversation(InkFile, positionOfBubble);
     }

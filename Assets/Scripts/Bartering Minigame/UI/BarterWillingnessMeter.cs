@@ -32,7 +32,7 @@ public class BarterWillingnessMeter : MonoBehaviour
 
     // The starting height of the marker, used to position it.
     private float MarkerStartingY;
-    // The horizontal of our BarFront image, used to position the marker.
+    // The horizontal range of our BarFront image, used to position the marker.
     private Vector2 BarFrontBounds;
     // Used to track when DecimalPlaces changes, so that we don't reconstruct the format string
     // every single frame.

@@ -127,6 +127,7 @@ public class BarterDirector : MonoBehaviour
         }
         
         _oppCards = oppCards;
+        OnOppCardsSet?.Invoke(oppCards);
     }
 
     public void SetPlayerCards(PlayingCard[] playerCards) 
@@ -140,6 +141,7 @@ public class BarterDirector : MonoBehaviour
         }
 
         _playerCards = playerCards;
+        OnPlayerCardsSet?.Invoke(playerCards);
     }
 
     public void SetMatchArray(bool[] matchArray)
@@ -153,7 +155,6 @@ public class BarterDirector : MonoBehaviour
         }
 
         _matchArray = matchArray;
-
         OnMatchArraySet?.Invoke(matchArray);
     }
 }

@@ -75,8 +75,6 @@ public class HandController : MonoBehaviour
         // from our CardUser.
         // ================
 
-        // print($"Added cards: {string.Join(",", handDelta.added)}\nRemoved cards: {string.Join(",", handDelta.removed)}");
-
         // Remove cards.
         foreach (CardUser.HandDelta.Removed removed in handDelta.removed) {
             DisplayCard display = hand[removed._formerIndex];
@@ -155,13 +153,24 @@ public class HandController : MonoBehaviour
         for (int i = 0; i < hand.Count; i++) {
             DisplayCard displayCard = hand[i];
 
-            PointsOnLine.GetPosition(anchorLeft.localPosition, anchorRight.localPosition, i,
-                                        hand.Count, usableRange, out Vector3 arcPosition);
+            // Calculate the position we need to put the card at!
+            float lerpIndex = (hand.Count == 1) ? 0.5f : i/(float)(hand.Count-1);
 
+            // The amount, from 0-1, we need to shift forward along our arc to have our cards
+            // be centered after accounting for usableRange.
+            float usableRange_arcOffset = 0.5f*(1-usableRange);
+            // How far, from 0-1, this card should be placed on our arc. 
+            float distanceOnArc = usableRange*lerpIndex + usableRange_arcOffset;
+            // Get the position!
+            Vector3 position = Vector3.Lerp(anchorLeft.localPosition, anchorRight.localPosition,
+                                            distanceOnArc);
+
+            // Figure out how long we should animate for...
             float duration = overrideAnimation ? 0 : moveTime;
-            displayCard.TransformTo(arcPosition, 1, duration);
 
-            baseCardPositions[displayCard] = arcPosition;
+            // And animate!
+            displayCard.TransformTo(position, 1, duration);
+            baseCardPositions[displayCard] = position;
         }
     }
 
@@ -177,15 +186,17 @@ public class HandController : MonoBehaviour
 
         if (alreadyDragging) return;
 
+        card.transform.SetAsLastSibling();
+
         // Play hover SFX
     }
 
     private void OnCardHoverEnd(DisplayCard card)
     {
-        if (!alreadyDragging) {
-            card.TransformTo(transform.localPosition, 1, hoverTime);
-            ResetToViewPosition();
-        }
+        if (alreadyDragging) return;
+
+        card.LerpOnlySize(1, hoverTime);
+        ResetToViewPosition();
     }
 
     private void OnCardDragStart(DisplayCard card)

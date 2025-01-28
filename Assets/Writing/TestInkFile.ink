@@ -1,11 +1,11 @@
 Mark? 
 Mark. 
-He's wired in. #Speaker: B
+He's wired in. #NPC
 
  * I'm Sorry?
-    He's wired in. #Speaker: B
+    He's wired in. #NPC
     Is he? 
-    Yes. #Speaker: B
+    Yes. #NPC
      ** Smash computer. #Action
         
  * Smash computer. #Action

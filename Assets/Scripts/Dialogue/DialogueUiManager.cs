@@ -5,22 +5,21 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using Ink.Runtime;
 using System.Collections;
-using static DialogueUiManager;
+using static DialogueManager;
 
 /// <summary>
 /// Manager to display text on screen.
 /// No Access to Ink files.
 /// </summary>
 public class DialogueUiManager : MonoBehaviour {
-    [Header("Dependencies")]
-    public TMP_Text SpeechTextA;
-    public TMP_Text SpeechTextB;
 
+    // Parameters =================================================================================
+
+    [Header("Dependencies")]
     public List<Button> UiButtons;
     public List<TMP_Text> UiButtonsText;
-
-    public GameObject SpeachBubbleA;
-    public GameObject SpeachBubbleB;
+    public Canvas RenderCanvas;
+    public GameObject SpeechBubblePrefab;
 
     [Header("Speaking Settings")]
     public float TextSpeed = 0.05f;
@@ -28,9 +27,10 @@ public class DialogueUiManager : MonoBehaviour {
     [HideInInspector]
     public delegate void CallAfterLineFinished();
 
-    private string _speakerA;
-    private string _speakerB;
+    // Misc Internal Variables ====================================================================
     private TMP_Text _currentTextBox;
+    private GameObject _npcSpeechBubble;
+    private GameObject _playerSpeechBubble;
 
     private class LineInformation {
         public int TotalCharacters = 0;
@@ -38,19 +38,18 @@ public class DialogueUiManager : MonoBehaviour {
         public CallAfterLineFinished Callback = null;
     }
     private LineInformation _currentLineData;
-    
+
+    // Public Utility Methods ====================================================================
 
     /// <summary>
     /// Setup UI with two speakers.
     /// </summary>
     /// <param name="speakerA"></param>
     /// <param name="speakerB"></param>
-    public void SetupUi(string speakerA, string speakerB) {
-        _speakerA = speakerA.ToLower().Trim();
-        _speakerB = speakerB.ToLower().Trim();
+    public void SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos) {
 
-        SpeachBubbleA.SetActive(false);
-        SpeachBubbleB.SetActive(false);
+        _npcSpeechBubble = CreateSpeechBubble(npcBubblePos);
+        _playerSpeechBubble = CreateSpeechBubble(playerBubblePos);
 
         HideChoices();
     }
@@ -61,25 +60,17 @@ public class DialogueUiManager : MonoBehaviour {
     /// <param name="text"> Text to display. </param>
     /// <param name="speakerName"> Name of speaker saying line. </param>
     /// <param name="callAfterLineFinished"> Callback after line of text is fully displayed.</param>
-    public void DisplayLineOfText(String text, string speakerName, CallAfterLineFinished callAfterLineFinished = null) {
+    public void DisplayLineOfText(String text, ProcessedTags foundTags, CallAfterLineFinished callAfterLineFinished = null) {
 
-        if (speakerName == null) {
-            speakerName = _speakerA;
-        }
+        _npcSpeechBubble.SetActive(false);
+        _playerSpeechBubble.SetActive(false);
 
-        string formattedName = speakerName.ToLower().Trim();
-
-        SpeachBubbleA.SetActive(false);
-        SpeachBubbleB.SetActive(false);
-
-        if (_speakerA == formattedName) {
-            _currentTextBox = SpeechTextA;
-            SpeachBubbleA.SetActive(true);
-        }
-
-        if (_speakerB == formattedName) {
-            _currentTextBox = SpeechTextB;
-            SpeachBubbleB.SetActive(true);
+        if (foundTags.isNpcTalking) {
+            _npcSpeechBubble.SetActive(true);
+            _currentTextBox = _npcSpeechBubble.GetComponentInChildren<TMP_Text>();
+        } else {
+            _playerSpeechBubble.SetActive(true);
+            _currentTextBox = _playerSpeechBubble.GetComponentInChildren<TMP_Text>();
         }
 
         _currentTextBox.maxVisibleCharacters = 0;
@@ -153,6 +144,8 @@ public class DialogueUiManager : MonoBehaviour {
         return _currentLineData.FinishedTyping;
     }
 
+    // Private Helper Methods ====================================================================
+
     /// <summary>
     /// Display next character in dialogue string.
     /// </summary>
@@ -196,5 +189,15 @@ public class DialogueUiManager : MonoBehaviour {
         if (_currentLineData.Callback != null) {
             _currentLineData.Callback();
         }
+    }
+
+    GameObject CreateSpeechBubble(Vector3 worldPos) {
+
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(worldPos);
+
+        Vector2 canvasResolution = RenderCanvas.GetComponent<CanvasScaler>().referenceResolution;
+        Vector2 canvasPos = new Vector2(viewportPos.x * canvasResolution.x, viewportPos.y * canvasResolution.y);
+
+        return Instantiate(SpeechBubblePrefab, canvasPos, Quaternion.identity, RenderCanvas.transform);
     }
 }

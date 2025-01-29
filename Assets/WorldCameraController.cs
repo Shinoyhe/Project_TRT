@@ -37,6 +37,7 @@ public class WorldCameraController : MonoBehaviour
     // Parameters
     [Header("Parameters")]
     [SerializeField] private bool ActiveOnAwake = false;
+    [SerializeField] private bool UpdatesVirtualCameras = true;
     [SerializeField] private MovementOrientation playerMovementOrientation;
     [SerializeField] private Vector3 forwardVector;
 
@@ -48,9 +49,7 @@ public class WorldCameraController : MonoBehaviour
 
     [Header("Transposer Follower")]
     [SerializeField]
-    private float transposerHeightOffset = 1.25f;
-    [SerializeField]
-    private float transposerDistance = 5f;
+    private Vector3 transposePosition = new Vector3(0, 3, -8);
     [SerializeField]
     private Vector3 transposerRotation = Vector3.right * 15f;
 
@@ -101,9 +100,9 @@ public class WorldCameraController : MonoBehaviour
     }
 
 
-    private void Fuckmyass()
+    private void FuckTheCamera()
     {
-        Fuckmyass();
+        FuckTheCamera();
     }
 
 
@@ -113,6 +112,8 @@ public class WorldCameraController : MonoBehaviour
     [EditorBrowsable(EditorBrowsableState.Never)]
     void OnValidate()
     {
+        if (!UpdatesVirtualCameras) return;
+
         // Handle Follower Types
         switch (followerType)
         {
@@ -151,10 +152,8 @@ public class WorldCameraController : MonoBehaviour
 
 
         // Apply Parameters for Movement and Camera
-        mainFT.m_FollowOffset = Vector3.up * transposerHeightOffset;
-        moveFT.m_FollowOffset = Vector3.up * transposerHeightOffset;
-        mainFT.m_FollowOffset += Vector3.forward * -transposerDistance;
-        moveFT.m_FollowOffset += Vector3.forward * -transposerDistance;
+        mainFT.m_FollowOffset = transposePosition;
+        moveFT.m_FollowOffset = transposePosition;
         VirtualCamera.transform.rotation = Quaternion.Euler(transposerRotation);
         VirtualMovement.transform.rotation = Quaternion.Euler(transposerRotation);
 
@@ -175,6 +174,9 @@ public class WorldCameraController : MonoBehaviour
 
         mainC.m_HorizontalDamping = aimDampening;
         mainC.m_VerticalDamping = aimDampening;
+
+        mainC.m_LookaheadTime = lookAheadDistance;
+        mainC.m_LookaheadSmoothing = lookAheadSmoothing;
     }
 
 

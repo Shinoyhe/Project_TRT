@@ -15,6 +15,7 @@ public class WorldCameraController : MonoBehaviour
     // Object References
     [Header("Object References")]
     public CinemachineVirtualCamera VirtualCamera;
+    public CinemachineVirtualCamera VirtualMovement;
 
     // Enums
     public enum MovementOrientation
@@ -35,21 +36,21 @@ public class WorldCameraController : MonoBehaviour
     [SerializeField] private Vector3 forwardVector;
 
     [Header("Follower")]
-    [SerializeField] [OnChangedCall("OnValueChanged")] 
+    [SerializeField]
     private Follower followerType = Follower.FramingTransposer;
-    [SerializeField] [OnChangedCall("OnValueChanged")] [Range(0, 1)]
+    [SerializeField] [Range(0, 1)]
     private float lookAheadDistance = 0.5f;
-    [SerializeField] [OnChangedCall("OnValueChanged")] [Range(0, 30)]
+    [SerializeField] [Range(0, 30)]
     private float lookAheadSmoothing = 5f;
-    [SerializeField] [OnChangedCall("OnValueChanged")] [Range(0, 30)]
-    private Vector3 dampening = Vector3.zero;
+    [SerializeField] [Range(0, 20)]
+    private float dampening = 0;
 
     [Header("Transposer Follower")]
-    [SerializeField] [OnChangedCall("OnValueChanged")]
+    [SerializeField]
     private float transposerHeightOffset = 1.25f;
-    [SerializeField] [OnChangedCall("OnValueChanged")]
+    [SerializeField]
     private float transposerDistance = 5f;
-    [SerializeField] [OnChangedCall("OnValueChanged")]
+    [SerializeField]
     private Vector3 transposerRotation = Vector3.right * 15f;
 
 
@@ -77,26 +78,14 @@ public class WorldCameraController : MonoBehaviour
         _currentCamera?.Deactivate();
         _currentCamera = this;
         VirtualCamera.gameObject.SetActive(true);
+        VirtualMovement.gameObject.SetActive(true);
     }
 
 
     private void Deactivate()
     {
         VirtualCamera.gameObject.SetActive(false);
-    }
-
-
-    private void UpdatePlayerForwardVector()
-    {
-        if (!IsActive()) return;
-
-        Player.Movement.SetForwardVector(
-            playerMovementOrientation switch
-            {
-                MovementOrientation.Fixed => forwardVector,
-                MovementOrientation.TowardsCamera => GetTowardsCameraOrientation(),
-                _ => GetTowardsCameraOrientation()
-            });
+        VirtualMovement.gameObject.SetActive(false);
     }
 
 
@@ -107,7 +96,7 @@ public class WorldCameraController : MonoBehaviour
 
     private Vector3 GetTowardsCameraOrientation()
     {
-        return (Player.Transform.position - Camera.main.transform.position).normalized;
+        return (Player.Transform.position - VirtualMovement.transform.position).normalized;
     }
 
 
@@ -115,7 +104,7 @@ public class WorldCameraController : MonoBehaviour
     /// Changes the Virtual Camera parameters automagically :D
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void OnValueChanged()
+    void OnValidate()
     {
         // Handle Follower Types
         switch (followerType)
@@ -136,19 +125,33 @@ public class WorldCameraController : MonoBehaviour
     private void UpdateFollowerTransposerValues()
     {
         DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>());
-        var framingTransposer = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>()
+        var mainFT = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>()
             ?? VirtualCamera.AddCinemachineComponent<CinemachineFramingTransposer>();
 
-        framingTransposer.m_TrackedObjectOffset = Vector3.up * transposerHeightOffset;
-        framingTransposer.m_CameraDistance = transposerDistance;
+        DestroyImmediate(VirtualMovement.GetCinemachineComponent<CinemachineTrackedDolly>());
+        var moveFT = VirtualMovement.GetCinemachineComponent<CinemachineFramingTransposer>()
+            ?? VirtualMovement.AddCinemachineComponent<CinemachineFramingTransposer>();
+
+
+        // Apply Parameters for Movement and Camera
+        mainFT.m_TrackedObjectOffset = Vector3.up * transposerHeightOffset;
+        moveFT.m_TrackedObjectOffset = Vector3.up * transposerHeightOffset;
+        mainFT.m_CameraDistance = transposerDistance;
+        moveFT.m_CameraDistance = transposerDistance;
         VirtualCamera.transform.rotation = Quaternion.Euler(transposerRotation);
+        VirtualMovement.transform.rotation = Quaternion.Euler(transposerRotation);
 
-        framingTransposer.m_LookaheadTime = lookAheadDistance;
-        framingTransposer.m_LookaheadSmoothing = lookAheadSmoothing;
+        // Only Main Affect Main Virtual Camera
+        mainFT.m_LookaheadTime = lookAheadDistance;
+        mainFT.m_LookaheadSmoothing = lookAheadSmoothing;
 
-        framingTransposer.m_XDamping = dampening.x;
-        framingTransposer.m_YDamping = dampening.y;
-        framingTransposer.m_ZDamping = dampening.z;
+        mainFT.m_XDamping = dampening;
+        mainFT.m_YDamping = dampening;
+        mainFT.m_ZDamping = dampening;
+
+        moveFT.m_XDamping = 0;
+        moveFT.m_YDamping = 0;
+        moveFT.m_ZDamping = 0;
     }
 
 
@@ -191,7 +194,7 @@ public class WorldCameraController : MonoBehaviour
 
     void Update()
     {
-        UpdatePlayerForwardVector();
+
     }
 
 

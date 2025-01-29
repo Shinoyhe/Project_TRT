@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Object Assignment")]
     [SerializeField] private PlayerInputHandler controls;
+    [SerializeField] private Transform forwardTransform;
     private CharacterController characterController;
 
 
@@ -15,23 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     private const float GRAVITY = 9.81f;
     private float _downwardForce = 0;
-    private Vector3 _forwardVector = Vector3.forward;
-
-
-    public void SetForwardVector(Vector3 direction)
-    {
-        direction.Scale(new Vector3(1, 0, 1));
-
-        if (direction == Vector3.zero)
-        {
-            Debug.LogError("SetForwardDirection needs a Vector3 with non-zero x and z values.");
-        }
-
-        _forwardVector = direction;
-        Debug.Log(direction);
-    }
-
-
 
 
     void Awake()
@@ -52,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 input = controls.GetMoveInput();
 
-        Quaternion forwardRot = Quaternion.FromToRotation(Vector3.forward, _forwardVector);
+        Quaternion forwardRot = Quaternion.FromToRotation(Vector3.forward, forwardTransform.forward);
         // transform.rotation = forwardRot;
 
         Vector3 direction = forwardRot * input;

@@ -15,6 +15,10 @@ public class BarterDirector : MonoBehaviour
     public int CardsToPlay = 3;
     [SerializeField, Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
     private float DecayPerSecond = 5;
+    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1")]
+    private float OppDuration = 1;
+    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1.5")]
+    private float ComputeDuration = 1.5f;
     [Tooltip("The amount Willingness is changed by on a successful, matching response.\n\nDefault: 5")]
     public float WillingnessPerMatch = 5;
     [Tooltip("The amount Willingness is changed by on a unsuccessful, nonmatching response.\n\nDefault: -5")]
@@ -36,33 +40,33 @@ public class BarterDirector : MonoBehaviour
     public System.Action<PlayingCard[]> OnOppCardsSet;
     public System.Action<PlayingCard[]> OnPlayerCardsSet;
     public System.Action<bool[]> OnMatchArraySet;
+    // Action for when the full non-null set of player cards is submitted.
+    public System.Action OnPlayerAllCardsSet;
 
     // Misc Internal Variables ====================================================================
 
     private PlayingCard[] _oppCards = null;
     private PlayingCard[] _playerCards = null;
     private bool[] _matchArray = null;
-    private bool _lastDebugMode = false;
     private BarterStateMachine _machine = null;
 
     // Initializers ===============================================================================
 
     private void Start()
     {
-        _machine = new(this, PlayerCardUser, OppCardUser);
+        _machine = new(this, PlayerCardUser, OppCardUser, OppDuration, ComputeDuration);
         _machine.SetDebug(DebugMode);
         _machine.StartMachine();
+
+        _playerCards = new PlayingCard[CardsToPlay];
     }
 
     // Update methods =============================================================================
 
     private void Update()
     {
-        if (DebugMode != _lastDebugMode) {
-            _lastDebugMode = DebugMode;
-            _machine.SetDebug(DebugMode);
-        }
-        
+        _machine.SetDebug(DebugMode);
+    
         _machine.UpdateState();
     }
 
@@ -75,6 +79,8 @@ public class BarterDirector : MonoBehaviour
     public PlayingCard[] GetPlayerCards() { return _playerCards; }
 
     public bool[] GetMatchArray() { return _matchArray; }
+
+    public string GetCurrentStateName() { return _machine.CurrentState.StateName; }
 
     // Willingness manipulators ===================================================================
 
@@ -100,12 +106,6 @@ public class BarterDirector : MonoBehaviour
     public void DecayWillingness()
     {
         Willingness -= DecayPerSecond * Time.deltaTime;
-
-        // If completely unwilling, we lost.
-        if (Willingness <= 0) {
-            Willingness = 0;
-            _machine.CurrentState = _machine.EndLossState;
-        }
     }
 
     /// <summary>
@@ -133,13 +133,34 @@ public class BarterDirector : MonoBehaviour
         OnOppCardsSet?.Invoke(oppCards);
     }
 
+    public void SetPlayerCard(PlayingCard playerCard, int indexInArray)
+    {
+        if (_playerCards != null && (indexInArray < 0 || indexInArray >= _playerCards.Length)) {
+            Debug.LogError($"BarterDirector Error: SetPlayerCard failed. indexInArray "
+                         + $"({indexInArray}) was beyond the bounds of the array (length "
+                         + $"{_playerCards.Length})");
+        }
+
+        // print($"_playerCards is null: ({_playerCards == null})");
+        // print($"Set card at index {indexInArray} to {((playerCard != null) ? playerCard.Id : "null")}");
+        _playerCards[indexInArray] = playerCard;
+
+        // Check if all slots are non-null.
+        foreach (PlayingCard card in _playerCards) {
+            // If we encounter any nonnull card, we shouldn't submit.
+            if (card == null) return;
+        }
+        // If we exit the loop, all cards were non-null!
+        OnPlayerAllCardsSet?.Invoke();
+    }
+
     public void SetPlayerCards(PlayingCard[] playerCards) 
     { 
         // Validate the array. We accept two states:
         //  * A null array, signifying 'no cards played'.
         //  * An array of length CardsToPlay, signifying 'all cards played'.
         if (playerCards != null && playerCards.Length != CardsToPlay) {
-            Debug.LogError($"BarterDirector Error: SetOppCards failed. Expected {CardsToPlay} "
+            Debug.LogError($"BarterDirector Error: SetPlayerCards failed. Expected {CardsToPlay} "
                          + $"cards, got {playerCards.Length} instead.");
         }
 

@@ -286,8 +286,10 @@ public class HandController : MonoBehaviour
             } else {
                 // If we don't have targets, return to our hand.
                 card.TransformTo(baseCardPositions[card], 1, moveTime);
-                card.SetSubmitted(null);
-                card.SubmitSlot.SetCard(null);
+                if (card.SubmitSlot != null) {
+                    card.SubmitSlot.SetCard(null);
+                    card.SetSubmitted(null);
+                }
 
                 ResetToViewPosition();
             }

@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class BarterState_Compute : BarterBaseState
 {
+    // Misc Internal Variables ====================================================================
+
+    private readonly float _duration = 1.5f;
+
     // State Methods ==============================================================================
 
-    public BarterState_Compute(string stateName, BarterStateMachine machine) : base(stateName, machine) {} 
+    public BarterState_Compute(string stateName, BarterStateMachine machine, float duration) 
+                        : base(stateName, machine) 
+    {
+        _duration = duration;
+    }
 
     public override void Enter(BarterBaseState previousState)
     {
@@ -73,7 +81,7 @@ public class BarterState_Compute : BarterBaseState
         // Clear the submitted OppCards / PlayerCards.
         // This has the side-effect of updating our UI, animating a discard.
         _machine.Dir.SetOppCards(null);
-        _machine.Dir.SetPlayerCards(null);
+        _machine.Dir.SetPlayerCards(new PlayingCard[_machine.Dir.CardsToPlay]);
 
         _machine.PlayerCardUser.DiscardHand();
         _machine.OppCardUser.DiscardHand();
@@ -99,7 +107,7 @@ public class BarterState_Compute : BarterBaseState
 
     private IEnumerator WaitAndGo()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(_duration);
         _machine.CurrentState = _machine.TurnOppState;
     }
 }

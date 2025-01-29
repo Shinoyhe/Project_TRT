@@ -10,8 +10,8 @@ using UnityEngine.EventSystems;
 public class DisplayCard : MonoBehaviour
 {
     [Header("Data and References")]
-    [SerializeField, Tooltip("The cardData we read from.")]
-    PlayingCard CardData = null;
+    [Tooltip("The cardData we read from.")]
+    public PlayingCard CardData = null;
     [SerializeField, Tooltip("TEMPORARY IMPLEMENTATION. For now, acts as our card back.")]
     private Image MainImage;
     [SerializeField, Tooltip("TEMPORARY IMPLEMENTATION. For now, acts as our card label.")]
@@ -22,7 +22,7 @@ public class DisplayCard : MonoBehaviour
     public System.Action<DisplayCard> startHovering;
     public System.Action<DisplayCard> doneHovering;
     bool isDragging = false;
-    bool _interactable = true;
+    public bool _interactable = true;
     PlayerCardSlot _submitSlot = null;
     public PlayerCardSlot SubmitSlot => _submitSlot;
     float dragElapsed = 0, dragUpdateRate = 0;
@@ -146,6 +146,15 @@ public class DisplayCard : MonoBehaviour
     public void SetInteractable(bool value)
     {
         _interactable = value;
+
+        if (!_interactable || isDragging) {
+            if (SubmitSlot == null) {
+                canvasGroup.alpha = dragAlpha;
+                return;
+            }
+        }
+
+        canvasGroup.alpha = 1;
     }
 
     public void SetSubmitted(PlayerCardSlot slot)

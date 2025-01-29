@@ -60,7 +60,8 @@ public class BarterStateMachine
 
     // Constructors and Initializers ==============================================================
 
-    public BarterStateMachine(BarterDirector dir, CardUser playerCardUser, CardUser oppCardUser)
+    public BarterStateMachine(BarterDirector dir, CardUser playerCardUser, CardUser oppCardUser,
+                              float oppTurnDuration, float computeDuration)
     {
         // Treat this as an "Awake" method. 
         // Finish any initialization elsewhere before calling Start().
@@ -73,9 +74,9 @@ public class BarterStateMachine
         // Create our states.
 
         InitState = new("Init", this);
-        TurnOppState = new("Opponent Turn", this);
-        TurnPlayerState = new("Auto Player Turn", this);
-        ComputeState = new("Compute", this);
+        TurnOppState = new("Opponent Turn", this, oppTurnDuration);
+        TurnPlayerState = new("Player Turn", this);
+        ComputeState = new("Compute", this, computeDuration);
         // CheckInfoState = new("Check Info", this);
         EndWinState = new("Win", this);
         EndLossState = new("Loss", this);

@@ -9,6 +9,8 @@ public class PlayerCardSlot : MonoBehaviour
     private RectTransform _rectTransform;
     private DisplayCard _card = null;
 
+    public System.Action<PlayerCardSlot, DisplayCard> OnSetCard;
+
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
@@ -22,5 +24,6 @@ public class PlayerCardSlot : MonoBehaviour
     public void SetCard(DisplayCard card)
     {
         _card = card;
+        OnSetCard?.Invoke(this, card);
     }
 }

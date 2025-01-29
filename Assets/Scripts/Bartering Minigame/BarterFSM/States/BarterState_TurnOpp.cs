@@ -6,18 +6,23 @@ public class BarterState_TurnOpp : BarterBaseState
 {
     // Misc Internal Variables ====================================================================
 
-    private PlayingCard[] playedCards = null;
+    private PlayingCard[] _playedCards = null;
+    private readonly float _duration = 1;
 
     // State Methods ==============================================================================
 
-    public BarterState_TurnOpp(string stateName, BarterStateMachine machine) : base(stateName, machine) {}
+    public BarterState_TurnOpp(string stateName, BarterStateMachine machine, float duration) 
+                        : base(stateName, machine) 
+    {
+        _duration = duration;
+    }
 
     public override void Enter(BarterBaseState previousState)
     {
         // Clear the submitted match array- important if we're entering from the Compute state.
         if (previousState == _machine.ComputeState) {
-            // TODO: Consider moving this elsewhere, if it makes animating hard.
             _machine.Dir.SetMatchArray(null);
+            _machine.Dir.PlayerHandController.Lock();
         }
 
         // ================
@@ -35,20 +40,20 @@ public class BarterState_TurnOpp : BarterBaseState
         }
 
         // Lazily init our card array... or reinit, if cardsToPlay changed.
-        if (playedCards == null || playedCards.Length != cardsToPlay) {
-            playedCards = new PlayingCard[cardsToPlay];   
+        if (_playedCards == null || _playedCards.Length != cardsToPlay) {
+            _playedCards = new PlayingCard[cardsToPlay];   
         }
         // Enemy picks cards randomly and stores them in an array!
         for (int i = 0; i < cardsToPlay; i++) {
             int handIndex = Random.Range(0, handList.Count);
-            playedCards[i] = handList[handIndex];
+            _playedCards[i] = handList[handIndex];
         }
 
         // Send the complete array of cards to the director.
-        _machine.Dir.SetOppCards(playedCards);
+        _machine.Dir.SetOppCards(_playedCards);
 
         // Debug.Log($"Opp submitted: {string.Join(", ", playedCards.Select(x => x.Id))}");
-        
+
         _machine.Dir.StartCoroutine(WaitAndGo());
     }
 
@@ -64,11 +69,11 @@ public class BarterState_TurnOpp : BarterBaseState
 
     public override void Exit() {}
 
-    // Private methods ============================================================================
+    // Misc methods ============================================================================
 
     private IEnumerator WaitAndGo()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(_duration);
         _machine.CurrentState = _machine.TurnPlayerState;
     }
 }

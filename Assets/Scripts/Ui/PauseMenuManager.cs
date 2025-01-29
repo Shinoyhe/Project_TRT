@@ -15,7 +15,7 @@ public class PauseMenuManager : Singleton<PauseMenuManager>
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (PlayerInputHandler.Instance.GetPauseDown()) { 
 
             if (_paused) {
                 UnPauseScene();

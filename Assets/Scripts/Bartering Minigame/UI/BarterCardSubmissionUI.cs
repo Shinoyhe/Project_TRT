@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BarterCardSubmissionUI : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class BarterCardSubmissionUI : MonoBehaviour
 
     [SerializeField, Tooltip("The BarterDirector in this scene.")]
     private BarterDirector Director;
+    [SerializeField, Tooltip("DEBUG- DISPLAY CURRENT STATE.")]
+    private TMP_Text DEBUG_StateDisplay;
 
     [Header("Player Card Region")]
     [SerializeField, Tooltip("The UI prefab consisting of a single player card slot.")]
@@ -63,31 +66,35 @@ public class BarterCardSubmissionUI : MonoBehaviour
 
         _matchSlotBounds = new(MatchSlotZone.offsetMin.x, MatchSlotZone.offsetMax.x);
         _matchSlotY = MatchSlotZone.anchoredPosition.y;
-    }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
         // Array inits ================
 
         // Initialize our arrays!
         _playerCardSlots = new PlayerCardSlot[Director.CardsToPlay];
         _oppCardSlots = new AutoPlayerCardSlotUI[Director.CardsToPlay];
         _matchSlots = new MatchSlotUI[Director.CardsToPlay];
+    }
 
+    // Start is called before the first frame update
+    private void Start()
+    {
         // Instantiate our objects in our arrays.
         for (int i=0; i<Director.CardsToPlay; i++)
         {
             // Initialize our Player CardSlots!
             GameObject playerSlot = PlaceSlot(i, PlayerCardSlotPrefab, _playerCardSlotBounds, 
-                                              _playerCardSlotY);
+                                              PlayerCardSlotZone);
             _playerCardSlots[i] = playerSlot.GetComponent<PlayerCardSlot>();
+
+            _playerCardSlots[i].OnSetCard -= OnSlotSetCard;
+            _playerCardSlots[i].OnSetCard += OnSlotSetCard;
+
             // Initialize our Opp CardSlots!
             GameObject oppSlot = PlaceSlot(i, OppCardSlotPrefab, _oppCardSlotBounds, 
-                                           _oppCardSlotY);
+                                           OppCardSlotZone);
             _oppCardSlots[i] = oppSlot.GetComponent<AutoPlayerCardSlotUI>();
             // Initialize our MatchSlots!
-            GameObject matchSlot = PlaceSlot(i, MatchSlotPrefab, _matchSlotBounds, _matchSlotY);
+            GameObject matchSlot = PlaceSlot(i, MatchSlotPrefab, _matchSlotBounds, MatchSlotZone);
             _matchSlots[i] = matchSlot.GetComponent<MatchSlotUI>();
         }
 
@@ -102,15 +109,36 @@ public class BarterCardSubmissionUI : MonoBehaviour
         // Locals =====================
 
         // Local method to simplify slot initialization.
-        GameObject PlaceSlot(int i, GameObject prefab, Vector2 xBounds, float y)
+        GameObject PlaceSlot(int i, GameObject prefab, Vector2 xBounds, Transform parent)
         {
             // For later, center our indices in the range.
             float normalizedI = (i + 1) / (float)(Director.CardsToPlay + 1);
 
-            GameObject slotObject = Instantiate(prefab, transform);
+            GameObject slotObject = Instantiate(prefab, parent);
             float x = Mathf.Lerp(xBounds.x, xBounds.y, normalizedI);
-            ((RectTransform)slotObject.transform).anchoredPosition = new(x, y);
+            ((RectTransform)slotObject.transform).anchoredPosition = new(x, 0);
             return slotObject;
+        }
+    }
+
+    private void Update()
+    {
+        // BAD CODE! DONT USE THIS IN ANY NON-PROTOTYPE BUILD.
+        DEBUG_StateDisplay.text = "Current State:\n" + Director.GetCurrentStateName();
+    }
+
+    private void OnSlotSetCard(PlayerCardSlot slot, DisplayCard card)
+    {
+        // NOTE: Not a great solution, but simple, and performance is negligible
+        //       on the single-digit scales we're gonna be using it on.
+        //       Potentially revisit this if we end up having a hand size of like 1000, lol.
+        
+        for (int i=0; i<_playerCardSlots.Length; i++) {
+            if (_playerCardSlots[i] == slot) {
+                PlayingCard playingCard = (card != null) ? card.CardData : null;
+                Director.SetPlayerCard(playingCard, i);
+                return;
+            }
         }
     }
 

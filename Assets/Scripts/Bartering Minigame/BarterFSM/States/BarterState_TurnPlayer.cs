@@ -22,9 +22,9 @@ public class BarterState_TurnPlayer : BarterBaseState
         }
 
         // TODO: Subscribe
-        // _machine.Dir.PlayerHandController.OnSubmitCards -= SubmitPlayerCards;
-        // _machine.Dir.PlayerHandController.OnSubmitCards += SubmitPlayerCards;
-        
+        _machine.Dir.OnPlayerAllCardsSet -= SubmitPlayerCards;
+        _machine.Dir.OnPlayerAllCardsSet += SubmitPlayerCards;
+
         _machine.Dir.PlayerHandController.Unlock();
 
         // TODO: How to handle UI stuff?
@@ -42,27 +42,14 @@ public class BarterState_TurnPlayer : BarterBaseState
 
     public override void Exit() 
     {
-        // TODO: Unsubscribe
-        // _machine.Dir.PlayerHandController.OnSubmitCards -= SubmitPlayerCards;
-
+        _machine.Dir.OnPlayerAllCardsSet -= SubmitPlayerCards;
         _machine.Dir.PlayerHandController.Lock();
     }
 
     // Callback Methods ===========================================================================
 
-    private void SubmitPlayerCards(PlayingCard[] submittedCards)
+    private void SubmitPlayerCards()
     {
-        // Validate the array.
-        if (submittedCards.Length != _machine.Dir.CardsToPlay) {
-            Debug.LogError("BarterState_TurnPlayer Error: SubmitPlayerCards failed. The provided "
-                        + $"array has {submittedCards.Length} cards, but we were expecting "
-                        + $"{_machine.Dir.CardsToPlay} cards.");
-            return;
-        }
-
-        // Send the complete array of cards to the director.
-        _machine.Dir.SetPlayerCards(submittedCards);
-
         _machine.CurrentState = _machine.ComputeState;
     }
 }

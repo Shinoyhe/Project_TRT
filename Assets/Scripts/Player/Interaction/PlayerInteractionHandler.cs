@@ -8,8 +8,14 @@ using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 
 public class PlayerInteractionHandler : MonoBehaviour {
+  /// <summary>
+  /// List of interactables that the player is in range to interact with
+  /// </summary>
   private List<Interactable> accessibleInteractables;
   [SerializeField]
+  /// <summary>
+  /// The interactable that will be interacted with when the player tries to interact
+  /// </summary>
   private Interactable highlightedInteractable;
 
   /// <summary>
@@ -21,7 +27,7 @@ public class PlayerInteractionHandler : MonoBehaviour {
     UnityEngine.Debug.Assert(GetComponent<Rigidbody>() != null, "PlayerInteractionHandler requires an attatched rigidbody&collider");
     accessibleInteractables = new List<Interactable>();
   }
-  private void Update() {
+  private void FixedUpdate() {
     CheckHighlight();
   }
   /// <summary>
@@ -33,6 +39,9 @@ public class PlayerInteractionHandler : MonoBehaviour {
     }
     highlightedInteractable.GetComponent<Interactable>().Interaction();
   }
+  /// <summary>
+  /// Checks if we need to change which interactable is currently highlighted
+  /// </summary>
   private void CheckHighlight() {
     if (highlightedInteractable == null) {
       if (accessibleInteractables.Count == 1) {
@@ -53,8 +62,6 @@ public class PlayerInteractionHandler : MonoBehaviour {
   }
   /// <summary>
   /// sets the current highlighted Interactable to the closest interactable
-  /// calls IInteractable.Highlight on the the new closest interactable
-  /// calls IInteractable.UnHighlight on the the old highlighted interactable
   /// </summary>
   public void HighlightNearest() {
     // get the nearest interactable the player can interact with
@@ -74,11 +81,18 @@ public class PlayerInteractionHandler : MonoBehaviour {
     HandlerHighlight(nearestInteractable);
   }
   
+  /// <summary>
+  /// safely highlights the given interactable, replacing the currently highlighted interactable if there is one
+  /// </summary>
+  /// <param name="newHighlight">The interactable to be highlighted</param>
   private void HandlerHighlight(Interactable newHighlight) {
     HandlerUnHighlight();
     highlightedInteractable = newHighlight;
     highlightedInteractable.Highlight();
   }
+  /// <summary>
+  /// Safely un-highlights the currently highlighted interactable
+  /// </summary>
   private void HandlerUnHighlight() {
     if (highlightedInteractable == null) {
       return;
@@ -101,7 +115,6 @@ public class PlayerInteractionHandler : MonoBehaviour {
       return false;
     }
     accessibleInteractables.Add(newInteractable);
-    UnityEngine.Debug.Log("added interactable: " + newInteractable);
     return true;
   }
   /// <summary>
@@ -118,13 +131,11 @@ public class PlayerInteractionHandler : MonoBehaviour {
       UnityEngine.Debug.LogWarning("WARNING: PlayerInteractionHandler: RemoveAccesibleInteractable: interactable not found in list");
       return false;
     }
-    UnityEngine.Debug.Log("removed interactable: " + markedInteractable);
     accessibleInteractables.Remove(markedInteractable);
     return true;
   }
 
   private void OnTriggerEnter(Collider other) {
-    UnityEngine.Debug.Log("hit somthin");
     Interactable otherInteractable = other.GetComponent<Interactable>();
     if (otherInteractable != null) {
       AddAccesibleInteractable(otherInteractable);

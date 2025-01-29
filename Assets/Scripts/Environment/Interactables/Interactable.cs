@@ -4,7 +4,10 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-
+  private void Start() {
+    UnityEngine.Debug.Assert(GetComponent<Collider>() != null, "Interactable requires an attatched collider");
+    UnityEngine.Debug.Assert(GetComponent<Collider>().isTrigger, "Interactable requires an attatched Trigger collider");
+  }
   /// <summary>
   /// Called when the player can interact with this interactable
   /// </summary>

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UIElements;
@@ -20,14 +22,34 @@ public class PlayerInteractionHandler : MonoBehaviour {
     accessibleInteractables = new List<Interactable>();
   }
   private void Update() {
-    HighlightNearest();
+    CheckHighlight();
   }
   /// <summary>
   /// calls the interact function on the currently highlighted Interactable
   /// </summary>
   public void Interact() {
-    if (highlightedInteractable == null) return;
+    if (highlightedInteractable == null) {
+      return;
+    }
     highlightedInteractable.GetComponent<Interactable>().Interaction();
+  }
+  private void CheckHighlight() {
+    if (highlightedInteractable == null) {
+      if (accessibleInteractables.Count == 1) {
+        HandlerHighlight(accessibleInteractables.ElementAt(0));
+      } else if (accessibleInteractables.Count > 1) {
+        HighlightNearest();
+      } else if (accessibleInteractables.Count == 1) {
+        return;
+      }
+    } else {
+      if (accessibleInteractables.Count > 1) {
+        HighlightNearest();
+      } else if (accessibleInteractables.Count == 0) {
+        UnityEngine.Debug.LogWarning("WARNING: PlayerInteractionHandler: CheckHighlight: Highlighted interactable found with empty accessible interactables list");
+        HandlerUnHighlight();
+      }
+    }
   }
   /// <summary>
   /// sets the current highlighted Interactable to the closest interactable
@@ -35,10 +57,9 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// calls IInteractable.UnHighlight on the the old highlighted interactable
   /// </summary>
   public void HighlightNearest() {
-    if (accessibleInteractables.Count == 0) return;
+    // get the nearest interactable the player can interact with
     Interactable nearestInteractable = highlightedInteractable;
     float distanceToNearest = float.MaxValue;
-
     foreach(Interactable curInteractable in accessibleInteractables) {
       float distanceToCurrent = Vector3.Distance(transform.position,curInteractable.transform.position);
       if( distanceToCurrent < distanceToNearest ) {
@@ -47,19 +68,30 @@ public class PlayerInteractionHandler : MonoBehaviour {
       }
     }
 
-    if (nearestInteractable == highlightedInteractable) return;
-    if (highlightedInteractable != null) {
-      highlightedInteractable.UnHighlight();
+    if (nearestInteractable == highlightedInteractable) {
+      return;
     }
-    highlightedInteractable = nearestInteractable;
+    HandlerHighlight(nearestInteractable);
+  }
+  
+  private void HandlerHighlight(Interactable newHighlight) {
+    HandlerUnHighlight();
+    highlightedInteractable = newHighlight;
     highlightedInteractable.Highlight();
+  }
+  private void HandlerUnHighlight() {
+    if (highlightedInteractable == null) {
+      return;
+    }
+    highlightedInteractable.UnHighlight();
+    highlightedInteractable = null;
   }
   /// <summary>
   /// adds an interactable to the list of accessible interactables
   /// </summary>
-  /// <param name="newInteractable"></param>
+  /// <param name="newInteractable">The Interactable to be added to the list</param>
   /// <returns>Returns true if interactable successfully added, false if not</returns>
-  public bool AddAccesibleInteractable(Interactable newInteractable) {
+  private bool AddAccesibleInteractable(Interactable newInteractable) {
     if (newInteractable == null) {
       UnityEngine.Debug.LogError("ERROR: PlayerInteractionHandler: AddAccesibleInteractable: Cannot add null item");
       return false;
@@ -75,9 +107,9 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// <summary>
   /// removes an interactable from the list of accessible interactables
   /// </summary>
-  /// <param name="markedInteractable"></param>
+  /// <param name="markedInteractable"> The Interactable to be removed from the list</param>
   /// <returns>returns true if succesfully removed, and false if there was nothing to remove</returns>
-  public bool RemoveAccesibleInteractable(Interactable markedInteractable) {
+  private bool RemoveAccesibleInteractable(Interactable markedInteractable) {
     if (markedInteractable == null) {
       UnityEngine.Debug.LogError("ERROR: PlayerInteractionHandler: RemoveAccesibleInteractable: Cannot remove null item");
       return false;
@@ -101,8 +133,10 @@ public class PlayerInteractionHandler : MonoBehaviour {
   private void OnTriggerExit(Collider other) {
     Interactable otherInteractable = other.GetComponent<Interactable>();
     if (otherInteractable != null && accessibleInteractables.Contains(otherInteractable)) {
+      if (otherInteractable == highlightedInteractable) {
+        HandlerUnHighlight();
+      }
       RemoveAccesibleInteractable(otherInteractable);
-      HighlightNearest();
     }
   } 
 }

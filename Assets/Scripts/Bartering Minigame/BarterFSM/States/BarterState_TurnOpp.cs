@@ -48,8 +48,7 @@ public class BarterState_TurnOpp : BarterBaseState
         _machine.Dir.SetOppCards(playedCards);
 
         // Debug.Log($"Opp submitted: {string.Join(", ", playedCards.Select(x => x.Id))}");
-
-        // _machine.CurrentState = _machine.DEBUG_TurnAutoPlayerState;
+        
         _machine.Dir.StartCoroutine(WaitAndGo());
     }
 
@@ -70,6 +69,6 @@ public class BarterState_TurnOpp : BarterBaseState
     private IEnumerator WaitAndGo()
     {
         yield return new WaitForSeconds(1);
-        _machine.CurrentState = _machine.DEBUG_TurnAutoPlayerState;
+        _machine.CurrentState = _machine.TurnPlayerState;
     }
 }

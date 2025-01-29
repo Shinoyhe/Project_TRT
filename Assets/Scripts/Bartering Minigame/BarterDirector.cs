@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class BarterDirector : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class BarterDirector : MonoBehaviour
     private CardUser OppCardUser;
     [SerializeField, Tooltip("The card user used by the player.")]
     private CardUser PlayerCardUser;
+    [Tooltip("The HandController used by the player.")]
+    public HandController PlayerHandController;
 
     // Actions for when arrays are updated.
     public System.Action<PlayingCard[]> OnOppCardsSet;

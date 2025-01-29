@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 
 public class HandController : MonoBehaviour
 {
@@ -10,6 +10,8 @@ public class HandController : MonoBehaviour
     private CardUser cardUser;
     [SerializeField, Tooltip("The displayCard prefab, with images and text preconfigured.")]
     private GameObject displayCardPrefab;
+    [SerializeField, Tooltip("The cardUser which owns the hand we're displaying.\n\nDefault: 5")]
+    private BarterCardSubmissionUI SubmissionUI;
 
 
     [Header("Positioning")]
@@ -40,6 +42,8 @@ public class HandController : MonoBehaviour
     private float dragAlpha = 0.5f;
     [SerializeField/*, ReadOnly*/]
     private bool alreadyDragging = false;
+    [SerializeField, Tooltip("The amount of time, in seconds, a card takes to snap to a submit slot.\n\nDefault: 0.15")]
+    private float snapTime = 0.15f;
 
     [Header("Other")]
     [SerializeField, Tooltip("The amount of time, in seconds, between dragUpdate events.\n\nDefault: 0.1")]
@@ -65,9 +69,7 @@ public class HandController : MonoBehaviour
         hand = new();
     }
 
-    // ================================================================
-    // Repainting methods
-    // ================================================================
+    // Repainting Methods =========================================================================
 
     public void UpdateDisplayCards(CardUser.HandDelta handDelta)
     {
@@ -165,18 +167,41 @@ public class HandController : MonoBehaviour
             Vector3 position = Vector3.Lerp(anchorLeft.localPosition, anchorRight.localPosition,
                                             distanceOnArc);
 
-            // Figure out how long we should animate for...
-            float duration = overrideAnimation ? 0 : moveTime;
-
-            // And animate!
-            displayCard.TransformTo(position, 1, duration);
+            // Log our base position in our dictionary.
             baseCardPositions[displayCard] = position;
+
+            // If we the current card isn't submitted...
+            if (displayCard.SubmitSlot == null) {
+                // Figure out how long we should animate for and animate!
+                float duration = overrideAnimation ? 0 : moveTime;
+                displayCard.TransformTo(position, 1, duration);
+            }
         }
     }
 
-    // ================================================================
-    // DisplayCard callbacks
-    // ================================================================
+    // Misc public manipulators ===================================================================
+
+    /// <summary>
+    /// Lock input on our display cards and reset to the view position.
+    /// </summary>
+    public void Lock()
+    {
+        foreach (DisplayCard card in hand) {
+            card.SetInteractable(false);
+        }
+    }
+
+    /// <summary>
+    /// Unlock input on our display cards.
+    /// </summary>
+    public void Unlock()
+    {
+        foreach (DisplayCard card in hand) {
+            card.SetInteractable(true);
+        }
+    }
+
+    // DisplayCard Callbacks ======================================================================
 
     private void OnCardHoverStart(DisplayCard card)
     {
@@ -193,7 +218,7 @@ public class HandController : MonoBehaviour
 
     private void OnCardHoverEnd(DisplayCard card)
     {
-        if (alreadyDragging) return;
+        if (alreadyDragging || card.SubmitSlot != null) return;
 
         card.LerpOnlySize(1, hoverTime);
         ResetToViewPosition();
@@ -204,16 +229,19 @@ public class HandController : MonoBehaviour
         if (!alreadyDragging) {
             card.LerpOnlySize(dragScaleFactor, hoverTime);
             alreadyDragging = true;
+
+            // If we were in a slot, unhook ourselves from it.
+            if (card.SubmitSlot != null) {
+                card.SubmitSlot.SetCard(null);
+                card.SetSubmitted(null);
+            }
         }
     }
 
     private void OnCardDrag(DisplayCard card)
     {      
-        // foreach (CardSubmitSlot slot in Director.GetCardSubmitSlots()) {
-        //     if (card.GetWorldRect().Overlaps(slot.GetWorldRect())) {
-        //         // TODO: Animate something on the slot? Something on the card?
-        //     }
-        // }
+        // Doesn't do anything right now.
+        return;
     }
 
     private void OnCardDragEnd(DisplayCard card)
@@ -223,15 +251,22 @@ public class HandController : MonoBehaviour
         // ================
 
         if (alreadyDragging) {
-            /*CardSubmitSlot*/ Transform targetSlot = null;
+            PlayerCardSlot targetSlot = null;
 
-            // foreach (CardSubmitSlot slot in Director.GetCardSubmitSlots()) {
-            //     if (card.GetWorldRect().Overlaps(slot.GetWorldRect())) {
-            //         // Animate something on the slot? Something on the card?
-            //         targetSlot = slot;
-            //         break;
-            //     }
-            // }
+            foreach (PlayerCardSlot slot in SubmissionUI.GetPlayerCardSlots()) {
+                if (card.GetWorldRect().Overlaps(slot.GetWorldRect())) {
+                    // Animate something on the slot? Something on the card?
+
+                    // If the slot is already filled, kick the old card out.
+                    if (slot.Card != null) {
+                        slot.Card.SetSubmitted(null);
+                        slot.SetCard(null);
+                    }
+
+                    targetSlot = slot;
+                    break;
+                }
+            }
 
             // If we have a target/targets...
             if (targetSlot != null) {
@@ -239,9 +274,21 @@ public class HandController : MonoBehaviour
                 // TODO: Play a submit SFX
                 // TODO: Note the display card as 'submitted'- this discounts it
                 //       from hand rendering, until it's dragged out again
+
+                // Find the position of the slot in OUR localspace.
+                Vector3 localSlotPosition = card.transform.localPosition + 
+                                            (targetSlot.transform.position-card.transform.position);
+                card.TransformTo(localSlotPosition, 1, snapTime);
+                card.SetSubmitted(targetSlot);
+                targetSlot.SetCard(card);
+
+                ResetToViewPosition();
             } else {
                 // If we don't have targets, return to our hand.
                 card.TransformTo(baseCardPositions[card], 1, moveTime);
+                card.SetSubmitted(null);
+                card.SubmitSlot.SetCard(null);
+
                 ResetToViewPosition();
             }
             

@@ -31,7 +31,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
 
     // Player CardSlots =======================
     // Array of AutoPlayerCardSlotUI components, one for each Player card submitted.
-    private AutoPlayerCardSlotUI[] _playerCardSlots = null;
+    private PlayerCardSlot[] _playerCardSlots = null;
     // The horizontal range of our PlayerCardSlotZone, used to position the AutoPlayerCardSlotUI objects.
     private Vector2 _playerCardSlotBounds;
     private float _playerCardSlotY;
@@ -71,7 +71,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
         // Array inits ================
 
         // Initialize our arrays!
-        _playerCardSlots = new AutoPlayerCardSlotUI[Director.CardsToPlay];
+        _playerCardSlots = new PlayerCardSlot[Director.CardsToPlay];
         _oppCardSlots = new AutoPlayerCardSlotUI[Director.CardsToPlay];
         _matchSlots = new MatchSlotUI[Director.CardsToPlay];
 
@@ -81,7 +81,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
             // Initialize our Player CardSlots!
             GameObject playerSlot = PlaceSlot(i, PlayerCardSlotPrefab, _playerCardSlotBounds, 
                                               _playerCardSlotY);
-            _playerCardSlots[i] = playerSlot.GetComponent<AutoPlayerCardSlotUI>();
+            _playerCardSlots[i] = playerSlot.GetComponent<PlayerCardSlot>();
             // Initialize our Opp CardSlots!
             GameObject oppSlot = PlaceSlot(i, OppCardSlotPrefab, _oppCardSlotBounds, 
                                            _oppCardSlotY);
@@ -92,9 +92,6 @@ public class BarterCardSubmissionUI : MonoBehaviour
         }
 
         // Action subs ================
-
-        Director.OnPlayerCardsSet -= UpdatePlayerCards;
-        Director.OnPlayerCardsSet += UpdatePlayerCards;
 
         Director.OnOppCardsSet -= UpdateOppCards;
         Director.OnOppCardsSet += UpdateOppCards;
@@ -115,11 +112,6 @@ public class BarterCardSubmissionUI : MonoBehaviour
             ((RectTransform)slotObject.transform).anchoredPosition = new(x, y);
             return slotObject;
         }
-    }
-
-    private void UpdatePlayerCards(PlayingCard[] results)
-    {
-        UpdateCards(results, _playerCardSlots);
     }
 
     private void UpdateOppCards(PlayingCard[] results)
@@ -175,5 +167,10 @@ public class BarterCardSubmissionUI : MonoBehaviour
                                                          : MatchSlotUI.MatchType.Wrong;
             _matchSlots[i].SetState(matchType);
         }
+    }
+
+    public PlayerCardSlot[] GetPlayerCardSlots()
+    {
+        return _playerCardSlots;
     }
 }

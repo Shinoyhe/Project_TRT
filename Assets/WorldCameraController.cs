@@ -25,7 +25,12 @@ public class WorldCameraController : MonoBehaviour
 
     public enum Follower
     {
-        None, FramingTransposer, TrackedDolly
+        None, Transposer, TrackedDolly
+    }
+
+    public enum Aimmer
+    {
+        None, Composer
     }
 
 
@@ -37,13 +42,9 @@ public class WorldCameraController : MonoBehaviour
 
     [Header("Follower")]
     [SerializeField]
-    private Follower followerType = Follower.FramingTransposer;
-    [SerializeField] [Range(0, 1)]
-    private float lookAheadDistance = 0.5f;
-    [SerializeField] [Range(0, 30)]
-    private float lookAheadSmoothing = 5f;
+    private Follower followerType = Follower.Transposer;
     [SerializeField] [Range(0, 20)]
-    private float dampening = 0;
+    private float followDampening = 2;
 
     [Header("Transposer Follower")]
     [SerializeField]
@@ -52,6 +53,17 @@ public class WorldCameraController : MonoBehaviour
     private float transposerDistance = 5f;
     [SerializeField]
     private Vector3 transposerRotation = Vector3.right * 15f;
+
+
+    [Header("Aimmer")]
+    [SerializeField]
+    private Aimmer aimmerType = Aimmer.Composer;
+    [SerializeField] [Range(0, 1)]
+    private float lookAheadDistance = 0.5f;
+    [SerializeField] [Range(0, 30)]
+    private float lookAheadSmoothing = 5f;
+    [SerializeField] [Range(0, 20)]
+    private float aimDampening = 2;
 
 
 
@@ -94,11 +106,6 @@ public class WorldCameraController : MonoBehaviour
         Fuckmyass();
     }
 
-    private Vector3 GetTowardsCameraOrientation()
-    {
-        return (Player.Transform.position - VirtualMovement.transform.position).normalized;
-    }
-
 
     /// <summary>
     /// Changes the Virtual Camera parameters automagically :D
@@ -110,13 +117,23 @@ public class WorldCameraController : MonoBehaviour
         switch (followerType)
         {
             case Follower.None:
-                DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>());
+                DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineTransposer>());
                 DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>());
                 break;
-            case Follower.FramingTransposer:
+            case Follower.Transposer:
                 UpdateFollowerTransposerValues();
                 break;
             case Follower.TrackedDolly:
+                break;
+        }
+
+        switch (aimmerType)
+        {
+            case Aimmer.None:
+                DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineComposer>());
+                break;
+            case Aimmer.Composer:
+                UpdateComposerValues();
                 break;
         }
     }
@@ -125,33 +142,39 @@ public class WorldCameraController : MonoBehaviour
     private void UpdateFollowerTransposerValues()
     {
         DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>());
-        var mainFT = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>()
-            ?? VirtualCamera.AddCinemachineComponent<CinemachineFramingTransposer>();
+        var mainFT = VirtualCamera.GetCinemachineComponent<CinemachineTransposer>()
+            ?? VirtualCamera.AddCinemachineComponent<CinemachineTransposer>();
 
         DestroyImmediate(VirtualMovement.GetCinemachineComponent<CinemachineTrackedDolly>());
-        var moveFT = VirtualMovement.GetCinemachineComponent<CinemachineFramingTransposer>()
-            ?? VirtualMovement.AddCinemachineComponent<CinemachineFramingTransposer>();
+        var moveFT = VirtualMovement.GetCinemachineComponent<CinemachineTransposer>()
+            ?? VirtualMovement.AddCinemachineComponent<CinemachineTransposer>();
 
 
         // Apply Parameters for Movement and Camera
-        mainFT.m_TrackedObjectOffset = Vector3.up * transposerHeightOffset;
-        moveFT.m_TrackedObjectOffset = Vector3.up * transposerHeightOffset;
-        mainFT.m_CameraDistance = transposerDistance;
-        moveFT.m_CameraDistance = transposerDistance;
+        mainFT.m_FollowOffset = Vector3.up * transposerHeightOffset;
+        moveFT.m_FollowOffset = Vector3.up * transposerHeightOffset;
+        mainFT.m_FollowOffset += Vector3.forward * -transposerDistance;
+        moveFT.m_FollowOffset += Vector3.forward * -transposerDistance;
         VirtualCamera.transform.rotation = Quaternion.Euler(transposerRotation);
         VirtualMovement.transform.rotation = Quaternion.Euler(transposerRotation);
 
-        // Only Main Affect Main Virtual Camera
-        mainFT.m_LookaheadTime = lookAheadDistance;
-        mainFT.m_LookaheadSmoothing = lookAheadSmoothing;
-
-        mainFT.m_XDamping = dampening;
-        mainFT.m_YDamping = dampening;
-        mainFT.m_ZDamping = dampening;
+        mainFT.m_XDamping = followDampening;
+        mainFT.m_YDamping = followDampening;
+        mainFT.m_ZDamping = followDampening;
 
         moveFT.m_XDamping = 0;
         moveFT.m_YDamping = 0;
         moveFT.m_ZDamping = 0;
+    }
+
+
+    private void UpdateComposerValues()
+    {
+        var mainC = VirtualCamera.GetCinemachineComponent<CinemachineComposer>()
+            ?? VirtualCamera.AddCinemachineComponent<CinemachineComposer>();
+
+        mainC.m_HorizontalDamping = aimDampening;
+        mainC.m_VerticalDamping = aimDampening;
     }
 
 

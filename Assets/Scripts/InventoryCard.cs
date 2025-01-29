@@ -5,8 +5,8 @@ using UnityEngine;
 public enum CardTypes { INFO, ITEM }
 
 
-[CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/Card", order = 1)]
-public class CardData : ScriptableObject
+[CreateAssetMenu(fileName = "InventoryCard", menuName = "ScriptableObjects/InventoryCard", order = 1)]
+public class InventoryCard : ScriptableObject
 {
     public string CardName;
 

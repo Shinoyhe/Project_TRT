@@ -276,7 +276,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 
 #if UNITY_WEBGL
             // Mouse tends to be even more sensitive in WebGL due to mouse acceleration, so reduce it even more.
-            i *= WebglLookSensitivityMultiplier;
+            axisValue *= WebglLookSensitivityMultiplier;
 #endif
         }
 

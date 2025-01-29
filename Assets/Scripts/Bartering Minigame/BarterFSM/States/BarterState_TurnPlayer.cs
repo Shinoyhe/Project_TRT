@@ -21,11 +21,11 @@ public class BarterState_TurnPlayer : BarterBaseState
             return;
         }
 
-        // TODO: Unlock player input
-
-        // PlayerCardInput.OnSubmitCards -= SubmitPlayerCards;
-        // PlayerCardInput.OnSubmitCards += SubmitPlayerCards;
-        // PlayerCardInput.Unlock();
+        // TODO: Subscribe
+        // _machine.Dir.PlayerHandController.OnSubmitCards -= SubmitPlayerCards;
+        // _machine.Dir.PlayerHandController.OnSubmitCards += SubmitPlayerCards;
+        
+        _machine.Dir.PlayerHandController.Unlock();
 
         // TODO: How to handle UI stuff?
     }
@@ -42,10 +42,10 @@ public class BarterState_TurnPlayer : BarterBaseState
 
     public override void Exit() 
     {
-        // TODO: Lock player input
+        // TODO: Unsubscribe
+        // _machine.Dir.PlayerHandController.OnSubmitCards -= SubmitPlayerCards;
 
-        // PlayerCardInput.OnSubmitCards -= SubmitPlayerCards;
-        // PlayerCardInput.Lock();
+        _machine.Dir.PlayerHandController.Lock();
     }
 
     // Callback Methods ===========================================================================
@@ -65,6 +65,4 @@ public class BarterState_TurnPlayer : BarterBaseState
 
         _machine.CurrentState = _machine.ComputeState;
     }
-
-    
 }

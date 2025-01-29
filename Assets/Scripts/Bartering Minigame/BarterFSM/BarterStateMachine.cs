@@ -46,8 +46,8 @@ public class BarterStateMachine
     // Define our states.
     public BarterState_Init InitState;
     public BarterState_TurnOpp TurnOppState;
-    // public BarterState_TurnPlayer TurnPlayerState;
-    public BarterState_TurnAutoPlayer DEBUG_TurnAutoPlayerState;
+    public BarterState_TurnPlayer TurnPlayerState;
+    // public BarterState_TurnAutoPlayer DEBUG_TurnAutoPlayerState;
     public BarterState_Compute ComputeState;
     // public BarterState_CheckInfo CheckInfoState;
     public BarterState_EndWin EndWinState;
@@ -74,7 +74,7 @@ public class BarterStateMachine
 
         InitState = new("Init", this);
         TurnOppState = new("Opponent Turn", this);
-        DEBUG_TurnAutoPlayerState = new("Auto Player Turn", this);
+        TurnPlayerState = new("Auto Player Turn", this);
         ComputeState = new("Compute", this);
         // CheckInfoState = new("Check Info", this);
         EndWinState = new("Win", this);

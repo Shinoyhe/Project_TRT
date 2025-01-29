@@ -10,6 +10,8 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 {
     // Parameters =================================================================================
 
+    [SerializeField, Tooltip("Unlock the Mouse")]
+    private bool LockMouse = true;
     [SerializeField, Tooltip("Sensitivity multiplier for moving the camera around")]
     private float LookSensitivity = 1f;
     [SerializeField, Tooltip("Additional sensitivity multiplier for WebGL")]
@@ -31,14 +33,15 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     private bool _sprintInput;
     private bool _interactDown;
     private bool _debugInputDown;
+    private bool _pauseDown;
 
     // Initializers and Finalizers ================================================================
 
     private void Start()
     {
         // Cursor lock -> invisible, and confined to center of screen.
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.lockState = LockMouse ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !LockMouse;
     }
 
     private void OnEnable()
@@ -55,7 +58,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 
     private void OnDisable()
     {
-        _controls.PlayerMovement.Disable();
+        if (_controls != null) _controls.PlayerMovement.Disable();
     }
 
     // InputAction Callbacks and Methods ==========================================================
@@ -66,6 +69,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
         _jumpInputDown = false;
         _interactDown = false;
         _debugInputDown = false;
+        _pauseDown = false;
     }
 
     /// <summary>
@@ -130,6 +134,16 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
         if (context.canceled) _sprintInput = false;
     }
 
+    /// <summary>
+    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
+    /// DO NOT CALL MANUALLY.
+    /// </summary>
+    /// <param name="context"></param>
+    public void OnPause(InputAction.CallbackContext context) {
+        if (context.started) _pauseDown = true;
+        if (context.canceled) _pauseDown = false;
+    }
+
     // Public Accessor Methods ====================================================================
     
     /// <summary>
@@ -180,6 +194,14 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// <returns>bool - if the debug input was pressed down on the last frame.</returns>
     public bool GetDebugDown() {
         return GetCanProcessInput() && _debugInputDown;
+    }
+
+    /// <summary>
+    /// Accessor for if the pause input was pressed on the last frame.
+    /// </summary>
+    /// <returns>bool - if the pause input was pressed down on the last frame.</returns>
+    public bool GetPauseDown() {
+        return GetCanProcessInput() && _pauseDown;
     }
 
     /// <summary>

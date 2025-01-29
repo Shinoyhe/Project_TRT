@@ -9,7 +9,7 @@ He's wired in. #NPC
      ** Smash computer. #Action
         
  * Smash computer. #Action
-    Fuck you Mark. 
+    Fig you Mark. 
 
-- Sorry, my Prada’s at the cleaners along with my hoodie and my fuck-you flip-flops you pretentious douchebag.
+- Sorry, my Prada’s at the cleaners along with my hoodie and my fig-you flip-flops you pretentious jackfruit.
     -> END

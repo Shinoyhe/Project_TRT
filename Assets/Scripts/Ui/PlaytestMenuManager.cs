@@ -65,6 +65,7 @@ public class PlaytestMenuManager : Singleton<PlaytestMenuManager> {
 
 public class PlaytestMenuEditor : Editor {
 
+    // ETHAN NOTE: For some reason this doesn't save when entering play mode, but does if I make a manual edit after pressing the button
     /// <summary>
     /// Init button to load all scenes in build path.
     /// </summary>

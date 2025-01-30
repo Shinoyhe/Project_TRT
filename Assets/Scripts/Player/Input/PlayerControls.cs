@@ -62,6 +62,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""b40a3041-a96f-4192-a2f6-2464c1cb5c3d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Debug Key"",
+                    ""type"": ""Button"",
+                    ""id"": ""da198104-e8a3-4d33-b4f1-a923feb19a49"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -218,6 +236,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Camera Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e137c835-310f-471a-8b08-8b11745de375"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a959cc6-02a0-4991-828f-dafb07df71b0"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Debug Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -258,6 +298,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerMovement_CameraLook = m_PlayerMovement.FindAction("Camera Look", throwIfNotFound: true);
         m_PlayerMovement_Jump = m_PlayerMovement.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMovement_SprintHold = m_PlayerMovement.FindAction("Sprint Hold", throwIfNotFound: true);
+        m_PlayerMovement_Interact = m_PlayerMovement.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerMovement_DebugKey = m_PlayerMovement.FindAction("Debug Key", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -328,6 +370,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_CameraLook;
     private readonly InputAction m_PlayerMovement_Jump;
     private readonly InputAction m_PlayerMovement_SprintHold;
+    private readonly InputAction m_PlayerMovement_Interact;
+    private readonly InputAction m_PlayerMovement_DebugKey;
     public struct PlayerMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -336,6 +380,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @CameraLook => m_Wrapper.m_PlayerMovement_CameraLook;
         public InputAction @Jump => m_Wrapper.m_PlayerMovement_Jump;
         public InputAction @SprintHold => m_Wrapper.m_PlayerMovement_SprintHold;
+        public InputAction @Interact => m_Wrapper.m_PlayerMovement_Interact;
+        public InputAction @DebugKey => m_Wrapper.m_PlayerMovement_DebugKey;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -357,6 +403,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SprintHold.started += instance.OnSprintHold;
             @SprintHold.performed += instance.OnSprintHold;
             @SprintHold.canceled += instance.OnSprintHold;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @DebugKey.started += instance.OnDebugKey;
+            @DebugKey.performed += instance.OnDebugKey;
+            @DebugKey.canceled += instance.OnDebugKey;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -373,6 +425,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SprintHold.started -= instance.OnSprintHold;
             @SprintHold.performed -= instance.OnSprintHold;
             @SprintHold.canceled -= instance.OnSprintHold;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @DebugKey.started -= instance.OnDebugKey;
+            @DebugKey.performed -= instance.OnDebugKey;
+            @DebugKey.canceled -= instance.OnDebugKey;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -414,5 +472,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnCameraLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprintHold(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnDebugKey(InputAction.CallbackContext context);
     }
 }

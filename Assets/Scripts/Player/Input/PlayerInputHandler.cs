@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,7 +6,7 @@ using UnityEngine.InputSystem;
 /// Class which manages inputs from the new input system, via PlayerControls.
 /// Modded from the input handler from the Unity FPS Microgame.
 /// </summary>
-public class PlayerInputHandler : MonoBehaviour, PlayerControls.IPlayerMovementActions
+public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.IPlayerMovementActions
 {
     // Parameters =================================================================================
 
@@ -28,6 +29,8 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IPlayerMovementA
     private Vector2 _lookDeltaVector;
     private bool _jumpInputDown;
     private bool _sprintInput;
+    private bool _interactDown;
+    private bool _debugInputDown;
 
     // Initializers and Finalizers ================================================================
 
@@ -61,6 +64,8 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IPlayerMovementA
     {
         // LateUpdate is called at the END of every frame, after all Update() calls.
         _jumpInputDown = false;
+        _interactDown = false;
+        _debugInputDown = false;
     }
 
     /// <summary>
@@ -99,6 +104,26 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IPlayerMovementA
     /// DO NOT CALL MANUALLY.
     /// </summary>
     /// <param name="context"></param>
+    public void OnInteract(InputAction.CallbackContext context) {
+        if (context.started) _interactDown = true;
+        if (context.canceled) _interactDown = false;
+    }
+
+    /// <summary>
+    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
+    /// DO NOT CALL MANUALLY.
+    /// </summary>
+    /// <param name="context"></param>
+    public void OnDebugKey(InputAction.CallbackContext context) {
+        if (context.started) _debugInputDown = true;
+        if (context.canceled) _debugInputDown = false;
+    }
+
+    /// <summary>
+    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
+    /// DO NOT CALL MANUALLY.
+    /// </summary>
+    /// <param name="context"></param>
     public void OnSprintHold(InputAction.CallbackContext context)
     {
         if (context.started) _sprintInput = true;
@@ -113,7 +138,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IPlayerMovementA
     /// <returns>bool - if PlayerInputHandler can process input.</returns>
     public bool GetCanProcessInput()
     {
-        return Cursor.lockState == CursorLockMode.Locked;
+        return true;//Cursor.lockState == CursorLockMode.Locked;
     }
 
     /// <summary>
@@ -139,6 +164,22 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IPlayerMovementA
     public bool GetJumpInputDown()
     {
         return GetCanProcessInput() && _jumpInputDown;
+    }
+
+    /// <summary>
+    /// Accessor for if the interact input was pressed on the last frame.
+    /// </summary>
+    /// <returns>bool - if the interact input was pressed down on the last frame.</returns>
+    public bool GetInteractDown() {
+        return GetCanProcessInput() && _interactDown;
+    }
+
+    /// <summary>
+    /// Accessor for if the debug input was pressed on the last frame.
+    /// </summary>
+    /// <returns>bool - if the debug input was pressed down on the last frame.</returns>
+    public bool GetDebugDown() {
+        return GetCanProcessInput() && _debugInputDown;
     }
 
     /// <summary>

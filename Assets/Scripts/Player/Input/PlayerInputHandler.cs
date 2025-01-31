@@ -56,7 +56,9 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 
     private void OnDisable()
     {
-        _controls.PlayerMovement.Disable();
+        if (_controls != null) {
+            _controls.PlayerMovement.Disable();
+        }
     }
 
     // InputAction Callbacks and Methods ==========================================================

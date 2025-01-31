@@ -20,12 +20,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        // Needs to be defined here instead because null reference error can occur
         Player.Movement = this;
-        Player.Object = gameObject;
-        Player.Transform = transform;
     }
 
-    
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();

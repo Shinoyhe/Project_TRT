@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 2648085081706861364}
   - component: {fileID: 5545141352350665784}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 1032150261627337977}
   - component: {fileID: 5580885045628382426}
   - component: {fileID: 3952272854997434913}
+  - component: {fileID: 2619325016540659842}
   m_Layer: 5
   m_Name: InventoryCardObject
   m_TagString: Untagged
@@ -317,6 +318,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &2619325016540659842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5258588618994369088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dae97c7bba88b844a01df8b4db8ab3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _card: {fileID: 0}
+  _cardNameText: {fileID: 3785650873124108434}
+  _cardSpriteImage: {fileID: 7325314269155438841}
+  _cardDescriptionText: {fileID: 5545141352350665784}
 --- !u!1 &9111943706223374946
 GameObject:
   m_ObjectHideFlags: 0

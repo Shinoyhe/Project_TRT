@@ -32,7 +32,10 @@ public class BarterState_TurnOpp : BarterBaseState
         // Clear the submitted match array- important if we're entering from the Compute state.
         if (previousState == _machine.ComputeState) {
             _machine.Dir.SetMatchArray(null);
-            _machine.Dir.PlayerHandController.Lock();
+            if (_machine.Dir.PlayerHandController != null && 
+                _machine.Dir.PlayerHandController.isActiveAndEnabled) {
+                _machine.Dir.PlayerHandController.Lock();
+            }
         }
 
         // Also, initialize our timer!

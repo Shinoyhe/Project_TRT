@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using Unity.VisualScripting;
 
 public class CardUser : MonoBehaviour
 {
@@ -11,25 +9,24 @@ public class CardUser : MonoBehaviour
     [Header("Stats")]
     [SerializeField, Tooltip("The number of cards we draw each turn by default.\n\nDefault: 3")]
     private int BaseDrawSize = 3;
+
     [Header("Card Piles")]
     [SerializeField, Tooltip("A list of PlayingCard we have in our deck. Populates our DrawPile.")]
     private PlayingCard[] DebugStartingDeck;
-    [SerializeField, Tooltip("list representing our draw pile- where UNUSED and inaccessible cards go.")]
-    private List<PlayingCard> _drawPile = new();
     // The draw pile as a read-only list.
     public ReadOnlyCollection<PlayingCard> DrawPileList { get { return _drawPile.AsReadOnly(); }}
-    [SerializeField, Tooltip("The list representing our hand- where cards that can be played go.")]
-    private List<PlayingCard> _hand = new();
     // The hand as a read-only list.
     public ReadOnlyCollection<PlayingCard> HandList { get { return _hand.AsReadOnly(); }}
-    [SerializeField, Tooltip("The list representing our discard pile- where USED and inaccessible cards go.")]
-    private List<PlayingCard> _discardPile = new();
     // The discard pile as a read-only list.
     public ReadOnlyCollection<PlayingCard> DiscardPileList { get { return _discardPile.AsReadOnly(); }}
+
+    // Enums ================
 
     // A public enum used as shorthand to identify the three places cards can be- the Draw Pile,
     // the Hand, and the Discard Pile.
     public enum CardPile { DrawPile, Hand, DiscardPile }
+
+    // Actions ================
 
     // An action called when we draw cards. Takes as argument the number of cards drawn.
     // Useful for things like SFX.
@@ -43,11 +40,20 @@ public class CardUser : MonoBehaviour
 
     // Misc Internal Variables ====================================================================
 
+    // The list representing our draw pile- where UNUSED and inaccessible cards go.
+    private List<PlayingCard> _drawPile = new();
+    // The list representing our hand- where cards that can be played go.")]
+    private List<PlayingCard> _hand = new();
+    // The list representing our discard pile- where USED and inaccessible cards go.
+    private List<PlayingCard> _discardPile = new();
     // Used as a quick converter between our CardPile enum and our actual card lists.
     private Dictionary<CardPile, List<PlayingCard>> _pileToList = null;
 
     // Initializers ===============================================================================
 
+    /// <summary>
+    /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
+    /// </summary>
     public void Initialize()
     {
         // Initialize _drawPile and _pileToList.

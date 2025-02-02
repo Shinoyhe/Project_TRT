@@ -14,7 +14,6 @@ public class BarterStateMachine
     public System.Action<BarterBaseState> OnStateChanged;
 
     // The current state of the state machine.
-    private BarterBaseState _currentState = null;
     public BarterBaseState CurrentState {
         get {
             return _currentState; 
@@ -32,7 +31,7 @@ public class BarterStateMachine
             BarterBaseState lastState = _currentState;
             _currentState = value;
 
-            // Debug announce that we are changing state.
+            // Debug- announce that we are changing state.
             if (_debugMode) {
                 AnnounceState(_currentState, lastState);
             }
@@ -47,19 +46,30 @@ public class BarterStateMachine
     public BarterState_Init InitState;
     public BarterState_TurnOpp TurnOppState;
     public BarterState_TurnPlayer TurnPlayerState;
-    // public BarterState_TurnAutoPlayer DEBUG_TurnAutoPlayerState;
     public BarterState_Compute ComputeState;
-    // public BarterState_CheckInfo CheckInfoState;
     public BarterState_EndWin EndWinState;
     public BarterState_EndLoss EndLossState;
+    // Not implemented... but someday soon!
+    // public BarterState_CheckInfo CheckInfoState;
     
 
     // Misc Internal Variables ====================================================================
 
+    // The backing field for the CurrentState property.
+    private BarterBaseState _currentState = null;
+    // Whether or not we should print debug information.
     private bool _debugMode = false;
 
     // Constructors and Initializers ==============================================================
 
+    /// <summary>
+    /// Returns a new BarterStateMachine.
+    /// </summary>
+    /// <param name="dir">BarterDirector - the Director that uses this state machine.</param>
+    /// <param name="playerCardUser">CardUser - the CardUser controlled by the player.</param>
+    /// <param name="oppCardUser">CardUser - the CardUser used by the opponent AI.</param>
+    /// <param name="oppTurnDuration">float - how long, in seconds, the opponent's turn is.</param>
+    /// <param name="computeDuration">float - how long, in seconds, the compute phase is.</param>
     public BarterStateMachine(BarterDirector dir, CardUser playerCardUser, CardUser oppCardUser,
                               float oppTurnDuration, float computeDuration)
     {

@@ -5,11 +5,16 @@ public class BarterState_TurnPlayer : BarterBaseState
 {
     // State Methods ==============================================================================
 
+    /// <summary>
+    /// Returns a new instance of this state.
+    /// </summary>
+    /// <param name="stateName">string - the internal ID of this state.</param>
+    /// <param name="machine">BarterStateMachine - the FSM that holds this state.</param>
     public BarterState_TurnPlayer(string stateName, BarterStateMachine machine) : base(stateName, machine) {}
 
     public override void Enter(BarterBaseState previousState)
     {
-        // Cache references.
+        // Cache references for code density reasons.
         int cardsToPlay = _machine.Dir.CardsToPlay;
         var handList = _machine.PlayerCardUser.HandList;
         
@@ -21,17 +26,18 @@ public class BarterState_TurnPlayer : BarterBaseState
             return;
         }
 
-        // TODO: Subscribe
+        // Once the player has submitted all cards, proceed.
         _machine.Dir.OnPlayerAllCardsSet -= SubmitPlayerCards;
         _machine.Dir.OnPlayerAllCardsSet += SubmitPlayerCards;
 
+        // Unlock the handcontroller, allowing the user to interact with cards.
         _machine.Dir.PlayerHandController.Unlock();
-
-        // TODO: How to handle UI stuff?
     }
 
     public override void UpdateState()
     {
+        // Decay willingness over time and lose if it hits zero.
+
         _machine.Dir.DecayWillingness();
 
         if (_machine.Dir.GetWillingness() <= 0) {
@@ -42,6 +48,7 @@ public class BarterState_TurnPlayer : BarterBaseState
 
     public override void Exit() 
     {
+        // Unsubscribe from the submission action and lock the controller, stopping player input.
         _machine.Dir.OnPlayerAllCardsSet -= SubmitPlayerCards;
         _machine.Dir.PlayerHandController.Lock();
     }
@@ -50,6 +57,10 @@ public class BarterState_TurnPlayer : BarterBaseState
 
     private void SubmitPlayerCards()
     {
+        // SubmitPlayerCards is called via callback when all cards have been submitted!
+        // We use it to change state.
+        // ================
+
         _machine.CurrentState = _machine.ComputeState;
     }
 }

@@ -6,11 +6,21 @@ public class BarterState_TurnOpp : BarterBaseState
 {
     // Misc Internal Variables ====================================================================
 
+    // The cards that the opponent will play.
     private PlayingCard[] _playedCards = null;
+    // The amount of time, in seconds, spent in this state so far.
+    private float _elapsed = 0;
+    // The amount of time, in seconds, we will spend in this state.
     private readonly float _duration = 1;
 
     // State Methods ==============================================================================
 
+    /// <summary>
+    /// Returns a new instance of this state.
+    /// </summary>
+    /// <param name="stateName">string - the internal ID of this state.</param>
+    /// <param name="machine">BarterStateMachine - the FSM that holds this state.</param>
+    /// <param name="duration">float - how long this state lasts before we exit it.</param>
     public BarterState_TurnOpp(string stateName, BarterStateMachine machine, float duration) 
                         : base(stateName, machine) 
     {
@@ -52,13 +62,21 @@ public class BarterState_TurnOpp : BarterBaseState
         // Send the complete array of cards to the director.
         _machine.Dir.SetOppCards(_playedCards);
 
-        // Debug.Log($"Opp submitted: {string.Join(", ", playedCards.Select(x => x.Id))}");
-
-        _machine.Dir.StartCoroutine(WaitAndGo());
+        // And initialize our timer!
+        _elapsed = 0;
     }
 
     public override void UpdateState()
     {
+        // Evaluate our state timer.
+        _elapsed += Time.deltaTime;
+        if (_elapsed >= _duration) { 
+            _machine.CurrentState = _machine.TurnPlayerState;
+            return;
+        }
+
+        // Decay willingness over time and lose if it hits zero.
+
         _machine.Dir.DecayWillingness();
 
         if (_machine.Dir.GetWillingness() <= 0) {
@@ -74,6 +92,5 @@ public class BarterState_TurnOpp : BarterBaseState
     private IEnumerator WaitAndGo()
     {
         yield return new WaitForSeconds(_duration);
-        _machine.CurrentState = _machine.TurnPlayerState;
     }
 }

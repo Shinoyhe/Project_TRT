@@ -10,6 +10,11 @@ public abstract class BarterBaseState
     // ...or to reach out into the game scene via references on the machine.
     protected BarterStateMachine _machine = null;
 
+    /// <summary>
+    /// Returns a new instance of this state.
+    /// </summary>
+    /// <param name="stateName">string - the internal ID of this state.</param>
+    /// <param name="machine">BarterStateMachine - the FSM that holds this state.</param>
     public BarterBaseState(string stateName, BarterStateMachine machine)
     {
         StateName = stateName;
@@ -19,7 +24,7 @@ public abstract class BarterBaseState
     /// <summary>
     /// Called by the state machine when we move from another state to this state.
     /// </summary>
-    /// <param name="previousState">BarterBaseState - the state preceding this one, or null.</param>
+    /// <param name="previousState">BarterBaseState - the state preceding this one or null.</param>
     public abstract void Enter(BarterBaseState previousState);
 
     /// <summary>

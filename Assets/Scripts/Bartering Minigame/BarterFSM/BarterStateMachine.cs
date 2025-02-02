@@ -87,6 +87,7 @@ public class BarterStateMachine
         TurnOppState = new("Opponent Turn", this, oppTurnDuration);
         TurnPlayerState = new("Player Turn", this);
         ComputeState = new("Compute", this, computeDuration);
+        // TODO: Implement the Check Info state!
         // CheckInfoState = new("Check Info", this);
         EndWinState = new("Win", this);
         EndLossState = new("Loss", this);

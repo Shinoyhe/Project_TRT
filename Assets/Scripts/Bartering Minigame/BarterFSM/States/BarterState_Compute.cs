@@ -102,7 +102,7 @@ public class BarterState_Compute : BarterBaseState
         // Clear the submitted OppCards / PlayerCards.
         // This has the side-effect of updating our UI, animating a discard.
         _machine.Dir.SetOppCards(null);
-        _machine.Dir.SetPlayerCards(new PlayingCard[_machine.Dir.CardsToPlay]);
+        _machine.Dir.ClearPlayerCards();
 
         // Re-initialize both CardUsers before the next opp's turn!
         _machine.PlayerCardUser.DiscardHand();

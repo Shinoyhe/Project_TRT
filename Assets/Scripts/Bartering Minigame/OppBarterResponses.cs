@@ -15,20 +15,25 @@ public class OppBarterResponses : ScriptableObject
 
     // Misc Internal Variables ====================================================================
 
+    // The dictionary populated from our list of PlayingCardPairs.
+    // Serves as a lookup table for matching input Ids against response PlayingCards.
     private readonly Dictionary<string, PlayingCard> _responseDict = new();
 
     // Manipulator Methods ========================================================================
 
+    /// <summary>
+    /// Populate our internal response lookup table. MUST be called before GetResponse() is used.
+    /// </summary>
     public void Initialize()
     {
         // Clear the dict before populating it.
         _responseDict.Clear();
 
         foreach (PlayingCardPair pair in PlayingCardPairs) {
-            // No double-entries.
+            // No double-entries for keys.
             if (_responseDict.ContainsKey(pair.Key.Id)) {
                 Debug.LogError("OppBarterResponses Error: Initialize failed. _responseDict "
-                            + $"contains key with ID {pair.Key.Id}.");
+                            + $"already contains key with ID {pair.Key.Id}.");
                 return;
             }
 
@@ -38,6 +43,11 @@ public class OppBarterResponses : ScriptableObject
         // The dict is now initialized and ready to use!
     }
 
+    /// <summary>
+    /// Takes a playing card, returns what this opponent wants as a response. 
+    /// </summary>
+    /// <param name="key">PlayingCard - the input card (used by the opponent).</param>
+    /// <returns>PlayingCard - the output card that is a valid response to the input.</returns>
     public PlayingCard GetResponse(PlayingCard key)
     {
         if (!_responseDict.ContainsKey(key.Id)) {
@@ -51,6 +61,12 @@ public class OppBarterResponses : ScriptableObject
 
     // Helper structs =============================================================================
 
+    /// <summary>
+    /// A helper struct that ties a key PlayingCard to a value PlayingCard. The value is encoded
+    /// as the 'correct' response to the key.
+    /// 
+    /// For now, only one correct response is supported.
+    /// </summary>
     [System.Serializable]
     public struct PlayingCardPair
     {

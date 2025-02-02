@@ -35,7 +35,8 @@ public class BarterState_TurnOpp : BarterBaseState
             _machine.Dir.PlayerHandController.Lock();
         }
 
-        // ================
+        // Also, initialize our timer!
+        _elapsed = 0;
 
         // Cache references.
         int cardsToPlay = _machine.Dir.CardsToPlay;
@@ -61,9 +62,6 @@ public class BarterState_TurnOpp : BarterBaseState
 
         // Send the complete array of cards to the director.
         _machine.Dir.SetOppCards(_playedCards);
-
-        // And initialize our timer!
-        _elapsed = 0;
     }
 
     public override void UpdateState()

@@ -28,7 +28,10 @@ public class BarterState_Init : BarterBaseState
         _machine.PlayerCardUser.DrawHand();
 
         // Lock player input for card selection.
-        _machine.Dir.PlayerHandController.Lock();
+        if (_machine.Dir.PlayerHandController != null && 
+            _machine.Dir.PlayerHandController.isActiveAndEnabled) {
+            _machine.Dir.PlayerHandController.Lock();
+        }
 
         // Begin!
         _machine.CurrentState = _machine.TurnOppState;

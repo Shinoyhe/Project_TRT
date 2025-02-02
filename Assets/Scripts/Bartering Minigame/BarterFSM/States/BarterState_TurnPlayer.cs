@@ -31,7 +31,10 @@ public class BarterState_TurnPlayer : BarterBaseState
         _machine.Dir.OnPlayerAllCardsSet += SubmitPlayerCards;
 
         // Unlock the handcontroller, allowing the user to interact with cards.
-        _machine.Dir.PlayerHandController.Unlock();
+        if (_machine.Dir.PlayerHandController != null && 
+            _machine.Dir.PlayerHandController.isActiveAndEnabled) {
+            _machine.Dir.PlayerHandController.Unlock();
+        }
     }
 
     public override void UpdateState()
@@ -50,7 +53,10 @@ public class BarterState_TurnPlayer : BarterBaseState
     {
         // Unsubscribe from the submission action and lock the controller, stopping player input.
         _machine.Dir.OnPlayerAllCardsSet -= SubmitPlayerCards;
-        _machine.Dir.PlayerHandController.Lock();
+        if (_machine.Dir.PlayerHandController != null && 
+            _machine.Dir.PlayerHandController.isActiveAndEnabled) {
+            _machine.Dir.PlayerHandController.Lock();
+        }
     }
 
     // Callback Methods ===========================================================================

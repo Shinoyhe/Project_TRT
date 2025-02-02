@@ -28,6 +28,9 @@ public class BarterState_Compute : BarterBaseState
 
     public override void Enter(BarterBaseState previousState)
     {
+        // Initialize our timer!
+        _elapsed = 0;
+
         // Because of how the SetCards functions work, we know for a fact these arrays have the
         // same length... or one or both are null.
         PlayingCard[] oppCards = _machine.Dir.GetOppCards();

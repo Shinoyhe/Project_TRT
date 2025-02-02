@@ -898,9 +898,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
   - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
   - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
-  _drawPile: []
-  _hand: []
-  _discardPile: []
 --- !u!4 &592080384
 Transform:
   m_ObjectHideFlags: 0
@@ -1300,9 +1297,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
   - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
   - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
-  _drawPile: []
-  _hand: []
-  _discardPile: []
 --- !u!1 &1165768945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,25 +1544,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8a83f79f5ed7b4cb860542c46b7761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardUser: {fileID: 592080383}
-  displayCardPrefab: {fileID: 5754509815202693436, guid: 936e194443647924382535e54c325c0f,
+  CardUser: {fileID: 592080383}
+  DisplayCardPrefab: {fileID: 5754509815202693436, guid: 936e194443647924382535e54c325c0f,
     type: 3}
   SubmissionUI: {fileID: 1286460809}
-  anchorLeft: {fileID: 878509880}
-  anchorRight: {fileID: 567571746}
-  drawAnchor: {fileID: 1165768946}
-  discardAnchor: {fileID: 285136328}
-  usableRangePerCard: 0.2
-  usableRange: 0
-  moveTime: 0.1
-  hoverScaleFactor: 1.1
-  dragScaleFactor: 1
-  hoverTime: 0.15
-  dragAlpha: 0.5
-  alreadyDragging: 0
-  snapTime: 0.15
-  dragUpdateRate: 0.01
-  hand: []
+  AnchorLeft: {fileID: 878509880}
+  AnchorRight: {fileID: 567571746}
+  DrawAnchor: {fileID: 1165768946}
+  DiscardAnchor: {fileID: 285136328}
+  UsableRangePerCard: 0.2
+  MoveTime: 0.25
+  DragScaleFactor: 0.9
+  HoverTime: 0.15
+  DragAlpha: 0.5
+  SnapTime: 0.15
 --- !u!222 &1382696089
 CanvasRenderer:
   m_ObjectHideFlags: 0

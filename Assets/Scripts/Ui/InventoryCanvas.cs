@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,8 +21,17 @@ public class InventoryCanvas : MonoBehaviour
     }
     private void OnDisable()
     {
-        // Unsubscribe to avoid memory leaks
-        _inventory.GetComponent<Inventory>().OnInventoryUpdated -= UpdateUI;
+        if (_inventory != null)
+        {
+            _inventory.GetComponent<Inventory>().OnInventoryUpdated -= UpdateUI;
+        }
+    }
+    private void OnDestroy()
+    {
+        if (_inventory != null)
+        {
+            _inventory.GetComponent<Inventory>().OnInventoryUpdated -= UpdateUI;
+        }
     }
 
 
@@ -59,6 +69,11 @@ public class InventoryCanvas : MonoBehaviour
             GameObject newCard = Instantiate(_inventoryCardPrefab, _grid.transform);
             newCard.GetComponent<InventoryCardObject>().SetData(card);
             _inventoryCardGameObjects.Add(newCard);
+
+            foreach (GameObject oldcard in _inventoryCardGameObjects)
+            {
+                print(oldcard.GetComponent<InventoryCardObject>().CardName);
+            }
         }
     }
 }

@@ -37,8 +37,8 @@ public class WorldCameraController : MonoBehaviour
 
     #region ========== [ PARAMETERS ] ==========
     [Header("Parameters")]
-    [SerializeField] private bool ActiveOnAwake = false;
-    [SerializeField] private bool UpdatesVirtualCameras = true;
+    [SerializeField] private bool activeOnAwake = false;
+    [SerializeField] private bool updatesVirtualCameras = true;
     [SerializeField] private MovementDirection movementDirection = MovementDirection.Dynamic;
     [SerializeField] private float fixedDirectionDegrees = 0;
 
@@ -70,7 +70,7 @@ public class WorldCameraController : MonoBehaviour
     #region ========== [ PRIVATE PROPERTIES ] ==========
 
     private static WorldCameraController _currentCamera = null;
-    // that's it lol
+    private bool _started = false; 
 
     #endregion
 
@@ -108,27 +108,36 @@ public class WorldCameraController : MonoBehaviour
         VirtualMovement.gameObject.SetActive(false);
     }
 
-
+#if UNITY_EDITOR
     /// <summary>
     /// If UpdatesVirtualCameras is true, this method changes the Virtual Camera parameters automagically :D
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]   // So that this doesn't appear in the autocomplete
     void OnValidate()
     {
-        if (!UpdatesVirtualCameras) return;
+        // VirtualCameras might be null on start up
+        if (!updatesVirtualCameras) return;
 
+        // Prevents errors from OnValidate running when a scene loads
+        if (Application.isPlaying && !_started) return;
+
+        UpdateVirtualCameras();
+    }
+
+
+    private void UpdateVirtualCameras()
+    {
         // Handle Body Stages
         switch (bodyType)
         {
             case Body.None:
-                DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineTransposer>());
-                DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>());
+                HandleBodyNone();
                 break;
             case Body.Transposer:
-                UpdateBodyTransposerValues();
+                HandleBodyTransposer();
                 break;
             case Body.TrackedDolly:
-                UpdateBodyTrackedDollyValues();
+                HandleBodyTrackedDolly();
                 break;
         }
 
@@ -136,14 +145,60 @@ public class WorldCameraController : MonoBehaviour
         switch (aimType)
         {
             case Aim.None:
-                DestroyImmediate(VirtualCamera.GetCinemachineComponent<CinemachineComposer>());
-                VirtualCamera.transform.rotation = Quaternion.Euler(fixedAimRotation);
-                VirtualMovement.transform.rotation = Quaternion.Euler(fixedAimRotation);
+                HandleAimNone();
                 break;
             case Aim.Composer:
-                UpdateComposerValues();
+                HandleAimComposer();
                 break;
         }
+    }
+
+
+    private void HandleBodyNone()
+    {
+        if (VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body) || VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Body))
+        {
+            // Delay Call is Required to DestroyImmediates with OnValidate
+            EditorApplication.delayCall += () =>
+                DestroyImmediate(VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body));
+        }
+    }
+
+
+    private void HandleBodyTransposer()
+    {
+        if (VirtualCamera.GetCinemachineComponent<CinemachineTransposer>() && VirtualMovement.GetCinemachineComponent<CinemachineTransposer>())
+            UpdateBodyTransposerValues();
+        else EditorApplication.delayCall += () => UpdateBodyTransposerValues();
+    }
+
+
+    private void HandleBodyTrackedDolly()
+    {
+        if (VirtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>() && VirtualMovement.GetCinemachineComponent<CinemachineTrackedDolly>())
+            UpdateBodyTrackedDollyValues();
+        else EditorApplication.delayCall += () => UpdateBodyTrackedDollyValues();
+    }
+
+    
+    private void HandleAimNone()
+    {
+        if (VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Aim))
+        {
+            EditorApplication.delayCall += () => DestroyImmediate(VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Aim));
+        }
+
+        VirtualCamera.transform.rotation = Quaternion.Euler(fixedAimRotation);
+        VirtualMovement.transform.eulerAngles = movementDirection == MovementDirection.Fixed ? 
+            Vector3.up * fixedDirectionDegrees : fixedAimRotation; // If movement direction is fixed, override it
+    }
+
+
+    private void HandleAimComposer()
+    {
+        if (VirtualCamera.GetCinemachineComponent<CinemachineComposer>() && VirtualMovement.GetCinemachineComponent<CinemachineComposer>())
+            UpdateAimComposerValues();
+        else EditorApplication.delayCall += () => UpdateAimComposerValues();
     }
 
 
@@ -188,7 +243,7 @@ public class WorldCameraController : MonoBehaviour
     }
 
 
-    private void UpdateComposerValues()
+    private void UpdateAimComposerValues()
     {
         var mainC = AddCinemachineComponent<CinemachineComposer>(VirtualCamera, CinemachineCore.Stage.Aim);
 
@@ -208,7 +263,11 @@ public class WorldCameraController : MonoBehaviour
         }
         else
         {
-            DestroyImmediate(VirtualMovement.GetCinemachineComponent<CinemachineComposer>());
+            if (VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Aim))
+                EditorApplication.delayCall += () =>
+                {
+                    DestroyImmediate(VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Aim));
+                };
             VirtualMovement.transform.eulerAngles = Vector3.up * fixedDirectionDegrees;
         }
     }
@@ -228,12 +287,12 @@ public class WorldCameraController : MonoBehaviour
             return comp as ComponentType;
         }
     }
-
+#endif
 
     void Awake()
     {
         // Activates this Camera if ActiveOnAwake is True
-        if (ActiveOnAwake)
+        if (activeOnAwake)
         {
             // Warning if another camera is also ActiveOnAwake
             if (_currentCamera != null)
@@ -276,6 +335,8 @@ public class WorldCameraController : MonoBehaviour
         {
             Debug.LogError("Virtual Movement (CinemachineVirtualCamera) has not been assigned.");
         }
+
+        _started = true;
     }
 
 

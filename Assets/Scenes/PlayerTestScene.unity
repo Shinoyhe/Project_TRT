@@ -477,7 +477,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   Mode: 1
-  lerpSpeed: 10
+  FlipOrientation: 0
+  lerpSpeed: 3
 --- !u!43 &237236141
 Mesh:
   m_ObjectHideFlags: 0
@@ -6945,8 +6946,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1620164979}
-  - component: {fileID: 1620164981}
   - component: {fileID: 1620164980}
+  - component: {fileID: 1620164981}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player

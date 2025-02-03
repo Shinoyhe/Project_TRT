@@ -9,8 +9,15 @@ public class Billboard : MonoBehaviour
     [Header("Parameters")]
     public Transform Target;
     public BillboardMode Mode = BillboardMode.None;
-    [SerializeField] private float lerpSpeed = 45f;
+    public bool FlipOrientation = false;
+    [SerializeField] private float lerpSpeed = 3f;
 
+    private Quaternion _targetRotation;
+
+    public void Flip()
+    {
+        FlipOrientation = !FlipOrientation;
+    }
 
 
     void Start()
@@ -29,25 +36,34 @@ public class Billboard : MonoBehaviour
         switch (Mode)
         {
             case BillboardMode.FaceTarget:
-                UpdateFacingTarget();
+                _targetRotation = UpdateFacingTarget();
                 break;
             case BillboardMode.MatchRotation:
-                UpdateMatchingRotation();
+                _targetRotation = UpdateMatchingRotation();
                 break;
         }
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, _targetRotation, lerpSpeed * Time.deltaTime);
     }
 
-    private void UpdateFacingTarget()
+    private Quaternion UpdateFacingTarget()
     {
         Vector3 direction = Vector3.Scale(Target.position - transform.position, Vector3.right + Vector3.forward);
+        if (FlipOrientation)
+        {
+            direction *= -1;
+        }
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, lerpSpeed * Time.deltaTime);
+
+        return targetRotation;
     }
 
-    private void UpdateMatchingRotation()
+    private Quaternion UpdateMatchingRotation()
     {
-        Debug.Log(Target.rotation.eulerAngles.y);
-        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, Target.rotation.eulerAngles.y, 0));
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, lerpSpeed * Time.deltaTime);
+        float y = Target.rotation.eulerAngles.y;
+        y *= FlipOrientation ? -1 : 1;
+        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, y, 0));
+
+        return targetRotation;
     }
 }

@@ -28,6 +28,15 @@ public class Billboard : MonoBehaviour
         }
     }
 
+
+    void Reset()
+    {
+        if (Target == null)
+        {
+            Target = Player.PivotCamera;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -61,7 +70,7 @@ public class Billboard : MonoBehaviour
     private Quaternion UpdateMatchingRotation()
     {
         float y = Target.rotation.eulerAngles.y;
-        y *= FlipOrientation ? -1 : 1;
+        y += FlipOrientation ? 180 : 0;
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0, y, 0));
 
         return targetRotation;

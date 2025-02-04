@@ -8,17 +8,17 @@ using UnityEngine;
 using UnityEditor;
 
 using Cinemachine;
+using NaughtyAttributes;
 
 
 public class WorldCameraController : MonoBehaviour
 {
-    #region ========== [ OBJECT REFERENCES ] ==========
-    [Header("Object References")]
-    public CinemachineVirtualCamera VirtualCamera;
-    public CinemachineVirtualCamera VirtualMovement;
+    #region ======== [ OBJECT REFERENCES ] ========
+    [Foldout("Object References")] public CinemachineVirtualCamera VirtualCamera;
+    [Foldout("Object References")] public CinemachineVirtualCamera VirtualMovement;
     #endregion
 
-    #region ========== [ ENUMS ] ==========
+    #region ======== [ ENUMS ] ========
     public enum MovementDirection
     {
         Fixed, Dynamic
@@ -35,46 +35,68 @@ public class WorldCameraController : MonoBehaviour
     }
     #endregion
 
-    #region ========== [ PARAMETERS ] ==========
+    #region ======== [ PARAMETERS ] ========
     [Header("Parameters")]
-    [SerializeField] private bool activeOnAwake = false;
-    [SerializeField] private bool updatesVirtualCameras = true;
-    [SerializeField] private MovementDirection movementDirection = MovementDirection.Dynamic;
-    [SerializeField] private float fixedDirectionDegrees = 0;
+    [Tooltip("Will activate this controller on Awake. Should be true for one controller in the scene.")] [SerializeField] 
+    private bool activeOnAwake = false;
+    [Tooltip("The view camera's FOV.")] [SerializeField] [MinValue(1), MaxValue(179)] 
+    private int fieldOfView = 60;
+    [Tooltip("Time for the camera to move to this controller.")] [SerializeField] [MinValue(0)] 
+    private float cameraTransitionTime = 2f;
+    [Tooltip("Time for the movement axis to match this controller's.")] [SerializeField] [MinValue(0)] 
+    private float movementTransitionTime = 1f;
+    [Tooltip("Dictates what axis the player moves in. \n" +
+        "Dynamic: Determines the axis automagically based on the camera's position\n" +
+        "Fixed: Axis is set by the \"Fixed Direction Degrees\"")] [SerializeField] 
+    private MovementDirection movementDirection = MovementDirection.Dynamic;
+    [Tooltip("Determines which way is forward based on the degrees.")] [ShowIf("movementDirection", MovementDirection.Fixed)] [SerializeField] 
+    private float fixedDirectionDegrees = 0;
+    [Tooltip("List of camera controllers that won't be transitioned to if the current camera is active.")] [SerializeField] 
+    private List<WorldCameraController> blacklistedControllers = new List<WorldCameraController>();
 
-    [Header("Follower")]
-    [SerializeField]
+
+    [BoxGroup("Body")] [Tooltip("The Cinemachine body type for the camera")] [SerializeField]
     private Body bodyType = Body.Transposer;
-    [SerializeField] [Range(0, 20)]
+    [BoxGroup("Body")] [SerializeField] [Range(0, 20)] [HideIf("bodyType", Body.None)]
     private float followDampening = 2;
+    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.Transposer)]
+    private Vector3 transposerPosition = new Vector3(0, 3, -8);
+    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)] [MinValue(1)]
+    private int movementPathResolution = 16;
+    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)]
+    private int cameraPathResolution = 8;
 
-    [Header("Transposer Follower")]
-    [SerializeField]
-    private Vector3 transposePosition = new Vector3(0, 3, -8);
 
-
-    [Header("Aimmer")]
+    [BoxGroup("Aim")]
     [SerializeField]
     private Aim aimType = Aim.Composer;
-    [SerializeField] [Range(0, 1)]
+    [BoxGroup("Aim")] [SerializeField] [Range(0, 1)] [ShowIf("aimType", Aim.Composer)]
     private float lookAheadDistance = 0.5f;
-    [SerializeField] [Range(0, 30)]
+    [BoxGroup("Aim")] [SerializeField] [Range(0, 30)] [ShowIf("aimType", Aim.Composer)]
     private float lookAheadSmoothing = 5f;
-    [SerializeField] [Range(0, 20)]
+    [BoxGroup("Aim")] [SerializeField] [Range(0, 20)] [ShowIf("aimType", Aim.Composer)]
     private float aimDampening = 2;
-    [SerializeField]
+    [BoxGroup("Aim")] [SerializeField] [ShowIf("aimType", Aim.Composer)]
+    private Vector3 aimOffset;
+    [BoxGroup("Aim")] [SerializeField] [ShowIf("aimType", Aim.None)]
     private Vector3 fixedAimRotation = Vector3.right * 15f;
 
+
+    [BoxGroup("Controls")]
+    [Label("Auto-Update Cameras")]
+    [SerializeField] private bool autoUpdate = true;
+
     #endregion
 
-    #region ========== [ PRIVATE PROPERTIES ] ==========
+    #region ======== [ PRIVATE PROPERTIES ] ========
 
     private static WorldCameraController _currentCamera = null;
-    private bool _started = false; 
+    private static WorldCameraController _previousCamera = null;
+    private bool _started = false;
 
     #endregion
 
-    #region ========== [ PUBLIC METHODS ] ==========
+    #region ======== [ PUBLIC METHODS ] ========
 
     /// <summary>
     /// Returns whether the camera is active or not.
@@ -93,16 +115,39 @@ public class WorldCameraController : MonoBehaviour
     {
         if (IsActive()) return;
 
-        _currentCamera?.Deactivate();
+        if (_currentCamera && _currentCamera.blacklistedControllers.Contains(this)) return;
+
+        Player.Camera.m_DefaultBlend.m_Time = cameraTransitionTime;
+        Player.MoveCamera.m_DefaultBlend.m_Time = movementTransitionTime;
+
+        _previousCamera = _currentCamera;
+        _currentCamera?.Disable();
         _currentCamera = this;
         VirtualCamera.gameObject.SetActive(true);
         VirtualMovement.gameObject.SetActive(true);
     }
 
+
+    /// <summary>
+    /// Deactivates this camera and resort back to previous camera
+    /// </summary>
+    public void Deactivate()
+    {
+        if (!IsActive()) return;
+        if (_previousCamera == null)
+        {
+            Debug.LogWarning("No previous camera detected. Aborting Deactivation");
+            return;
+        }
+
+        _previousCamera.Activate();
+        _previousCamera = this;
+    }
+
     #endregion
 
-    #region ========== [ PRIVATE METHODS ] ==========
-    private void Deactivate()
+    #region ======== [ PRIVATE METHODS ] ========
+    private void Disable()
     {
         VirtualCamera.gameObject.SetActive(false);
         VirtualMovement.gameObject.SetActive(false);
@@ -116,7 +161,7 @@ public class WorldCameraController : MonoBehaviour
     void OnValidate()
     {
         // VirtualCameras might be null on start up
-        if (!updatesVirtualCameras) return;
+        if (!autoUpdate) return;
 
         // Prevents errors from OnValidate running when a scene loads
         if (Application.isPlaying && !_started) return;
@@ -125,8 +170,11 @@ public class WorldCameraController : MonoBehaviour
     }
 
 
+    [HideIf("autoUpdate")] [Button("Manually Update Camera Values")]
     private void UpdateVirtualCameras()
     {
+        VirtualCamera.m_Lens.FieldOfView = fieldOfView;
+
         // Handle Body Stages
         switch (bodyType)
         {
@@ -204,13 +252,15 @@ public class WorldCameraController : MonoBehaviour
 
     private void UpdateBodyTransposerValues()
     {
+        if (VirtualCamera == null) return;
+
         // Get Existing or Add a CinemachineTransposer
         var mainFT = AddCinemachineComponent<CinemachineTransposer>(VirtualCamera, CinemachineCore.Stage.Body);
         var moveFT = AddCinemachineComponent<CinemachineTransposer>(VirtualMovement, CinemachineCore.Stage.Body);
 
         // Apply Parameters for Movement and Camera
-        mainFT.m_FollowOffset = transposePosition;
-        moveFT.m_FollowOffset = transposePosition;
+        mainFT.m_FollowOffset = transposerPosition;
+        moveFT.m_FollowOffset = transposerPosition;
 
         mainFT.m_XDamping = followDampening;
         mainFT.m_YDamping = followDampening;
@@ -224,6 +274,8 @@ public class WorldCameraController : MonoBehaviour
 
     private void UpdateBodyTrackedDollyValues()
     {
+        if (VirtualCamera == null) return;
+
         // Get Existing or Add a CinemachineTransposer
         var mainTD = AddCinemachineComponent<CinemachineTrackedDolly>(VirtualCamera, CinemachineCore.Stage.Body);
         var moveTD = AddCinemachineComponent<CinemachineTrackedDolly>(VirtualMovement, CinemachineCore.Stage.Body);
@@ -240,11 +292,29 @@ public class WorldCameraController : MonoBehaviour
         moveTD.m_XDamping = 0;
         moveTD.m_YDamping = 0;
         moveTD.m_ZDamping = 0;
+
+        mainTD.m_Path = GetComponent<CinemachinePath>() ??
+            gameObject.AddComponent(typeof(CinemachinePath)) as CinemachinePath;
+        moveTD.m_Path = GetComponent<CinemachinePath>();
+
+        mainTD.m_AutoDolly.m_Enabled = true;
+        moveTD.m_AutoDolly.m_Enabled = true;
+
+        mainTD.m_AutoDolly.m_SearchResolution = cameraPathResolution;
+        moveTD.m_AutoDolly.m_SearchResolution = movementPathResolution;
+
+        if (mainTD.m_Path.PathLength == 0)
+            GetComponent<CinemachinePath>().m_Waypoints = new CinemachinePath.Waypoint[1]
+            {
+                new CinemachinePath.Waypoint { position = transform.position, tangent = new Vector3(1, 0, 0) }
+            };
     }
 
 
     private void UpdateAimComposerValues()
     {
+        if (VirtualCamera == null) return;
+
         var mainC = AddCinemachineComponent<CinemachineComposer>(VirtualCamera, CinemachineCore.Stage.Aim);
 
         mainC.m_HorizontalDamping = aimDampening;
@@ -252,6 +322,8 @@ public class WorldCameraController : MonoBehaviour
 
         mainC.m_LookaheadTime = lookAheadDistance;
         mainC.m_LookaheadSmoothing = lookAheadSmoothing;
+
+        mainC.m_TrackedObjectOffset = aimOffset;
 
         if (movementDirection == MovementDirection.Dynamic)
         {
@@ -299,14 +371,14 @@ public class WorldCameraController : MonoBehaviour
             {
                 Debug.LogWarning($"There is another WorldCameraController " +
                     $"({_currentCamera.gameObject} with \"Active On Awake\" enabled.");
-                Deactivate();
+                Disable();
                 return;
             }
             Activate();
         }
         else
         {
-            Deactivate();
+            Disable();
         }
     }
 

@@ -208,7 +208,10 @@ public class WorldCameraController : MonoBehaviour
         {
             // Delay Call is Required to DestroyImmediates with OnValidate
             EditorApplication.delayCall += () =>
+            {
                 DestroyImmediate(VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body));
+                DestroyImmediate(VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Body));
+            };
         }
     }
 
@@ -234,6 +237,7 @@ public class WorldCameraController : MonoBehaviour
         if (VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Aim))
         {
             EditorApplication.delayCall += () => DestroyImmediate(VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Aim));
+            EditorApplication.delayCall += () => DestroyImmediate(VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Aim));
         }
 
         VirtualCamera.transform.rotation = Quaternion.Euler(fixedAimRotation);

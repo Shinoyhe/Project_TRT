@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 446718723907889688}
   serializedVersion: 2
   m_LocalRotation: {x: 0.17842479, y: -0.00000002676535, z: 0.0000000048534834, w: 0.9839536}
-  m_LocalPosition: {x: -7.89, y: 3, z: -8.97}
+  m_LocalPosition: {x: 0, y: 3, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -193,7 +193,7 @@ Transform:
   m_GameObject: {fileID: 4258066814768155699}
   serializedVersion: 2
   m_LocalRotation: {x: 0.06213744, y: -1.2253602e-10, z: 7.6288255e-12, w: 0.9980677}
-  m_LocalPosition: {x: -7.89, y: 3, z: -8.97}
+  m_LocalPosition: {x: 0, y: 3, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -361,7 +361,7 @@ Transform:
   m_GameObject: {fileID: 4870792822801870972}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.32, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -385,7 +385,8 @@ MonoBehaviour:
   VirtualMovement: {fileID: 1846623816388945109}
   activeOnAwake: 1
   fieldOfView: 60
-  transitionTime: 2
+  cameraTransitionTime: 2
+  movementTransitionTime: 1
   movementDirection: 1
   fixedDirectionDegrees: 0
   blacklistedControllers: []
@@ -420,5 +421,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 29.587975, y: 4.8318996, z: 9.41346}
-  m_Center: {x: -13.16239, y: 1.9159498, z: 0.48068142}
+  m_Size: {x: 3, y: 3, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -4,26 +4,33 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Object Assignment")]
+    #region ======== [ OBJECT REFERENCES ] ========
+
+    [Header("Object References")]
     [SerializeField] private PlayerInputHandler controls;
     [SerializeField] private Transform forwardTransform;
     private CharacterController characterController;
 
+    #endregion
+
+
+    #region ======== [ PARAMETERS ] ========
 
     [Header("Parameters")]
     [SerializeField] private float speed = 5f;
 
+    #endregion
+
+
+    #region ======== [ PRIVATE PROPERTIES ] ========
 
     private const float GRAVITY = 9.81f;
     private float _downwardForce = 0;
 
+    #endregion
 
-    void Awake()
-    {
-        // Needs to be defined here instead because null reference error can occur
-        Player.Movement = this;
-    }
 
+    #region ======== [ PRIVATE METHODS ] ========
 
     void Start()
     {
@@ -33,14 +40,28 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
+        UpdateMovement();
+        UpdateGravity();
+    }
+
+
+    private void UpdateMovement()
+    {
+        // Get Input
         Vector3 input = controls.GetMoveInput();
 
-        Quaternion forwardRot = Quaternion.FromToRotation(Vector3.forward, forwardTransform.forward);
-        // transform.rotation = forwardRot;
+        // Relative to Target
+        float y = forwardTransform.rotation.eulerAngles.y;
+        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, y, 0));
 
-        Vector3 direction = forwardRot * input;
+        // Move character
+        Vector3 direction = targetRotation * input;
         characterController.Move(direction * speed * Time.deltaTime);
+    }
 
+
+    private void UpdateGravity()
+    {
         if (!characterController.isGrounded)
         {
             _downwardForce += GRAVITY * Time.deltaTime;
@@ -50,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
         {
             _downwardForce = 0;
         }
-
-        // Debug.Log(_downwardForce * Time.deltaTime);
     }
+    #endregion
 }

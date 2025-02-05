@@ -16,10 +16,11 @@ public class Player : Singleton<Player>
     public static CinemachineBrain Camera { get { return Instance.playerCamera; } }
     public static Transform PivotCamera { get { return Instance.pivotCamera; } }
     public static CinemachineBrain MoveCamera { get { return Instance.pivotCamera.GetComponent<CinemachineBrain>(); } }
-    // ;3c
+    public static Transform LookTarget { get { return Instance.lookTarget; } }
 
     [Header("References")]
     [SerializeField] private PlayerMovement playerController;
     [SerializeField] private CinemachineBrain playerCamera;
     [SerializeField] private Transform pivotCamera;
+    [SerializeField] private Transform lookTarget;
 }

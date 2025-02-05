@@ -17,12 +17,16 @@ public class AutoPlayerCardSlotUI : MonoBehaviour
 
     private void Awake()
     {
-        SetState(null);
+        DisplayCard(null);
     }
 
     // Public manipulators ========================================================================
 
-    public void SetState(PlayingCard card)
+    /// <summary>
+    /// Display in this slot a new card (or no card).
+    /// </summary>
+    /// <param name="card">PlayingCard - the card data we are to display in this slot.</param>
+    public void DisplayCard(PlayingCard card)
     {
         if (card == null) {
             MainImage.sprite = NullSprite;

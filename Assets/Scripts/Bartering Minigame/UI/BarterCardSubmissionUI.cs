@@ -37,21 +37,18 @@ public class BarterCardSubmissionUI : MonoBehaviour
     private PlayerCardSlot[] _playerCardSlots = null;
     // The horizontal range of our PlayerCardSlotZone, used to position the AutoPlayerCardSlotUI objects.
     private Vector2 _playerCardSlotBounds;
-    private float _playerCardSlotY;
 
     // Opp CardSlots =======================
     // Array of AutoPlayerCardSlotUI components, one for each Opp card submitted.
     private AutoPlayerCardSlotUI[] _oppCardSlots = null;
     // The horizontal range of our OppCardSlotZone, used to position the AutoPlayerCardSlotUI objects.
     private Vector2 _oppCardSlotBounds;
-    private float _oppCardSlotY;
 
     // MatchSlots =====================
     // Array of MatchSlotUI components, one for each Opp-Player pair of cards submitted.
     private MatchSlotUI[] _matchSlots = null;
     // The horizontal range of our MatchSlotZone, used to position the MatchSlotUI objects.
     private Vector2 _matchSlotBounds;
-    private float _matchSlotY;
 
     // Initializers ===============================================================================
 
@@ -59,25 +56,21 @@ public class BarterCardSubmissionUI : MonoBehaviour
     {
         // TODO: Test all this at different resolutions.
         _playerCardSlotBounds = new(PlayerCardSlotZone.offsetMin.x, PlayerCardSlotZone.offsetMax.x);
-        _playerCardSlotY = PlayerCardSlotZone.anchoredPosition.y;
-
         _oppCardSlotBounds = new(OppCardSlotZone.offsetMin.x, OppCardSlotZone.offsetMax.x);
-        _oppCardSlotY = OppCardSlotZone.anchoredPosition.y;
-
         _matchSlotBounds = new(MatchSlotZone.offsetMin.x, MatchSlotZone.offsetMax.x);
-        _matchSlotY = MatchSlotZone.anchoredPosition.y;
 
         // Array inits ================
 
-        // Initialize our arrays!
+        // Initialize our slot arrays!
         _playerCardSlots = new PlayerCardSlot[Director.CardsToPlay];
         _oppCardSlots = new AutoPlayerCardSlotUI[Director.CardsToPlay];
         _matchSlots = new MatchSlotUI[Director.CardsToPlay];
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
+        // Slot inits ================
+
         // Instantiate our objects in our arrays.
         for (int i=0; i<Director.CardsToPlay; i++)
         {
@@ -86,6 +79,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
                                               PlayerCardSlotZone);
             _playerCardSlots[i] = playerSlot.GetComponent<PlayerCardSlot>();
 
+            // Sub to PlayerCardSlot actions
             _playerCardSlots[i].OnSetCard -= OnSlotSetCard;
             _playerCardSlots[i].OnSetCard += OnSlotSetCard;
 
@@ -121,21 +115,38 @@ public class BarterCardSubmissionUI : MonoBehaviour
         }
     }
 
+    // Update functions ===========================================================================
+
     private void Update()
     {
-        // BAD CODE! DONT USE THIS IN ANY NON-PROTOTYPE BUILD.
+        // TODO: Replace this with an action-based implementation, that only switches the string
+        // when we enter a new state.
         DEBUG_StateDisplay.text = "Current State:\n" + Director.GetCurrentStateName();
     }
 
+    // Public accessors ===========================================================================
+
+    public PlayerCardSlot[] GetPlayerCardSlots() { return _playerCardSlots; }
+
+    // Callback functions =========================================================================
+
     private void OnSlotSetCard(PlayerCardSlot slot, DisplayCard card)
     {
-        // NOTE: Not a great solution, but simple, and performance is negligible
-        //       on the single-digit scales we're gonna be using it on.
-        //       Potentially revisit this if we end up having a hand size of like 1000, lol.
+        // Submits the PlayingCard, or null, to our director in the right slot.
+        // Called via an action from PlayerCardSlot when a slot has a DisplayCard dragged over it,
+        // or dragged off of it.
+        //
+        // NOTE: For the player, the UI is set first (via user input), and then the game state 
+        //       changes to match.
+        // ================
+
+        // NOTE: Looping through the whole thing isn't a great solution, but it's simple, and 
+        //       performance is negligible on the single-digit scales we're gonna be using it on.
+        //       Potentially revisit this if we end up having a hand size of like, 1000, lol.
         
         for (int i=0; i<_playerCardSlots.Length; i++) {
             if (_playerCardSlots[i] == slot) {
-                PlayingCard playingCard = (card != null) ? card.CardData : null;
+                PlayingCard playingCard = (card != null) ? card.PlayingCard : null;
                 Director.SetPlayerCard(playingCard, i);
                 return;
             }
@@ -144,15 +155,16 @@ public class BarterCardSubmissionUI : MonoBehaviour
 
     private void UpdateOppCards(PlayingCard[] results)
     {
-        UpdateCards(results, _oppCardSlots);
-    }
+        // Update the displayed opponent cards. Called via an action from the BarterDirector.
+        //
+        // NOTE: For the opponent, the game state changes first (via the BarterDirector), and then
+        //       the UI changes to match.
+        // ================
 
-    private void UpdateCards(PlayingCard[] results, AutoPlayerCardSlotUI[] slots)
-    {
         // Case 1, null array- set all slots to the null sprite.
         if (results == null) {
-            foreach (AutoPlayerCardSlotUI slot in slots) {
-                slot.SetState(null);
+            foreach (AutoPlayerCardSlotUI slot in _oppCardSlots) {
+                slot.DisplayCard(null);
             }
             return;
         }
@@ -160,19 +172,25 @@ public class BarterCardSubmissionUI : MonoBehaviour
         // Case 2, nonnull array but wrong size- raise an error.
         if (results.Length != _matchSlots.Length) {
             Debug.LogError("BarterCardSubmissionUI Error: UpdateCards failed. results array "
-                        + $"length ({results.Length}) and slots array length ({slots.Length}) "
-                        + $"do not match.");
+                        + $"length ({results.Length}) and slots array length "
+                        + $"({_oppCardSlots.Length}) do not match.");
             return;
         }
 
         // Case 3, nonnull array and right size- set sprites.
         for (int i=0; i<results.Length; i++) {
-            slots[i].SetState(results[i]);
+            _oppCardSlots[i].DisplayCard(results[i]);
         }
     }
 
     private void UpdateMatchIcons(bool[] results)
     {
+        // Update the displayed opponent cards. Called via an action from the BarterDirector.
+        //
+        // NOTE: For the matches, the game state changes first (via the BarterDirector), and then
+        //       the UI changes to match.
+        // ================
+
         // Case 1, null array- set all slots to the null sprite.
         if (results == null) {
             foreach (MatchSlotUI slot in _matchSlots) {
@@ -195,10 +213,5 @@ public class BarterCardSubmissionUI : MonoBehaviour
                                                          : MatchSlotUI.MatchType.Wrong;
             _matchSlots[i].SetState(matchType);
         }
-    }
-
-    public PlayerCardSlot[] GetPlayerCardSlots()
-    {
-        return _playerCardSlots;
     }
 }

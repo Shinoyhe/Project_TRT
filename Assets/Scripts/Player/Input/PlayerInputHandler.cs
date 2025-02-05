@@ -10,8 +10,6 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 {
     // Parameters =================================================================================
 
-    [SerializeField, Tooltip("Unlock the Mouse")]
-    private bool LockMouse = true;
     [SerializeField, Tooltip("Sensitivity multiplier for moving the camera around")]
     private float LookSensitivity = 1f;
     [SerializeField, Tooltip("Additional sensitivity multiplier for WebGL")]
@@ -33,16 +31,9 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     private bool _sprintInput;
     private bool _interactDown;
     private bool _debugInputDown;
-    private bool _pauseDown;
+    private bool _settingsDown;
 
     // Initializers and Finalizers ================================================================
-
-    private void Start()
-    {
-        // Cursor lock -> invisible, and confined to center of screen.
-        Cursor.lockState = LockMouse ? CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !LockMouse;
-    }
 
     private void OnEnable()
     {
@@ -58,7 +49,9 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 
     private void OnDisable()
     {
-        if (_controls != null) _controls.PlayerMovement.Disable();
+        if (_controls != null) {
+            _controls.PlayerMovement.Disable();
+        }
     }
 
     // InputAction Callbacks and Methods ==========================================================
@@ -69,7 +62,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
         _jumpInputDown = false;
         _interactDown = false;
         _debugInputDown = false;
-        _pauseDown = false;
+        _settingsDown = false;
     }
 
     /// <summary>
@@ -128,10 +121,9 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// DO NOT CALL MANUALLY.
     /// </summary>
     /// <param name="context"></param>
-    public void OnSprintHold(InputAction.CallbackContext context)
-    {
-        if (context.started) _sprintInput = true;
-        if (context.canceled) _sprintInput = false;
+    public void OnPauseKey(InputAction.CallbackContext context) {
+        if (context.started) _settingsDown = true;
+        if (context.canceled) _settingsDown = false;
     }
 
     /// <summary>
@@ -139,9 +131,10 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// DO NOT CALL MANUALLY.
     /// </summary>
     /// <param name="context"></param>
-    public void OnPause(InputAction.CallbackContext context) {
-        if (context.started) _pauseDown = true;
-        if (context.canceled) _pauseDown = false;
+    public void OnSprintHold(InputAction.CallbackContext context)
+    {
+        if (context.started) _sprintInput = true;
+        if (context.canceled) _sprintInput = false;
     }
 
     // Public Accessor Methods ====================================================================
@@ -197,11 +190,11 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     }
 
     /// <summary>
-    /// Accessor for if the pause input was pressed on the last frame.
+    /// Accessor for if the setting input was pressed on the last frame.
     /// </summary>
-    /// <returns>bool - if the pause input was pressed down on the last frame.</returns>
-    public bool GetPauseDown() {
-        return GetCanProcessInput() && _pauseDown;
+    /// <returns>bool - if the setting input was pressed down on the last frame.</returns>
+    public bool GetSettingsDown() {
+        return GetCanProcessInput() && _settingsDown;
     }
 
     /// <summary>
@@ -276,7 +269,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 
 #if UNITY_WEBGL
             // Mouse tends to be even more sensitive in WebGL due to mouse acceleration, so reduce it even more.
-            axisValue *= WebglLookSensitivityMultiplier;
+            i *= WebglLookSensitivityMultiplier;
 #endif
         }
 

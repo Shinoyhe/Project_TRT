@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,20 +46,26 @@ public class BarterDirector : MonoBehaviour
 
     // Misc Internal Variables ====================================================================
 
+    // Arrays storing the current submissions for both sets of cards and whether each pair matches.
     private PlayingCard[] _oppCards = null;
     private PlayingCard[] _playerCards = null;
     private bool[] _matchArray = null;
+    // The BarterStateMachine that manages our turns!
     private BarterStateMachine _machine = null;
 
     // Initializers ===============================================================================
 
     private void Start()
     {
+        // Initialize our _playerCards array to empty (not to null).
+        // Because opponent cards are submitted as a set and player cards are submitted one-by-one,
+        // the player cards array must be pre-initialized.
+        _playerCards = new PlayingCard[CardsToPlay];
+
+        // Create the machine and start it.
         _machine = new(this, PlayerCardUser, OppCardUser, OppDuration, ComputeDuration);
         _machine.SetDebug(DebugMode);
         _machine.StartMachine();
-
-        _playerCards = new PlayingCard[CardsToPlay];
     }
 
     // Update methods =============================================================================
@@ -66,7 +73,6 @@ public class BarterDirector : MonoBehaviour
     private void Update()
     {
         _machine.SetDebug(DebugMode);
-    
         _machine.UpdateState();
     }
 
@@ -101,7 +107,7 @@ public class BarterDirector : MonoBehaviour
     }
 
     /// <summary>
-    /// Called once per frame. Reduces our willingness by a small amount, adjusted for deltatime.
+    /// Called once per frame. Reduces our willingness by a small amount, adjusted for deltaTime.
     /// </summary>
     public void DecayWillingness()
     {
@@ -119,9 +125,13 @@ public class BarterDirector : MonoBehaviour
 
     // Array manipulators =========================================================================
 
+    /// <summary>
+    /// Used to submit an full array of opponent cards, or to submit null.
+    /// </summary>
+    /// <param name="oppCards">PlayingCard[] - the full array of PlayingCards to submit.</param>
     public void SetOppCards(PlayingCard[] oppCards) 
     {
-        // Validate the array. We accept two states:
+        // Validate the submission. We accept two states:
         //  * A null array, signifying 'no cards played'.
         //  * An array of length CardsToPlay, signifying 'all cards played'.
         if (oppCards != null && oppCards.Length != CardsToPlay) {
@@ -133,41 +143,51 @@ public class BarterDirector : MonoBehaviour
         OnOppCardsSet?.Invoke(oppCards);
     }
 
+    /// <summary>
+    /// Used to submit a single player card to a slot.
+    /// </summary>
+    /// <param name="playerCard">PlayingCard - the card to submit.</param>
+    /// <param name="indexInArray">int - where in the hand to submit it to.</param>
     public void SetPlayerCard(PlayingCard playerCard, int indexInArray)
     {
+        // If our _playerCards array is null, set it to an empty array of the right size.
+
+        // Because opponent cards are submitted as a set and player cards are submitted one-by-one,
+        // the player cards array must be pre-initialized.
+        _playerCards ??= new PlayingCard[CardsToPlay];
+        
+        // Validate the submission. We accept two states:
+        //  * A null PlayerCard and an in-range index: 'slot at index should be empty'.
+        //  * An non-null PlayerCard and an in-range index: 'slot at index should be PlayerCard'.
         if (_playerCards != null && (indexInArray < 0 || indexInArray >= _playerCards.Length)) {
             Debug.LogError($"BarterDirector Error: SetPlayerCard failed. indexInArray "
                          + $"({indexInArray}) was beyond the bounds of the array (length "
                          + $"{_playerCards.Length})");
         }
 
-        // print($"_playerCards is null: ({_playerCards == null})");
-        // print($"Set card at index {indexInArray} to {((playerCard != null) ? playerCard.Id : "null")}");
         _playerCards[indexInArray] = playerCard;
 
         // Check if all slots are non-null.
         foreach (PlayingCard card in _playerCards) {
-            // If we encounter any nonnull card, we shouldn't submit.
+            // If we encounter any null card, we shouldn't submit.
             if (card == null) return;
         }
         // If we exit the loop, all cards were non-null!
         OnPlayerAllCardsSet?.Invoke();
     }
 
-    public void SetPlayerCards(PlayingCard[] playerCards) 
+    /// <summary>
+    /// Clear all submitted player cards.
+    /// </summary>
+    public void ClearPlayerCards() 
     { 
-        // Validate the array. We accept two states:
-        //  * A null array, signifying 'no cards played'.
-        //  * An array of length CardsToPlay, signifying 'all cards played'.
-        if (playerCards != null && playerCards.Length != CardsToPlay) {
-            Debug.LogError($"BarterDirector Error: SetPlayerCards failed. Expected {CardsToPlay} "
-                         + $"cards, got {playerCards.Length} instead.");
-        }
-
-        _playerCards = playerCards;
-        OnPlayerCardsSet?.Invoke(playerCards);
+        Array.Clear(_playerCards, 0, _playerCards.Length);
     }
 
+    /// <summary>
+    /// Used to submit an full array of matches between cards.
+    /// </summary>
+    /// <param name="matchArray">bool[] - the full array of bool matches to submit.</param>
     public void SetMatchArray(bool[] matchArray)
     {
         // Validate the array. We accept two states:

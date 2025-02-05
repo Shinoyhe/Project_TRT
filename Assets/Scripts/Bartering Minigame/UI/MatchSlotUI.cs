@@ -5,8 +5,8 @@ public class MatchSlotUI : MonoBehaviour
 {
     // Parameters and Publics =====================================================================
 
+    // Lightweight enum defining multiple states that a match can be.
     public enum MatchType { Null, Right, Wrong }
-
     [SerializeField, Tooltip("The sprite we show when the match array is null.")]
     private Sprite emptySprite;
     [SerializeField, Tooltip("The sprite we show on a match.")]
@@ -20,13 +20,17 @@ public class MatchSlotUI : MonoBehaviour
 
     // Initializers ===============================================================================
 
-    private void Start()
+    private void Awake()
     {
         icon = GetComponent<Image>();
     }
 
     // Public manipulators ========================================================================
 
+    /// <summary>
+    /// Set the state of this Match: Right, Wrong, or Null.
+    /// </summary>
+    /// <param name="type">MatchType - this match's value (Right, Wrong, or Null).</param>
     public void SetState(MatchType type)
     {
         // Add fancy animations here!

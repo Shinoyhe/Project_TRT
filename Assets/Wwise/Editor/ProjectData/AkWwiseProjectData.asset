@@ -80,8 +80,65 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 33316d7890aa87408e2af719ccc92cfd
     GuidInternal: 
-    m_lastTime: -8584641917621094716
-    List: []
+    m_lastTime: -8584634178879963254
+    List:
+    - name: MusicEvents
+      guid: bb98cb8f8639c644980fd12d17cb9504
+      id: 2858168685
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 33316d7890aa87408e2af719ccc92cfd
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      Path: Events\Default Work Unit\MusicEvents
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: MusicStateActive
+      guid: b5e755e895d52648ad8a374f605fcf53
+      id: 1623677187
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 33316d7890aa87408e2af719ccc92cfd
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStateActive
+        ObjectType: 3
+        guid: b5e755e895d52648ad8a374f605fcf53
+      Path: Events\Default Work Unit\MusicEvents\MusicStateActive
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: MusicStateCalm
+      guid: d4d011b7ab20394ab4e982305ba67d38
+      id: 821441420
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 33316d7890aa87408e2af719ccc92cfd
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStateCalm
+        ObjectType: 3
+        guid: d4d011b7ab20394ab4e982305ba67d38
+      Path: Events\Default Work Unit\MusicEvents\MusicStateCalm
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
@@ -108,8 +165,74 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: e6b79552b8b0634f8a967d61276f57fa
     GuidInternal: 
-    m_lastTime: -8584641917620854494
-    List: []
+    m_lastTime: -8584634178880103386
+    List:
+    - name: MusicState
+      guid: 5df940ae313415468d9b77fe40be0b6c
+      id: 1021618141
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: e6b79552b8b0634f8a967d61276f57fa
+      - ElementName: MusicState
+        ObjectType: 9
+        guid: 5df940ae313415468d9b77fe40be0b6c
+      Path: States\Default Work Unit\MusicState
+      values:
+      - name: Active
+        guid: b58baea42db1fe49889416968c8d3d71
+        id: 58138747
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e6b79552b8b0634f8a967d61276f57fa
+        - ElementName: MusicState
+          ObjectType: 9
+          guid: 5df940ae313415468d9b77fe40be0b6c
+        - ElementName: Active
+          ObjectType: 8
+          guid: b58baea42db1fe49889416968c8d3d71
+      - name: Calm
+        guid: 2c6f914aa7fe72419c63fc5255a5ba9d
+        id: 3753286132
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e6b79552b8b0634f8a967d61276f57fa
+        - ElementName: MusicState
+          ObjectType: 9
+          guid: 5df940ae313415468d9b77fe40be0b6c
+        - ElementName: Calm
+          ObjectType: 8
+          guid: 2c6f914aa7fe72419c63fc5255a5ba9d
+      - name: None
+        guid: 1162ecb9dd81564cbc1ee4da0611b591
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e6b79552b8b0634f8a967d61276f57fa
+        - ElementName: MusicState
+          ObjectType: 9
+          guid: 5df940ae313415468d9b77fe40be0b6c
+        - ElementName: None
+          ObjectType: 8
+          guid: 1162ecb9dd81564cbc1ee4da0611b591
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
   SwitchWwu:
   - PhysicalPath: Switches\Default Work Unit.wwu
     PathAndIcons:
@@ -136,10 +259,24 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 9df9aa54af8cab4ea76b42f4ee8eaa58
     GuidInternal: 
-    m_lastTime: -8584641917621715281
-    List: []
+    m_lastTime: -8584634171553577610
+    List:
+    - name: Test
+      guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
+      id: 3157003241
+      PathAndIcons:
+      - ElementName: Triggers
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 9df9aa54af8cab4ea76b42f4ee8eaa58
+      - ElementName: Test
+        ObjectType: 14
+        guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
+      Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 050000000600000007000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

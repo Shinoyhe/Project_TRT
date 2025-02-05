@@ -32,6 +32,7 @@ public class AudioEvent
 
     // State Trackers
     private bool isPlaying = false;
+    public bool playOnInit = false;
 
     [SerializeField] private TriggerEvents _events;
     private GameObject attenuationPoint;

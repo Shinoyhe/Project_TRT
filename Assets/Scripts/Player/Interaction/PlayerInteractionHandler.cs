@@ -24,7 +24,7 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// </summary>
   void Start()
   {
-    UnityEngine.Debug.Assert(GetComponent<Rigidbody>() != null, "PlayerInteractionHandler requires an attatched rigidbody&collider");
+    UnityEngine.Debug.Assert(GetComponent<CharacterController>() != null, "PlayerInteractionHandler requires an attatched CharacterController&collider");
     accessibleInteractables = new List<Interactable>();
   }
   private void FixedUpdate() {

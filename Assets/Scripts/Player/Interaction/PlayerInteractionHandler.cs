@@ -31,7 +31,8 @@ public class PlayerInteractionHandler : MonoBehaviour {
     //UnityEngine.Debug.Assert(GetComponent<CharacterController>() != null, "PlayerInteractionHandler requires an attatched CharacterController&collider");
     accessibleInteractables = new List<Interactable>();
   }
-  private void FixedUpdate() {
+
+  private void Update() {
     CheckHighlight();
    
     if(controls.GetInteractDown()){

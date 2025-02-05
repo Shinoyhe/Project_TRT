@@ -8,8 +8,8 @@ using Cinemachine;
 /// "Singleton" that contain references to important player references for other scripts to access.
 /// There's probably a better way to do this, but I'll wait for the review.
 /// </summary>
-[ExecuteAlways]
-public class Player : Singleton<Player>
+// [ExecuteAlways]
+public class Player : MonoBehaviour
 {
     public static PlayerMovement Movement { get { return Instance.playerController; } }
     public static GameObject Object { get { return Instance.playerController.gameObject; } }
@@ -25,4 +25,15 @@ public class Player : Singleton<Player>
     [SerializeField] private CinemachineBrain playerCamera;
     [SerializeField] private Transform pivotCamera;
     [SerializeField] private Transform lookTarget;
+    
+    public static Player Instance { get; private set; }
+
+    void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 }

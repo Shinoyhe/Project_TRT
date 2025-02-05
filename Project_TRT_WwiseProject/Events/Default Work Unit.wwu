@@ -33,6 +33,59 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="StartEnvironmentMusic" ID="{95DED10A-BAFA-4517-9EB7-3E06DDBA7B76}">
+							<ChildrenList>
+								<Action Name="" ID="{270CD915-047E-4F18-8E92-8D19304417A5}" ShortID="728333106">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnvironmentSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="PauseEnvironmentMusic" ID="{E86A3296-7F22-496B-BD16-5FCCBC20504E}">
+							<ChildrenList>
+								<Action Name="" ID="{7E55EEC8-4847-492F-B366-9D7FA4A3DAB4}" ShortID="941718113">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="7"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnvironmentSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="StopEnvironmentMusic" ID="{EFEE06EC-4A3D-41B2-9883-2E17938F0EF1}">
+							<ChildrenList>
+								<Action Name="" ID="{6D4E7058-9235-479F-8C58-885CA5D477FB}" ShortID="1040242334">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnvironmentSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ResumeEnvironmentMusic" ID="{417CD789-3F05-4A40-8360-23E0159080AF}">
+							<ChildrenList>
+								<Action Name="" ID="{9F397117-AEBE-48AC-8634-C6D5AFD1C946}" ShortID="482653556">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="9"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnvironmentSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

@@ -37,7 +37,7 @@ public class AudioEvent
     private GameObject attenuationPoint;
 
     //private EVENT_CALLBACK _eventCallback;
-    //private Dictionary<EVENT_CALLBACK_TYPE, UnityEvent> _callbackHandler;
+    private Dictionary<AkCallbackType, UnityEvent> _callbackHandler;
 
     // Serialized callback references to appear in inspector, added to _callbackHandler on init.
     [Serializable, StructLayout(LayoutKind.Sequential)]
@@ -169,25 +169,26 @@ public class AudioEvent
     }
     #endregion
 
-    /* THE FMOD CALLBACK GRAVEYARD
     #region Callbacks
 
     private void InitCallbackHandler()
     {
-        _callbackHandler = new Dictionary<EVENT_CALLBACK_TYPE, UnityEvent>();
-        _eventCallback = new EVENT_CALLBACK(Callback);
+        _callbackHandler = new Dictionary<AkCallbackType, UnityEvent>();
+        //_eventCallback = new EVENT_CALLBACK(Callback);
+
+        AK.Wwise.Bank bank;
 
         // Initialize UnityEvents and add them to the callback dictionary.
         _callbacks.onStart = new();
-        _callbackHandler[EVENT_CALLBACK_TYPE.STARTED] = _callbacks.onStart;
+        _callbackHandler[AkCallbackType.AK_MusicPlayStarted] = _callbacks.onStart;
         _callbacks.onRestart = new();
-        _callbackHandler[EVENT_CALLBACK_TYPE.RESTARTED] = _callbacks.onRestart;
+        _callbackHandler[AkCallbackType.AK_MusicSyncEntry] = _callbacks.onRestart;
         _callbacks.onCompleted = new();
-        _callbackHandler[EVENT_CALLBACK_TYPE.STOPPED] = _callbacks.onCompleted;
+        _callbackHandler[AkCallbackType.AK_EndOfEvent] = _callbacks.onCompleted;
         _callbacks.onBeat = new();
-        _callbackHandler[EVENT_CALLBACK_TYPE.TIMELINE_BEAT] = _callbacks.onBeat;
+        _callbackHandler[AkCallbackType.AK_MusicSyncBeat] = _callbacks.onBeat;
         _callbacks.onMarker = new();
-        _callbackHandler[EVENT_CALLBACK_TYPE.TIMELINE_MARKER] = _callbacks.onMarker;
+        _callbackHandler[AkCallbackType.AK_MusicSyncUserCue] = _callbacks.onMarker;
     }
 
     private void PinCallbackData()
@@ -198,31 +199,31 @@ public class AudioEvent
     #region Abstracted Callback Functions
     public void OnStart(UnityAction callback)
     {
-        SetCallback(EVENT_CALLBACK_TYPE.STARTED, callback);
+        SetCallback(AkCallbackType.AK_MusicPlayStarted, callback);
     }
 
     public void OnRestart(UnityAction callback)
     {
-        SetCallback(EVENT_CALLBACK_TYPE.RESTARTED, callback);
+        SetCallback(AkCallbackType.AK_MusicSyncEntry, callback);
     }
 
     public void OnComplete(UnityAction callback)
     {
-        SetCallback(EVENT_CALLBACK_TYPE.STOPPED, callback);
+        SetCallback(AkCallbackType.AK_EndOfEvent, callback);
     }
 
     public void OnBeat(UnityAction callback)
     {
-        SetCallback(EVENT_CALLBACK_TYPE.TIMELINE_MARKER, callback);
+        SetCallback(AkCallbackType.AK_MusicSyncBeat, callback);
     }
 
     public void OnMarker(UnityAction callback)
     {
-        SetCallback(EVENT_CALLBACK_TYPE.TIMELINE_BEAT, callback);
+        SetCallback(AkCallbackType.AK_MusicSyncUserCue, callback);
     }
     #endregion
 
-    public void SetCallback(EVENT_CALLBACK_TYPE type, UnityAction callback)
+    public void SetCallback(AkCallbackType type, UnityAction callback)
     {
         Debug.Log("Setting Callback");
         _callbackHandler.TryGetValue(type, out UnityEvent callbackEvent);
@@ -234,7 +235,8 @@ public class AudioEvent
         _callbackHandler[type].AddListener(callback);
     }
 
-    private FMOD.RESULT Callback(EVENT_CALLBACK_TYPE type, IntPtr _event, IntPtr parameters)
+    /*
+    private FMOD.RESULT Callback(AkCallbackType type, IntPtr _event, IntPtr parameters)
     {
         Debug.Log("Callback Type: " + type);
         //_callbackHandler.TryGetValue(type, out UnityEvent callbackEvent);
@@ -249,6 +251,6 @@ public class AudioEvent
         Debug.Log("Success!");
         return FMOD.RESULT.OK;
     }
-    #endregion
     */
+    #endregion
 }

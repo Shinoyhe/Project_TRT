@@ -153,6 +153,20 @@ public class WorldCameraController : MonoBehaviour
         VirtualMovement.gameObject.SetActive(false);
     }
 
+    private void AssignTargets()
+    {
+        if (VirtualCamera.Follow == null) VirtualCamera.Follow = Player.Transform;
+        if (VirtualMovement.Follow == null) VirtualMovement.Follow = Player.Transform;
+
+        if (VirtualCamera.LookAt == null) VirtualCamera.LookAt = Player.LookTarget;
+        if (VirtualMovement.LookAt == null) VirtualMovement.LookAt = Player.LookTarget;
+    }
+
+    void Reset() 
+    {
+        AssignTargets();
+    }
+
 #if UNITY_EDITOR
     /// <summary>
     /// If UpdatesVirtualCameras is true, this method changes the Virtual Camera parameters automagically :D
@@ -165,6 +179,11 @@ public class WorldCameraController : MonoBehaviour
 
         // Prevents errors from OnValidate running when a scene loads
         if (Application.isPlaying && !_started) return;
+
+        if (Player.Loaded) 
+        {
+            AssignTargets();
+        }
 
         UpdateVirtualCameras();
     }
@@ -411,6 +430,8 @@ public class WorldCameraController : MonoBehaviour
         {
             Debug.LogError("Virtual Movement (CinemachineVirtualCamera) has not been assigned.");
         }
+
+        AssignTargets();
 
         _started = true;
 

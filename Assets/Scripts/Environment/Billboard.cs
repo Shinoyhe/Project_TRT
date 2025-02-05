@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,12 @@ public class Billboard : MonoBehaviour
     #region ======== [ PARAMETERS ] ========
 
     [Header("Parameters")]
+    [InfoBox("The camera will be the automatic target if not assigned. [Recommended]")]
     [Tooltip("Controls where the billboard faces. Leaving it empty will default to a player camera.")] public Transform Target;
-    [Tooltip("Determines how the billboard follows the target.\n" +
-        "None: Billboard is inactive.\n" +
-        "Face Target: Billboard will face towards the target. [Recommended]\n" +
-        "Match Rotation: Billboard will match the rotation of the target.")]
+    [Tooltip("Determines how the billboard follows the target.\n\n" +
+        "- None: Billboard is inactive.\n" +
+        "- Face Target [Recommended]: Billboard will face towards the target.\n" +
+        "- Match Rotation: Billboard will match the rotation of the target.")]
     public BillboardMode Mode = BillboardMode.FaceTarget;
     [Tooltip("Flips which way is side the target")] public bool FlipOrientation = false;
     [SerializeField] private float lerpSpeed = 3f;

@@ -80,6 +80,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause Key"",
+                    ""type"": ""Button"",
+                    ""id"": ""042e3a54-c3e5-4acd-a7cf-1bbb4a9f1b0c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -251,11 +260,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9a959cc6-02a0-4991-828f-dafb07df71b0"",
-                    ""path"": ""<Keyboard>/backquote"",
+                    ""path"": ""<Keyboard>/f1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Debug Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a6100c9-8574-4244-ad01-f13c20f537a3"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause Key"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -300,6 +320,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerMovement_SprintHold = m_PlayerMovement.FindAction("Sprint Hold", throwIfNotFound: true);
         m_PlayerMovement_Interact = m_PlayerMovement.FindAction("Interact", throwIfNotFound: true);
         m_PlayerMovement_DebugKey = m_PlayerMovement.FindAction("Debug Key", throwIfNotFound: true);
+        m_PlayerMovement_PauseKey = m_PlayerMovement.FindAction("Pause Key", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -372,6 +393,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_SprintHold;
     private readonly InputAction m_PlayerMovement_Interact;
     private readonly InputAction m_PlayerMovement_DebugKey;
+    private readonly InputAction m_PlayerMovement_PauseKey;
     public struct PlayerMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -382,6 +404,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SprintHold => m_Wrapper.m_PlayerMovement_SprintHold;
         public InputAction @Interact => m_Wrapper.m_PlayerMovement_Interact;
         public InputAction @DebugKey => m_Wrapper.m_PlayerMovement_DebugKey;
+        public InputAction @PauseKey => m_Wrapper.m_PlayerMovement_PauseKey;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -409,6 +432,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugKey.started += instance.OnDebugKey;
             @DebugKey.performed += instance.OnDebugKey;
             @DebugKey.canceled += instance.OnDebugKey;
+            @PauseKey.started += instance.OnPauseKey;
+            @PauseKey.performed += instance.OnPauseKey;
+            @PauseKey.canceled += instance.OnPauseKey;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -431,6 +457,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugKey.started -= instance.OnDebugKey;
             @DebugKey.performed -= instance.OnDebugKey;
             @DebugKey.canceled -= instance.OnDebugKey;
+            @PauseKey.started -= instance.OnPauseKey;
+            @PauseKey.performed -= instance.OnPauseKey;
+            @PauseKey.canceled -= instance.OnPauseKey;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -474,5 +503,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSprintHold(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnDebugKey(InputAction.CallbackContext context);
+        void OnPauseKey(InputAction.CallbackContext context);
     }
 }

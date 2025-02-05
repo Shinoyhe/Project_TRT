@@ -259,8 +259,7 @@ public class HandController : MonoBehaviour
                 // TODO: Play a submit SFX
 
                 // Find the position of the slot in OUR localspace.
-                Vector3 localSlotPosition = card.transform.localPosition + 
-                                            (targetSlot.transform.position-card.transform.position);
+                Vector3 localSlotPosition = card.transform.parent.InverseTransformPoint(targetSlot.transform.position);
                 // Snap the display card to the slot's position.
                 card.TransformTo(localSlotPosition, 1, SnapTime);
                 // Note that the display card is submitted (don't animate it back into the hand).

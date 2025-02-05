@@ -676,6 +676,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 205702243}
+    - target: {fileID: 1253949427417460438, guid: 45702244b208e43438fd46065ff5a0b1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SwitchToTitleScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 1253949427417460438, guid: 45702244b208e43438fd46065ff5a0b1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: StartUi, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2292545764926054080, guid: 45702244b208e43438fd46065ff5a0b1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

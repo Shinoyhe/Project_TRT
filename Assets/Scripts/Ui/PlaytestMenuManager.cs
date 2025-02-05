@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 
-public class PlaytestMenuManager : Singleton<PlaytestMenuManager> {
+public class PlaytestMenuManager : MonoBehaviour {
     
     public GameObject SceneSelectButtonPrefab;
     public GameObject ButtonParent;
@@ -19,9 +19,7 @@ public class PlaytestMenuManager : Singleton<PlaytestMenuManager> {
     float _offset = 0;
     List<GameObject> _playtestButtons = new List<GameObject>();
 
-    protected override void Awake() {
-
-        base.Awake();
+    protected void Awake() {
 
         int totalScenes = ScenesToCreate.Count;
 
@@ -42,14 +40,10 @@ public class PlaytestMenuManager : Singleton<PlaytestMenuManager> {
     GameObject CreateButton(string sceneName, string scenePath) {
 
         // Create button
-        var button = Instantiate(SceneSelectButtonPrefab, Vector3.zero, Quaternion.identity, ButtonParent.transform);
+        var button = Instantiate(SceneSelectButtonPrefab, Vector3.zero, Quaternion.identity, transform);
         var buttonManager = button.GetComponent<ButtonManager>();
 
         if (buttonManager == null) return button;
-
-        // Align to position
-        buttonManager.SetLocalPos(new Vector3(0, _offset, 0));
-        _offset -= DistanceBetweenButtons;
 
         // Set name
         buttonManager.SetText(sceneName);

@@ -6,7 +6,7 @@ public class BarterWillingnessMeter : MonoBehaviour
 {
     // Parameters and Publics =====================================================================
 
-    [SerializeField, Tooltip("The BarterDirector in this scene")]
+    [SerializeField, Tooltip("The BarterDirector that we monitor the Willingness on.")]
     private BarterDirector Director;
 
     [Header("Bar Images")]
@@ -16,7 +16,6 @@ public class BarterWillingnessMeter : MonoBehaviour
     [Header("Level Marker")]
     [SerializeField, Tooltip("The transform that our marker exists under.")]
     private RectTransform MarkerParent;
-
 
     [Header("Percentage Label")]
     [SerializeField, Tooltip("The text object used to display our percentage label.")]
@@ -30,8 +29,6 @@ public class BarterWillingnessMeter : MonoBehaviour
 
     // Misc Internal Variables ====================================================================
 
-    // The starting height of the marker, used to position it.
-    private float MarkerStartingY;
     // The horizontal range of our BarFront image, used to position the marker.
     private Vector2 BarFrontBounds;
     // Used to track when DecimalPlaces changes, so that we don't reconstruct the format string
@@ -44,36 +41,46 @@ public class BarterWillingnessMeter : MonoBehaviour
 
     private void Awake()
     {
+        // Calculate the minimum and maximum values of our bounds object.
         // TODO: Test at different resolutions.
         BarFrontBounds = new(BarFront.rectTransform.offsetMin.x, BarFront.rectTransform.offsetMax.x);
 
-        MarkerStartingY = MarkerParent.anchoredPosition.y;
-
+        // Init our format string.
         SetFormatString();
         _lastDecimalPlaces = DecimalPlaces;
     }
 
     private void SetFormatString()
     {
+                            // This string constructor produces '0' repeated DecimalPlaces times.
+                            // v
         _formatString = "0." + new string('0', (int)DecimalPlaces);
+                     // ^
+                     // Adding it to this '0.' makes a format string that, when used on a number,
+                     // prints to DecimalPlaces decimal places.
     }
 
     // Update Methods =============================================================================
 
     private void Update()
     {
+        // Cache Willingness for code length reasons!
         float willingness = Director.GetWillingness();
+
+        // Bar fill
         BarFront.fillAmount = Director.GetWillingness() / 100f;
 
+        // Marker position
         float xPosition = Mathf.Lerp(BarFrontBounds.x, BarFrontBounds.y, willingness/100f);
         MarkerParent.anchoredPosition = new Vector2(xPosition, MarkerParent.anchoredPosition.y);
 
-        // Check if DecimalPlaces has changed.
+        // Check if DecimalPlaces has changed. If so, reset the format string.
         if (_lastDecimalPlaces != DecimalPlaces) {
             _lastDecimalPlaces = DecimalPlaces;
             SetFormatString();
         }
 
+        // Percentage label
         TextObject.text = Prefix + willingness.ToString(_formatString) + Suffix;
     }
 }

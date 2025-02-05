@@ -26,7 +26,7 @@ public class PlaytestMenuManager : MonoBehaviour {
         for (int i = 0; i < totalScenes; i++) {
             var scenePath = ScenesToCreate[i];
 
-            string sceneName = ObjectNames.NicifyVariableName(Path.GetFileNameWithoutExtension(scenePath));
+            string sceneName = Path.GetFileNameWithoutExtension(scenePath); // ObjectNames.NicifyVariableName(Path.GetFileNameWithoutExtension(scenePath));
 
             _playtestButtons.Add(CreateButton(sceneName, scenePath));
         }
@@ -55,6 +55,7 @@ public class PlaytestMenuManager : MonoBehaviour {
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(PlaytestMenuManager))]
 
 public class PlaytestMenuEditor : Editor {
@@ -84,3 +85,4 @@ public class PlaytestMenuEditor : Editor {
         }
     }
 }
+#endif

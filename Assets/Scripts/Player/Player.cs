@@ -15,9 +15,7 @@ public class Player : Singleton<Player>
     public static Transform Transform { get { return Instance.playerController.transform; } }
     public static CinemachineBrain Camera { get { return Instance.playerCamera; } }
     public static Transform PivotCamera { get { return Instance.pivotCamera; } }
-    public static CinemachineBrain MoveCamera { get { return Instance.pivotCamera.GetComponent<CinemachineBrain>().gameObject.GetComponent<CinemachineBrain>()
-                .gameObject.GetComponent<CinemachineBrain>().gameObject.GetComponent<CinemachineBrain>().gameObject.GetComponent<CinemachineBrain>().gameObject.GetComponent<CinemachineBrain>()
-                .gameObject.GetComponent<CinemachineBrain>().gameObject.GetComponent<CinemachineBrain>().gameObject.GetComponent<CinemachineBrain>().gameObject.GetComponent<CinemachineBrain>(); } }
+    public static CinemachineBrain MoveCamera { get { return Instance.pivotCamera.GetComponent<CinemachineBrain>(); } }
     // ;3c
 
     [Header("References")]

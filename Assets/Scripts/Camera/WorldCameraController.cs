@@ -378,7 +378,7 @@ public class WorldCameraController : MonoBehaviour
                 Disable();
                 return;
             }
-            Activate();
+            _currentCamera = this;
         }
         else
         {
@@ -413,6 +413,8 @@ public class WorldCameraController : MonoBehaviour
         }
 
         _started = true;
+
+        _currentCamera.Activate();
     }
 
 

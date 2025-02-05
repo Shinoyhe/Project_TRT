@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 1373132101}
   - component: {fileID: 1373132100}
   - component: {fileID: 1373132105}
+  - component: {fileID: 1373132106}
   m_Layer: 0
   m_Name: Interactor
   m_TagString: Untagged
@@ -510,6 +511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightedInteractable: {fileID: 0}
+  controls: {fileID: 1373132106}
 --- !u!65 &1373132101
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -623,6 +625,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1373132106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373132099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c458e1f588f88942a756ebd6a7f861f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookSensitivity: 1
+  WebglLookSensitivityMultiplier: 0.25
+  InvertYAxis: 0
+  InvertXAxis: 0
 --- !u!1 &1991450214
 GameObject:
   m_ObjectHideFlags: 0

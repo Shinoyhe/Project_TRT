@@ -22,13 +22,22 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// Start is called on the frame when a script is enabled just before
   /// any of the Update methods is called the first time.
   /// </summary>
+  /// 
+
+    [SerializeField] private PlayerInputHandler controls;
+  
   void Start()
   {
-    UnityEngine.Debug.Assert(GetComponent<CharacterController>() != null, "PlayerInteractionHandler requires an attatched CharacterController&collider");
+    //UnityEngine.Debug.Assert(GetComponent<CharacterController>() != null, "PlayerInteractionHandler requires an attatched CharacterController&collider");
     accessibleInteractables = new List<Interactable>();
   }
   private void FixedUpdate() {
     CheckHighlight();
+   
+    if(controls.GetInteractDown()){
+         UnityEngine.Debug.Log("Why no work?");
+        Interact();
+    }
   }
   /// <summary>
   /// calls the interact function on the currently highlighted Interactable

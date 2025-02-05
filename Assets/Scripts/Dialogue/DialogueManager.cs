@@ -1,6 +1,7 @@
 using Ink.Runtime;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Processes Ink file and controls conversation flow.
@@ -38,6 +39,8 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (Instance != this) return;
 
         _inConversation = false;
+        
+        SceneManager.sceneLoaded += (_,_) => {Player = GameObject.FindWithTag("Player");};
     }
 
     private void Update() {

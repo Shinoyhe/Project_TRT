@@ -7,8 +7,8 @@ public class PlayerMovement : MonoBehaviour
     #region ======== [ OBJECT REFERENCES ] ========
 
     [Header("Object References")]
-    [SerializeField] private PlayerInputHandler controls;
     [SerializeField] private Transform forwardTransform;
+    private PlayerInputHandler controls => PlayerInputHandler.Instance;
     private CharacterController characterController;
 
     #endregion

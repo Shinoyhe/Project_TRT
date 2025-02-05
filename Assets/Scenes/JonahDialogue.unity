@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 1546801894}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -758,7 +758,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press ` to start dialogue
+  m_text: 'Press SPACE to start dialogue
 
     Press F to continue dialogue'
   m_isRightToLeft: 0
@@ -988,7 +988,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c458e1f588f88942a756ebd6a7f861f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LockMouse: 1
   LookSensitivity: 1
   WebglLookSensitivityMultiplier: 0.25
   InvertYAxis: 0

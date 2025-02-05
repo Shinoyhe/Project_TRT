@@ -37,8 +37,8 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     private void Start()
     {
         // Cursor lock -> invisible, and confined to center of screen.
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
     }
 
     private void OnEnable()

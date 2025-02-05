@@ -13,6 +13,9 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
         }
 
         Instance = this as T;
-        DontDestroyOnLoad(gameObject);
+        if (gameObject.scene.name != "DontDestroyOnLoad")
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

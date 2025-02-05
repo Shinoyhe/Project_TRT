@@ -35,13 +35,6 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 
     // Initializers and Finalizers ================================================================
 
-    private void Start()
-    {
-        // Cursor lock -> invisible, and confined to center of screen.
-        //Cursor.lockState = CursorLockMode.Locked;
-       //Cursor.visible = false;
-    }
-
     private void OnEnable()
     {
         if (_controls == null) {

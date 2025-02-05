@@ -10,6 +10,8 @@ public class Inventory : MonoBehaviour
     public List<InventoryCard> StartingCards;
     private List<InventoryCard> cards;
 
+    public event Action OnInventoryUpdated;
+
     // Enums for Sorting
     public enum SortParameters { NAME, ID, TYPE }
     public enum SortOrder { ASCENDING, DESCENDING }
@@ -34,6 +36,16 @@ public class Inventory : MonoBehaviour
 
     #region ---------- Public Methods ----------
 
+    public List<InventoryCard> Get()
+    {
+        if (cards == null)
+        {
+            return new List<InventoryCard>();
+        }
+
+        return new List<InventoryCard>(cards);
+    }
+
     public void AddCard(InventoryCard card)
     {
         
@@ -44,6 +56,7 @@ public class Inventory : MonoBehaviour
         }
 
         cards.Add(card);
+        OnInventoryUpdated?.Invoke();
     }
 
     public void RemoveCard(InventoryCard card)
@@ -55,11 +68,13 @@ public class Inventory : MonoBehaviour
         }
 
         cards.Remove(card);
+        OnInventoryUpdated?.Invoke();
     }
 
     public void Clear()
     {
         cards.Clear();
+        OnInventoryUpdated?.Invoke();
     }
 
     public void ClearExceptType(CardTypes type)
@@ -170,6 +185,7 @@ public class Inventory : MonoBehaviour
         }
 
         cards.Sort(comparison);
+        OnInventoryUpdated?.Invoke();
     }
 
     #endregion

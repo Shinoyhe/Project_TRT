@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause Key",
+                    "type": "Button",
+                    "id": "042e3a54-c3e5-4acd-a7cf-1bbb4a9f1b0c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -229,11 +238,22 @@
                 {
                     "name": "",
                     "id": "9a959cc6-02a0-4991-828f-dafb07df71b0",
-                    "path": "<Keyboard>/backquote",
+                    "path": "<Keyboard>/f1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Debug Key",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a6100c9-8574-4244-ad01-f13c20f537a3",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause Key",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -105,43 +105,43 @@ jobs:
           path: ${{ vars.BUILD_PATH }}
           if-no-files-found: warn
 
-buildMacOS:
-  runs-on: ubuntu-latest
-  strategy:
-    fail-fast: false
-  steps:
-    # Checkout
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        lfs: true
+  buildMacOS:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
 
-    - name: Clean up Docker to free up space
-      run: docker system prune -af
+      - name: Clean up Docker to free up space
+        run: docker system prune -af
 
-    # Cache
-    - uses: actions/cache@v3
-      with:
-        path: Library
-        key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-        restore-keys: |
-          Library-
+      # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
 
-    # Build
-    - name: Build project
-      uses: game-ci/unity-builder@v4
-      env:
-        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-      with:
-        targetPlatform: StandaloneOSX
-        buildName: Project_TRT
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneOSX
+          buildName: Project_TRT
 
-    # Output
-    - name: Upload MacOS Build Artifact
-      uses: actions/upload-artifact@v4.3.3
-      with:
-        name: Build-MacOS
-        path: ${{ vars.BUILD_PATH }}
-        if-no-files-found: warn
+      # Output
+      - name: Upload MacOS Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: Build-MacOS
+          path: ${{ vars.BUILD_PATH }}
+          if-no-files-found: warn

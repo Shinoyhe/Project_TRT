@@ -1,0 +1,192 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "3991942870",
+    "Type": "User",
+    "GUID": "{2CAF7C27-18E4-40A7-871C-C075A9250659}",
+    "Language": "SFX",
+    "Hash": "{41CEE51C-7901-9A03-0738-0713C517571B}",
+    "ObjectPath": "\\SoundBanks\\Music\\Music",
+    "ShortName": "Music",
+    "Path": "Music.bnk",
+    "Media": [
+     {
+      "Id": "375964416",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "EnvAttempt4.2.wav",
+      "CachePath": "85/{8568FB55-E3E0-AF9D-E18B-7D6E2C4A9A5B}.wem"
+     },
+     {
+      "Id": "417247961",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "EnvAttempt5.wav",
+      "CachePath": "7C/{7CB4D243-D61B-C4A1-CB1E-F44307A1AFCC}.wem"
+     },
+     {
+      "Id": "879061896",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "EnvAttempt4.1.wav",
+      "CachePath": "24/{248734C3-BD17-67AA-D9B8-5EEC0829AF5F}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1623677187",
+      "Name": "MusicStateActive",
+      "ObjectPath": "\\Events\\Default Work Unit\\MusicEvents\\MusicStateActive",
+      "GUID": "{E855E7B5-D595-4826-AD8A-374F605FCF53}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "ActionSetState": [
+       {
+        "GroupId": "1021618141",
+        "Id": "58138747",
+        "Name": "Active",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicState\\Active",
+        "GUID": "{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}"
+       }
+      ]
+     },
+     {
+      "Id": "821441420",
+      "Name": "MusicStateCalm",
+      "ObjectPath": "\\Events\\Default Work Unit\\MusicEvents\\MusicStateCalm",
+      "GUID": "{B711D0D4-20AB-4A39-B4E9-82305BA67D38}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "ActionSetState": [
+       {
+        "GroupId": "1021618141",
+        "Id": "3753286132",
+        "Name": "Calm",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicState\\Calm",
+        "GUID": "{4A916F2C-FEA7-4172-9C63-FC5255A5BA9D}"
+       }
+      ]
+     },
+     {
+      "Id": "396180185",
+      "Name": "PauseEnvironmentMusic",
+      "ObjectPath": "\\Events\\Default Work Unit\\MusicEvents\\PauseEnvironmentMusic",
+      "GUID": "{E86A3296-7F22-496B-BD16-5FCCBC20504E}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "MediaRefs": [
+       {
+        "Id": "375964416"
+       },
+       {
+        "Id": "417247961"
+       }
+      ]
+     },
+     {
+      "Id": "3562268364",
+      "Name": "ResumeEnvironmentMusic",
+      "ObjectPath": "\\Events\\Default Work Unit\\MusicEvents\\ResumeEnvironmentMusic",
+      "GUID": "{417CD789-3F05-4A40-8360-23E0159080AF}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "MediaRefs": [
+       {
+        "Id": "375964416"
+       },
+       {
+        "Id": "417247961"
+       }
+      ]
+     },
+     {
+      "Id": "1918643091",
+      "Name": "StartEnvironmentMusic",
+      "ObjectPath": "\\Events\\Default Work Unit\\MusicEvents\\StartEnvironmentMusic",
+      "GUID": "{95DED10A-BAFA-4517-9EB7-3E06DDBA7B76}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "375964416"
+       },
+       {
+        "Id": "417247961"
+       }
+      ]
+     },
+     {
+      "Id": "2557824689",
+      "Name": "StopEnvironmentMusic",
+      "ObjectPath": "\\Events\\Default Work Unit\\MusicEvents\\StopEnvironmentMusic",
+      "GUID": "{EFEE06EC-4A3D-41B2-9883-2E17938F0EF1}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "MediaRefs": [
+       {
+        "Id": "375964416"
+       },
+       {
+        "Id": "417247961"
+       }
+      ]
+     }
+    ],
+    "StateGroups": [
+     {
+      "Id": "1021618141",
+      "Name": "MusicState",
+      "ObjectPath": "\\States\\Default Work Unit\\MusicState",
+      "GUID": "{AE40F95D-3431-4615-8D9B-77FE40BE0B6C}",
+      "States": [
+       {
+        "Id": "58138747",
+        "Name": "Active",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicState\\Active",
+        "GUID": "{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}"
+       },
+       {
+        "Id": "748895195",
+        "Name": "None",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicState\\None",
+        "GUID": "{B9EC6211-81DD-4C56-BC1E-E4DA0611B591}"
+       },
+       {
+        "Id": "3753286132",
+        "Name": "Calm",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicState\\Calm",
+        "GUID": "{4A916F2C-FEA7-4172-9C63-FC5255A5BA9D}"
+       }
+      ]
+     }
+    ],
+    "Triggers": [
+     {
+      "Id": "3157003241",
+      "Name": "Test",
+      "ObjectPath": "\\Triggers\\Default Work Unit\\Test",
+      "GUID": "{A1F7C023-FE54-4D4F-BB4C-BB0E19D72476}"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{A4DB8BF3-B897-75F6-18CD-2B5510E65709}"
+ }
+}

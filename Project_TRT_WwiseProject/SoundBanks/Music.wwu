@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{832E5C5F-F56D-419D-8330-26F7BC293CAB}" SchemaVersion="123">
+	<SoundBanks>
+		<WorkUnit Name="Music" ID="{832E5C5F-F56D-419D-8330-26F7BC293CAB}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="Music" ID="{2CAF7C27-18E4-40A7-871C-C075A9250659}">
+					<ObjectInclusionList>
+						<ObjectRef Name="EnviromentSequence" ID="{1FF7DC03-7415-4276-8283-4018BA65C84E}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="EnvironmentSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="MusicEvents" ID="{8FCB98BB-3986-44C6-980F-D12D17CB9504}" WorkUnitID="{786D3133-AA90-4087-8E2A-F719CCC92CFD}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

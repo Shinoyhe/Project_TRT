@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicManager : MonoBehaviour
+public class MusicManager : Singleton<MusicManager>
 {
     [SerializeField] private List<AudioEvent> musicEvents = new();
     private Dictionary<string, AudioEvent> musicEventsDict = new();
     private AudioEvent focusedMusic;
     private Stack<AudioEvent> allCurrentMusic;
 
-    private void Awake()
+    private void Start()
     {
         InitializeAudioEventsDictionary();
     }
@@ -19,6 +19,7 @@ public class MusicManager : MonoBehaviour
         for (int i = 0; i < musicEvents.Count; ++i)
         {
             musicEventsDict[musicEvents[i].GetEventName()] = musicEvents[i];
+            if (musicEvents[i].playOnInit) musicEvents[i].Play(this.gameObject); Debug.Log("hi");
         }
     }
 

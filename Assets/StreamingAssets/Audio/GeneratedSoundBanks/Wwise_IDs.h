@@ -11,6 +11,16 @@
 
 namespace AK
 {
+    namespace EVENTS
+    {
+        static const AkUniqueID MUSICSTATEACTIVE = 1623677187U;
+        static const AkUniqueID MUSICSTATECALM = 821441420U;
+        static const AkUniqueID PAUSEENVIRONMENTMUSIC = 396180185U;
+        static const AkUniqueID RESUMEENVIRONMENTMUSIC = 3562268364U;
+        static const AkUniqueID STARTENVIRONMENTMUSIC = 1918643091U;
+        static const AkUniqueID STOPENVIRONMENTMUSIC = 2557824689U;
+    } // namespace EVENTS
+
     namespace STATES
     {
         namespace MUSICSTATE
@@ -31,6 +41,12 @@ namespace AK
     {
         static const AkUniqueID TEST = 3157003241U;
     } // namespace TRIGGERS
+
+    namespace BANKS
+    {
+        static const AkUniqueID INIT = 1355168291U;
+        static const AkUniqueID MUSIC = 3991942870U;
+    } // namespace BANKS
 
     namespace BUSSES
     {

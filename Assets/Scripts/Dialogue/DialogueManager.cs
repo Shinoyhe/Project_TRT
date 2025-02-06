@@ -11,6 +11,7 @@ public class DialogueManager : Singleton<DialogueManager> {
 
     [Header("Dependencies")]
     public GameObject DialogueUiPrefab;
+    public GameObject BarterContainerPrefab;
 
     public struct ProcessedTags {
 
@@ -229,6 +230,7 @@ public class DialogueManager : Singleton<DialogueManager> {
 
     void StartBarter() {
         Debug.Log("Barter Starting!");
+        Instantiate(BarterContainerPrefab, Vector3.zero, Quaternion.identity);
     }
 
     /// <summary>

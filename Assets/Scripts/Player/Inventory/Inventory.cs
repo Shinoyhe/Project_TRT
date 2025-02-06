@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Tilemaps.TilemapRenderer;
 
-public class Inventory : MonoBehaviour
+public class Inventory : Singleton<Inventory>
 {
     public List<InventoryCard> StartingCards;
     private List<InventoryCard> cards;

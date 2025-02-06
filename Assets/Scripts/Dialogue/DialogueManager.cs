@@ -10,7 +10,6 @@ public class DialogueManager : Singleton<DialogueManager> {
     // Parameters =================================================================================
 
     [Header("Dependencies")]
-    public GameObject Player;
     public GameObject DialogueUiPrefab;
 
     public struct ProcessedTags {
@@ -68,7 +67,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         _inConversation = true;
 
         // Create UI instance
-        _dialogueUiManager = SetupUi(npcBubblePos, Player.transform.position);
+        _dialogueUiManager = SetupUi(npcBubblePos, Player.Transform.position);
 
         // Parse Ink File
         _currentStory = new Story(inkJson.text);

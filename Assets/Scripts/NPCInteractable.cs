@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NPCInteractable : Interactable
 {
+    [SerializeField] private TextAsset npcConversation;
+
     void Start()
     {
         
@@ -21,6 +23,6 @@ public class NPCInteractable : Interactable
 
     public override void Interaction()
     {
-        Debug.Log("Interact");
+        DialogueManager.Instance.StartConversation(npcConversation,this.transform.position);
     }
 }

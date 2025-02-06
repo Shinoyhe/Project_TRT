@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &223746778595519988
 GameObject:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -21,7 +21,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &7267517061612633345
 Transform:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -36,7 +36,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7784573570580722003
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &4466823347442335840
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_CenterOnActivate: 1
 --- !u!114 &4394718669040763581
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -120,8 +120,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 446718723907889688}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17842479, y: -0.00000002676535, z: 0.0000000048534834, w: 0.9839536}
-  m_LocalPosition: {x: 0, y: 3, z: -8}
+  m_LocalRotation: {x: 0.062137444, y: 1.8722912e-15, z: -1.0002863e-15, w: 0.9980676}
+  m_LocalPosition: {x: -0.047329903, y: 3, z: -7.8740797}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 1
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -193,7 +193,7 @@ Transform:
   m_GameObject: {fileID: 4258066814768155699}
   serializedVersion: 2
   m_LocalRotation: {x: 0.06213744, y: -1.2253602e-10, z: 7.6288255e-12, w: 0.9980677}
-  m_LocalPosition: {x: 0, y: 3, z: -8}
+  m_LocalPosition: {x: -0.047329903, y: 3, z: -7.8740797}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_ComponentOwner: {fileID: 9119017896394725895}
 --- !u!1 &4387289849093383467
 GameObject:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &9119017896394725895
 Transform:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -275,7 +275,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7279795060246572223
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &2245485660342581519
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_CenterOnActivate: 1
 --- !u!114 &4688698938855997534
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -383,7 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VirtualCamera: {fileID: 738630665043669698}
   VirtualMovement: {fileID: 1846623816388945109}
-  activeOnAwake: 1
+  activeOnAwake: 0
   fieldOfView: 60
   cameraTransitionTime: 2
   movementTransitionTime: 1
@@ -395,6 +395,7 @@ MonoBehaviour:
   transposerPosition: {x: 0, y: 3, z: -8}
   movementPathResolution: 16
   cameraPathResolution: 8
+  fixedPosition: {x: 0, y: 3, z: -8}
   aimType: 1
   lookAheadDistance: 0.5
   lookAheadSmoothing: 10

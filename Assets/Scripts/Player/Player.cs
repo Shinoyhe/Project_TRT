@@ -8,7 +8,7 @@ using Cinemachine;
 /// "Singleton" that contain references to important player references for other scripts to access.
 /// There's probably a better way to do this, but I'll wait for the review.
 /// </summary>
-[ExecuteAlways]
+//[ExecuteAlways]
 public class Player : Singleton<Player>
 {
     public static PlayerMovement Movement { get { return Instance.playerController; } }

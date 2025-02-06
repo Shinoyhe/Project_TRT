@@ -7,8 +7,10 @@ using static UnityEngine.Tilemaps.TilemapRenderer;
 
 public class Inventory : MonoBehaviour
 {
-    public List<CardData> StartingCards;
-    private List<CardData> cards;
+    public List<InventoryCard> StartingCards;
+    private List<InventoryCard> cards;
+
+    public event Action OnInventoryUpdated;
 
     // Enums for Sorting
     public enum SortParameters { NAME, ID, TYPE }
@@ -17,11 +19,11 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cards = new List<CardData>();
+        cards = new List<InventoryCard>();
 
         Clear();
 
-        foreach (CardData card in StartingCards)
+        foreach (InventoryCard card in StartingCards)
         {
             AddCard(card);
         }
@@ -34,7 +36,17 @@ public class Inventory : MonoBehaviour
 
     #region ---------- Public Methods ----------
 
-    public void AddCard(CardData card)
+    public List<InventoryCard> Get()
+    {
+        if (cards == null)
+        {
+            return new List<InventoryCard>();
+        }
+
+        return new List<InventoryCard>(cards);
+    }
+
+    public void AddCard(InventoryCard card)
     {
         
         if (IDtaken(card.ID))
@@ -44,9 +56,10 @@ public class Inventory : MonoBehaviour
         }
 
         cards.Add(card);
+        OnInventoryUpdated?.Invoke();
     }
 
-    public void RemoveCard(CardData card)
+    public void RemoveCard(InventoryCard card)
     {
         if (!cards.Contains(card))
         {
@@ -55,16 +68,18 @@ public class Inventory : MonoBehaviour
         }
 
         cards.Remove(card);
+        OnInventoryUpdated?.Invoke();
     }
 
     public void Clear()
     {
         cards.Clear();
+        OnInventoryUpdated?.Invoke();
     }
 
     public void ClearExceptType(CardTypes type)
     {
-        foreach (CardData card in cards)
+        foreach (InventoryCard card in cards)
         {
             if (type != card.Type)
             {
@@ -76,7 +91,7 @@ public class Inventory : MonoBehaviour
     public void Print()
     {
         string printString = "[\n";
-        foreach (CardData card in cards)
+        foreach (InventoryCard card in cards)
         {
             printString += $"[{card.name}, {card.ID}, {card.Type},\"{card.Description}\"],\n";
         }
@@ -89,9 +104,9 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="id">The id to search for.</param>
     /// <returns></returns>
-    public CardData GetCardByID(string id)
+    public InventoryCard GetCardByID(string id)
     {
-        foreach (CardData card in cards)
+        foreach (InventoryCard card in cards)
         {
             if (card.ID == id) return card;
         }
@@ -103,9 +118,9 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="cardName">The cardName to search for.</param>
     /// <returns></returns>
-    public CardData GetCardByName(string cardName)
+    public InventoryCard GetCardByName(string cardName)
     {
-        foreach (CardData card in cards)
+        foreach (InventoryCard card in cards)
         {
             if (card.name == cardName) return card;
         }
@@ -117,10 +132,10 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="cardName">The cardName to search for.</param>
     /// <returns></returns>
-    public List<CardData> GetCardsByName(string cardName)
+    public List<InventoryCard> GetCardsByName(string cardName)
     {
-        List<CardData> returnList = new List<CardData>();
-        foreach (CardData card in cards)
+        List<InventoryCard> returnList = new List<InventoryCard>();
+        foreach (InventoryCard card in cards)
         {
             if (card.name == cardName)
             {
@@ -135,10 +150,10 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="cardName">The type to search for.</param>
     /// <returns></returns>
-    public List<CardData> GetCardsByType(CardTypes type)
+    public List<InventoryCard> GetCardsByType(CardTypes type)
     {
-        List<CardData> returnList = new List<CardData>();
-        foreach (CardData card in cards)
+        List<InventoryCard> returnList = new List<InventoryCard>();
+        foreach (InventoryCard card in cards)
         {
             if (card.Type == type)
             {
@@ -154,7 +169,7 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     public void Sort(SortParameters sortParameter, SortOrder sortOrder)
     {
-        Comparison<CardData> comparison = sortParameter switch
+        Comparison<InventoryCard> comparison = sortParameter switch
         {
             SortParameters.NAME => (card1, card2) => string.Compare(card1.CardName, card2.CardName, true),
             SortParameters.ID => (card1, card2) => string.Compare(card1.ID, card2.ID, true),
@@ -170,6 +185,7 @@ public class Inventory : MonoBehaviour
         }
 
         cards.Sort(comparison);
+        OnInventoryUpdated?.Invoke();
     }
 
     #endregion
@@ -182,7 +198,7 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     private bool IDtaken(string cardID)
     {
-        foreach (CardData card in cards)
+        foreach (InventoryCard card in cards)
         {
             if (card.ID == cardID) return true;
         }

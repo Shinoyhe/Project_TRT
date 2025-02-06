@@ -31,15 +31,9 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     private bool _sprintInput;
     private bool _interactDown;
     private bool _debugInputDown;
+    private bool _settingsDown;
 
     // Initializers and Finalizers ================================================================
-
-    private void Start()
-    {
-        // Cursor lock -> invisible, and confined to center of screen.
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
 
     private void OnEnable()
     {
@@ -55,7 +49,9 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
 
     private void OnDisable()
     {
-        _controls.PlayerMovement.Disable();
+        if (_controls != null) {
+            _controls.PlayerMovement.Disable();
+        }
     }
 
     // InputAction Callbacks and Methods ==========================================================
@@ -66,6 +62,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
         _jumpInputDown = false;
         _interactDown = false;
         _debugInputDown = false;
+        _settingsDown = false;
     }
 
     /// <summary>
@@ -117,6 +114,16 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     public void OnDebugKey(InputAction.CallbackContext context) {
         if (context.started) _debugInputDown = true;
         if (context.canceled) _debugInputDown = false;
+    }
+
+    /// <summary>
+    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
+    /// DO NOT CALL MANUALLY.
+    /// </summary>
+    /// <param name="context"></param>
+    public void OnPauseKey(InputAction.CallbackContext context) {
+        if (context.started) _settingsDown = true;
+        if (context.canceled) _settingsDown = false;
     }
 
     /// <summary>
@@ -180,6 +187,14 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// <returns>bool - if the debug input was pressed down on the last frame.</returns>
     public bool GetDebugDown() {
         return GetCanProcessInput() && _debugInputDown;
+    }
+
+    /// <summary>
+    /// Accessor for if the setting input was pressed on the last frame.
+    /// </summary>
+    /// <returns>bool - if the setting input was pressed down on the last frame.</returns>
+    public bool GetSettingsDown() {
+        return GetCanProcessInput() && _settingsDown;
     }
 
     /// <summary>

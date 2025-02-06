@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     #region ======== [ OBJECT REFERENCES ] ========
 
     [Header("Object References")]
-    [SerializeField] private PlayerInputHandler controls;
     [SerializeField] private Transform forwardTransform;
     private CharacterController characterController;
 
@@ -48,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateMovement()
     {
         // Get Input
-        Vector3 input = controls.GetMoveInput();
+        Vector3 input = GameManager.PlayerInput.GetMoveInput();
 
         // Relative to Target
         float y = forwardTransform.rotation.eulerAngles.y;

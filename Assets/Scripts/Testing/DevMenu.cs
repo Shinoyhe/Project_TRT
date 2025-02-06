@@ -7,7 +7,7 @@ public class DevMenu : Singleton<DevMenu> {
     [SerializeField] GameObject devMenu;
     float _initalTimescale = 0;
     bool _devOn = false;
-    UiInputHandler _input => UiInputHandler.Instance;
+    UiInputHandler _input => GameManager.UiInput;
     
     private void Start() {
         devMenu.SetActive(false);

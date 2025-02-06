@@ -63,12 +63,12 @@ public class StartUi : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (UiInputHandler.Instance == null) { return; }
+        if (GameManager.UiInput == null) { return; }
 
         // Keyboard input checking
         if (_currentCanvasState == _canvasState.TitleScreen) {
 
-            if (UiInputHandler.Instance.GetSettingsDown()) {
+            if (GameManager.UiInput.GetSettingsDown()) {
                 SwitchToOptionsMenu();
                 return;
             }
@@ -76,7 +76,7 @@ public class StartUi : MonoBehaviour {
 
         if (_currentCanvasState != _canvasState.TitleScreen) {
 
-            if (UiInputHandler.Instance.GetSettingsDown()) {
+            if (GameManager.UiInput.GetSettingsDown()) {
                 SwitchToTitleScreen();
             }
         }

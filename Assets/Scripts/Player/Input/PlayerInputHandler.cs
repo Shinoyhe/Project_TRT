@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// Class which manages inputs from the new input system, via PlayerControls.
 /// Modded from the input handler from the Unity FPS Microgame.
 /// </summary>
-public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.IPlayerMovementActions {
+public class PlayerInputHandler : MonoBehaviour, PlayerControls.IPlayerMovementActions {
     // Parameters =================================================================================
 
     [SerializeField, Tooltip("Sensitivity multiplier for moving the camera around")]

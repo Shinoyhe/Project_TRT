@@ -11,7 +11,7 @@ public class CardPickup : Interactable {
     }
 
     public override void Interaction() {
-        Inventory.Instance.AddCard(CardToGive);
+        GameManager.Inventory.AddCard(CardToGive);
         Destroy(this.gameObject);
     }
 

@@ -70,12 +70,12 @@ public class InGameUi : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if (PlayerInputHandler.Instance == null) { return; }
+        if (GameManager.UiInput == null) { return; }
 
         // Keyboard input checking
         if (_currentCanvasState == _canvasState.HudCanvas) {
 
-            if (UiInputHandler.Instance.GetSettingsDown()) {
+            if (GameManager.UiInput.GetSettingsDown()) {
                 SwitchToInventory();
                 return;
             }
@@ -83,7 +83,7 @@ public class InGameUi : MonoBehaviour
 
         if (_currentCanvasState != _canvasState.HudCanvas) {
 
-            if (UiInputHandler.Instance.GetSettingsDown()) {
+            if (GameManager.UiInput.GetSettingsDown()) {
                 SwitchToHudScreen();
                 return;
             }

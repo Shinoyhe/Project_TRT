@@ -8,7 +8,6 @@ public class InventoryCanvas : MonoBehaviour
 {
 
     [SerializeField] private GridLayoutGroup _grid;
-    [SerializeField] private GameObject _inventory;
     [SerializeField] private GameObject _inventoryCardPrefab;
 
     private List<InventoryCard> _inventoryCardScriptableObjects;
@@ -16,22 +15,22 @@ public class InventoryCanvas : MonoBehaviour
 
     private void OnEnable()
     {
-        _inventory.GetComponent<Inventory>().OnInventoryUpdated += UpdateUI;
-        _inventoryCardScriptableObjects = _inventory.GetComponent<Inventory>().Get();
+        GameManager.Inventory.OnInventoryUpdated += UpdateUI;
+        _inventoryCardScriptableObjects = GameManager.Inventory.Get();
         UpdateUI();
     }
     private void OnDisable()
     {
-        if (_inventory != null)
+        if (GameManager.Inventory != null)
         {
-            _inventory.GetComponent<Inventory>().OnInventoryUpdated -= UpdateUI;
+            GameManager.Inventory.OnInventoryUpdated -= UpdateUI;
         }
     }
     private void OnDestroy()
     {
-        if (_inventory != null)
+        if (GameManager.Inventory != null)
         {
-            _inventory.GetComponent<Inventory>().OnInventoryUpdated -= UpdateUI;
+            GameManager.Inventory.OnInventoryUpdated -= UpdateUI;
         }
     }
 
@@ -39,7 +38,7 @@ public class InventoryCanvas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _inventoryCardScriptableObjects = _inventory.GetComponent<Inventory>().Get();
+        _inventoryCardScriptableObjects = GameManager.Inventory.Get();
     }
 
     // Update is called once per frame
@@ -50,7 +49,7 @@ public class InventoryCanvas : MonoBehaviour
 
     private void UpdateUI()
     {
-        _inventoryCardScriptableObjects = _inventory.GetComponent<Inventory>().Get();
+        _inventoryCardScriptableObjects = GameManager.Inventory.Get();
         UpdateCardGameObjects();
     }
 

@@ -17,7 +17,7 @@ public class DialogueRoot : MonoBehaviour
     private void Update() {
 
         // Check for Player Input
-        if (UiInputHandler.Instance.GetDebugDown()) {
+        if (GameManager.UiInput.GetDebugDown()) {
             OnInteract();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -32,7 +32,7 @@ public class DialogueRoot : MonoBehaviour
     private void OnInteract() {
         var positionOfBubble = transform.position + BubbleSpawnOffset + new Vector3(0,VerticalOffset,0);
         
-        DialogueManager.Instance.StartConversation(InkFile, positionOfBubble);
+        GameManager.DialogueManager.StartConversation(InkFile, positionOfBubble);
     }
 
     /// <summary>

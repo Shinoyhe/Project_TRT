@@ -271,7 +271,7 @@ public class DialogueUiManager : MonoBehaviour {
 
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(worldPos);
 
-        if(RenderCanvas == null) {
+        if (RenderCanvas == null) {
             Debug.LogError("Render Canvas not set in DialogueUiManager.");
         }
 

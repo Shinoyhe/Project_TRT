@@ -80,7 +80,7 @@ public class InGameUi : MonoBehaviour
                 return;
             }
             if (PlayerInputHandler.Instance.GetInteractDown()) {
-                SwitchToInventory();
+                //SwitchToInventory();
                 return;
             }
         }

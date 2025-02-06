@@ -35,7 +35,6 @@ public class PlayerInteractionHandler : MonoBehaviour {
     CheckHighlight();
    
     if(controls.GetInteractDown()){
-         UnityEngine.Debug.Log("Why no work?");
         Interact();
     }
   }

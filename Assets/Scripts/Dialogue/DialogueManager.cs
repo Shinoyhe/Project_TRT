@@ -74,7 +74,7 @@ public class DialogueManager : MonoBehaviour {
         _inConversation = true;
 
         // Create UI instance
-        _dialogueUiManager = SetupUi(npcBubblePos, Player.Transform.position);
+        _dialogueUiManager = SetupUi(npcBubblePos, GameManager.Player.Transform.position);
 
         // Parse Ink File
         _currentStory = new Story(inkJson.text);

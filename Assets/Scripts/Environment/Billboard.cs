@@ -46,7 +46,7 @@ public class Billboard : MonoBehaviour
     {
         if (Target == null)
         {
-            Target = Player.PivotCamera;
+            Target = GameManager.Player.MovePivot;
         }
     }
 
@@ -55,7 +55,7 @@ public class Billboard : MonoBehaviour
     {
         if (Target == null)
         {
-            Target = Player.PivotCamera;
+            Target = GameManager.Player.MovePivot;
         }
     }
 

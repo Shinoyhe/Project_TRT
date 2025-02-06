@@ -101,7 +101,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 0.00001
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -211,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1671b4e4a24dc9408e005517611ee20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controls: {fileID: 8568074324984953064}
   forwardTransform: {fileID: 5083528762976515683}
   speed: 5
 --- !u!143 &6074142200603486058
@@ -253,7 +252,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightedInteractable: {fileID: 0}
-  controls: {fileID: 8568074324984953064}
 --- !u!1 &3870256125407273809
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,10 +300,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a90b43738e1497749b2117ff6b9fffc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 8583860041712276947}
-  playerCamera: {fileID: 51520251301293892}
-  pivotCamera: {fileID: 5083528762976515683}
-  lookTarget: {fileID: 8363774335222113587}
+  Movement: {fileID: 8583860041712276947}
+  Object: {fileID: 2770568053980062067}
+  Transform: {fileID: 1767942433717707359}
+  Camera: {fileID: 51520251301293892}
+  MoveCamera: {fileID: 1423583173659599766}
+  MovePivot: {fileID: 5083528762976515683}
+  LookTarget: {fileID: 8363774335222113587}
 --- !u!1 &4521869914754720316
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +401,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookSensitivity: 1
-  WebglLookSensitivityMultiplier: 0.25
   InvertYAxis: 0
   InvertXAxis: 0
 --- !u!1 &8208938610237536702

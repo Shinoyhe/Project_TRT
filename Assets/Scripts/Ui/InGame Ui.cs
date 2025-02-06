@@ -8,21 +8,17 @@ public class InGameUi : MonoBehaviour
 
     public Canvas HudCanvas;
     public Canvas InventoryCanvas;
-    public Canvas OptionsCanvas;
-    public Canvas CreditsCanvas;
 
     private Canvas _currentCanvas;
     private enum _canvasState {
         HudCanvas,
-        OptionScreen,
-        CreditsScreen,
         InventoryCanvas
     }
     private _canvasState _currentCanvasState;
 
     // Initializers and Update ================================================================
     void Start() {
-        if (HudCanvas == null || OptionsCanvas == null || CreditsCanvas == null || InventoryCanvas == null) {
+        if (HudCanvas == null || InventoryCanvas == null) {
             Debug.LogError("Start Ui not setup!");
         }
 
@@ -35,14 +31,6 @@ public class InGameUi : MonoBehaviour
     public void SwitchToHudScreen() {
         SwitchCanvas(HudCanvas);
         _currentCanvasState = _canvasState.HudCanvas;
-    }
-    public void SwitchToOptionsMenu() {
-        SwitchCanvas(OptionsCanvas);
-        _currentCanvasState = _canvasState.OptionScreen;
-    }
-    public void SwitchToCreditsMenu() {
-        SwitchCanvas(CreditsCanvas);
-        _currentCanvasState = _canvasState.CreditsScreen;
     }
     public void SwitchToInventory() {
         SwitchCanvas(InventoryCanvas);

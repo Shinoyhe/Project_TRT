@@ -76,6 +76,7 @@ public class PlayerInteractionHandler : MonoBehaviour {
     Interactable nearestInteractable = highlightedInteractable;
     float distanceToNearest = float.MaxValue;
     foreach(Interactable curInteractable in accessibleInteractables) {
+      if (curInteractable == null) continue;
       float distanceToCurrent = Vector3.Distance(transform.position,curInteractable.transform.position);
       if( distanceToCurrent < distanceToNearest ) {
         nearestInteractable = curInteractable;

@@ -1,4 +1,5 @@
 using Ink.Runtime;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -28,7 +29,7 @@ public class DialogueManager : Singleton<DialogueManager> {
     // Misc Internal Variables ====================================================================
 
     private bool _inConversation;
-    private bool _conversationPaused;
+    private bool _onDelay;
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
@@ -42,6 +43,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (Instance != this) return;
 
         _inConversation = false;
+        _onDelay = false;
     }
 
     private void Update() {
@@ -49,7 +51,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (_inConversation == false) return;
 
         // Check for Player Input
-        if (PlayerInputHandler.Instance.GetInteractDown()) {
+        if (UiInputHandler.Instance.GetProgressDialogueDown()) {
 
             if (_dialogueUiManager.IsLineFinished()) {
                 ShowNextLine();
@@ -65,10 +67,13 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// <summary>
     /// Start a conversation using an Ink JSON file. 
     /// </summary>
+    /// <returns> True if conversation started successfully. </returns>
     /// <param name="inkJson"> Ink file conversation will use. </param>
     /// <param name="npcBubblePos"> Where we want a NPC speech bubble.</param>
-    public void StartConversation(TextAsset inkJson, Vector3 npcBubblePos) {
-        if (_inConversation) return;
+    public bool StartConversation(TextAsset inkJson, Vector3 npcBubblePos) {
+        if (_inConversation) return false;
+        if (_onDelay) return false;
+
         _inConversation = true;
 
         // Create UI instance
@@ -79,6 +84,7 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         // Show First Line
         ShowNextLine();
+        return true;
     }
 
     /// <summary>
@@ -113,14 +119,14 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         _dialogueUiInstance = Instantiate(DialogueUiPrefab, Vector3.zero, Quaternion.identity);
 
-        if(_dialogueUiInstance == null) {
+        if (_dialogueUiInstance == null) {
             ThrowNullError("SetupUi()", "DialogueUiInstance");
         }
 
         DialogueUiManager dialogueUiManager = _dialogueUiInstance.GetComponent<DialogueUiManager>();
 
         dialogueUiManager.PairChoices(ProcessDialogueChoice);
-        dialogueUiManager.SetupUi(npcBubblePos,playerBubblePos);
+        dialogueUiManager.SetupUi(npcBubblePos, playerBubblePos);
 
         return dialogueUiManager;
     }
@@ -172,7 +178,7 @@ public class DialogueManager : Singleton<DialogueManager> {
 
         // Precondition: Has not reached end of story
         if (AtEndOfStory()) {
-            EndStory();
+            EndStory(true);
             return;
         }
 
@@ -188,7 +194,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         // If choice was Action, skip the line.
         if (foundTags.isBarterTrigger) {
             StartBarter();
-            EndStory();
+            EndStory(false);
             return;
         }
 
@@ -208,7 +214,7 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// <returns>Our new ProcessedTag struct.</returns>
     ProcessedTags ProcessTags(List<string> lineTags) {
 
-        if(lineTags == null) {
+        if (lineTags == null) {
             ThrowNullError("ProcessTags()", "tag array");
         }
 
@@ -244,6 +250,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
         barterDirectorOfInstance.OnWin += WinBarter;
         barterDirectorOfInstance.OnLose += LoseBarter;
+        PlayerInputHandler.Instance.SetActive(false);
     }
 
     /// <summary>
@@ -268,20 +275,31 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// </summary>
     void CleanupBarter() {
         Destroy(_barterInstance.gameObject);
+        PlayerInputHandler.Instance.SetActive(true);
     }
 
     /// <summary>
     /// Called to kill UI and prep for next dialogue.
     /// </summary>
-    void EndStory() {
+    /// <param name="enablePlayerInput"> True if we want to enable player input after ending story. </param>
+    void EndStory(bool enablePlayerInput) {
         _inConversation = false;
         _currentStory = null;
         _dialogueUiManager = null;
 
         Destroy(_dialogueUiInstance);
-    }   
+        PlayerInputHandler.Instance.SetActive(enablePlayerInput);
+        _onDelay = true;
+        StartCoroutine("ConversationDelay");
+    }
 
     void ThrowNullError(string functionOrigin, string whatWasNull) {
         Debug.LogError("Called " + functionOrigin + " with a null " + whatWasNull + ".");
+    }
+
+    // Delay to prevent ghost inputs, convo ends and starts right again.
+    IEnumerator ConversationDelay() {
+        yield return new WaitForSeconds(0.25f);
+        _onDelay = false;
     }
 }

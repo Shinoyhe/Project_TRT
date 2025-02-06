@@ -16,7 +16,6 @@ public class PlaytestMenuManager : MonoBehaviour {
 
     public List<String> ScenesToCreate;
 
-    float _offset = 0;
     List<GameObject> _playtestButtons = new List<GameObject>();
 
     protected void Awake() {

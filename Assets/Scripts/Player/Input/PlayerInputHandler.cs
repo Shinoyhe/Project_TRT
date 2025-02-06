@@ -6,14 +6,11 @@ using UnityEngine.InputSystem;
 /// Class which manages inputs from the new input system, via PlayerControls.
 /// Modded from the input handler from the Unity FPS Microgame.
 /// </summary>
-public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.IPlayerMovementActions
-{
+public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.IPlayerMovementActions {
     // Parameters =================================================================================
 
     [SerializeField, Tooltip("Sensitivity multiplier for moving the camera around")]
     private float LookSensitivity = 1f;
-    [SerializeField, Tooltip("Additional sensitivity multiplier for WebGL")]
-    private float WebglLookSensitivityMultiplier = 0.25f;
     [SerializeField, Tooltip("Used to flip the vertical input axis")]
     private bool InvertYAxis = false;
     [SerializeField, Tooltip("Used to flip the horizontal input axis")]
@@ -24,45 +21,42 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     private enum Axis { Horizontal, Vertical };
     // Object references
     PlayerControls _controls;
+    private bool _isActive;
+
     // Input states: set by InputAction callbacks, read by accessors
     private Vector2 _moveInputVector;
     private Vector2 _lookDeltaVector;
     private bool _jumpInputDown;
     private bool _sprintInput;
     private bool _interactDown;
-    private bool _debugInputDown;
-    private bool _settingsDown;
-
+   
     // Initializers and Finalizers ================================================================
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         if (_controls == null) {
             _controls = new PlayerControls();
             // Tell the "gameplay" action map that we want to get told about
             // when actions get triggered.
-            _controls.PlayerMovement.SetCallbacks(this);
+            _controls.UiInteract.SetCallbacks(this);
         }
-        
-        _controls.PlayerMovement.Enable();
+
+        _controls.UiInteract.Enable();
+        _isActive = true;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         if (_controls != null) {
-            _controls.PlayerMovement.Disable();
+            _controls.UiInteract.Disable();
+            _isActive = false;
         }
     }
 
     // InputAction Callbacks and Methods ==========================================================
 
-    private void LateUpdate()
-    {
+    private void LateUpdate() {
         // LateUpdate is called at the END of every frame, after all Update() calls.
         _jumpInputDown = false;
         _interactDown = false;
-        _debugInputDown = false;
-        _settingsDown = false;
     }
 
     /// <summary>
@@ -70,8 +64,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// DO NOT CALL MANUALLY.
     /// </summary>
     /// <param name="context"></param>
-    public void OnMove(InputAction.CallbackContext context)
-    {
+    public void OnMove(InputAction.CallbackContext context) {
         _moveInputVector = context.ReadValue<Vector2>();
     }
 
@@ -80,8 +73,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// DO NOT CALL MANUALLY.
     /// </summary>
     /// <param name="context"></param>
-    public void OnCameraLook(InputAction.CallbackContext context)
-    {
+    public void OnCameraLook(InputAction.CallbackContext context) {
         _lookDeltaVector = context.ReadValue<Vector2>();
     }
 
@@ -90,8 +82,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// DO NOT CALL MANUALLY.
     /// </summary>
     /// <param name="context"></param>
-    public void OnJump(InputAction.CallbackContext context)
-    {
+    public void OnJump(InputAction.CallbackContext context) {
         if (context.started) _jumpInputDown = true;
         if (context.canceled) _jumpInputDown = false;
     }
@@ -111,54 +102,31 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// DO NOT CALL MANUALLY.
     /// </summary>
     /// <param name="context"></param>
-    public void OnDebugKey(InputAction.CallbackContext context) {
-        if (context.started) _debugInputDown = true;
-        if (context.canceled) _debugInputDown = false;
-    }
-
-    /// <summary>
-    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
-    /// DO NOT CALL MANUALLY.
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnPauseKey(InputAction.CallbackContext context) {
-        if (context.started) _settingsDown = true;
-        if (context.canceled) _settingsDown = false;
-    }
-
-    /// <summary>
-    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
-    /// DO NOT CALL MANUALLY.
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnSprintHold(InputAction.CallbackContext context)
-    {
+    public void OnSprintHold(InputAction.CallbackContext context) {
         if (context.started) _sprintInput = true;
         if (context.canceled) _sprintInput = false;
     }
 
     // Public Accessor Methods ====================================================================
-    
+
     /// <summary>
     /// Accessor for if inputs are currently accepted.
     /// </summary>
     /// <returns>bool - if PlayerInputHandler can process input.</returns>
-    public bool GetCanProcessInput()
-    {
-        return true;//Cursor.lockState == CursorLockMode.Locked;
+    public bool GetCanProcessInput() {
+        return _isActive;//Cursor.lockState == CursorLockMode.Locked;
     }
 
     /// <summary>
     /// Accessor for the last held values of the lateral move inputs.
     /// </summary>
     /// <returns>Vector3 - last known move input.</returns>
-    public Vector3 GetMoveInput()
-    {
+    public Vector3 GetMoveInput() {
         if (!GetCanProcessInput()) {
             return Vector3.zero;
         }
 
-        Vector3 move = new (_moveInputVector.x, 0f, _moveInputVector.y);
+        Vector3 move = new(_moveInputVector.x, 0f, _moveInputVector.y);
 
         // 'Normalize' move vector but allow for sub-one values.
         return Vector3.ClampMagnitude(move, 1);
@@ -168,8 +136,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// Accessor for if the jump input was pressed on the last frame.
     /// </summary>
     /// <returns>bool - if the jump input was pressed down on the last frame.</returns>
-    public bool GetJumpInputDown()
-    {
+    public bool GetJumpInputDown() {
         return GetCanProcessInput() && _jumpInputDown;
     }
 
@@ -182,27 +149,10 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     }
 
     /// <summary>
-    /// Accessor for if the debug input was pressed on the last frame.
-    /// </summary>
-    /// <returns>bool - if the debug input was pressed down on the last frame.</returns>
-    public bool GetDebugDown() {
-        return GetCanProcessInput() && _debugInputDown;
-    }
-
-    /// <summary>
-    /// Accessor for if the setting input was pressed on the last frame.
-    /// </summary>
-    /// <returns>bool - if the setting input was pressed down on the last frame.</returns>
-    public bool GetSettingsDown() {
-        return GetCanProcessInput() && _settingsDown;
-    }
-
-    /// <summary>
     /// Accessor for if the sprint input was held on the last frame.
     /// </summary>
     /// <returns>bool - last known hold state of the sprint input.</returns>
-    public bool GetSprintInputHeld()
-    {
+    public bool GetSprintInputHeld() {
         return GetCanProcessInput() && _sprintInput;
     }
 
@@ -210,8 +160,7 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// Accessor for the horizontal delta on the last frame for the look input.
     /// </summary>
     /// <returns>float - horizontal delta of the look input on the last frame.</returns>
-    public float GetLookInputsHorizontal()
-    {
+    public float GetLookInputsHorizontal() {
         return GetLookInputsAxis(Axis.Horizontal);
     }
 
@@ -219,13 +168,11 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
     /// Accessor for the vertical delta on the last frame for the look input.
     /// </summary>
     /// <returns>float - vertical delta of the look input on the last frame.</returns>
-    public float GetLookInputsVertical()
-    {
+    public float GetLookInputsVertical() {
         return GetLookInputsAxis(Axis.Vertical);
     }
 
-    private float GetLookInputsAxis(Axis axis)
-    {
+    private float GetLookInputsAxis(Axis axis) {
         // Shared functionality for GetLookInputsHorizontal and GetLookInputsVertical.
         // * Takes as argument an Axis enum (either Horizontal or Vertical, input is 2D)
         // * Returns the input delta on the last frame for that axis.
@@ -274,5 +221,8 @@ public class PlayerInputHandler : Singleton<PlayerInputHandler>, PlayerControls.
         }
 
         return axisValue;
+    }
+    public void SetActive(bool isActive) {
+        _isActive = isActive;
     }
 }

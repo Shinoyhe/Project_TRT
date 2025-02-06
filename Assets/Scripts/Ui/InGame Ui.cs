@@ -75,19 +75,15 @@ public class InGameUi : MonoBehaviour
         // Keyboard input checking
         if (_currentCanvasState == _canvasState.HudCanvas) {
 
-            if (PlayerInputHandler.Instance.GetSettingsDown()) {
+            if (UiInputHandler.Instance.GetSettingsDown()) {
                 SwitchToInventory();
-                return;
-            }
-            if (PlayerInputHandler.Instance.GetInteractDown()) {
-                //SwitchToInventory();
                 return;
             }
         }
 
         if (_currentCanvasState != _canvasState.HudCanvas) {
 
-            if (PlayerInputHandler.Instance.GetSettingsDown()) {
+            if (UiInputHandler.Instance.GetSettingsDown()) {
                 SwitchToHudScreen();
                 return;
             }

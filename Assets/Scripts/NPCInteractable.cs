@@ -4,9 +4,10 @@ public class NpcCore : Interactable
 {
     [SerializeField] private InventoryCard CardToGiveOnWin;
     [SerializeField] private TextAsset NpcConversation;
+
     void Start()
     {
-        
+
     }
 
     public override void Highlight()
@@ -21,7 +22,11 @@ public class NpcCore : Interactable
 
     public override void Interaction()
     {
-        DialogueManager.Instance.StartConversation(NpcConversation,this.transform.position);
-        DialogueManager.Instance.SetPrizeCard(CardToGiveOnWin);
+        bool convoStarted = DialogueManager.Instance.StartConversation(NpcConversation,this.transform.position);
+
+        if (convoStarted) {
+            DialogueManager.Instance.SetPrizeCard(CardToGiveOnWin);
+            PlayerInputHandler.Instance.SetActive(false);
+        }
     }
 }

@@ -7,20 +7,18 @@ public class StartUi : MonoBehaviour {
     // Parameters =================================================================================
 
     public Canvas TitleScreenCanvas;
-    public Canvas OptionsCanvas;
     public Canvas CreditsCanvas;
 
     private Canvas _currentCanvas;
     private enum _canvasState {
         TitleScreen,
-        OptionScreen,
-        CreditsScreen
+        Credits
     }
     private _canvasState _currentCanvasState;
 
     // Initializers and Update ================================================================
     void Start() {
-        if(TitleScreenCanvas == null || OptionsCanvas == null || CreditsCanvas == null) {
+        if(TitleScreenCanvas == null) {
             Debug.LogError("Start Ui not setup!");
         }
 
@@ -34,13 +32,10 @@ public class StartUi : MonoBehaviour {
         SwitchCanvas(TitleScreenCanvas);
         _currentCanvasState = _canvasState.TitleScreen;
     }
-    public void SwitchToOptionsMenu() {
-        SwitchCanvas(OptionsCanvas);
-        _currentCanvasState = _canvasState.OptionScreen;
-    }
-    public void SwitchToCreditsMenu() {
+
+    public void SwitchToCreditsScreen() {
         SwitchCanvas(CreditsCanvas);
-        _currentCanvasState = _canvasState.CreditsScreen;
+        _currentCanvasState = _canvasState.Credits;
     }
 
     // Private Helper Methods ====================================================================
@@ -64,15 +59,6 @@ public class StartUi : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (GameManager.UiInput == null) { return; }
-
-        // Keyboard input checking
-        if (_currentCanvasState == _canvasState.TitleScreen) {
-
-            if (GameManager.UiInput.GetSettingsDown()) {
-                SwitchToOptionsMenu();
-                return;
-            }
-        }
 
         if (_currentCanvasState != _canvasState.TitleScreen) {
 

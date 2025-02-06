@@ -5,5 +5,5 @@ Want to Barter? #NPC
     -> END
     
  * Nope.
-    Ok fine.
+    Ok fine. #NPC
     -> END

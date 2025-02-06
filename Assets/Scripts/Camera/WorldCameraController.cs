@@ -56,37 +56,39 @@ public class WorldCameraController : MonoBehaviour
     private List<WorldCameraController> blacklistedControllers = new List<WorldCameraController>();
 
 
-    [BoxGroup("Body")] [Tooltip("The Cinemachine body type for the camera")] [SerializeField] [OnValueChanged("AutoUpdateBody")]
+    [BoxGroup("Body")] [Tooltip("The Cinemachine body type for the camera. (Influences position.)")] [SerializeField] [OnValueChanged("AutoUpdateBody")]
     private Body bodyType = Body.Transposer;
-    [BoxGroup("Body")] [SerializeField] [Range(0, 20)] [HideIf("bodyType", Body.Fixed)] [OnValueChanged("AutoUpdateBody")]
+    [BoxGroup("Body")] [Tooltip("Dampening for the Cinemachine Body")] [SerializeField] [Range(0, 20)] [HideIf("bodyType", Body.Fixed)] [OnValueChanged("AutoUpdateBody")]
     private float followDampening = 2;
-    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.Transposer)] [OnValueChanged("AutoUpdateBody")]
+    [BoxGroup("Body")] [Tooltip("CinemachineTransposer's position relative to the target")] [SerializeField] [ShowIf("bodyType", Body.Transposer)] [OnValueChanged("AutoUpdateBody")]
     private Vector3 transposerPosition = new Vector3(0, 3, -8);
-    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)] [MinValue(1)] [OnValueChanged("AutoUpdateBody")]
+    [BoxGroup("Body")] [Tooltip("Increase to reduce character movement jitter with the dolly at the cost of performance.")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)] [MinValue(1)] [OnValueChanged("AutoUpdateBody")]
     private int movementPathResolution = 16;
-    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)] [OnValueChanged("AutoUpdateBody")]
+    [BoxGroup("Body")] [Tooltip("Increase to reduce camera jitter with the dolly at the cost of performance." +
+        "Note that follow dampening can also negative jitter, at the cost of the camera lagging behind.")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)] [OnValueChanged("AutoUpdateBody")]
     private int cameraPathResolution = 8;
-    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.Fixed)] [OnValueChanged("AutoUpdateBody")]
+    [BoxGroup("Body")] [Tooltip("The world position of the camera when the Body is Fixed.")] [SerializeField] [ShowIf("bodyType", Body.Fixed)] [OnValueChanged("AutoUpdateBody")]
     private Vector3 fixedPosition = new Vector3(0, 3, -8);
 
 
     [BoxGroup("Aim")]
-    [SerializeField] [OnValueChanged("AutoUpdateMainAim")]
+    [SerializeField] [Tooltip("The Cinemachine aim type for the camera. (Influences rotation.)")] [OnValueChanged("AutoUpdateMainAim")]
     private Aim aimType = Aim.Composer;
-    [BoxGroup("Aim")] [SerializeField] [Range(0, 1)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
+    [BoxGroup("Aim")] [Tooltip("How far ahead of the player the composer will rotate towards.")] [SerializeField] [Range(0, 1)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
     private float lookAheadDistance = 0.5f;
-    [BoxGroup("Aim")] [SerializeField] [Range(0, 30)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
+    [BoxGroup("Aim")] [Tooltip("Smooths the rotation when the camera looks ahead.")] [SerializeField] [Range(0, 30)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
     private float lookAheadSmoothing = 5f;
-    [BoxGroup("Aim")] [SerializeField] [Range(0, 20)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
+    [BoxGroup("Aim")] [Tooltip("Adds dampening to the camera rotating.")] [SerializeField] [Range(0, 20)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
     private float aimDampening = 2;
-    [BoxGroup("Aim")] [SerializeField] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
+    [BoxGroup("Aim")] [Tooltip("Offset where the camera is looking at relative to the target.")] [SerializeField] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
     private Vector3 aimOffset;
-    [BoxGroup("Aim")] [SerializeField] [ShowIf("aimType", Aim.Fixed)] [OnValueChanged("AutoUpdateMainAim")]
+    [BoxGroup("Aim")] [Tooltip("The world euler angle rotation of the camera when the Aim is Fixed.")] [SerializeField] [ShowIf("aimType", Aim.Fixed)] [OnValueChanged("AutoUpdateMainAim")]
     private Vector3 fixedAimRotation = Vector3.right * 15f;
 
 
     [BoxGroup("Controls")]
-    [Label("Auto-Update Cameras")]
+    [Label("Auto-Update Cameras")] [Tooltip("Automatically updates the child virtual cameras when changing the script's parameters." +
+        "Disable if you want to manually change the virtual cameras.")]
     [SerializeField] private bool autoUpdate = true;
 
     #endregion
@@ -366,10 +368,12 @@ public class WorldCameraController : MonoBehaviour
 
     void Start()
     {
+        // Check if in Prefab Mode
         if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
 
         AssignTargets();
 
+        // Don't run if the game is not running
         if (!Application.isPlaying) return;
 
         // Error Catching

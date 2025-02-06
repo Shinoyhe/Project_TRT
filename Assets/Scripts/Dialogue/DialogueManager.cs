@@ -15,17 +15,18 @@ public class DialogueManager : Singleton<DialogueManager> {
     public struct ProcessedTags {
 
         public bool isNpcTalking;
-        public bool isAction;
+        public bool isBarterTrigger;
 
-        public ProcessedTags(bool isAction = false, bool isNpcTalking = false) {
+        public ProcessedTags(bool isBarterTrigger = false, bool isNpcTalking = false) {
             this.isNpcTalking = isNpcTalking;
-            this.isAction = isAction;
+            this.isBarterTrigger = isBarterTrigger;
         }
     }
 
     // Misc Internal Variables ====================================================================
 
     private bool _inConversation;
+    private bool _conversationPaused;
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
@@ -177,8 +178,9 @@ public class DialogueManager : Singleton<DialogueManager> {
         ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
         // If choice was Action, skip the line.
-        if (foundTags.isAction) {
-            ShowNextLine();
+        if (foundTags.isBarterTrigger) {
+            StartBarter();
+            EndStory();
             return;
         }
 
@@ -216,13 +218,17 @@ public class DialogueManager : Singleton<DialogueManager> {
                 case "npc":
                     foundTags.isNpcTalking = true;
                     break;
-                case "action":
-                    foundTags.isAction = true;
+                case "barter":
+                    foundTags.isBarterTrigger = true;
                     break;
             }
         }
 
         return foundTags;
+    }
+
+    void StartBarter() {
+        Debug.Log("Barter Starting!");
     }
 
     /// <summary>

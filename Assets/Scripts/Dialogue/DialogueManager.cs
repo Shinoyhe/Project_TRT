@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Processes Ink file and controls conversation flow.
 /// </summary>
-public class DialogueManager : Singleton<DialogueManager> {
+public class DialogueManager : MonoBehaviour {
 
     // Parameters =================================================================================
 
@@ -38,10 +38,7 @@ public class DialogueManager : Singleton<DialogueManager> {
 
     // Initializers and Update ================================================================
 
-    protected override void Awake() {
-        base.Awake();
-        if (Instance != this) return;
-
+    protected void Awake() {
         _inConversation = false;
         _onDelay = false;
     }
@@ -51,7 +48,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         if (_inConversation == false) return;
 
         // Check for Player Input
-        if (UiInputHandler.Instance.GetProgressDialogueDown()) {
+        if (GameManager.UiInput.GetProgressDialogueDown()) {
 
             if (_dialogueUiManager.IsLineFinished()) {
                 ShowNextLine();
@@ -250,7 +247,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
         barterDirectorOfInstance.OnWin += WinBarter;
         barterDirectorOfInstance.OnLose += LoseBarter;
-        PlayerInputHandler.Instance.SetActive(false);
+        GameManager.PlayerInput.SetActive(false);
     }
 
     /// <summary>
@@ -258,7 +255,7 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// </summary>
     void WinBarter() {
         if (_prizeCard != null) {
-            Inventory.Instance.AddCard(_prizeCard);
+            GameManager.Inventory.AddCard(_prizeCard);
         }
         CleanupBarter();
     }
@@ -275,7 +272,7 @@ public class DialogueManager : Singleton<DialogueManager> {
     /// </summary>
     void CleanupBarter() {
         Destroy(_barterInstance.gameObject);
-        PlayerInputHandler.Instance.SetActive(true);
+        GameManager.PlayerInput.SetActive(true);
     }
 
     /// <summary>
@@ -288,7 +285,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         _dialogueUiManager = null;
 
         Destroy(_dialogueUiInstance);
-        PlayerInputHandler.Instance.SetActive(enablePlayerInput);
+        GameManager.PlayerInput.SetActive(enablePlayerInput);
         _onDelay = true;
         StartCoroutine("ConversationDelay");
     }

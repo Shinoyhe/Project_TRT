@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// Class which manages inputs from the new input system, via PlayerControls.
 /// Modded from the input handler from the Unity FPS Microgame.
 /// </summary>
-public class UiInputHandler : Singleton<UiInputHandler>, UiControls.IUiInteractActions {
+public class UiInputHandler : MonoBehaviour, UiControls.IUiInteractActions {
     // Misc Internal Variables ====================================================================
 
     // Object references

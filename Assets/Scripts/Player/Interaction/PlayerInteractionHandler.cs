@@ -16,14 +16,6 @@ public class PlayerInteractionHandler : MonoBehaviour {
   /// The interactable that will be interacted with when the player tries to interact
   /// </summary>
   private Interactable highlightedInteractable;
-
-  /// <summary>
-  /// Start is called on the frame when a script is enabled just before
-  /// any of the Update methods is called the first time.
-  /// </summary>
-  /// 
-
-    [SerializeField] private PlayerInputHandler controls;
   
   void Start()
   {
@@ -34,7 +26,7 @@ public class PlayerInteractionHandler : MonoBehaviour {
   private void Update() {
     CheckHighlight();
    
-    if(controls.GetInteractDown()){
+    if(GameManager.PlayerInput.GetInteractDown()){
         Interact();
     }
   }

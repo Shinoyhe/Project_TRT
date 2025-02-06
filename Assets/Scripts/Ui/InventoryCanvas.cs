@@ -18,6 +18,7 @@ public class InventoryCanvas : MonoBehaviour
     {
         _inventory.GetComponent<Inventory>().OnInventoryUpdated += UpdateUI;
         _inventoryCardScriptableObjects = _inventory.GetComponent<Inventory>().Get();
+        UpdateUI();
     }
     private void OnDisable()
     {

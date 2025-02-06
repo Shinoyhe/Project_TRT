@@ -76,7 +76,7 @@ public class InGameUi : MonoBehaviour
         if (_currentCanvasState == _canvasState.HudCanvas) {
 
             if (PlayerInputHandler.Instance.GetSettingsDown()) {
-                SwitchToOptionsMenu();
+                SwitchToInventory();
                 return;
             }
             if (PlayerInputHandler.Instance.GetInteractDown()) {
@@ -87,7 +87,7 @@ public class InGameUi : MonoBehaviour
 
         if (_currentCanvasState != _canvasState.HudCanvas) {
 
-            if (PlayerInputHandler.Instance.GetSettingsDown() || PlayerInputHandler.Instance.GetInteractDown()) {
+            if (PlayerInputHandler.Instance.GetSettingsDown()) {
                 SwitchToHudScreen();
                 return;
             }

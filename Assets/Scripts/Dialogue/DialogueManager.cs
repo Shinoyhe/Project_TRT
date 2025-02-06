@@ -1,5 +1,6 @@
 using Ink.Runtime;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -31,6 +32,8 @@ public class DialogueManager : Singleton<DialogueManager> {
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
+    private InventoryCard _prizeCard;
+    private GameObject _barterInstance;
 
     // Initializers and Update ================================================================
 
@@ -88,6 +91,10 @@ public class DialogueManager : Singleton<DialogueManager> {
         }
 
         _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
+    }
+
+    public void SetPrizeCard(InventoryCard prizeCard) {
+        _prizeCard = prizeCard;
     }
 
     // Private Helper Methods ====================================================================
@@ -228,9 +235,39 @@ public class DialogueManager : Singleton<DialogueManager> {
         return foundTags;
     }
 
+    /// <summary>
+    /// Creates a barter game instance and hooks up callbacks.
+    /// </summary>
     void StartBarter() {
         Debug.Log("Barter Starting!");
-        Instantiate(BarterContainerPrefab, Vector3.zero, Quaternion.identity);
+        _barterInstance = Instantiate(BarterContainerPrefab, Vector3.zero, Quaternion.identity);
+        BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
+        barterDirectorOfInstance.OnWin += WinBarter;
+        barterDirectorOfInstance.OnLose += LoseBarter;
+    }
+
+    /// <summary>
+    /// Call on Barter Win, give player card.
+    /// </summary>
+    void WinBarter() {
+        if (_prizeCard != null) {
+            Inventory.Instance.AddCard(_prizeCard);
+        }
+        CleanupBarter();
+    }
+
+    /// <summary>
+    /// Call on Barter lose, just cleans up.
+    /// </summary>
+    void LoseBarter() {
+        CleanupBarter();
+    }
+
+    /// <summary>
+    /// Handles cleanup of barter minigame.
+    /// </summary>
+    void CleanupBarter() {
+        Destroy(_barterInstance.gameObject);
     }
 
     /// <summary>

@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCInteractable : Interactable
+public class NpcCore : Interactable
 {
-    [SerializeField] private TextAsset npcConversation;
-
+    [SerializeField] private InventoryCard CardToGiveOnWin;
+    [SerializeField] private TextAsset NpcConversation;
     void Start()
     {
         
@@ -23,6 +21,7 @@ public class NPCInteractable : Interactable
 
     public override void Interaction()
     {
-        DialogueManager.Instance.StartConversation(npcConversation,this.transform.position);
+        DialogueManager.Instance.StartConversation(NpcConversation,this.transform.position);
+        DialogueManager.Instance.SetPrizeCard(CardToGiveOnWin);
     }
 }

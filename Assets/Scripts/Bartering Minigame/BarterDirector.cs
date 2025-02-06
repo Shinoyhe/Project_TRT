@@ -43,6 +43,9 @@ public class BarterDirector : MonoBehaviour
     public System.Action<bool[]> OnMatchArraySet;
     // Action for when the full non-null set of player cards is submitted.
     public System.Action OnPlayerAllCardsSet;
+    // Action for win and loss
+    public System.Action OnWin;
+    public System.Action OnLose;
 
     // Misc Internal Variables ====================================================================
 
@@ -200,5 +203,13 @@ public class BarterDirector : MonoBehaviour
 
         _matchArray = matchArray;
         OnMatchArraySet?.Invoke(matchArray);
+    }
+
+    public void TriggerWin() {
+        OnWin?.Invoke();
+    }
+
+    public void TriggerLose() {
+        OnLose?.Invoke();
     }
 }

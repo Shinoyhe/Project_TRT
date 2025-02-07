@@ -81,12 +81,12 @@ public class DialogueUiManager : MonoBehaviour {
     /// <param name="text"> Text to display. </param>
     /// <param name="speakerName"> Name of speaker saying line. </param>
     /// <param name="callAfterLineFinished"> Callback after line of text is fully displayed.</param>
-    public void DisplayLineOfText(String text, DialogueManager.ProcessedTags foundTags, CallAfterLineFinished callAfterLineFinished = null) {
+    public void DisplayLineOfText(string text, DialogueManager.ProcessedTags foundTags, CallAfterLineFinished callAfterLineFinished = null) {
 
         _npcBubble.Hide();
         _playerBubble.Hide();
 
-        if (foundTags.isNpcTalking) {
+        if (foundTags.IsNpcTalking) {
             _npcBubble.Show();
             _currentTextBox = _npcBubble.Text;
         } else {
@@ -102,14 +102,14 @@ public class DialogueUiManager : MonoBehaviour {
         _currentLineData.Callback = callAfterLineFinished;
 
         // Start Printing
-        StartCoroutine("NextCharacter");
+        StartCoroutine(NextCharacter());
     }
 
     /// <summary>
     /// Skip the typing animation of the current line of text.
     /// </summary>
     public void SkipLineAnimation() {
-        StopCoroutine("NextCharacter");
+        StopCoroutine(NextCharacter());
         _currentTextBox.maxVisibleCharacters = _currentLineData.TotalCharacters;
         EndLineOfText();
     }
@@ -130,11 +130,11 @@ public class DialogueUiManager : MonoBehaviour {
         }
 
         if (UiButtons == null || UiButtons.Count == 0) {
-            Debug.LogError("Called SetupChoices() with no Ui Buttons added to DialogueUiManager!");
+            Debug.LogError("Called SetupChoices() with no UI Buttons added to DialogueUiManager!");
         }
 
         if (UiButtonsText == null || UiButtons.Count != UiButtonsText.Count) {
-            Debug.LogError("Ui Button Texts added to DialogueUiManager != to Ui Buttons.");
+            Debug.LogError("Ui Button Texts added to DialogueUiManager != to UI Buttons.");
         }
 
         // Reset buttons
@@ -239,7 +239,7 @@ public class DialogueUiManager : MonoBehaviour {
         if (textFinished) {
             EndLineOfText();
         } else {
-            StartCoroutine("NextCharacter");
+            StartCoroutine(NextCharacter());
         }
     }
 
@@ -256,9 +256,7 @@ public class DialogueUiManager : MonoBehaviour {
 
         _currentLineData.FinishedTyping = true;
 
-        if (_currentLineData.Callback != null) {
-            _currentLineData.Callback();
-        }
+        _currentLineData.Callback?.Invoke();
     }
 
     /// <summary>

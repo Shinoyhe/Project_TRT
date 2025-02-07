@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
 
 public class HandController : MonoBehaviour
 {
@@ -9,35 +7,35 @@ public class HandController : MonoBehaviour
     
     [Header("References")]
     [SerializeField, Tooltip("The cardUser which owns the hand we're displaying.\n\nDefault: 5")]
-    private CardUser CardUser;
+    private CardUser cardUser;
     [SerializeField, Tooltip("The displayCard prefab, with images and text preconfigured.")]
-    private GameObject DisplayCardPrefab;
+    private GameObject displayCardPrefab;
     [SerializeField, Tooltip("The cardUser which owns the hand we're displaying.\n\nDefault: 5")]
-    private BarterCardSubmissionUI SubmissionUI;
+    private BarterCardSubmissionUI submissionUI;
 
     [Header("Positioning")]
     [SerializeField, Tooltip("The leftmost anchor object.")]
-    private Transform AnchorLeft;
+    private Transform anchorLeft;
     [SerializeField, Tooltip("The rightmost anchor object.")]
-    private Transform AnchorRight;
+    private Transform anchorRight;
     [SerializeField, Tooltip("The anchor object determining where drawn cards are spawned from.")]
-    private Transform DrawAnchor;
+    private Transform drawAnchor;
     [SerializeField, Tooltip("The anchor object determining where discarded cards animate to.")]
-    private Transform DiscardAnchor;
+    private Transform discardAnchor;
     [SerializeField, Range(0,1), Tooltip("The amount we multiply (handsize - 1) by to get our usableRange.\n\nDefault: 0.2.")]
-    private float UsableRangePerCard = 0.2f;
+    private float usableRangePerCard = 0.2f;
 
     [Header("Animation")]
     [SerializeField, Tooltip("The amount of time, in seconds, a card takes to move back into place.\n\nDefault: 0.25")]
-    private float MoveTime = 0.25f;
+    private float moveTime = 0.25f;
     [SerializeField, Tooltip("The amount we multiply a card's scale by on a drag.\n\nDefault: 0.9f.")]
-    private float DragScaleFactor = 0.9f;
+    private float dragScaleFactor = 0.9f;
     [SerializeField, Tooltip("The amount of time, in seconds, a card takes to animate a hover/unhover.\n\nDefault: 0.15")]
-    private float HoverTime = 0.15f;
+    private float hoverTime = 0.15f;
     [SerializeField, Tooltip("The alpha value of a card when it is being dragged.\n\nDefault: 0.5")]
-    private float DragAlpha = 0.5f;
+    private float dragAlpha = 0.5f;
     [SerializeField, Tooltip("The amount of time, in seconds, a card takes to snap to a submit slot.\n\nDefault: 0.15")]
-    private float SnapTime = 0.15f;
+    private float snapTime = 0.15f;
 
     // Misc Internal Variables ====================================================================
 
@@ -57,7 +55,7 @@ public class HandController : MonoBehaviour
         // Awake is called before Start.
         // ================
 
-        CardUser.OnHandUpdated += UpdateDisplayCards;
+        cardUser.OnHandUpdated += UpdateDisplayCards;
         // TODO: cardUser.OnDraw += play draw SFX;
         // TODO: cardUser.OnShuffle += play shuffle sfx;
 
@@ -89,11 +87,11 @@ public class HandController : MonoBehaviour
                 Destroy(display.gameObject);
             };
 
-            float leaveTime = MoveTime;
+            float leaveTime = moveTime;
             Vector3 pos = handDelta.removedDestination switch {
-                CardUser.CardPile.DrawPile => DrawAnchor.position,
-                CardUser.CardPile.Hand => Vector3.Lerp(AnchorRight.position, AnchorLeft.position, 0.5f),
-                CardUser.CardPile.DiscardPile => DiscardAnchor.position,
+                CardUser.CardPile.DrawPile => drawAnchor.position,
+                CardUser.CardPile.Hand => Vector3.Lerp(anchorRight.position, anchorLeft.position, 0.5f),
+                CardUser.CardPile.DiscardPile => discardAnchor.position,
                 _ => Vector3.zero
             };
 
@@ -107,12 +105,12 @@ public class HandController : MonoBehaviour
         foreach (CardUser.HandDelta.Added added in handDelta.added) {
             PlayingCard data = added.data;
 
-            GameObject displayCardObj = Instantiate(DisplayCardPrefab, transform);
+            GameObject displayCardObj = Instantiate(displayCardPrefab, transform);
 
             displayCardObj.transform.position = handDelta.addSource switch {
-                CardUser.CardPile.DrawPile => DrawAnchor.position,
-                CardUser.CardPile.Hand => Vector3.Lerp(AnchorRight.position, AnchorLeft.position, 0.5f),
-                CardUser.CardPile.DiscardPile => DiscardAnchor.position,
+                CardUser.CardPile.DrawPile => drawAnchor.position,
+                CardUser.CardPile.Hand => Vector3.Lerp(anchorRight.position, anchorLeft.position, 0.5f),
+                CardUser.CardPile.DiscardPile => discardAnchor.position,
                 _ => Vector3.zero
             };
 
@@ -125,14 +123,14 @@ public class HandController : MonoBehaviour
             display.OnStartDrag += OnCardDragStart;
             display.OnEndDrag += OnCardDragEnd;
 
-            display.Initialize(data, destinationIndex, DragAlpha);
+            display.Initialize(data, destinationIndex, dragAlpha);
             display.name = $"DisplayCard({data.name})";
         }
 
         // Remove all null displayCards from our list.
         _hand.RemoveAll(displayCard => displayCard == null);
         // Update our usableRange.
-        _usableRange = Mathf.Min(1,UsableRangePerCard*(_hand.Count-1));
+        _usableRange = Mathf.Min(1,usableRangePerCard*(_hand.Count-1));
         // Update all our indices-in-hand.
         for (int i=0; i<_hand.Count; i++) {
             _hand[i].IndexInHand = i;
@@ -162,7 +160,7 @@ public class HandController : MonoBehaviour
             // How far, from 0-1, this card should be placed on our arc. 
             float distanceOnArc = _usableRange*lerpIndex + usableRange_arcOffset;
             // Get the position!
-            Vector3 position = Vector3.Lerp(AnchorLeft.localPosition, AnchorRight.localPosition,
+            Vector3 position = Vector3.Lerp(anchorLeft.localPosition, anchorRight.localPosition,
                                             distanceOnArc);
 
             // Log our base position in our dictionary.
@@ -171,7 +169,7 @@ public class HandController : MonoBehaviour
             // If we the current card isn't submitted...
             if (displayCard.SubmitSlot == null) {
                 // Figure out how long we should animate for and animate!
-                float duration = overrideAnim ? 0 : MoveTime;
+                float duration = overrideAnim ? 0 : moveTime;
                 displayCard.TransformTo(position, 1, duration);
             }
         }
@@ -216,7 +214,7 @@ public class HandController : MonoBehaviour
     {
         // Begin animating the card drag on the card!
         if (!_alreadyDragging) {
-            card.LerpOnlySize(DragScaleFactor, HoverTime);
+            card.LerpOnlySize(dragScaleFactor, hoverTime);
             _alreadyDragging = true;
 
             // If we were in a slot, unhook ourselves from it.
@@ -238,7 +236,7 @@ public class HandController : MonoBehaviour
 
             // Check each of the slots and see if it's overlapping any of them.
             // NOTE: Looping through each slot isn't ideal, but at our scale it shouldn't matter.
-            foreach (PlayerCardSlot slot in SubmissionUI.GetPlayerCardSlots()) {
+            foreach (PlayerCardSlot slot in submissionUI.GetPlayerCardSlots()) {
                 if (card.GetWorldRect().Overlaps(slot.GetWorldRect())) {
                     // TODO: Animate something on the slot? 
                     // TODO: Animate something on the card?
@@ -261,7 +259,7 @@ public class HandController : MonoBehaviour
                 // Find the position of the slot in OUR localspace.
                 Vector3 localSlotPosition = card.transform.parent.InverseTransformPoint(targetSlot.transform.position);
                 // Snap the display card to the slot's position.
-                card.TransformTo(localSlotPosition, 1, SnapTime);
+                card.TransformTo(localSlotPosition, 1, snapTime);
                 // Note that the display card is submitted (don't animate it back into the hand).
                 card.SetSubmitted(targetSlot);
                 // Tell the slot that it's holding a new PlayingCard.

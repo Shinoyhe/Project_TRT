@@ -1,6 +1,3 @@
-using UnityEngine;
-using System.Linq;
-
 public class BarterState_Init : BarterBaseState
 {
     // State Methods ==============================================================================

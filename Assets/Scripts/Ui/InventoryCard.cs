@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public enum CardTypes { INFO, ITEM }
+public enum CardTypes { 
+    INFO, 
+    ITEM 
+}
 
 
 [CreateAssetMenu(fileName = "InventoryCard", menuName = "ScriptableObjects/InventoryCard", order = 1)]

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InGameUi : MonoBehaviour
@@ -10,33 +8,36 @@ public class InGameUi : MonoBehaviour
     public Canvas InventoryCanvas;
 
     private Canvas _currentCanvas;
-    private enum _canvasState {
+    private enum CanvasState {
         HudCanvas,
         InventoryCanvas
     }
-    private _canvasState _currentCanvasState;
+    private CanvasState _currentCanvasState;
 
     // Initializers and Update ================================================================
-    void Start() {
+    void Start() 
+    {
         if (HudCanvas == null || InventoryCanvas == null) {
-            Debug.LogError("Start Ui not setup!");
+            Debug.LogError("Start UI not setup!");
         }
 
-        _currentCanvasState = _canvasState.HudCanvas;
+        _currentCanvasState = CanvasState.HudCanvas;
         _currentCanvas = HudCanvas;
     }
 
     // Public Utility Methods ====================================================================
 
-    public void SwitchToHudScreen() {
+    public void SwitchToHudScreen() 
+    {
         SwitchCanvas(HudCanvas);
-        _currentCanvasState = _canvasState.HudCanvas;
-    }
-    public void SwitchToInventory() {
-        SwitchCanvas(InventoryCanvas);
-        _currentCanvasState = _canvasState.InventoryCanvas;
+        _currentCanvasState = CanvasState.HudCanvas;
     }
 
+    public void SwitchToInventory() 
+    {
+        SwitchCanvas(InventoryCanvas);
+        _currentCanvasState = CanvasState.InventoryCanvas;
+    }
 
     // Private Helper Methods ====================================================================
 
@@ -44,8 +45,8 @@ public class InGameUi : MonoBehaviour
     /// Switch from current canvas to a new canvas.
     /// </summary>
     /// <param name="canvas">New canvas to show.</param>
-    void SwitchCanvas(Canvas canvas) {
-
+    void SwitchCanvas(Canvas canvas) 
+    {
         if (canvas == null) return;
 
         if (_currentCanvas != null) {
@@ -57,26 +58,23 @@ public class InGameUi : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
-        if (GameManager.UiInput == null) { return; }
+    void Update() 
+    {
+        if (GameManager.UiInput == null) return;
 
         // Keyboard input checking
-        if (_currentCanvasState == _canvasState.HudCanvas) {
-
+        if (_currentCanvasState == CanvasState.HudCanvas) {
             if (GameManager.UiInput.GetSettingsDown()) {
                 SwitchToInventory();
                 return;
             }
         }
 
-        if (_currentCanvasState != _canvasState.HudCanvas) {
-
+        if (_currentCanvasState != CanvasState.HudCanvas) {
             if (GameManager.UiInput.GetSettingsDown()) {
                 SwitchToHudScreen();
                 return;
             }
         }
-
-
     }
 }

@@ -1,17 +1,10 @@
 using UnityEngine;
 
-public class NpcCore : Interactable
+public class NpcInteractable : Interactable
 {
-    public Vector3 dialogueBubbleOffset;
-
-    [SerializeField] private InventoryCard CardToGiveOnWin;
-    [SerializeField] private TextAsset NpcConversation;
-
-
-    void Start()
-    {
-
-    }
+    [SerializeField] private Vector3 dialogueBubbleOffset;
+    [SerializeField] private InventoryCard cardToGiveOnWin;
+    [SerializeField] private TextAsset npcConversation;
 
     public override void Highlight()
     {
@@ -25,10 +18,11 @@ public class NpcCore : Interactable
 
     public override void Interaction()
     {
-        bool convoStarted = GameManager.DialogueManager.StartConversation(NpcConversation,this.transform.position + dialogueBubbleOffset);
+        bool convoStarted = GameManager.DialogueManager.StartConversation(npcConversation, 
+                                                                          transform.position+dialogueBubbleOffset);
 
         if (convoStarted) {
-            GameManager.DialogueManager.SetPrizeCard(CardToGiveOnWin);
+            GameManager.DialogueManager.SetPrizeCard(cardToGiveOnWin);
             GameManager.PlayerInput.SetActive(false);
         }
     }

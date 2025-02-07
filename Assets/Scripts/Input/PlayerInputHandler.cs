@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,13 +16,15 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     // Input states: set by InputAction callbacks, read by accessors
     private Vector2 _controlAxisVector;
-    private bool _primaryTrigDown,
-                 _secondaryTrigDown,
-                 _startDown,
-                 _affirmDown,
-                 _rejectDown,
-                 _menu1Down,
-                 _menu2Down;
+    private Dictionary<string, bool> _isDown = new() {
+        {"_primaryTrigger", false},
+        {"_secondaryTrigger", false},
+        {"_start", false},
+        {"_affirm", false},
+        {"_reject", false},
+        {"_menu1", false},
+        {"_menu2", false}
+    };
    
     // Initializers and Finalizers ================================================================
 
@@ -48,13 +51,9 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     private void LateUpdate() {
         // LateUpdate is called at the END of every frame, after all Update() calls.
-        _primaryTrigDown = false;
-        _secondaryTrigDown = false;
-        _startDown = false;
-        _affirmDown = false;
-        _rejectDown = false;
-        _menu1Down = false;
-        _menu2Down = false;
+        foreach (string key in _isDown.Keys) {
+            _isDown[key] = false;
+        }
     }
 
     public void OnControlAxis(InputAction.CallbackContext context) 
@@ -62,47 +61,19 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         _controlAxisVector = context.ReadValue<Vector2>();
     }
 
-    public void OnPrimaryTrigger(InputAction.CallbackContext context)
+    private void SetDown(InputAction.CallbackContext context, string input)
     {
-        if (context.started) _primaryTrigDown = true;
-        if (context.canceled) _primaryTrigDown = false;
+        if (context.started) _isDown[input] = true; 
+        if (context.canceled) _isDown[input] = false;
     }
 
-    public void OnSecondaryTrigger(InputAction.CallbackContext context)
-    {
-        if (context.started) _secondaryTrigDown = true;
-        if (context.canceled) _secondaryTrigDown = false;
-    }
-
-    public void OnStartButton(InputAction.CallbackContext context)
-    {
-        if (context.started) _startDown = true;
-        if (context.canceled) _startDown = false;
-    }
-
-    public void OnAffirmButton(InputAction.CallbackContext context)
-    {
-        if (context.started) _affirmDown = true;
-        if (context.canceled) _affirmDown = false;
-    }
-
-    public void OnRejectButton(InputAction.CallbackContext context)
-    {
-        if (context.started) _rejectDown = true;
-        if (context.canceled) _rejectDown = false;
-    }
-
-    public void OnMenuButton1(InputAction.CallbackContext context)
-    {
-        if (context.started) _menu1Down = true;
-        if (context.canceled) _menu1Down = false;
-    }
-
-    public void OnMenuButton2(InputAction.CallbackContext context)
-    {
-        if (context.started) _menu2Down = true;
-        if (context.canceled) _menu2Down = false;
-    }
+    public void OnPrimaryTrigger(InputAction.CallbackContext context) { SetDown(context, "_primaryTrigger"); }
+    public void OnSecondaryTrigger(InputAction.CallbackContext context) { SetDown(context, "_secondaryTrigger"); }
+    public void OnAffirmButton(InputAction.CallbackContext context) { SetDown(context, "_affirm"); }
+    public void OnStartButton(InputAction.CallbackContext context) { SetDown(context, "_start"); }
+    public void OnRejectButton(InputAction.CallbackContext context) { SetDown(context, "_reject"); }
+    public void OnMenuButton1(InputAction.CallbackContext context) { SetDown(context, "_menu1"); }
+    public void OnMenuButton2(InputAction.CallbackContext context) { SetDown(context, "_menu2"); }
 
     // Public Accessor Methods ====================================================================
 
@@ -122,11 +93,11 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         return Vector3.ClampMagnitude(move, 1);
     }
 
-    public bool GetPrimaryTrigger() { return _primaryTrigDown; }
-    public bool GetSecondaryTrigger() { return _secondaryTrigDown; }
-    public bool GetStartButton() { return _startDown; }
-    public bool GetAffirmButton() { return _affirmDown; }
-    public bool GetRejectButton() { return _rejectDown; }
-    public bool GetMenuButton1() { return _menu1Down; }
-    public bool GetMenuButton2() { return _menu2Down; }
+    public bool GetPrimaryTriggerDown() { return IsActive && _isDown["_primaryTrigger"]; }
+    public bool GetSecondaryTriggerDown() { return IsActive && _isDown["_secondaryTrigger"]; }
+    public bool GetStartDown() { return IsActive && _isDown["_start"]; }
+    public bool GetAffirmDown() { return IsActive && _isDown["_affirm"]; }
+    public bool GetRejectDown() { return IsActive && _isDown["_reject"]; }
+    public bool GetMenu1Down() { return IsActive && _isDown["_menu1"]; }
+    public bool GetMenu2Down() { return IsActive && _isDown["_menu2"]; }
 }

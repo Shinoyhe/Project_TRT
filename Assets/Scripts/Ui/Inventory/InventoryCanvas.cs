@@ -7,7 +7,7 @@ public class InventoryCanvas : MonoBehaviour
     [SerializeField] private GridLayoutGroup _grid;
     [SerializeField] private GameObject _inventoryCardPrefab;
 
-    private List<InventoryCard> _inventoryCardScriptableObjects;
+    private List<InventoryCardData> _inventoryCardScriptableObjects;
     private List<GameObject> _inventoryCardGameObjects = new List<GameObject>();
 
     private void OnEnable()
@@ -54,7 +54,7 @@ public class InventoryCanvas : MonoBehaviour
         }
         _inventoryCardGameObjects.Clear();
 
-        foreach (InventoryCard card in _inventoryCardScriptableObjects) {
+        foreach (InventoryCardData card in _inventoryCardScriptableObjects) {
             
             GameObject newCard = Instantiate(_inventoryCardPrefab, _grid.transform);
             newCard.GetComponent<InventoryCardObject>().SetData(card);

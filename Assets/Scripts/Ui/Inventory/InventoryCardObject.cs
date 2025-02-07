@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class InventoryCardObject : MonoBehaviour
 {
-    [SerializeField] private InventoryCard _card;
+    [SerializeField] private InventoryCardData _card;
 
     [SerializeField] private TMP_Text _cardNameText;
     [SerializeField] private Image _cardSpriteImage;
@@ -22,7 +22,7 @@ public class InventoryCardObject : MonoBehaviour
         }
     }
 
-    public void SetData(InventoryCard newCard)
+    public void SetData(InventoryCardData newCard)
     {
         if (newCard == null) return;
         

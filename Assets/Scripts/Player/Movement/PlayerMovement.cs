@@ -4,72 +4,75 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    #region ======== [ OBJECT REFERENCES ] ========
+	#region ======== [ OBJECT REFERENCES ] ========
 
-    [Header("Object References")]
-    [SerializeField] private Transform forwardTransform;
-    private CharacterController characterController;
+	[Header("Object References")]
+	[SerializeField] private Transform forwardTransform;
+	[SerializeField] private Animator animator;
+	private CharacterController characterController;
 
-    #endregion
-
-
-    #region ======== [ PARAMETERS ] ========
-
-    [Header("Parameters")]
-    [SerializeField] private float speed = 5f;
-
-    #endregion
+	#endregion
 
 
-    #region ======== [ PRIVATE PROPERTIES ] ========
+	#region ======== [ PARAMETERS ] ========
 
-    private const float GRAVITY = 9.81f;
-    private float _downwardForce = 0;
+	[Header("Parameters")]
+	[SerializeField] private float speed = 5f;
 
-    #endregion
-
-
-    #region ======== [ PRIVATE METHODS ] ========
-
-    void Start()
-    {
-        characterController = GetComponent<CharacterController>();
-    }
-
-    
-    void Update()
-    {
-        UpdateMovement();
-        UpdateGravity();
-    }
+	#endregion
 
 
-    private void UpdateMovement()
-    {
-        // Get Input
-        Vector3 input = GameManager.PlayerInput.GetMoveInput();
+	#region ======== [ PRIVATE PROPERTIES ] ========
 
-        // Relative to Target
-        float y = forwardTransform.rotation.eulerAngles.y;
-        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, y, 0));
+	private const float GRAVITY = 9.81f;
+	private float _downwardForce = 0;
 
-        // Move character
-        Vector3 direction = targetRotation * input;
-        characterController.Move(direction * speed * Time.deltaTime);
-    }
+	#endregion
 
 
-    private void UpdateGravity()
-    {
-        if (!characterController.isGrounded)
-        {
-            _downwardForce += GRAVITY * Time.deltaTime;
-            characterController.Move(_downwardForce * Vector3.down * Time.deltaTime);
-        }
-        else
-        {
-            _downwardForce = 0;
-        }
-    }
-    #endregion
+	#region ======== [ PRIVATE METHODS ] ========
+
+	void Start()
+	{
+		characterController = GetComponent<CharacterController>();
+	}
+
+	
+	void Update()
+	{
+		UpdateMovement();
+		UpdateGravity();
+	}
+
+
+	private void UpdateMovement()
+	{
+		// Get Input
+		Vector3 input = GameManager.PlayerInput.GetMoveInput();
+
+		// Relative to Target
+		float y = forwardTransform.rotation.eulerAngles.y;
+		Quaternion targetRotation = Quaternion.Euler(new Vector3(0, y, 0));
+
+		// Move character
+		Vector3 direction = targetRotation * input;
+		characterController.Move(direction * speed * Time.deltaTime);
+		
+		animator.SetBool("IsWalking", (direction * speed).magnitude > 0);
+	}
+
+
+	private void UpdateGravity()
+	{
+		if (!characterController.isGrounded)
+		{
+			_downwardForce += GRAVITY * Time.deltaTime;
+			characterController.Move(_downwardForce * Vector3.down * Time.deltaTime);
+		}
+		else
+		{
+			_downwardForce = 0;
+		}
+	}
+	#endregion
 }

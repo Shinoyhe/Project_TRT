@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,10 +7,9 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Object References")]
 	[SerializeField] private Transform forwardTransform;
 	[SerializeField] private Animator animator;
-	private CharacterController characterController;
+	private CharacterController _characterController;
 
 	#endregion
-
 
 	#region ======== [ PARAMETERS ] ========
 
@@ -21,29 +18,25 @@ public class PlayerMovement : MonoBehaviour
 
 	#endregion
 
-
 	#region ======== [ PRIVATE PROPERTIES ] ========
 
-	private const float GRAVITY = 9.81f;
+	private const float _gravity = 9.81f;
 	private float _downwardForce = 0;
 
 	#endregion
-
 
 	#region ======== [ PRIVATE METHODS ] ========
 
 	void Start()
 	{
-		characterController = GetComponent<CharacterController>();
+		_characterController = GetComponent<CharacterController>();
 	}
 
-	
 	void Update()
 	{
 		UpdateMovement();
 		UpdateGravity();
 	}
-
 
 	private void UpdateMovement()
 	{
@@ -56,21 +49,17 @@ public class PlayerMovement : MonoBehaviour
 
 		// Move character
 		Vector3 direction = targetRotation * input;
-		characterController.Move(direction * speed * Time.deltaTime);
+		_characterController.Move(speed * Time.deltaTime * direction);
 		
 		animator.SetBool("IsWalking", (direction * speed).magnitude > 0);
 	}
 
-
 	private void UpdateGravity()
 	{
-		if (!characterController.isGrounded)
-		{
-			_downwardForce += GRAVITY * Time.deltaTime;
-			characterController.Move(_downwardForce * Vector3.down * Time.deltaTime);
-		}
-		else
-		{
+		if (!_characterController.isGrounded) {
+			_downwardForce += _gravity * Time.deltaTime;
+			_characterController.Move(_downwardForce * Time.deltaTime * Vector3.down);
+		} else {
 			_downwardForce = 0;
 		}
 	}

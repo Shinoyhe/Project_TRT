@@ -1,7 +1,6 @@
 using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -17,12 +16,12 @@ public class DialogueManager : MonoBehaviour {
 
     public struct ProcessedTags {
 
-        public bool isNpcTalking;
-        public bool isBarterTrigger;
+        public bool IsNpcTalking;
+        public bool IsBarterTrigger;
 
         public ProcessedTags(bool isBarterTrigger = false, bool isNpcTalking = false) {
-            this.isNpcTalking = isNpcTalking;
-            this.isBarterTrigger = isBarterTrigger;
+            IsNpcTalking = isNpcTalking;
+            IsBarterTrigger = isBarterTrigger;
         }
     }
 
@@ -156,9 +155,9 @@ public class DialogueManager : MonoBehaviour {
         }
 
         bool canContinue = _currentStory.canContinue;
-        bool hasChoices = _currentStory.currentChoices != null && _currentStory.currentChoices.Count != 0;
+        bool hasChoices = (_currentStory.currentChoices != null) && (_currentStory.currentChoices.Count != 0);
 
-        return canContinue == false && hasChoices == false;
+        return (canContinue == false) && (hasChoices == false);
     }
 
     /// <summary>
@@ -189,7 +188,7 @@ public class DialogueManager : MonoBehaviour {
         ProcessedTags foundTags = ProcessTags(_currentStory.currentTags);
 
         // If choice was Action, skip the line.
-        if (foundTags.isBarterTrigger) {
+        if (foundTags.IsBarterTrigger) {
             StartBarter();
             EndStory(false);
             return;
@@ -227,10 +226,10 @@ public class DialogueManager : MonoBehaviour {
             // Process Tag
             switch (key) {
                 case "npc":
-                    foundTags.isNpcTalking = true;
+                    foundTags.IsNpcTalking = true;
                     break;
                 case "barter":
-                    foundTags.isBarterTrigger = true;
+                    foundTags.IsBarterTrigger = true;
                     break;
             }
         }
@@ -271,7 +270,7 @@ public class DialogueManager : MonoBehaviour {
     /// Handles cleanup of barter minigame.
     /// </summary>
     void CleanupBarter() {
-        Destroy(_barterInstance.gameObject);
+        Destroy(_barterInstance);
         GameManager.PlayerInput.SetActive(true);
     }
 
@@ -287,7 +286,7 @@ public class DialogueManager : MonoBehaviour {
         Destroy(_dialogueUiInstance);
         GameManager.PlayerInput.SetActive(enablePlayerInput);
         _onDelay = true;
-        StartCoroutine("ConversationDelay");
+        StartCoroutine(ConversationDelay());
     }
 
     void ThrowNullError(string functionOrigin, string whatWasNull) {

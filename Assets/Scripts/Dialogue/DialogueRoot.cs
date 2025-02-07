@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DialogueRoot : MonoBehaviour
 {
@@ -39,6 +36,6 @@ public class DialogueRoot : MonoBehaviour
     /// Display draw position.
     /// </summary>
     private void OnDrawGizmos() {
-        Gizmos.DrawWireSphere(this.transform.position + BubbleSpawnOffset, 0.25f);
+        Gizmos.DrawWireSphere(transform.position + BubbleSpawnOffset, 0.25f);
     }
 }

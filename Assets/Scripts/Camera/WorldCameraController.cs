@@ -207,8 +207,6 @@ public class WorldCameraController : MonoBehaviour
     private void UpdateFOV()
     {
         VirtualCamera.m_Lens.FieldOfView = fieldOfView;
-
-        Undo.RecordObject(VirtualMovement, "Updated FOV");
     }
 
     private void UpdateMainAim()
@@ -225,10 +223,9 @@ public class WorldCameraController : MonoBehaviour
             mainComposer.m_LookaheadTime = lookAheadDistance;
             mainComposer.m_LookaheadSmoothing = lookAheadSmoothing;
             mainComposer.m_TrackedObjectOffset = aimOffset;
+            RecCompUndo(mainComposer, "Changed Main's Composer");
         }
         UpdateMovementAim();
-
-        Undo.RecordObject(VirtualCamera, "Updated Main Aim Components");
     }
 
     private void UpdateMovementAim()
@@ -253,9 +250,8 @@ public class WorldCameraController : MonoBehaviour
             moveComposer.m_VerticalDamping = 0;
             moveComposer.m_LookaheadTime = 0;
             moveComposer.m_LookaheadSmoothing = 0;
+            RecCompUndo(moveComposer, "Changed Move's Composer");
         }
-
-        Undo.RecordObject(VirtualMovement, "Updated Movement Aim Components");
     }
 
     private void UpdateBody()
@@ -275,8 +271,6 @@ public class WorldCameraController : MonoBehaviour
                 UpdateTransposer();
                 break;
         }
-        Undo.RecordObject(VirtualMovement, "Updated Body Components");
-        Undo.RecordObject(VirtualCamera, "Updated Body Components");
     }
 
     private void UpdateTrackedDolly()
@@ -312,25 +306,31 @@ public class WorldCameraController : MonoBehaviour
                 new CinemachinePath.Waypoint { position = transform.position, tangent = new Vector3(1, 0, 0) }
             };
         }
+
+        RecCompUndo(mainTD, "Changed Main's Tracked Dolly");
+        RecCompUndo(moveTD, "Changed Move's Tracked Dolly");
     }
 
     private void UpdateTransposer()
     {
         // Get Existing or Add a CinemachineTransposer
-        var mainFT = AddOrGetCinemachineComponent<CinemachineTransposer>(VirtualCamera, CinemachineCore.Stage.Body);
-        var moveFT = AddOrGetCinemachineComponent<CinemachineTransposer>(VirtualMovement, CinemachineCore.Stage.Body);
+        var mainT = AddOrGetCinemachineComponent<CinemachineTransposer>(VirtualCamera, CinemachineCore.Stage.Body);
+        var moveT = AddOrGetCinemachineComponent<CinemachineTransposer>(VirtualMovement, CinemachineCore.Stage.Body);
 
         // Apply Parameters for Movement and Camera
-        mainFT.m_FollowOffset = transposerPosition;
-        moveFT.m_FollowOffset = transposerPosition;
+        mainT.m_FollowOffset = transposerPosition;
+        moveT.m_FollowOffset = transposerPosition;
 
-        mainFT.m_XDamping = followDampening;
-        mainFT.m_YDamping = followDampening;
-        mainFT.m_ZDamping = followDampening;
+        mainT.m_XDamping = followDampening;
+        mainT.m_YDamping = followDampening;
+        mainT.m_ZDamping = followDampening;
 
-        moveFT.m_XDamping = 0;
-        moveFT.m_YDamping = 0;
-        moveFT.m_ZDamping = 0;
+        moveT.m_XDamping = 0;
+        moveT.m_YDamping = 0;
+        moveT.m_ZDamping = 0;
+
+        RecCompUndo(mainT, "Updated Main's Transposer");
+        RecCompUndo(moveT, "Updated Move's Transposer");
     }
 
     private ComponentType AddOrGetCinemachineComponent<ComponentType>(CinemachineVirtualCamera virtualCamera, 
@@ -351,6 +351,15 @@ public class WorldCameraController : MonoBehaviour
         if (Application.isPlaying) return;
         Undo.RecordObject(VirtualCamera, message);
         Undo.RecordObject(VirtualMovement, message);
+        EditorUtility.SetDirty(VirtualCamera);
+        EditorUtility.SetDirty(VirtualMovement);
+    }
+
+    private void RecCompUndo(CinemachineComponentBase comp, string message)
+    {
+        if (Application.isPlaying || comp == null) return;
+        Undo.RecordObject(comp, message);
+        EditorUtility.SetDirty(comp);
     }
 
     void Start()

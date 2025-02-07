@@ -23,7 +23,7 @@ public class NpcInteractable : Interactable
 
         if (convoStarted) {
             GameManager.DialogueManager.SetPrizeCard(cardToGiveOnWin);
-            GameManager.PlayerInput.SetActive(false);
+            GameManager.PlayerInput.IsActive = false;
         }
     }
 

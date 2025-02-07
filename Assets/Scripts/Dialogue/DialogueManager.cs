@@ -246,7 +246,7 @@ public class DialogueManager : MonoBehaviour {
         BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
         barterDirectorOfInstance.OnWin += WinBarter;
         barterDirectorOfInstance.OnLose += LoseBarter;
-        GameManager.PlayerInput.SetActive(false);
+        GameManager.PlayerInput.IsActive = false;
     }
 
     /// <summary>
@@ -271,7 +271,7 @@ public class DialogueManager : MonoBehaviour {
     /// </summary>
     void CleanupBarter() {
         Destroy(_barterInstance);
-        GameManager.PlayerInput.SetActive(true);
+        GameManager.PlayerInput.IsActive = true;
     }
 
     /// <summary>
@@ -284,7 +284,7 @@ public class DialogueManager : MonoBehaviour {
         _dialogueUiManager = null;
 
         Destroy(_dialogueUiInstance);
-        GameManager.PlayerInput.SetActive(enablePlayerInput);
+        GameManager.PlayerInput.IsActive = enablePlayerInput;
         _onDelay = true;
         StartCoroutine(ConversationDelay());
     }

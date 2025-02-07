@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -51,7 +52,16 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     private void LateUpdate() {
         // LateUpdate is called at the END of every frame, after all Update() calls.
-        foreach (string key in _getDown.Keys) {
+        
+        // ==============================================================================
+        // NOTE:
+        // Not happy that we're calling ToList every frame, but that's the cleanest way
+        // to make this work without having 7 boolean assignments in a row.
+        //
+        // The performance hit should be minimal for us. If it isn't, change this.
+        // ==============================================================================
+
+        foreach (string key in _getDown.Keys.ToList()) {
             _getDown[key] = false;
         }
     }

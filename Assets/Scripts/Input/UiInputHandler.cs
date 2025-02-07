@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -45,7 +46,7 @@ public class UiInputHandler : MonoBehaviour, UiControls.IUiInteractActions {
 
     private void LateUpdate() {
         // LateUpdate is called at the END of every frame, after all Update() calls.
-        foreach (string key in _getDown.Keys) {
+        foreach (string key in _getDown.Keys.ToList()) {
             _getDown[key] = false;
         }
     }

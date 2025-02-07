@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +9,9 @@ public class DisplayCard : MonoBehaviour
     [Tooltip("The PlayingCard data we read from.")]
     public PlayingCard PlayingCard = null;
     [SerializeField, Tooltip("TEMPORARY IMPLEMENTATION. For now, acts as our card back.")]
-    private Image MainImage;
+    private Image mainImage;
     [SerializeField, Tooltip("TEMPORARY IMPLEMENTATION. For now, acts as our card label.")]
-    private TMP_Text MainText;
+    private TMP_Text mainText;
 
     // The PlayerCardSlot, if any, that this DisplayCard is held by.
     public PlayerCardSlot SubmitSlot => _submitSlot;
@@ -81,15 +80,15 @@ public class DisplayCard : MonoBehaviour
         // Read from the PlayingCard field and populate the display objects.
 
         if (PlayingCard) {
-            MainImage.sprite = null;
-            MainImage.color = PlayingCard.DEBUG_COLOR;
+            mainImage.sprite = null;
+            mainImage.color = PlayingCard.DEBUG_COLOR;
 
-            MainText.text = PlayingCard.Id;
+            mainText.text = PlayingCard.Id;
         } else {
-            MainImage.sprite = null;
-            MainImage.color = Color.white;
+            mainImage.sprite = null;
+            mainImage.color = Color.white;
 
-            MainText.text = "";
+            mainText.text = "";
         }
     }
 

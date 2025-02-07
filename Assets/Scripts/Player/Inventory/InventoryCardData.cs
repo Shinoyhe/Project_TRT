@@ -16,5 +16,5 @@ public class InventoryCardData : ScriptableObject
     public Sprite Sprite;
     public string StartingLocation;
 
-    public List<ContextOriginPair> contextData = new List<ContextOriginPair>();
+    public List<ContextOriginPair> ContextData = new List<ContextOriginPair>();
 }

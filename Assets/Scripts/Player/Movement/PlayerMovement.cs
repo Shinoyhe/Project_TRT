@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 	private void UpdateMovement()
 	{
 		// Get Input
-		Vector3 input = GameManager.PlayerInput.GetMoveInput();
+		Vector3 input = GameManager.PlayerInput.GetControlInput();
 
 		// Relative to Target
 		float y = forwardTransform.rotation.eulerAngles.y;

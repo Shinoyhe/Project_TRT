@@ -24,11 +24,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     ""name"": ""PlayerControls"",
     ""maps"": [
         {
-            ""name"": ""PlayerMovement"",
+            ""name"": ""MainControls"",
             ""id"": ""f84bda52-e4fc-4e43-a269-9eb07fffe283"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""ControlAxis"",
                     ""type"": ""Value"",
                     ""id"": ""c01cda30-afae-4505-b2c9-4dedc216d4d1"",
                     ""expectedControlType"": ""Vector2"",
@@ -37,36 +37,63 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Camera Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""abaecdfd-5e18-415e-8056-d7dbe7e5039c"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Jump"",
+                    ""name"": ""PrimaryTrigger"",
                     ""type"": ""Button"",
-                    ""id"": ""6344ff4c-c408-44f8-8416-ae51c1a427e6"",
+                    ""id"": ""b40a3041-a96f-4192-a2f6-2464c1cb5c3d"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Sprint Hold"",
-                    ""type"": ""Value"",
-                    ""id"": ""6d7c71f0-c162-4476-8efd-569182ec728f"",
+                    ""name"": ""SecondaryTrigger"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c10bfe5-0f32-4950-be78-78878a94c4d0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""StartButton"",
                     ""type"": ""Button"",
-                    ""id"": ""b40a3041-a96f-4192-a2f6-2464c1cb5c3d"",
+                    ""id"": ""d6f1774e-2a07-47f9-a6ae-f6a0070ff5a4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AffirmButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b46fe2c-a342-457e-b69b-91351414669c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RejectButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""5680fe2b-4c15-48ce-92dc-000c1ea7154b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuButton1"",
+                    ""type"": ""Button"",
+                    ""id"": ""84b1ce27-e6b0-45fe-8c37-56f643a4c610"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuButton2"",
+                    ""type"": ""Button"",
+                    ""id"": ""07485d20-4a93-468f-a448-345ab7ad86a2"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -75,37 +102,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""1826b792-e474-4d91-90fd-8be0d1cac891"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""2D Vector (Keyboard)"",
                     ""id"": ""c7de3d37-8d65-49cb-9695-1b8ac27be2da"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""ControlAxis"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""ffac3cb9-cedc-4612-a044-77923f61a30f"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""up"",
@@ -114,40 +119,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""462c0329-85ae-43af-a1c3-bbbbdd209c2d"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""1c6c2a0f-374f-4c59-b0c4-17b4cd5ef9e2"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""bb48467f-d2df-40c1-88d8-19fcd688e1ee"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""ControlAxis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -158,18 +130,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""ControlAxis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""c202af11-a141-4bb4-9294-9761805bc767"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""name"": ""down"",
+                    ""id"": ""1c6c2a0f-374f-4c59-b0c4-17b4cd5ef9e2"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""ControlAxis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -180,9 +152,130 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""ControlAxis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ffac3cb9-cedc-4612-a044-77923f61a30f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""ControlAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""bb48467f-d2df-40c1-88d8-19fcd688e1ee"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""ControlAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""e7eff52d-4c28-4ff9-9526-e18525c7cb96"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""ControlAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""d31f6fa9-0092-49bf-b088-eecc75220449"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""ControlAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96ff58ef-9f1c-49e0-bdbc-1d7d36082373"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""MenuButton2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5228eb5d-caf3-46a0-bdb8-51ca2585b186"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""MenuButton1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51e40533-f2cf-4b64-8424-34b7431ecb8c"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""RejectButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5085c927-f0f0-406f-8bce-c38decc2c942"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""StartButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e139aa4-c66d-4117-825c-bb5dfa99586c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""SecondaryTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7bfa9fe3-29ac-4343-9f57-c1beeb33764b"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""PrimaryTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee41816c-d9af-40a3-96a4-16657c7704a7"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""AffirmButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -191,51 +284,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fea506dc-1084-4f94-bcfb-c91dcf2725b5"",
-                    ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Sprint Hold"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0bf29371-c13d-4334-b260-7cb06888820d"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
-                    ""processors"": ""InvertVector2(invertX=false),ScaleVector2(x=0.05,y=0.05)"",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Camera Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""90e74290-7240-42ea-82f2-43aae4ec1c77"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": ""InvertVector2(invertX=false),ScaleVector2(x=0.01,y=0.01)"",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Camera Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e137c835-310f-471a-8b08-8b11745de375"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""Interact"",
+                    ""action"": ""ControlAxis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -272,18 +321,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // PlayerMovement
-        m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
-        m_PlayerMovement_Move = m_PlayerMovement.FindAction("Move", throwIfNotFound: true);
-        m_PlayerMovement_CameraLook = m_PlayerMovement.FindAction("Camera Look", throwIfNotFound: true);
-        m_PlayerMovement_Jump = m_PlayerMovement.FindAction("Jump", throwIfNotFound: true);
-        m_PlayerMovement_SprintHold = m_PlayerMovement.FindAction("Sprint Hold", throwIfNotFound: true);
-        m_PlayerMovement_Interact = m_PlayerMovement.FindAction("Interact", throwIfNotFound: true);
+        // MainControls
+        m_MainControls = asset.FindActionMap("MainControls", throwIfNotFound: true);
+        m_MainControls_ControlAxis = m_MainControls.FindAction("ControlAxis", throwIfNotFound: true);
+        m_MainControls_PrimaryTrigger = m_MainControls.FindAction("PrimaryTrigger", throwIfNotFound: true);
+        m_MainControls_SecondaryTrigger = m_MainControls.FindAction("SecondaryTrigger", throwIfNotFound: true);
+        m_MainControls_StartButton = m_MainControls.FindAction("StartButton", throwIfNotFound: true);
+        m_MainControls_AffirmButton = m_MainControls.FindAction("AffirmButton", throwIfNotFound: true);
+        m_MainControls_RejectButton = m_MainControls.FindAction("RejectButton", throwIfNotFound: true);
+        m_MainControls_MenuButton1 = m_MainControls.FindAction("MenuButton1", throwIfNotFound: true);
+        m_MainControls_MenuButton2 = m_MainControls.FindAction("MenuButton2", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
     {
-        UnityEngine.Debug.Assert(!m_PlayerMovement.enabled, "This will cause a leak and performance issues, PlayerControls.PlayerMovement.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_MainControls.enabled, "This will cause a leak and performance issues, PlayerControls.MainControls.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -342,83 +394,107 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerMovement
-    private readonly InputActionMap m_PlayerMovement;
-    private List<IPlayerMovementActions> m_PlayerMovementActionsCallbackInterfaces = new List<IPlayerMovementActions>();
-    private readonly InputAction m_PlayerMovement_Move;
-    private readonly InputAction m_PlayerMovement_CameraLook;
-    private readonly InputAction m_PlayerMovement_Jump;
-    private readonly InputAction m_PlayerMovement_SprintHold;
-    private readonly InputAction m_PlayerMovement_Interact;
-    public struct PlayerMovementActions
+    // MainControls
+    private readonly InputActionMap m_MainControls;
+    private List<IMainControlsActions> m_MainControlsActionsCallbackInterfaces = new List<IMainControlsActions>();
+    private readonly InputAction m_MainControls_ControlAxis;
+    private readonly InputAction m_MainControls_PrimaryTrigger;
+    private readonly InputAction m_MainControls_SecondaryTrigger;
+    private readonly InputAction m_MainControls_StartButton;
+    private readonly InputAction m_MainControls_AffirmButton;
+    private readonly InputAction m_MainControls_RejectButton;
+    private readonly InputAction m_MainControls_MenuButton1;
+    private readonly InputAction m_MainControls_MenuButton2;
+    public struct MainControlsActions
     {
         private @PlayerControls m_Wrapper;
-        public PlayerMovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_PlayerMovement_Move;
-        public InputAction @CameraLook => m_Wrapper.m_PlayerMovement_CameraLook;
-        public InputAction @Jump => m_Wrapper.m_PlayerMovement_Jump;
-        public InputAction @SprintHold => m_Wrapper.m_PlayerMovement_SprintHold;
-        public InputAction @Interact => m_Wrapper.m_PlayerMovement_Interact;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
+        public MainControlsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ControlAxis => m_Wrapper.m_MainControls_ControlAxis;
+        public InputAction @PrimaryTrigger => m_Wrapper.m_MainControls_PrimaryTrigger;
+        public InputAction @SecondaryTrigger => m_Wrapper.m_MainControls_SecondaryTrigger;
+        public InputAction @StartButton => m_Wrapper.m_MainControls_StartButton;
+        public InputAction @AffirmButton => m_Wrapper.m_MainControls_AffirmButton;
+        public InputAction @RejectButton => m_Wrapper.m_MainControls_RejectButton;
+        public InputAction @MenuButton1 => m_Wrapper.m_MainControls_MenuButton1;
+        public InputAction @MenuButton2 => m_Wrapper.m_MainControls_MenuButton2;
+        public InputActionMap Get() { return m_Wrapper.m_MainControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerMovementActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerMovementActions instance)
+        public static implicit operator InputActionMap(MainControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IMainControlsActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerMovementActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerMovementActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @CameraLook.started += instance.OnCameraLook;
-            @CameraLook.performed += instance.OnCameraLook;
-            @CameraLook.canceled += instance.OnCameraLook;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
-            @SprintHold.started += instance.OnSprintHold;
-            @SprintHold.performed += instance.OnSprintHold;
-            @SprintHold.canceled += instance.OnSprintHold;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
+            if (instance == null || m_Wrapper.m_MainControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MainControlsActionsCallbackInterfaces.Add(instance);
+            @ControlAxis.started += instance.OnControlAxis;
+            @ControlAxis.performed += instance.OnControlAxis;
+            @ControlAxis.canceled += instance.OnControlAxis;
+            @PrimaryTrigger.started += instance.OnPrimaryTrigger;
+            @PrimaryTrigger.performed += instance.OnPrimaryTrigger;
+            @PrimaryTrigger.canceled += instance.OnPrimaryTrigger;
+            @SecondaryTrigger.started += instance.OnSecondaryTrigger;
+            @SecondaryTrigger.performed += instance.OnSecondaryTrigger;
+            @SecondaryTrigger.canceled += instance.OnSecondaryTrigger;
+            @StartButton.started += instance.OnStartButton;
+            @StartButton.performed += instance.OnStartButton;
+            @StartButton.canceled += instance.OnStartButton;
+            @AffirmButton.started += instance.OnAffirmButton;
+            @AffirmButton.performed += instance.OnAffirmButton;
+            @AffirmButton.canceled += instance.OnAffirmButton;
+            @RejectButton.started += instance.OnRejectButton;
+            @RejectButton.performed += instance.OnRejectButton;
+            @RejectButton.canceled += instance.OnRejectButton;
+            @MenuButton1.started += instance.OnMenuButton1;
+            @MenuButton1.performed += instance.OnMenuButton1;
+            @MenuButton1.canceled += instance.OnMenuButton1;
+            @MenuButton2.started += instance.OnMenuButton2;
+            @MenuButton2.performed += instance.OnMenuButton2;
+            @MenuButton2.canceled += instance.OnMenuButton2;
         }
 
-        private void UnregisterCallbacks(IPlayerMovementActions instance)
+        private void UnregisterCallbacks(IMainControlsActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @CameraLook.started -= instance.OnCameraLook;
-            @CameraLook.performed -= instance.OnCameraLook;
-            @CameraLook.canceled -= instance.OnCameraLook;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
-            @SprintHold.started -= instance.OnSprintHold;
-            @SprintHold.performed -= instance.OnSprintHold;
-            @SprintHold.canceled -= instance.OnSprintHold;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
+            @ControlAxis.started -= instance.OnControlAxis;
+            @ControlAxis.performed -= instance.OnControlAxis;
+            @ControlAxis.canceled -= instance.OnControlAxis;
+            @PrimaryTrigger.started -= instance.OnPrimaryTrigger;
+            @PrimaryTrigger.performed -= instance.OnPrimaryTrigger;
+            @PrimaryTrigger.canceled -= instance.OnPrimaryTrigger;
+            @SecondaryTrigger.started -= instance.OnSecondaryTrigger;
+            @SecondaryTrigger.performed -= instance.OnSecondaryTrigger;
+            @SecondaryTrigger.canceled -= instance.OnSecondaryTrigger;
+            @StartButton.started -= instance.OnStartButton;
+            @StartButton.performed -= instance.OnStartButton;
+            @StartButton.canceled -= instance.OnStartButton;
+            @AffirmButton.started -= instance.OnAffirmButton;
+            @AffirmButton.performed -= instance.OnAffirmButton;
+            @AffirmButton.canceled -= instance.OnAffirmButton;
+            @RejectButton.started -= instance.OnRejectButton;
+            @RejectButton.performed -= instance.OnRejectButton;
+            @RejectButton.canceled -= instance.OnRejectButton;
+            @MenuButton1.started -= instance.OnMenuButton1;
+            @MenuButton1.performed -= instance.OnMenuButton1;
+            @MenuButton1.canceled -= instance.OnMenuButton1;
+            @MenuButton2.started -= instance.OnMenuButton2;
+            @MenuButton2.performed -= instance.OnMenuButton2;
+            @MenuButton2.canceled -= instance.OnMenuButton2;
         }
 
-        public void RemoveCallbacks(IPlayerMovementActions instance)
+        public void RemoveCallbacks(IMainControlsActions instance)
         {
-            if (m_Wrapper.m_PlayerMovementActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_MainControlsActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerMovementActions instance)
+        public void SetCallbacks(IMainControlsActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerMovementActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_MainControlsActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerMovementActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_MainControlsActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
+    public MainControlsActions @MainControls => new MainControlsActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -437,12 +513,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
-    public interface IPlayerMovementActions
+    public interface IMainControlsActions
     {
-        void OnMove(InputAction.CallbackContext context);
-        void OnCameraLook(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
-        void OnSprintHold(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
+        void OnControlAxis(InputAction.CallbackContext context);
+        void OnPrimaryTrigger(InputAction.CallbackContext context);
+        void OnSecondaryTrigger(InputAction.CallbackContext context);
+        void OnStartButton(InputAction.CallbackContext context);
+        void OnAffirmButton(InputAction.CallbackContext context);
+        void OnRejectButton(InputAction.CallbackContext context);
+        void OnMenuButton1(InputAction.CallbackContext context);
+        void OnMenuButton2(InputAction.CallbackContext context);
     }
 }

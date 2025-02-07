@@ -1,4 +1,5 @@
-using Unity.VisualScripting;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,12 +12,14 @@ public class UiInputHandler : MonoBehaviour, UiControls.IUiInteractActions {
 
     // Object references
     UiControls _controls;
-    private bool _isActive;
+    public bool IsActive;
 
     // Input states: set by InputAction callbacks, read by accessors
-    private bool _debugInputDown;
-    private bool _settingsDown;
-    private bool _progressDialogueDown;
+    private Dictionary<string, bool> _getDown = new() {
+        {"_debug", false},
+        {"_settings", false},
+        {"_progressDialogue", false}
+    };
 
     // Initializers and Finalizers ================================================================
 
@@ -29,13 +32,13 @@ public class UiInputHandler : MonoBehaviour, UiControls.IUiInteractActions {
         }
 
         _controls.UiInteract.Enable();
-        _isActive = true;
+        IsActive = true;
     }
 
     private void OnDisable() {
         if (_controls != null) {
             _controls.UiInteract.Disable();
-            _isActive = false;
+            IsActive = false;
         }
     }
 
@@ -43,77 +46,24 @@ public class UiInputHandler : MonoBehaviour, UiControls.IUiInteractActions {
 
     private void LateUpdate() {
         // LateUpdate is called at the END of every frame, after all Update() calls.
-        _debugInputDown = false;
-        _settingsDown = false;
-        _progressDialogueDown = false;
+        foreach (string key in _getDown.Keys.ToList()) {
+            _getDown[key] = false;
+        }
     }
 
-    /// <summary>
-    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
-    /// DO NOT CALL MANUALLY.
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnDebugKey(InputAction.CallbackContext context) {
-        if (context.started) _debugInputDown = true;
-        if (context.canceled) _debugInputDown = false;
+    private void SetDown(InputAction.CallbackContext context, string input)
+    {
+        if (context.started) _getDown[input] = true; 
+        if (context.canceled) _getDown[input] = false;
     }
 
-    /// <summary>
-    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
-    /// DO NOT CALL MANUALLY.
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnPauseKey(InputAction.CallbackContext context) {
-        if (context.started) _settingsDown = true;
-        if (context.canceled) _settingsDown = false;
-    }
-
-    /// <summary>
-    /// Callback function used with the PlayerControls object internal to PlayerInputHandler.
-    /// DO NOT CALL MANUALLY.
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnProgressDialogue(InputAction.CallbackContext context) {
-        if (context.started) _progressDialogueDown = true;
-        if (context.canceled) _progressDialogueDown = false;
-    }
+    public void OnDebugKey(InputAction.CallbackContext context) { SetDown(context, "_debug"); }
+    public void OnPauseKey(InputAction.CallbackContext context) { SetDown(context, "_settings"); }
+    public void OnProgressDialogue(InputAction.CallbackContext context) { SetDown(context, "_progressDialogue"); }
 
     // Public Accessor Methods ====================================================================
 
-    /// <summary>
-    /// Accessor for if inputs are currently accepted.
-    /// </summary>
-    /// <returns>bool - if PlayerInputHandler can process input.</returns>
-    public bool GetCanProcessInput() {
-        return _isActive;//Cursor.lockState == CursorLockMode.Locked;
-    }
-
-    /// <summary>
-    /// Accessor for if the debug input was pressed on the last frame.
-    /// </summary>
-    /// <returns>bool - if the debug input was pressed down on the last frame.</returns>
-    public bool GetDebugDown() {
-        return GetCanProcessInput() && _debugInputDown;
-    }
-
-    /// <summary>
-    /// Accessor for if the setting input was pressed on the last frame.
-    /// </summary>
-    /// <returns>bool - if the setting input was pressed down on the last frame.</returns>
-    public bool GetSettingsDown() {
-        return GetCanProcessInput() && _settingsDown;
-    }
-
-    /// <summary>
-    /// Accessor for if the dialogue down input was pressed on the last frame.
-    /// </summary>
-    /// <returns>bool - if the dialogue down input was pressed down on the last frame.</returns>
-    public bool GetProgressDialogueDown() {
-        return GetCanProcessInput() && _progressDialogueDown;
-    }
-
-
-    public void SetActive(bool isActive) {
-        _isActive = isActive;
-    }
+    public bool GetDebugDown() { return IsActive && _getDown["_debug"]; }
+    public bool GetSettingsDown() { return IsActive && _getDown["_settings"];  }
+    public bool GetProgressDialogueDown() { return IsActive && _getDown["_progressDialogue"];  }
 }

@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardTransform: {fileID: 5083528762976515683}
+  animator: {fileID: 3590953238995180109}
   speed: 5
 --- !u!143 &6074142200603486058
 CharacterController:
@@ -317,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5528291917880232895}
   - component: {fileID: 9005634577511394852}
+  - component: {fileID: 3590953238995180109}
   m_Layer: 0
   m_Name: Renderer
   m_TagString: Untagged
@@ -356,6 +358,27 @@ MonoBehaviour:
   Mode: 2
   FlipOrientation: 0
   lerpSpeed: 3
+--- !u!95 &3590953238995180109
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521869914754720316}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 794f1691bd6eb110a87dbe9e4e802cfa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8011710992692426672
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,7 +655,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 479d9e10cb7ad2cfb9300afa17dbe65a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 479d9e10cb7ad2cfb9300afa17dbe65a,
         type: 3}
@@ -642,7 +665,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 479d9e10cb7ad2cfb9300afa17dbe65a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 479d9e10cb7ad2cfb9300afa17dbe65a,
         type: 3}

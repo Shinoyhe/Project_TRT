@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "New PlayingCard", menuName = "Bartering/PlayingCard")]
 public class PlayingCard : ScriptableObject

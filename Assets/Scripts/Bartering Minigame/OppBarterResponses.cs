@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 [CreateAssetMenu(fileName = "New OppBarterResponses", menuName = "Bartering/OppBarterResponses")]
 public class OppBarterResponses : ScriptableObject
@@ -8,10 +7,10 @@ public class OppBarterResponses : ScriptableObject
     // Parameters and Publics =====================================================================
 
     [Tooltip("An ID used for debug purposes.")]
-    public string Id;
+    public string id;
     [SerializeField, Tooltip("A list of key-value pairs, representing tones the opponent plays VS "
            + "what they want to hear in response.")]
-    private PlayingCardPair[] PlayingCardPairs;
+    private PlayingCardPair[] playingCardPairs;
 
     // Misc Internal Variables ====================================================================
 
@@ -29,7 +28,7 @@ public class OppBarterResponses : ScriptableObject
         // Clear the dict before populating it.
         _responseDict.Clear();
 
-        foreach (PlayingCardPair pair in PlayingCardPairs) {
+        foreach (PlayingCardPair pair in playingCardPairs) {
             // No double-entries for keys.
             if (_responseDict.ContainsKey(pair.Key.Id)) {
                 Debug.LogError("OppBarterResponses Error: Initialize failed. _responseDict "

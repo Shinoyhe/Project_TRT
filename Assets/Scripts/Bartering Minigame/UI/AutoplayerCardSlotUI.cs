@@ -7,11 +7,11 @@ public class AutoPlayerCardSlotUI : MonoBehaviour
     // Parameters and Publics =====================================================================
 
     [SerializeField, Tooltip("TEMPORARY IMPLEMENTATION. For now, acts as our card back.")]
-    private Image MainImage;
+    private Image mainImage;
     [SerializeField, Tooltip("TEMPORARY IMPLEMENTATION. For now, acts as our card label.")]
-    private TMP_Text MainText; 
+    private TMP_Text mainText; 
     [SerializeField, Tooltip("The sprite on this slot when our state is set to null.")]
-    private Sprite NullSprite;
+    private Sprite nullSprite;
 
     // Initializers ===============================================================================
 
@@ -29,13 +29,13 @@ public class AutoPlayerCardSlotUI : MonoBehaviour
     public void DisplayCard(PlayingCard card)
     {
         if (card == null) {
-            MainImage.sprite = NullSprite;
-            MainImage.color = Color.white;
-            MainText.text = "";
+            mainImage.sprite = nullSprite;
+            mainImage.color = Color.white;
+            mainText.text = "";
         } else {
-            MainImage.sprite = null;
-            MainImage.color = card.DEBUG_COLOR;
-            MainText.text = card.Id;
+            mainImage.sprite = null;
+            mainImage.color = card.DEBUG_COLOR;
+            mainText.text = card.Id;
         }
     }
 }

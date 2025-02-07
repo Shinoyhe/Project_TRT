@@ -14,7 +14,7 @@ public class UiInputHandler : MonoBehaviour, UiControls.IUiInteractActions {
     public bool IsActive;
 
     // Input states: set by InputAction callbacks, read by accessors
-    private Dictionary<string, bool> _isDown = new() {
+    private Dictionary<string, bool> _getDown = new() {
         {"_debug", false},
         {"_settings", false},
         {"_progressDialogue", false}
@@ -45,15 +45,15 @@ public class UiInputHandler : MonoBehaviour, UiControls.IUiInteractActions {
 
     private void LateUpdate() {
         // LateUpdate is called at the END of every frame, after all Update() calls.
-        foreach (string key in _isDown.Keys) {
-            _isDown[key] = false;
+        foreach (string key in _getDown.Keys) {
+            _getDown[key] = false;
         }
     }
 
     private void SetDown(InputAction.CallbackContext context, string input)
     {
-        if (context.started) _isDown[input] = true; 
-        if (context.canceled) _isDown[input] = false;
+        if (context.started) _getDown[input] = true; 
+        if (context.canceled) _getDown[input] = false;
     }
 
     public void OnDebugKey(InputAction.CallbackContext context) { SetDown(context, "_debug"); }
@@ -62,7 +62,7 @@ public class UiInputHandler : MonoBehaviour, UiControls.IUiInteractActions {
 
     // Public Accessor Methods ====================================================================
 
-    public bool GetDebugDown() { return IsActive && _isDown["_debug"]; }
-    public bool GetSettingsDown() { return IsActive && _isDown["_settings"];  }
-    public bool GetProgressDialogueDown() { return IsActive && _isDown["_progressDialogue"];  }
+    public bool GetDebugDown() { return IsActive && _getDown["_debug"]; }
+    public bool GetSettingsDown() { return IsActive && _getDown["_settings"];  }
+    public bool GetProgressDialogueDown() { return IsActive && _getDown["_progressDialogue"];  }
 }

@@ -16,7 +16,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     // Input states: set by InputAction callbacks, read by accessors
     private Vector2 _controlAxisVector;
-    private Dictionary<string, bool> _isDown = new() {
+    private Dictionary<string, bool> _getDown = new() {
         {"_primaryTrigger", false},
         {"_secondaryTrigger", false},
         {"_start", false},
@@ -51,8 +51,8 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     private void LateUpdate() {
         // LateUpdate is called at the END of every frame, after all Update() calls.
-        foreach (string key in _isDown.Keys) {
-            _isDown[key] = false;
+        foreach (string key in _getDown.Keys) {
+            _getDown[key] = false;
         }
     }
 
@@ -63,8 +63,8 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     private void SetDown(InputAction.CallbackContext context, string input)
     {
-        if (context.started) _isDown[input] = true; 
-        if (context.canceled) _isDown[input] = false;
+        if (context.started) _getDown[input] = true; 
+        if (context.canceled) _getDown[input] = false;
     }
 
     public void OnPrimaryTrigger(InputAction.CallbackContext context) { SetDown(context, "_primaryTrigger"); }
@@ -93,11 +93,11 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         return Vector3.ClampMagnitude(move, 1);
     }
 
-    public bool GetPrimaryTriggerDown() { return IsActive && _isDown["_primaryTrigger"]; }
-    public bool GetSecondaryTriggerDown() { return IsActive && _isDown["_secondaryTrigger"]; }
-    public bool GetStartDown() { return IsActive && _isDown["_start"]; }
-    public bool GetAffirmDown() { return IsActive && _isDown["_affirm"]; }
-    public bool GetRejectDown() { return IsActive && _isDown["_reject"]; }
-    public bool GetMenu1Down() { return IsActive && _isDown["_menu1"]; }
-    public bool GetMenu2Down() { return IsActive && _isDown["_menu2"]; }
+    public bool GetPrimaryTriggerDown() { return IsActive && _getDown["_primaryTrigger"]; }
+    public bool GetSecondaryTriggerDown() { return IsActive && _getDown["_secondaryTrigger"]; }
+    public bool GetStartDown() { return IsActive && _getDown["_start"]; }
+    public bool GetAffirmDown() { return IsActive && _getDown["_affirm"]; }
+    public bool GetRejectDown() { return IsActive && _getDown["_reject"]; }
+    public bool GetMenu1Down() { return IsActive && _getDown["_menu1"]; }
+    public bool GetMenu2Down() { return IsActive && _getDown["_menu2"]; }
 }

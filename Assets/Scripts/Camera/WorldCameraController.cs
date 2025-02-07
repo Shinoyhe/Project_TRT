@@ -1,16 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.ComponentModel;
 
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 using Cinemachine;
 using NaughtyAttributes;
 
-
+[ExecuteAlways]
 public class WorldCameraController : MonoBehaviour
 {
     #region ======== [ OBJECT REFERENCES ] ========
@@ -19,19 +16,16 @@ public class WorldCameraController : MonoBehaviour
     #endregion
 
     #region ======== [ ENUMS ] ========
-    public enum MovementDirection
-    {
+    public enum MovementDirection {
         Fixed, Dynamic
     }
 
-    public enum Body
-    {
-        None, Transposer, TrackedDolly
+    public enum Body {
+        Fixed, Transposer, TrackedDolly
     }
 
-    public enum Aim
-    {
-        None, Composer
+    public enum Aim {
+        Fixed, Composer
     }
     #endregion
 
@@ -39,7 +33,7 @@ public class WorldCameraController : MonoBehaviour
     [Header("Parameters")]
     [Tooltip("Will activate this controller on Awake. Should be true for one controller in the scene.")] [SerializeField] 
     private bool activeOnAwake = false;
-    [Tooltip("The view camera's FOV.")] [SerializeField] [MinValue(1), MaxValue(179)] 
+    [Tooltip("The view camera's FOV.")] [SerializeField] [MinValue(1), MaxValue(179)] [OnValueChanged("AutoUpdateFOV")]
     private int fieldOfView = 60;
     [Tooltip("Time for the camera to move to this controller.")] [SerializeField] [MinValue(0)] 
     private float cameraTransitionTime = 2f;
@@ -47,43 +41,47 @@ public class WorldCameraController : MonoBehaviour
     private float movementTransitionTime = 1f;
     [Tooltip("Dictates what axis the player moves in. \n" +
         "Dynamic: Determines the axis automagically based on the camera's position\n" +
-        "Fixed: Axis is set by the \"Fixed Direction Degrees\"")] [SerializeField] 
+        "Fixed: Axis is set by the \"Fixed Direction Degrees\"")] [SerializeField] [OnValueChanged("AutoUpdateMovementAim")]
     private MovementDirection movementDirection = MovementDirection.Dynamic;
-    [Tooltip("Determines which way is forward based on the degrees.")] [ShowIf("movementDirection", MovementDirection.Fixed)] [SerializeField] 
+    [Tooltip("Determines which way is forward based on the degrees.")] [ShowIf("movementDirection", MovementDirection.Fixed)] [SerializeField] [OnValueChanged("AutoUpdateMovementAim")]
     private float fixedDirectionDegrees = 0;
     [Tooltip("List of camera controllers that won't be transitioned to if the current camera is active.")] [SerializeField] 
     private List<WorldCameraController> blacklistedControllers = new List<WorldCameraController>();
 
 
-    [BoxGroup("Body")] [Tooltip("The Cinemachine body type for the camera")] [SerializeField]
+    [BoxGroup("Body")] [Tooltip("The Cinemachine body type for the camera. (Influences position.)")] [SerializeField] [OnValueChanged("AutoUpdateBody")]
     private Body bodyType = Body.Transposer;
-    [BoxGroup("Body")] [SerializeField] [Range(0, 20)] [HideIf("bodyType", Body.None)]
+    [BoxGroup("Body")] [Tooltip("Dampening for the Cinemachine Body")] [SerializeField] [Range(0, 20)] [HideIf("bodyType", Body.Fixed)] [OnValueChanged("AutoUpdateBody")]
     private float followDampening = 2;
-    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.Transposer)]
+    [BoxGroup("Body")] [Tooltip("CinemachineTransposer's position relative to the target")] [SerializeField] [ShowIf("bodyType", Body.Transposer)] [OnValueChanged("AutoUpdateBody")]
     private Vector3 transposerPosition = new Vector3(0, 3, -8);
-    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)] [MinValue(1)]
+    [BoxGroup("Body")] [Tooltip("Increase to reduce character movement jitter with the dolly at the cost of performance.")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)] [MinValue(1)] [OnValueChanged("AutoUpdateBody")]
     private int movementPathResolution = 16;
-    [BoxGroup("Body")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)]
+    [BoxGroup("Body")] [Tooltip("Increase to reduce camera jitter with the dolly at the cost of performance." +
+        "Note that follow dampening can also negative jitter, at the cost of the camera lagging behind.")] [SerializeField] [ShowIf("bodyType", Body.TrackedDolly)] [OnValueChanged("AutoUpdateBody")]
     private int cameraPathResolution = 8;
+    [BoxGroup("Body")] [Tooltip("The world position of the camera when the Body is Fixed.")] [SerializeField] [ShowIf("bodyType", Body.Fixed)] [OnValueChanged("AutoUpdateBody")]
+    private Vector3 fixedPosition = new Vector3(0, 3, -8);
 
 
     [BoxGroup("Aim")]
-    [SerializeField]
+    [SerializeField] [Tooltip("The Cinemachine aim type for the camera. (Influences rotation.)")] [OnValueChanged("AutoUpdateMainAim")]
     private Aim aimType = Aim.Composer;
-    [BoxGroup("Aim")] [SerializeField] [Range(0, 1)] [ShowIf("aimType", Aim.Composer)]
+    [BoxGroup("Aim")] [Tooltip("How far ahead of the player the composer will rotate towards.")] [SerializeField] [Range(0, 1)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
     private float lookAheadDistance = 0.5f;
-    [BoxGroup("Aim")] [SerializeField] [Range(0, 30)] [ShowIf("aimType", Aim.Composer)]
+    [BoxGroup("Aim")] [Tooltip("Smooths the rotation when the camera looks ahead.")] [SerializeField] [Range(0, 30)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
     private float lookAheadSmoothing = 5f;
-    [BoxGroup("Aim")] [SerializeField] [Range(0, 20)] [ShowIf("aimType", Aim.Composer)]
+    [BoxGroup("Aim")] [Tooltip("Adds dampening to the camera rotating.")] [SerializeField] [Range(0, 20)] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
     private float aimDampening = 2;
-    [BoxGroup("Aim")] [SerializeField] [ShowIf("aimType", Aim.Composer)]
+    [BoxGroup("Aim")] [Tooltip("Offset where the camera is looking at relative to the target.")] [SerializeField] [ShowIf("aimType", Aim.Composer)] [OnValueChanged("AutoUpdateMainAim")]
     private Vector3 aimOffset;
-    [BoxGroup("Aim")] [SerializeField] [ShowIf("aimType", Aim.None)]
+    [BoxGroup("Aim")] [Tooltip("The world euler angle rotation of the camera when the Aim is Fixed.")] [SerializeField] [ShowIf("aimType", Aim.Fixed)] [OnValueChanged("AutoUpdateMainAim")]
     private Vector3 fixedAimRotation = Vector3.right * 15f;
 
 
     [BoxGroup("Controls")]
-    [Label("Auto-Update Cameras")]
+    [Label("Auto-Update Cameras")] [Tooltip("Automatically updates the child virtual cameras when changing the script's parameters." +
+        "Disable if you want to manually change the virtual cameras.")]
     [SerializeField] private bool autoUpdate = true;
 
     #endregion
@@ -92,7 +90,7 @@ public class WorldCameraController : MonoBehaviour
 
     private static WorldCameraController _currentCamera = null;
     private static WorldCameraController _previousCamera = null;
-    private bool _started = false;
+    private static Player _player;
 
     #endregion
 
@@ -104,7 +102,6 @@ public class WorldCameraController : MonoBehaviour
     public bool IsActive()
     {
         return _currentCamera == this;
-        
     }
 
 
@@ -117,11 +114,13 @@ public class WorldCameraController : MonoBehaviour
 
         if (_currentCamera && _currentCamera.blacklistedControllers.Contains(this)) return;
 
-        Player.Camera.m_DefaultBlend.m_Time = cameraTransitionTime;
-        Player.MoveCamera.m_DefaultBlend.m_Time = movementTransitionTime;
+        GameManager.Player.Camera.m_DefaultBlend.m_Time = cameraTransitionTime;
+        GameManager.Player.MoveCamera.m_DefaultBlend.m_Time = movementTransitionTime;
 
         _previousCamera = _currentCamera;
-        _currentCamera?.Disable();
+        if (_currentCamera != null) {
+            _currentCamera.Disable();
+        }
         _currentCamera = this;
         VirtualCamera.gameObject.SetActive(true);
         VirtualMovement.gameObject.SetActive(true);
@@ -134,8 +133,7 @@ public class WorldCameraController : MonoBehaviour
     public void Deactivate()
     {
         if (!IsActive()) return;
-        if (_previousCamera == null)
-        {
+        if (_previousCamera == null) {
             Debug.LogWarning("No previous camera detected. Aborting Deactivation");
             return;
         }
@@ -153,247 +151,17 @@ public class WorldCameraController : MonoBehaviour
         VirtualMovement.gameObject.SetActive(false);
     }
 
-    private void AssignTargets()
-    {
-        if (VirtualCamera.Follow == null) VirtualCamera.Follow = Player.Transform;
-        if (VirtualMovement.Follow == null) VirtualMovement.Follow = Player.Transform;
-
-        if (VirtualCamera.LookAt == null) VirtualCamera.LookAt = Player.LookTarget;
-        if (VirtualMovement.LookAt == null) VirtualMovement.LookAt = Player.LookTarget;
-    }
-
-    void Reset() 
-    {
-        AssignTargets();
-    }
-
-#if UNITY_EDITOR
-    /// <summary>
-    /// If UpdatesVirtualCameras is true, this method changes the Virtual Camera parameters automagically :D
-    /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]   // So that this doesn't appear in the autocomplete
-    void OnValidate()
-    {
-        // VirtualCameras might be null on start up
-        if (!autoUpdate) return;
-
-        // Prevents errors from OnValidate running when a scene loads
-        if (Application.isPlaying && !_started) return;
-
-        if (Player.Loaded) 
-        {
-            AssignTargets();
-        }
-
-        UpdateVirtualCameras();
-    }
-
-
-    [HideIf("autoUpdate")] [Button("Manually Update Camera Values")]
-    private void UpdateVirtualCameras()
-    {
-        VirtualCamera.m_Lens.FieldOfView = fieldOfView;
-
-        // Handle Body Stages
-        switch (bodyType)
-        {
-            case Body.None:
-                HandleBodyNone();
-                break;
-            case Body.Transposer:
-                HandleBodyTransposer();
-                break;
-            case Body.TrackedDolly:
-                HandleBodyTrackedDolly();
-                break;
-        }
-
-        // Handle Follower Types
-        switch (aimType)
-        {
-            case Aim.None:
-                HandleAimNone();
-                break;
-            case Aim.Composer:
-                HandleAimComposer();
-                break;
-        }
-    }
-
-
-    private void HandleBodyNone()
-    {
-        if (VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body) || VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Body))
-        {
-            // Delay Call is Required to DestroyImmediates with OnValidate
-            EditorApplication.delayCall += () =>
-            {
-                DestroyImmediate(VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body));
-                DestroyImmediate(VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Body));
-            };
-        }
-    }
-
-
-    private void HandleBodyTransposer()
-    {
-        if (VirtualCamera.GetCinemachineComponent<CinemachineTransposer>() && VirtualMovement.GetCinemachineComponent<CinemachineTransposer>())
-            UpdateBodyTransposerValues();
-        else EditorApplication.delayCall += () => UpdateBodyTransposerValues();
-    }
-
-
-    private void HandleBodyTrackedDolly()
-    {
-        if (VirtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>() && VirtualMovement.GetCinemachineComponent<CinemachineTrackedDolly>())
-            UpdateBodyTrackedDollyValues();
-        else EditorApplication.delayCall += () => UpdateBodyTrackedDollyValues();
-    }
-
-    
-    private void HandleAimNone()
-    {
-        if (VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Aim))
-        {
-            EditorApplication.delayCall += () => DestroyImmediate(VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Aim));
-            EditorApplication.delayCall += () => DestroyImmediate(VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Aim));
-        }
-
-        VirtualCamera.transform.rotation = Quaternion.Euler(fixedAimRotation);
-        VirtualMovement.transform.eulerAngles = movementDirection == MovementDirection.Fixed ? 
-            Vector3.up * fixedDirectionDegrees : fixedAimRotation; // If movement direction is fixed, override it
-    }
-
-
-    private void HandleAimComposer()
-    {
-        if (VirtualCamera.GetCinemachineComponent<CinemachineComposer>() && VirtualMovement.GetCinemachineComponent<CinemachineComposer>())
-            UpdateAimComposerValues();
-        else EditorApplication.delayCall += () => UpdateAimComposerValues();
-    }
-
-
-    private void UpdateBodyTransposerValues()
-    {
-        if (VirtualCamera == null) return;
-
-        // Get Existing or Add a CinemachineTransposer
-        var mainFT = AddCinemachineComponent<CinemachineTransposer>(VirtualCamera, CinemachineCore.Stage.Body);
-        var moveFT = AddCinemachineComponent<CinemachineTransposer>(VirtualMovement, CinemachineCore.Stage.Body);
-
-        // Apply Parameters for Movement and Camera
-        mainFT.m_FollowOffset = transposerPosition;
-        moveFT.m_FollowOffset = transposerPosition;
-
-        mainFT.m_XDamping = followDampening;
-        mainFT.m_YDamping = followDampening;
-        mainFT.m_ZDamping = followDampening;
-
-        moveFT.m_XDamping = 0;
-        moveFT.m_YDamping = 0;
-        moveFT.m_ZDamping = 0;
-    }
-
-
-    private void UpdateBodyTrackedDollyValues()
-    {
-        if (VirtualCamera == null) return;
-
-        // Get Existing or Add a CinemachineTransposer
-        var mainTD = AddCinemachineComponent<CinemachineTrackedDolly>(VirtualCamera, CinemachineCore.Stage.Body);
-        var moveTD = AddCinemachineComponent<CinemachineTrackedDolly>(VirtualMovement, CinemachineCore.Stage.Body);
-
-        // Apply Parameters for Movement and Camera
-        VirtualCamera.transform.rotation = Quaternion.Euler(fixedAimRotation);
-        VirtualMovement.transform.eulerAngles = movementDirection == MovementDirection.Fixed ? 
-            Vector3.up * fixedDirectionDegrees : fixedAimRotation; // If movement direction is fixed, override it
-
-        mainTD.m_XDamping = followDampening;
-        mainTD.m_YDamping = followDampening;
-        mainTD.m_ZDamping = followDampening;
-
-        moveTD.m_XDamping = 0;
-        moveTD.m_YDamping = 0;
-        moveTD.m_ZDamping = 0;
-
-        mainTD.m_Path = GetComponent<CinemachinePath>() ??
-            gameObject.AddComponent(typeof(CinemachinePath)) as CinemachinePath;
-        moveTD.m_Path = GetComponent<CinemachinePath>();
-
-        mainTD.m_AutoDolly.m_Enabled = true;
-        moveTD.m_AutoDolly.m_Enabled = true;
-
-        mainTD.m_AutoDolly.m_SearchResolution = cameraPathResolution;
-        moveTD.m_AutoDolly.m_SearchResolution = movementPathResolution;
-
-        if (mainTD.m_Path.PathLength == 0)
-            GetComponent<CinemachinePath>().m_Waypoints = new CinemachinePath.Waypoint[1]
-            {
-                new CinemachinePath.Waypoint { position = transform.position, tangent = new Vector3(1, 0, 0) }
-            };
-    }
-
-
-    private void UpdateAimComposerValues()
-    {
-        if (VirtualCamera == null) return;
-
-        var mainC = AddCinemachineComponent<CinemachineComposer>(VirtualCamera, CinemachineCore.Stage.Aim);
-
-        mainC.m_HorizontalDamping = aimDampening;
-        mainC.m_VerticalDamping = aimDampening;
-
-        mainC.m_LookaheadTime = lookAheadDistance;
-        mainC.m_LookaheadSmoothing = lookAheadSmoothing;
-
-        mainC.m_TrackedObjectOffset = aimOffset;
-
-        if (movementDirection == MovementDirection.Dynamic)
-        {
-            var moveC = AddCinemachineComponent<CinemachineComposer>(VirtualMovement, CinemachineCore.Stage.Aim);
-            moveC.m_HorizontalDamping = 0;
-            moveC.m_VerticalDamping = 0;
-            moveC.m_LookaheadTime = 0;
-            moveC.m_LookaheadSmoothing = 0;
-        }
-        else
-        {
-            if (VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Aim))
-                EditorApplication.delayCall += () =>
-                {
-                    DestroyImmediate(VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Aim));
-                };
-            VirtualMovement.transform.eulerAngles = Vector3.up * fixedDirectionDegrees;
-        }
-    }
-
-
-    private ComponentType AddCinemachineComponent<ComponentType>(CinemachineVirtualCamera virtualCamera, CinemachineCore.Stage stage)
-        where ComponentType : CinemachineComponentBase
-    {
-        CinemachineComponentBase comp = virtualCamera.GetCinemachineComponent(stage);
-        if (!(comp is ComponentType))
-        {
-            DestroyImmediate(comp); 
-            return virtualCamera.AddCinemachineComponent<ComponentType>();
-        }
-        else
-        {
-            return comp as ComponentType;
-        }
-    }
-#endif
-
     void Awake()
     {
+        if (!Application.isPlaying || PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+
         // Activates this Camera if ActiveOnAwake is True
         if (activeOnAwake)
         {
             // Warning if another camera is also ActiveOnAwake
-            if (_currentCamera != null)
-            {
+            if (_currentCamera != null) {
                 Debug.LogWarning($"There is another WorldCameraController " +
-                    $"({_currentCamera.gameObject} with \"Active On Awake\" enabled.");
+                                 $"({_currentCamera.gameObject} with \"Active On Awake\" enabled.");
                 Disable();
                 return;
             }
@@ -405,44 +173,230 @@ public class WorldCameraController : MonoBehaviour
         }
     }
 
+    private void AssignTargets()
+    {
+        // GameManager.Player may be null if the Editor is in Edit Mode
+        // so we manually search if it is.
+        _player = FindObjectOfType<Player>();
+
+        if (_player == null) return;
+
+        VirtualCamera.Follow = _player.Transform;
+        VirtualMovement.Follow = _player.Transform;
+
+        VirtualCamera.LookAt = _player.LookTarget;
+        VirtualMovement.LookAt = _player.LookTarget;
+    }
+
+    [HideIf("autoUpdate"), Button("Manually Update Cameras")]
+    private void UpdateAll()
+    {
+        UpdateFOV();
+        UpdateBody();
+        UpdateMainAim();
+        RecUndo("UpdateAll");
+    }
+
+    private void AutoUpdateFOV() { if (autoUpdate) UpdateFOV(); RecUndo("UpdateFOV"); }
+    private void AutoUpdateMainAim() { if (autoUpdate) UpdateMainAim(); RecUndo("UpdateMainAim"); }
+    private void AutoUpdateMovementAim() { if (autoUpdate) UpdateMovementAim(); RecUndo("UpdateMovementAim"); }
+    private void AutoUpdateBody() { if (autoUpdate) UpdateBody(); RecUndo("UpdateBody"); }
+    private void AutoUpdateTrackedDolly() { if (autoUpdate) UpdateTrackedDolly(); RecUndo("UpdateTrackedDolly"); }
+    private void AutoUpdateTransposer() { if (autoUpdate) UpdateTransposer(); RecUndo("UpdateTransposer"); }
+
+    private void UpdateFOV()
+    {
+        VirtualCamera.m_Lens.FieldOfView = fieldOfView;
+    }
+
+    private void UpdateMainAim()
+    {
+        CinemachineComponentBase mainAim = VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Aim);
+        if (aimType == Aim.Fixed) {
+            if (mainAim != null) DestroyImmediate(mainAim);
+            VirtualCamera.transform.eulerAngles = fixedAimRotation;
+        } else if (aimType == Aim.Composer) {
+            CinemachineComposer mainComposer =
+                AddOrGetCinemachineComponent<CinemachineComposer>(VirtualCamera, CinemachineCore.Stage.Aim);
+            mainComposer.m_HorizontalDamping = aimDampening;
+            mainComposer.m_VerticalDamping = aimDampening;
+            mainComposer.m_LookaheadTime = lookAheadDistance;
+            mainComposer.m_LookaheadSmoothing = lookAheadSmoothing;
+            mainComposer.m_TrackedObjectOffset = aimOffset;
+            RecCompUndo(mainComposer, "Changed Main's Composer");
+        }
+        UpdateMovementAim();
+    }
+
+    private void UpdateMovementAim()
+    {
+        if (movementDirection == MovementDirection.Fixed) {
+            // Destroy Aim Component if Exists
+            DestroyImmediate(VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Aim));
+            VirtualMovement.transform.eulerAngles = Vector3.up * fixedDirectionDegrees;
+            return;
+        }
+
+        // If aim components are different, need to change Movement Camera's aim
+        CinemachineComponentBase moveAim = VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Aim);
+
+        if (aimType == Aim.Fixed) {
+            if (moveAim != null) DestroyImmediate(moveAim);
+            VirtualMovement.transform.rotation = VirtualCamera.transform.rotation;
+        } else if (aimType == Aim.Composer) {
+            CinemachineComposer moveComposer =
+                AddOrGetCinemachineComponent<CinemachineComposer>(VirtualMovement, CinemachineCore.Stage.Aim);
+            moveComposer.m_HorizontalDamping = 0;
+            moveComposer.m_VerticalDamping = 0;
+            moveComposer.m_LookaheadTime = 0;
+            moveComposer.m_LookaheadSmoothing = 0;
+            RecCompUndo(moveComposer, "Changed Move's Composer");
+        }
+    }
+
+    private void UpdateBody()
+    {
+        switch (bodyType)
+        {
+            case Body.Fixed:
+                DestroyImmediate(VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body));
+                DestroyImmediate(VirtualMovement.GetCinemachineComponent(CinemachineCore.Stage.Body));
+                VirtualCamera.transform.position = fixedPosition;
+                VirtualMovement.transform.position = fixedPosition;
+                break;
+            case Body.TrackedDolly:
+                UpdateTrackedDolly();
+                break;
+            case Body.Transposer:
+                UpdateTransposer();
+                break;
+        }
+    }
+
+    private void UpdateTrackedDolly()
+    {
+        CinemachineTrackedDolly mainTD =
+            AddOrGetCinemachineComponent<CinemachineTrackedDolly>(VirtualCamera, CinemachineCore.Stage.Body);
+        CinemachineTrackedDolly moveTD =
+            AddOrGetCinemachineComponent<CinemachineTrackedDolly>(VirtualMovement, CinemachineCore.Stage.Body);
+
+        mainTD.m_XDamping = followDampening;
+        mainTD.m_YDamping = followDampening;
+        mainTD.m_ZDamping = followDampening;
+
+        moveTD.m_XDamping = 0;
+        moveTD.m_YDamping = 0;
+        moveTD.m_ZDamping = 0;
+
+        mainTD.m_Path = GetComponent<CinemachinePath>();
+        if (mainTD.m_Path == null) {
+            mainTD.m_Path = gameObject.AddComponent(typeof(CinemachinePath)) as CinemachinePath;
+        }
+            
+        moveTD.m_Path = GetComponent<CinemachinePath>();
+
+        mainTD.m_AutoDolly.m_Enabled = true;
+        moveTD.m_AutoDolly.m_Enabled = true;
+
+        mainTD.m_AutoDolly.m_SearchResolution = cameraPathResolution;
+        moveTD.m_AutoDolly.m_SearchResolution = movementPathResolution;
+
+        if (mainTD.m_Path.PathLength == 0) {
+            GetComponent<CinemachinePath>().m_Waypoints = new CinemachinePath.Waypoint[1] {
+                new CinemachinePath.Waypoint { position = transform.position, tangent = new Vector3(1, 0, 0) }
+            };
+        }
+
+        RecCompUndo(mainTD, "Changed Main's Tracked Dolly");
+        RecCompUndo(moveTD, "Changed Move's Tracked Dolly");
+    }
+
+    private void UpdateTransposer()
+    {
+        // Get Existing or Add a CinemachineTransposer
+        var mainT = AddOrGetCinemachineComponent<CinemachineTransposer>(VirtualCamera, CinemachineCore.Stage.Body);
+        var moveT = AddOrGetCinemachineComponent<CinemachineTransposer>(VirtualMovement, CinemachineCore.Stage.Body);
+
+        // Apply Parameters for Movement and Camera
+        mainT.m_FollowOffset = transposerPosition;
+        moveT.m_FollowOffset = transposerPosition;
+
+        mainT.m_XDamping = followDampening;
+        mainT.m_YDamping = followDampening;
+        mainT.m_ZDamping = followDampening;
+
+        moveT.m_XDamping = 0;
+        moveT.m_YDamping = 0;
+        moveT.m_ZDamping = 0;
+
+        RecCompUndo(mainT, "Updated Main's Transposer");
+        RecCompUndo(moveT, "Updated Move's Transposer");
+    }
+
+    private ComponentType AddOrGetCinemachineComponent<ComponentType>(CinemachineVirtualCamera virtualCamera, 
+                                                                      CinemachineCore.Stage stage)
+        where ComponentType : CinemachineComponentBase
+    {
+        CinemachineComponentBase comp = virtualCamera.GetCinemachineComponent(stage);
+        if (comp is not ComponentType) {
+            DestroyImmediate(comp);
+            return virtualCamera.AddCinemachineComponent<ComponentType>();
+        } else {
+            return comp as ComponentType;
+        }
+    }
+
+    private void RecUndo(string message)
+    {
+        if (Application.isPlaying) return;
+        Undo.RecordObject(VirtualCamera, message);
+        Undo.RecordObject(VirtualMovement, message);
+        EditorUtility.SetDirty(VirtualCamera);
+        EditorUtility.SetDirty(VirtualMovement);
+    }
+
+    private void RecCompUndo(CinemachineComponentBase comp, string message)
+    {
+        if (Application.isPlaying || comp == null) return;
+        Undo.RecordObject(comp, message);
+        EditorUtility.SetDirty(comp);
+    }
 
     void Start()
     {
+        // Check if in Prefab Mode
+        if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+
+        AssignTargets();
+
+        // Don't run if the game is not running
+        if (!Application.isPlaying) return;
+
         // Error Catching
-        if (_currentCamera == null)
-        {
+        if (_currentCamera == null) {
             Debug.LogError($"No WorldCameraControllers are active. " +
                 $"Make sure one WorldCameraController has \"Active On Awake\" enabled.");
         }
 
-        if (!GetComponent<Collider>() || !GetComponent<Collider>().isTrigger)
-        {
+        if (!GetComponent<Collider>() || !GetComponent<Collider>().isTrigger) {
             Debug.LogWarning("Make sure WorldCameraController has an " +
                 "attached collider with \"Is Trigger\" Enabled");
         }
 
-        if (VirtualCamera == null)
-        {
+        if (VirtualCamera == null) {
             Debug.LogError("Virtual Camera (CinemachineVirtualCamera) has not been assigned.");
         }
 
-        if (VirtualMovement == null)
-        {
+        if (VirtualMovement == null) {
             Debug.LogError("Virtual Movement (CinemachineVirtualCamera) has not been assigned.");
         }
-
-        AssignTargets();
-
-        _started = true;
 
         _currentCamera.Activate();
     }
 
-
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
+        if (other.CompareTag("Player")) {
             Activate();
         }
     }

@@ -1,46 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StartUi : MonoBehaviour {
     // Parameters =================================================================================
 
     public Canvas TitleScreenCanvas;
-    public Canvas OptionsCanvas;
     public Canvas CreditsCanvas;
 
     private Canvas _currentCanvas;
-    private enum _canvasState {
+    private enum CanvasState {
         TitleScreen,
-        OptionScreen,
-        CreditsScreen
+        Credits
     }
-    private _canvasState _currentCanvasState;
+    private CanvasState _currentCanvasState;
 
     // Initializers and Update ================================================================
-    void Start() {
-        if(TitleScreenCanvas == null || OptionsCanvas == null || CreditsCanvas == null) {
-            Debug.LogError("Start Ui not setup!");
+    void Start() 
+    {
+        if (TitleScreenCanvas == null) {
+            Debug.LogError("Start UI not setup!");
         }
 
-        _currentCanvasState = _canvasState.TitleScreen;
+        _currentCanvasState = CanvasState.TitleScreen;
         _currentCanvas = TitleScreenCanvas;
     }
 
     // Public Utility Methods ====================================================================
 
-    public void SwitchToTitleScreen() {
+    public void SwitchToTitleScreen() 
+    {
         SwitchCanvas(TitleScreenCanvas);
-        _currentCanvasState = _canvasState.TitleScreen;
+        _currentCanvasState = CanvasState.TitleScreen;
     }
-    public void SwitchToOptionsMenu() {
-        SwitchCanvas(OptionsCanvas);
-        _currentCanvasState = _canvasState.OptionScreen;
-    }
-    public void SwitchToCreditsMenu() {
+
+    public void SwitchToCreditsScreen() 
+    {
         SwitchCanvas(CreditsCanvas);
-        _currentCanvasState = _canvasState.CreditsScreen;
+        _currentCanvasState = CanvasState.Credits;
     }
 
     // Private Helper Methods ====================================================================
@@ -49,8 +44,8 @@ public class StartUi : MonoBehaviour {
     /// Switch from current canvas to a new canvas.
     /// </summary>
     /// <param name="canvas">New canvas to show.</param>
-    void SwitchCanvas(Canvas canvas) {
-
+    void SwitchCanvas(Canvas canvas) 
+    {
         if (canvas == null) return;
 
         if (_currentCanvas != null) {
@@ -62,21 +57,12 @@ public class StartUi : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
-        if (PlayerInputHandler.Instance == null) { return; }
+    void Update() 
+    {
+        if (GameManager.UiInput == null) return;
 
-        // Keyboard input checking
-        if (_currentCanvasState == _canvasState.TitleScreen) {
-
-            if (PlayerInputHandler.Instance.GetSettingsDown()) {
-                SwitchToOptionsMenu();
-                return;
-            }
-        }
-
-        if (_currentCanvasState != _canvasState.TitleScreen) {
-
-            if (PlayerInputHandler.Instance.GetSettingsDown()) {
+        if (_currentCanvasState != CanvasState.TitleScreen) {
+            if (GameManager.UiInput.GetSettingsDown()) {
                 SwitchToTitleScreen();
             }
         }

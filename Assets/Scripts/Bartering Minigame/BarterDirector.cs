@@ -1,39 +1,35 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class BarterDirector : MonoBehaviour
 {
     // Parameters =================================================================================
 
     [SerializeField, Range(0, 100), Tooltip("The current willingness percentage, from 0-100.")]
-    private float Willingness;
+    private float willingness = 50;
 
     [Header("Parameters")]
     [Tooltip("The number of tone cards each player must play.\n\nDefault: 3")]
     public int CardsToPlay = 3;
     [SerializeField, Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
-    private float DecayPerSecond = 5;
+    private float decayPerSecond = 5;
     [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1")]
-    private float OppDuration = 1;
+    private float oppDuration = 1;
     [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1.5")]
-    private float ComputeDuration = 1.5f;
+    private float computeDuration = 1.5f;
     [Tooltip("The amount Willingness is changed by on a successful, matching response.\n\nDefault: 5")]
     public float WillingnessPerMatch = 5;
     [Tooltip("The amount Willingness is changed by on a unsuccessful, nonmatching response.\n\nDefault: -5")]
     public float WillingnessPerFail = -5;
     [SerializeField, Tooltip("Whether or not we should print debug messages.")]
-    private bool DebugMode = false;
+    private bool debugMode = false;
 
     [Header("Object References")]
     [SerializeField, Tooltip("The tone responses the opposing NPC prefers.")]
     public OppBarterResponses BarterResponses;
     [SerializeField, Tooltip("The card user used by the opposing NPC.")]
-    private CardUser OppCardUser;
+    private CardUser oppCardUser;
     [SerializeField, Tooltip("The card user used by the player.")]
-    private CardUser PlayerCardUser;
+    private CardUser playerCardUser;
     [Tooltip("The HandController used by the player.")]
     public HandController PlayerHandController;
 
@@ -43,6 +39,9 @@ public class BarterDirector : MonoBehaviour
     public System.Action<bool[]> OnMatchArraySet;
     // Action for when the full non-null set of player cards is submitted.
     public System.Action OnPlayerAllCardsSet;
+    // Action for win and loss
+    public System.Action OnWin;
+    public System.Action OnLose;
 
     // Misc Internal Variables ====================================================================
 
@@ -63,8 +62,8 @@ public class BarterDirector : MonoBehaviour
         _playerCards = new PlayingCard[CardsToPlay];
 
         // Create the machine and start it.
-        _machine = new(this, PlayerCardUser, OppCardUser, OppDuration, ComputeDuration);
-        _machine.SetDebug(DebugMode);
+        _machine = new(this, playerCardUser, oppCardUser, oppDuration, computeDuration);
+        _machine.SetDebug(debugMode);
         _machine.StartMachine();
     }
 
@@ -72,13 +71,13 @@ public class BarterDirector : MonoBehaviour
 
     private void Update()
     {
-        _machine.SetDebug(DebugMode);
+        _machine.SetDebug(debugMode);
         _machine.UpdateState();
     }
 
     // Public accessors ===========================================================================
 
-    public float GetWillingness() { return Willingness; }
+    public float GetWillingness() { return willingness; }
 
     public PlayingCard[] GetOppCards() { return _oppCards; }
 
@@ -103,7 +102,7 @@ public class BarterDirector : MonoBehaviour
             return;
         }
 
-        Willingness = startingValue;
+        willingness = startingValue;
     }
 
     /// <summary>
@@ -111,7 +110,7 @@ public class BarterDirector : MonoBehaviour
     /// </summary>
     public void DecayWillingness()
     {
-        Willingness -= DecayPerSecond * Time.deltaTime;
+        willingness -= decayPerSecond * Time.deltaTime;
     }
 
     /// <summary>
@@ -120,7 +119,7 @@ public class BarterDirector : MonoBehaviour
     /// <param name="amount">float - the value we change Willingness by.</param>
     public void NudgeWillingness(float amount)
     {
-        Willingness = Mathf.Clamp(Willingness+amount, 0, 100);
+        willingness = Mathf.Clamp(willingness+amount, 0, 100);
     }
 
     // Array manipulators =========================================================================
@@ -181,7 +180,7 @@ public class BarterDirector : MonoBehaviour
     /// </summary>
     public void ClearPlayerCards() 
     { 
-        Array.Clear(_playerCards, 0, _playerCards.Length);
+        System.Array.Clear(_playerCards, 0, _playerCards.Length);
     }
 
     /// <summary>
@@ -200,5 +199,13 @@ public class BarterDirector : MonoBehaviour
 
         _matchArray = matchArray;
         OnMatchArraySet?.Invoke(matchArray);
+    }
+
+    public void TriggerWin() {
+        OnWin?.Invoke();
+    }
+
+    public void TriggerLose() {
+        OnLose?.Invoke();
     }
 }

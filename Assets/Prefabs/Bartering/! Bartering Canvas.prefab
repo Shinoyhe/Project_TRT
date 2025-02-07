@@ -164,20 +164,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8a83f79f5ed7b4cb860542c46b7761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardUser: {fileID: 0}
-  DisplayCardPrefab: {fileID: 5754509815202693436, guid: 936e194443647924382535e54c325c0f,
+  cardUser: {fileID: 0}
+  displayCardPrefab: {fileID: 5754509815202693436, guid: 936e194443647924382535e54c325c0f,
     type: 3}
-  SubmissionUI: {fileID: 674162664119888351}
-  AnchorLeft: {fileID: 4216182219936765561}
-  AnchorRight: {fileID: 6966202267639916172}
-  DrawAnchor: {fileID: 313582089972706307}
-  DiscardAnchor: {fileID: 3000621485968222550}
-  UsableRangePerCard: 0.2
-  MoveTime: 0.15
-  DragScaleFactor: 0.8
-  HoverTime: 0.15
-  DragAlpha: 0.5
-  SnapTime: 0.15
+  submissionUI: {fileID: 674162664119888351}
+  anchorLeft: {fileID: 4216182219936765561}
+  anchorRight: {fileID: 6966202267639916172}
+  drawAnchor: {fileID: 313582089972706307}
+  discardAnchor: {fileID: 3000621485968222550}
+  usableRangePerCard: 0.2
+  moveTime: 0.25
+  dragScaleFactor: 0.9
+  hoverTime: 0.15
+  dragAlpha: 0.5
+  snapTime: 0.15
 --- !u!1 &2386307641602492332
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,13 +699,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ee0ef6ae8ad6a4aa7006065a1c0f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Director: {fileID: 0}
-  BarFront: {fileID: 8871508248618765537}
-  MarkerParent: {fileID: 1602782612643317225}
-  TextObject: {fileID: 8364866770039674396}
-  DecimalPlaces: 0
-  Prefix: 
-  Suffix: '%'
+  director: {fileID: 0}
+  barFront: {fileID: 8871508248618765537}
+  markerParent: {fileID: 1602782612643317225}
+  textObject: {fileID: 8364866770039674396}
+  decimalPlaces: 0
+  prefix: 
+  suffix: '%'
 --- !u!1 &4912882367534420908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,17 +1239,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27049eeedb38fa9478cd944f63480090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Director: {fileID: 0}
+  director: {fileID: 0}
   DEBUG_StateDisplay: {fileID: 3095200451977607047}
-  PlayerCardSlotPrefab: {fileID: 6273194753866176866, guid: ae19afd134f191344be2e8f82cb8903d,
+  playerCardSlotPrefab: {fileID: 6273194753866176866, guid: ae19afd134f191344be2e8f82cb8903d,
     type: 3}
-  PlayerCardSlotZone: {fileID: 4477602138692694596}
-  OppCardSlotPrefab: {fileID: 5754509815202693436, guid: c349a347002b10b48b376a658fb98abd,
+  playerCardSlotZone: {fileID: 4477602138692694596}
+  oppCardSlotPrefab: {fileID: 5754509815202693436, guid: c349a347002b10b48b376a658fb98abd,
     type: 3}
-  OppCardSlotZone: {fileID: 1794351600274943764}
-  MatchSlotPrefab: {fileID: 4127379657485283127, guid: 40cc06dd8b0c39641b642b068bd72595,
+  oppCardSlotZone: {fileID: 1794351600274943764}
+  matchSlotPrefab: {fileID: 4127379657485283127, guid: 40cc06dd8b0c39641b642b068bd72595,
     type: 3}
-  MatchSlotZone: {fileID: 476466859657780747}
+  matchSlotZone: {fileID: 476466859657780747}
 --- !u!1 &7029510026539790264
 GameObject:
   m_ObjectHideFlags: 0

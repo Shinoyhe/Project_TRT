@@ -1,23 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameEnums;
 
-public enum CardTypes { 
-    INFO, 
-    ITEM 
-}
-
-public enum Merchants
-{
-    MAILBOT,
-    SHADY,
-    PRIESTESS
-}
 
 [CreateAssetMenu(fileName = "InventoryCard", menuName = "ScriptableObjects/InventoryCard", order = 1)]
 public class InventoryCardData : ScriptableObject
 {
-    public readonly string CardName;
+    public string CardName;
 
     public CardTypes Type;
 
@@ -26,16 +16,5 @@ public class InventoryCardData : ScriptableObject
     public Sprite Sprite;
     public string StartingLocation;
 
-    [SerializeField]
-    public Dictionary<string, Array> Contexts = new Dictionary<string, Array>() 
-    {
-        
-    };
-}
-
-[Serializable]
-public class KeyValuePair<TKey, TValue>
-{
-    public TKey Key;
-    public TValue Value;
+    public List<ContextOriginPair> contextData = new List<ContextOriginPair>();
 }

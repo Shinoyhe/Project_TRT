@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameEnums;
 
 public class Inventory : MonoBehaviour
 {
@@ -46,7 +47,9 @@ public class Inventory : MonoBehaviour
 
     public void AddCard(InventoryCardData card)
     {
-        
+        if (card == null) return;
+
+
         if (IDtaken(card.ID)) {
             Debug.LogError("Card ID: " + card.ID + " already exists in inventory. Failed to add");
             return;
@@ -86,7 +89,7 @@ public class Inventory : MonoBehaviour
     {
         string printString = "[\n";
         foreach (InventoryCardData card in _cards) {
-            printString += $"[{card.name}, {card.ID}, {card.Type},\"{card.Description}\"],\n";
+            printString += $"[{card.CardName}, {card.ID}, {card.Type},\"{card.Description}\"],\n";
         }
 
         printString += "]";

@@ -37,16 +37,16 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IPlayerMovementA
             _controls = new PlayerControls();
             // Tell the "gameplay" action map that we want to get told about
             // when actions get triggered.
-            _controls.UiInteract.SetCallbacks(this);
+            _controls.PlayerMovement.SetCallbacks(this);
         }
 
-        _controls.UiInteract.Enable();
+        _controls.PlayerMovement.Enable();
         _isActive = true;
     }
 
     private void OnDisable() {
         if (_controls != null) {
-            _controls.UiInteract.Disable();
+            _controls.PlayerMovement.Disable();
             _isActive = false;
         }
     }

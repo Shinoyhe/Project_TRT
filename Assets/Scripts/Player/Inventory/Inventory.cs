@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,11 @@ using static GameEnums;
 
 public class Inventory : MonoBehaviour
 {
+    [SerializeField, ReadOnly]
+    private List<InventoryCardData> Cards;
+
     public List<InventoryCardData> StartingCards;
     public event Action OnInventoryUpdated;
-
-    private List<InventoryCardData> _cards;
 
     // Enums for Sorting
     public enum SortParameters { 
@@ -25,7 +27,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _cards = new List<InventoryCardData>();
+        Cards = new List<InventoryCardData>();
 
         Clear();
 
@@ -38,11 +40,11 @@ public class Inventory : MonoBehaviour
 
     public List<InventoryCardData> Get()
     {
-        if (_cards == null) {
+        if (Cards == null) {
             return new List<InventoryCardData>();
         }
 
-        return new List<InventoryCardData>(_cards);
+        return new List<InventoryCardData>(Cards);
     }
 
     public void AddCard(InventoryCardData card)
@@ -55,30 +57,30 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        _cards.Add(card);
+        Cards.Add(card);
         OnInventoryUpdated?.Invoke();
     }
 
     public void RemoveCard(InventoryCardData card)
     {
-        if (!_cards.Contains(card)) {
+        if (!Cards.Contains(card)) {
             Debug.LogError("Cannot remove card. Card does not exist.");
             return;
         }
 
-        _cards.Remove(card);
+        Cards.Remove(card);
         OnInventoryUpdated?.Invoke();
     }
 
     public void Clear()
     {
-        _cards.Clear();
+        Cards.Clear();
         OnInventoryUpdated?.Invoke();
     }
 
     public void ClearExceptType(CardTypes type)
     {
-        foreach (InventoryCardData card in _cards) {
+        foreach (InventoryCardData card in Cards) {
             if (type != card.Type) {
                 RemoveCard(card);
             }
@@ -88,7 +90,7 @@ public class Inventory : MonoBehaviour
     public void Print()
     {
         string printString = "[\n";
-        foreach (InventoryCardData card in _cards) {
+        foreach (InventoryCardData card in Cards) {
             printString += $"[{card.CardName}, {card.ID}, {card.Type},\"{card.Description}\"],\n";
         }
 
@@ -103,7 +105,7 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     public InventoryCardData GetCardByID(string id)
     {
-        foreach (InventoryCardData card in _cards) {
+        foreach (InventoryCardData card in Cards) {
             if (card.ID == id) return card;
         }
 
@@ -117,7 +119,7 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     public InventoryCardData GetCardByName(string cardName)
     {
-        foreach (InventoryCardData card in _cards) {
+        foreach (InventoryCardData card in Cards) {
             if (card.name == cardName) return card;
         }
 
@@ -132,7 +134,7 @@ public class Inventory : MonoBehaviour
     public List<InventoryCardData> GetCardsByName(string cardName)
     {
         List<InventoryCardData> returnList = new List<InventoryCardData>();
-        foreach (InventoryCardData card in _cards) {
+        foreach (InventoryCardData card in Cards) {
             if (card.name == cardName) {
                 returnList.Add(card);
             }
@@ -149,7 +151,7 @@ public class Inventory : MonoBehaviour
     public List<InventoryCardData> GetCardsByType(CardTypes type)
     {
         List<InventoryCardData> returnList = new List<InventoryCardData>();
-        foreach (InventoryCardData card in _cards) {
+        foreach (InventoryCardData card in Cards) {
             if (card.Type == type) {
                 returnList.Add(card);
             }
@@ -177,7 +179,7 @@ public class Inventory : MonoBehaviour
             comparison = (card1, card2) => -originalComparison(card1, card2);
         }
 
-        _cards.Sort(comparison);
+        Cards.Sort(comparison);
         OnInventoryUpdated?.Invoke();
     }
 
@@ -191,7 +193,7 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     private bool IDtaken(string cardID)
     {
-        foreach (InventoryCardData card in _cards) {
+        foreach (InventoryCardData card in Cards) {
             if (card.ID == cardID) return true;
         }
         

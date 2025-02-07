@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StartUi : MonoBehaviour {
@@ -10,32 +7,35 @@ public class StartUi : MonoBehaviour {
     public Canvas CreditsCanvas;
 
     private Canvas _currentCanvas;
-    private enum _canvasState {
+    private enum CanvasState {
         TitleScreen,
         Credits
     }
-    private _canvasState _currentCanvasState;
+    private CanvasState _currentCanvasState;
 
     // Initializers and Update ================================================================
-    void Start() {
-        if(TitleScreenCanvas == null) {
-            Debug.LogError("Start Ui not setup!");
+    void Start() 
+    {
+        if (TitleScreenCanvas == null) {
+            Debug.LogError("Start UI not setup!");
         }
 
-        _currentCanvasState = _canvasState.TitleScreen;
+        _currentCanvasState = CanvasState.TitleScreen;
         _currentCanvas = TitleScreenCanvas;
     }
 
     // Public Utility Methods ====================================================================
 
-    public void SwitchToTitleScreen() {
+    public void SwitchToTitleScreen() 
+    {
         SwitchCanvas(TitleScreenCanvas);
-        _currentCanvasState = _canvasState.TitleScreen;
+        _currentCanvasState = CanvasState.TitleScreen;
     }
 
-    public void SwitchToCreditsScreen() {
+    public void SwitchToCreditsScreen() 
+    {
         SwitchCanvas(CreditsCanvas);
-        _currentCanvasState = _canvasState.Credits;
+        _currentCanvasState = CanvasState.Credits;
     }
 
     // Private Helper Methods ====================================================================
@@ -44,8 +44,8 @@ public class StartUi : MonoBehaviour {
     /// Switch from current canvas to a new canvas.
     /// </summary>
     /// <param name="canvas">New canvas to show.</param>
-    void SwitchCanvas(Canvas canvas) {
-
+    void SwitchCanvas(Canvas canvas) 
+    {
         if (canvas == null) return;
 
         if (_currentCanvas != null) {
@@ -57,11 +57,11 @@ public class StartUi : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
-        if (GameManager.UiInput == null) { return; }
+    void Update() 
+    {
+        if (GameManager.UiInput == null) return;
 
-        if (_currentCanvasState != _canvasState.TitleScreen) {
-
+        if (_currentCanvasState != CanvasState.TitleScreen) {
             if (GameManager.UiInput.GetSettingsDown()) {
                 SwitchToTitleScreen();
             }

@@ -13,13 +13,12 @@ public class PlaytestMenuManager : MonoBehaviour {
     public GameObject SceneSelectButtonPrefab;
     public GameObject ButtonParent;
     public float DistanceBetweenButtons = 200;
-
-    public List<String> ScenesToCreate;
+    public List<string> ScenesToCreate;
 
     List<GameObject> _playtestButtons = new List<GameObject>();
 
-    protected void Awake() {
-
+    protected void Awake() 
+    {
         int totalScenes = ScenesToCreate.Count;
 
         for (int i = 0; i < totalScenes; i++) {
@@ -36,8 +35,8 @@ public class PlaytestMenuManager : MonoBehaviour {
     /// </summary>
     /// <param name="sceneName"> The name to display on Button. </param>
     /// <param name="scenePath"> Path to scene in Asset Database.</param>
-    GameObject CreateButton(string sceneName, string scenePath) {
-
+    GameObject CreateButton(string sceneName, string scenePath) 
+    {
         // Create button
         var button = Instantiate(SceneSelectButtonPrefab, Vector3.zero, Quaternion.identity, transform);
         var buttonManager = button.GetComponent<ButtonManager>();
@@ -57,8 +56,8 @@ public class PlaytestMenuManager : MonoBehaviour {
 #if UNITY_EDITOR
 [CustomEditor(typeof(PlaytestMenuManager))]
 
-public class PlaytestMenuEditor : Editor {
-
+public class PlaytestMenuEditor : Editor 
+{
     /// <summary>
     /// Init button to load all scenes in build path.
     /// </summary>

@@ -91,6 +91,9 @@ public class WorldCameraController : MonoBehaviour
     private static WorldCameraController _currentCamera = null;
     private static WorldCameraController _previousCamera = null;
     private static Player _player;
+    private static WorldCameraController _editorCamera = null;
+    private const int SELECTED_PRIORITY = 1;
+    private const int DEF_PRIORITY = 0;
 
     #endregion
 
@@ -188,7 +191,81 @@ public class WorldCameraController : MonoBehaviour
         VirtualMovement.LookAt = _player.LookTarget;
     }
 
-    [HideIf("autoUpdate"), Button("Manually Update Cameras")]
+    void Start()
+    {
+        // Check if in Prefab Mode
+        if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+
+        AssignTargets();
+        VirtualCamera.Priority = DEF_PRIORITY;
+        VirtualMovement.Priority = DEF_PRIORITY;
+
+        // Don't run if the game is not running
+        if (!Application.isPlaying) return;
+
+        // Error Catching
+        if (_currentCamera == null)
+        {
+            Debug.LogError($"No WorldCameraControllers are active. " +
+                $"Make sure one WorldCameraController has \"Active On Awake\" enabled.");
+        }
+
+        if (!GetComponent<Collider>() || !GetComponent<Collider>().isTrigger)
+        {
+            Debug.LogWarning("Make sure WorldCameraController has an " +
+                "attached collider with \"Is Trigger\" Enabled");
+        }
+
+        if (VirtualCamera == null)
+        {
+            Debug.LogError("Virtual Camera (CinemachineVirtualCamera) has not been assigned.");
+        }
+
+        if (VirtualMovement == null)
+        {
+            Debug.LogError("Virtual Movement (CinemachineVirtualCamera) has not been assigned.");
+        }
+
+        _currentCamera.Activate();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Activate();
+        }
+    }
+
+    #endregion
+
+    #region ======== [ EDITOR FUNCTIONS ] ========
+
+    #if UNITY_EDITOR
+
+    [Button("Switch To This Camera")]
+    private void SwitchToThis()
+    {
+        if (Application.isPlaying)
+        {
+            Activate();
+            return;
+        }
+
+        if (_editorCamera)
+        {
+            _editorCamera.VirtualCamera.Priority = DEF_PRIORITY;
+            _editorCamera.VirtualMovement.Priority = DEF_PRIORITY;
+        }
+
+        VirtualCamera.Priority = SELECTED_PRIORITY;
+        VirtualMovement.Priority = SELECTED_PRIORITY;
+
+        _editorCamera = this;
+    }
+
+
+    [Button("Manually Update Cameras")]
     private void UpdateAll()
     {
         UpdateFOV();
@@ -362,44 +439,7 @@ public class WorldCameraController : MonoBehaviour
         EditorUtility.SetDirty(comp);
     }
 
-    void Start()
-    {
-        // Check if in Prefab Mode
-        if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
-
-        AssignTargets();
-
-        // Don't run if the game is not running
-        if (!Application.isPlaying) return;
-
-        // Error Catching
-        if (_currentCamera == null) {
-            Debug.LogError($"No WorldCameraControllers are active. " +
-                $"Make sure one WorldCameraController has \"Active On Awake\" enabled.");
-        }
-
-        if (!GetComponent<Collider>() || !GetComponent<Collider>().isTrigger) {
-            Debug.LogWarning("Make sure WorldCameraController has an " +
-                "attached collider with \"Is Trigger\" Enabled");
-        }
-
-        if (VirtualCamera == null) {
-            Debug.LogError("Virtual Camera (CinemachineVirtualCamera) has not been assigned.");
-        }
-
-        if (VirtualMovement == null) {
-            Debug.LogError("Virtual Movement (CinemachineVirtualCamera) has not been assigned.");
-        }
-
-        _currentCamera.Activate();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player")) {
-            Activate();
-        }
-    }
+    #endif
 
     #endregion
 }

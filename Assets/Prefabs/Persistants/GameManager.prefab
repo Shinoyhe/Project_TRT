@@ -53,6 +53,7 @@ MonoBehaviour:
   playerInput: {fileID: 7198147195480083390}
   uiInput: {fileID: 297495919439177883}
   inventory: {fileID: 7739117665189127466}
+  player: {fileID: 0}
 --- !u!114 &297495919439177883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2a5b1ba4aefb146960abf6d7d90e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsActive: 0
 --- !u!114 &7198147195480083390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,9 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c458e1f588f88942a756ebd6a7f861f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookSensitivity: 1
-  InvertYAxis: 0
-  InvertXAxis: 0
+  IsActive: 0
 --- !u!114 &2334186633066417863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,8 +94,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DialogueUiPrefab: {fileID: 8005697584356534663, guid: a43636c37c7551c4a9708853bd50a584,
     type: 3}
-  BarterContainerPrefab: {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d,
-    type: 3}
+  BarterContainerPrefab:
+  - {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &7739117665189127466
 MonoBehaviour:
   m_ObjectHideFlags: 0

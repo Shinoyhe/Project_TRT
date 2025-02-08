@@ -20,4 +20,12 @@ public class Player : MonoBehaviour
     [Required] public CinemachineBrain MoveCamera;
     [Required] public Transform MovePivot;
     [Required] public Transform LookTarget;
+    
+    private void Awake()
+    {
+        if (!GameManager.Player){
+            GameManager.Instance.player = this;
+            Debug.Log(GameManager.Instance.player);
+        }
+    }
 }

@@ -16,5 +16,5 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private PlayerInputHandler playerInput;
     [SerializeField] private UiInputHandler uiInput;
     [SerializeField] private Inventory inventory;
-    [SerializeField] private Player player;
+    [SerializeField] public Player player;
 }

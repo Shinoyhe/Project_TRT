@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 
-using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
+#endif
+using UnityEngine;
 
 using Cinemachine;
 using NaughtyAttributes;
@@ -153,7 +155,10 @@ public class WorldCameraController : MonoBehaviour
 
     void Awake()
     {
-        if (!Application.isPlaying || PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+        if (!Application.isPlaying ) return;
+        #if UNITY_EDITOR
+        if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+        #endif
 
         // Activates this Camera if ActiveOnAwake is True
         if (activeOnAwake)
@@ -349,23 +354,29 @@ public class WorldCameraController : MonoBehaviour
     private void RecUndo(string message)
     {
         if (Application.isPlaying) return;
+        #if UNITY_EDITOR
         Undo.RecordObject(VirtualCamera, message);
         Undo.RecordObject(VirtualMovement, message);
         EditorUtility.SetDirty(VirtualCamera);
         EditorUtility.SetDirty(VirtualMovement);
+        #endif
     }
 
     private void RecCompUndo(CinemachineComponentBase comp, string message)
     {
         if (Application.isPlaying || comp == null) return;
+        #if UNITY_EDITOR
         Undo.RecordObject(comp, message);
         EditorUtility.SetDirty(comp);
+        #endif 
     }
 
     void Start()
     {
         // Check if in Prefab Mode
+        #if UNITY_EDITOR
         if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+        #endif
 
         AssignTargets();
 

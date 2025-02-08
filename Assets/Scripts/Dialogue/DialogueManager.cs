@@ -12,7 +12,7 @@ public class DialogueManager : MonoBehaviour {
 
     [Header("Dependencies")]
     public GameObject DialogueUiPrefab;
-    public GameObject BarterContainerPrefab;
+    public List<GameObject> BarterContainerPrefab;
 
     public struct ProcessedTags {
 
@@ -34,6 +34,7 @@ public class DialogueManager : MonoBehaviour {
     private GameObject _dialogueUiInstance;
     private InventoryCard _prizeCard;
     private GameObject _barterInstance;
+    private int _barterInstInd = 0;
 
     // Initializers and Update ================================================================
 
@@ -230,6 +231,9 @@ public class DialogueManager : MonoBehaviour {
                     break;
                 case "barter":
                     foundTags.IsBarterTrigger = true;
+                    if (value != ""){
+                        _barterInstInd = int.Parse(value);
+                    }
                     break;
             }
         }
@@ -242,7 +246,7 @@ public class DialogueManager : MonoBehaviour {
     /// </summary>
     void StartBarter() {
         Debug.Log("Barter Starting!");
-        _barterInstance = Instantiate(BarterContainerPrefab, Vector3.zero, Quaternion.identity);
+        _barterInstance = Instantiate(BarterContainerPrefab[_barterInstInd], Vector3.zero, Quaternion.identity);
         BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
         barterDirectorOfInstance.OnWin += WinBarter;
         barterDirectorOfInstance.OnLose += LoseBarter;

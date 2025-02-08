@@ -86,4 +86,18 @@ public class InventoryCard
         ContextsLearned = new List<ContextOrigins>();
     }
 
+    public InventoryCard(InventoryCardData data)
+    {
+        Data = data;
+        ContextsLearned = new List<ContextOrigins>();
+    }
+
+    public void LearnContext(ContextOrigins origin)
+    {
+        if (ContextsLearned.Contains(origin)) {
+            Debug.LogError($"Context Already Learned: {origin}");
+            return;
+        }
+        ContextsLearned.Add(origin);
+    }
 }

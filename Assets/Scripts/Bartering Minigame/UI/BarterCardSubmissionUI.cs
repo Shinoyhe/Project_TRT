@@ -63,10 +63,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
         _playerCardSlots = new PlayerCardSlot[director.CardsToPlay];
         _oppCardSlots = new AutoPlayerCardSlotUI[director.CardsToPlay];
         _matchSlots = new MatchSlotUI[director.CardsToPlay];
-    }
 
-    private void Start()
-    {
         // Slot inits ================
 
         // Instantiate our objects in our arrays.
@@ -151,7 +148,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
         }
     }
 
-    private void UpdateOppCards(PlayingCard[] results)
+    private void UpdateOppCards(PlayingCard[] oppCards)
     {
         // Update the displayed opponent cards. Called via an action from the BarterDirector.
         //
@@ -159,8 +156,10 @@ public class BarterCardSubmissionUI : MonoBehaviour
         //       the UI changes to match.
         // ================
 
+        Debug.Log("UpdateOppCards called");
+
         // Case 1, null array- set all slots to the null sprite.
-        if (results == null) {
+        if (oppCards == null) {
             foreach (AutoPlayerCardSlotUI slot in _oppCardSlots) {
                 slot.DisplayCard(null);
             }
@@ -168,16 +167,16 @@ public class BarterCardSubmissionUI : MonoBehaviour
         }
 
         // Case 2, nonnull array but wrong size- raise an error.
-        if (results.Length != _matchSlots.Length) {
+        if (oppCards.Length != _matchSlots.Length) {
             Debug.LogError("BarterCardSubmissionUI Error: UpdateCards failed. results array "
-                        + $"length ({results.Length}) and slots array length "
+                        + $"length ({oppCards.Length}) and slots array length "
                         + $"({_oppCardSlots.Length}) do not match.");
             return;
         }
 
         // Case 3, nonnull array and right size- set sprites.
-        for (int i=0; i<results.Length; i++) {
-            _oppCardSlots[i].DisplayCard(results[i]);
+        for (int i=0; i<oppCards.Length; i++) {
+            _oppCardSlots[i].DisplayCard(oppCards[i]);
         }
     }
 

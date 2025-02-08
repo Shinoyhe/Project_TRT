@@ -6,10 +6,15 @@ using static GameEnums;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField, ReadOnly]
-    private List<InventoryCardData> Cards;
+    [Header("Global Card Info")]
+    public List<InventoryCardData> AllCardDatas;
+    [SerializeField, ReadOnly] public List<InventoryCard> AllCards;
 
+    [Space]
+    [Header("Inventory")]
     public List<InventoryCardData> StartingCards;
+    [SerializeField, ReadOnly] private List<InventoryCard> Cards;
+    
     public event Action OnInventoryUpdated;
 
     // Enums for Sorting
@@ -24,12 +29,23 @@ public class Inventory : MonoBehaviour
         DESCENDING 
     }
 
+    private void Awake()
+    {
+        if (AllCardDatas == null) AllCardDatas = new List<InventoryCardData>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        Cards = new List<InventoryCardData>();
-
-        Clear();
+        AllCards = new List<InventoryCard>();
+        Cards = new List<InventoryCard>();
+        
+        // Fill the AllCards list using AllCardDatas
+        foreach (InventoryCardData cardData in AllCardDatas)
+        {
+            InventoryCard newCard = new InventoryCard(cardData);
+            AllCards.Add(newCard);
+        }
 
         foreach (InventoryCardData card in StartingCards) {
             AddCard(card);
@@ -38,13 +54,24 @@ public class Inventory : MonoBehaviour
 
     #region ---------- Public Methods ----------
 
-    public List<InventoryCardData> Get()
+    public List<InventoryCard> Get()
     {
         if (Cards == null) {
-            return new List<InventoryCardData>();
+            return new List<InventoryCard>();
         }
 
-        return new List<InventoryCardData>(Cards);
+        return new List<InventoryCard>(Cards);
+    }
+
+    public List<InventoryCardData> GetDatas()
+    {
+        List<InventoryCardData> returnList = new List<InventoryCardData>();
+        if (Cards == null) return returnList;
+
+        foreach (InventoryCard card in Cards) {
+            returnList.Add(card.Data);
+        }
+        return returnList;
     }
 
     public void AddCard(InventoryCardData card)
@@ -57,18 +84,37 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        Cards.Add(card);
+        // Find card in AllCards and add it to the current inventory
+        InventoryCard newCard = null;
+        foreach (InventoryCard possibleNewCard in AllCards) {
+            if (possibleNewCard.Data == card) {
+                newCard = possibleNewCard;
+                break;
+            }
+        }
+        if (newCard == null) {
+            Debug.LogError("Could not find, card does not exist in AllCards");
+            return;
+        }
+        newCard.CurrentlyOwn = true;
+        newCard.HaveOwned = true;
+
+        Cards.Add(newCard);
         OnInventoryUpdated?.Invoke();
     }
 
     public void RemoveCard(InventoryCardData card)
     {
-        if (!Cards.Contains(card)) {
-            Debug.LogError("Cannot remove card. Card does not exist.");
+        if (!CardInInventory(card)) {
+            Debug.LogError("Cannot remove card. Card is not in inventory.");
             return;
         }
 
-        Cards.Remove(card);
+        InventoryCard cardToRemove = GetCardFromData(card);
+
+        Cards.Remove(cardToRemove);
+        cardToRemove.CurrentlyOwn = false;
+
         OnInventoryUpdated?.Invoke();
     }
 
@@ -80,9 +126,9 @@ public class Inventory : MonoBehaviour
 
     public void ClearExceptType(CardTypes type)
     {
-        foreach (InventoryCardData card in Cards) {
+        foreach (InventoryCard card in Cards) {
             if (type != card.Type) {
-                RemoveCard(card);
+                RemoveCard(card.Data);
             }
         }
     }
@@ -90,8 +136,8 @@ public class Inventory : MonoBehaviour
     public void Print()
     {
         string printString = "[\n";
-        foreach (InventoryCardData card in Cards) {
-            printString += $"[{card.CardName}, {card.ID}, {card.Type},\"{card.Description}\"],\n";
+        foreach (InventoryCard card in Cards) {
+            printString += $"[{card.CardName}, {card.ID}, {card.Type},\"{card.Description}\", {card.StartingLocation}],\n";
         }
 
         printString += "]";
@@ -103,9 +149,9 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="id">The id to search for.</param>
     /// <returns></returns>
-    public InventoryCardData GetCardByID(string id)
+    public InventoryCard GetCardByID(string id)
     {
-        foreach (InventoryCardData card in Cards) {
+        foreach (InventoryCard card in Cards) {
             if (card.ID == id) return card;
         }
 
@@ -117,10 +163,10 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="cardName">The cardName to search for.</param>
     /// <returns></returns>
-    public InventoryCardData GetCardByName(string cardName)
+    public InventoryCard GetCardByName(string cardName)
     {
-        foreach (InventoryCardData card in Cards) {
-            if (card.name == cardName) return card;
+        foreach (InventoryCard card in Cards) {
+            if (card.CardName == cardName) return card;
         }
 
         return null;
@@ -131,11 +177,11 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="cardName">The cardName to search for.</param>
     /// <returns></returns>
-    public List<InventoryCardData> GetCardsByName(string cardName)
+    public List<InventoryCard> GetCardsByName(string cardName)
     {
-        List<InventoryCardData> returnList = new List<InventoryCardData>();
-        foreach (InventoryCardData card in Cards) {
-            if (card.name == cardName) {
+        List<InventoryCard> returnList = new List<InventoryCard>();
+        foreach (InventoryCard card in Cards) {
+            if (card.CardName == cardName) {
                 returnList.Add(card);
             }
         }
@@ -148,10 +194,10 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="cardName">The type to search for.</param>
     /// <returns></returns>
-    public List<InventoryCardData> GetCardsByType(CardTypes type)
+    public List<InventoryCard> GetCardsByType(CardTypes type)
     {
-        List<InventoryCardData> returnList = new List<InventoryCardData>();
-        foreach (InventoryCardData card in Cards) {
+        List<InventoryCard> returnList = new List<InventoryCard>();
+        foreach (InventoryCard card in Cards) {
             if (card.Type == type) {
                 returnList.Add(card);
             }
@@ -166,7 +212,7 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     public void Sort(SortParameters sortParameter, SortOrder sortOrder)
     {
-        Comparison<InventoryCardData> comparison = sortParameter switch {
+        Comparison<InventoryCard> comparison = sortParameter switch {
             SortParameters.NAME => (card1, card2) => string.Compare(card1.CardName, card2.CardName, true),
             SortParameters.ID => (card1, card2) => string.Compare(card1.ID, card2.ID, true),
             SortParameters.TYPE => (card1, card2) => string.Compare(card1.Type.ToString(), card2.Type.ToString(), true),
@@ -193,29 +239,34 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     private bool IDtaken(string cardID)
     {
-        foreach (InventoryCardData card in Cards) {
+        foreach (InventoryCard card in Cards) {
             if (card.ID == cardID) return true;
         }
         
         return false;
     }
 
+    /// <summary>
+    /// Is the InventoryCardData in the Inventory?
+    /// </summary>
+    /// <returns></returns>
+    private bool CardInInventory(InventoryCardData cardData)
+    {
+        foreach (InventoryCard card in Cards) { 
+            if (card.Data == cardData) return true;
+        }
+        return false;
+    }
+
+    private InventoryCard GetCardFromData(InventoryCardData cardData)
+    {
+        foreach (InventoryCard card in AllCards)
+        {
+            if (card.Data == cardData) { return card; }
+        }
+        Debug.LogError("Could not find card.");
+        return null;
+    }
+
     #endregion
 }
-
-#region ---------- Ideas ----------
-
-/* 
-cards are scriptable objects
-
-addCard
-removeCard
-clear
-sort?
-
-getByName
-
-
-*/
-
-#endregion

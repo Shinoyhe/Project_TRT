@@ -1,13 +1,15 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static GameEnums;
 
+[Serializable]
 public class InventoryCard
 {
     [SerializeField, ReadOnly]
-    private InventoryCardData Data;
+    public InventoryCardData Data;
 
     [ReadOnly] public List<ContextOrigins> ContextsLearned;
     [ReadOnly] public bool HaveOwned = false;
@@ -90,8 +92,16 @@ public class InventoryCard
     {
         Data = data;
         ContextsLearned = new List<ContextOrigins>();
+        if (!hasValidContextSetup())
+        {
+            Debug.LogError("Invalid Contexts, duplicate origins");
+        }
     }
 
+    /// <summary>
+    /// Learns a new piece of context, if it is the last relevant context, it will learn all contexts
+    /// </summary>
+    /// <returns></returns>
     public void LearnContext(ContextOrigins origin)
     {
         if (ContextsLearned.Contains(origin)) {
@@ -99,5 +109,24 @@ public class InventoryCard
             return;
         }
         ContextsLearned.Add(origin);
+    }
+
+    /// <summary>
+    /// Checks the ContextData and returns if it is valid. Looks for duplicate ContextOrigins and 
+    /// </summary>
+    /// <returns></returns>
+    private bool hasValidContextSetup()
+    {
+        // Items should not have any context
+        if (Type == CardTypes.ITEM) { return true; }
+
+        // Checks for duplicate origins
+        List<ContextOrigins> originsUsed = new List<ContextOrigins>();
+        foreach (ContextOriginPair originPair in ContextData) { 
+            if (originsUsed.Contains(originPair.origin)) { return false; }
+            originsUsed.Add(originPair.origin);
+        }
+
+        return true;
     }
 }

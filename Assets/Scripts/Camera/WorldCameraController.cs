@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
+#endif
 
 using Cinemachine;
 using NaughtyAttributes;
@@ -10,12 +13,12 @@ using NaughtyAttributes;
 [ExecuteAlways]
 public class WorldCameraController : MonoBehaviour
 {
-    #region ======== [ OBJECT REFERENCES ] ========
+#region ======== [ OBJECT REFERENCES ] ========
     [Foldout("Object References")] public CinemachineVirtualCamera VirtualCamera;
     [Foldout("Object References")] public CinemachineVirtualCamera VirtualMovement;
-    #endregion
+#endregion
 
-    #region ======== [ ENUMS ] ========
+#region ======== [ ENUMS ] ========
     public enum MovementDirection {
         Fixed, Dynamic
     }
@@ -33,21 +36,25 @@ public class WorldCameraController : MonoBehaviour
     [Header("Parameters")]
     [Tooltip("Will activate this controller on Awake. Should be true for one controller in the scene.")] [SerializeField] 
     private bool activeOnAwake = false;
+#if UNITY_EDITOR
     [Tooltip("The view camera's FOV.")] [SerializeField] [MinValue(1), MaxValue(179)] [OnValueChanged("AutoUpdateFOV")]
     private int fieldOfView = 60;
-    [Tooltip("Time for the camera to move to this controller.")] [SerializeField] [MinValue(0)] 
+    [Tooltip("Time for the camera to move to this controller.")] [SerializeField] [MinValue(0)]
+#endif
     private float cameraTransitionTime = 2f;
     [Tooltip("Time for the movement axis to match this controller's.")] [SerializeField] [MinValue(0)] 
     private float movementTransitionTime = 1f;
+#if UNITY_EDITOR
     [Tooltip("Dictates what axis the player moves in. \n" +
         "Dynamic: Determines the axis automagically based on the camera's position\n" +
         "Fixed: Axis is set by the \"Fixed Direction Degrees\"")] [SerializeField] [OnValueChanged("AutoUpdateMovementAim")]
     private MovementDirection movementDirection = MovementDirection.Dynamic;
     [Tooltip("Determines which way is forward based on the degrees.")] [ShowIf("movementDirection", MovementDirection.Fixed)] [SerializeField] [OnValueChanged("AutoUpdateMovementAim")]
     private float fixedDirectionDegrees = 0;
+#endif
     [Tooltip("List of camera controllers that won't be transitioned to if the current camera is active.")] [SerializeField] 
     private List<WorldCameraController> blacklistedControllers = new List<WorldCameraController>();
-
+#if UNITY_EDITOR
 
     [BoxGroup("Body")] [Tooltip("The Cinemachine body type for the camera. (Influences position.)")] [SerializeField] [OnValueChanged("AutoUpdateBody")]
     private Body bodyType = Body.Transposer;
@@ -83,7 +90,7 @@ public class WorldCameraController : MonoBehaviour
     [Label("Auto-Update Cameras")] [Tooltip("Automatically updates the child virtual cameras when changing the script's parameters." +
         "Disable if you want to manually change the virtual cameras.")]
     [SerializeField] private bool autoUpdate = true;
-
+#endif
     #endregion
 
     #region ======== [ PRIVATE PROPERTIES ] ========
@@ -91,10 +98,15 @@ public class WorldCameraController : MonoBehaviour
     private static WorldCameraController _currentCamera = null;
     private static WorldCameraController _previousCamera = null;
     private static Player _player;
+#if UNITY_EDITOR
+    private static WorldCameraController _editorCamera = null;
+#endif
+    private const int SELECTED_PRIORITY = 1;
+    private const int DEF_PRIORITY = 0;
 
-    #endregion
+#endregion
 
-    #region ======== [ PUBLIC METHODS ] ========
+#region ======== [ PUBLIC METHODS ] ========
 
     /// <summary>
     /// Returns whether the camera is active or not.
@@ -142,9 +154,9 @@ public class WorldCameraController : MonoBehaviour
         _previousCamera = this;
     }
 
-    #endregion
+#endregion
 
-    #region ======== [ PRIVATE METHODS ] ========
+#region ======== [ PRIVATE METHODS ] ========
     private void Disable()
     {
         VirtualCamera.gameObject.SetActive(false);
@@ -153,7 +165,11 @@ public class WorldCameraController : MonoBehaviour
 
     void Awake()
     {
-        if (!Application.isPlaying || PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+        if (!Application.isPlaying) return;
+
+#if UNITY_EDITOR
+        if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+#endif
 
         // Activates this Camera if ActiveOnAwake is True
         if (activeOnAwake)
@@ -188,7 +204,81 @@ public class WorldCameraController : MonoBehaviour
         VirtualMovement.LookAt = _player.LookTarget;
     }
 
-    [HideIf("autoUpdate"), Button("Manually Update Cameras")]
+    void Start()
+    {
+#if UNITY_EDITOR
+        if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+#endif
+        AssignTargets();
+        VirtualCamera.Priority = DEF_PRIORITY;
+        VirtualMovement.Priority = DEF_PRIORITY;
+
+        // Don't run if the game is not running
+        if (!Application.isPlaying) return;
+
+        // Error Catching
+        if (_currentCamera == null)
+        {
+            Debug.LogError($"No WorldCameraControllers are active. " +
+                $"Make sure one WorldCameraController has \"Active On Awake\" enabled.");
+        }
+
+        if (!GetComponent<Collider>() || !GetComponent<Collider>().isTrigger)
+        {
+            Debug.LogWarning("Make sure WorldCameraController has an " +
+                "attached collider with \"Is Trigger\" Enabled");
+        }
+
+        if (VirtualCamera == null)
+        {
+            Debug.LogError("Virtual Camera (CinemachineVirtualCamera) has not been assigned.");
+        }
+
+        if (VirtualMovement == null)
+        {
+            Debug.LogError("Virtual Movement (CinemachineVirtualCamera) has not been assigned.");
+        }
+
+        _currentCamera.Activate();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Activate();
+        }
+    }
+
+#endregion
+
+#region ======== [ EDITOR FUNCTIONS ] ========
+
+#if UNITY_EDITOR
+
+    [Button("Switch To This Camera")]
+    private void SwitchToThis()
+    {
+        if (Application.isPlaying)
+        {
+            Activate();
+            return;
+        }
+
+        if (_editorCamera)
+        {
+            _editorCamera.VirtualCamera.Priority = DEF_PRIORITY;
+            _editorCamera.VirtualMovement.Priority = DEF_PRIORITY;
+        }
+
+        VirtualCamera.Priority = SELECTED_PRIORITY;
+        VirtualMovement.Priority = SELECTED_PRIORITY;
+
+        _editorCamera = this;
+    }
+
+
+    [Button("Manually Update Cameras")]
     private void UpdateAll()
     {
         UpdateFOV();
@@ -362,44 +452,7 @@ public class WorldCameraController : MonoBehaviour
         EditorUtility.SetDirty(comp);
     }
 
-    void Start()
-    {
-        // Check if in Prefab Mode
-        if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+#endif
 
-        AssignTargets();
-
-        // Don't run if the game is not running
-        if (!Application.isPlaying) return;
-
-        // Error Catching
-        if (_currentCamera == null) {
-            Debug.LogError($"No WorldCameraControllers are active. " +
-                $"Make sure one WorldCameraController has \"Active On Awake\" enabled.");
-        }
-
-        if (!GetComponent<Collider>() || !GetComponent<Collider>().isTrigger) {
-            Debug.LogWarning("Make sure WorldCameraController has an " +
-                "attached collider with \"Is Trigger\" Enabled");
-        }
-
-        if (VirtualCamera == null) {
-            Debug.LogError("Virtual Camera (CinemachineVirtualCamera) has not been assigned.");
-        }
-
-        if (VirtualMovement == null) {
-            Debug.LogError("Virtual Movement (CinemachineVirtualCamera) has not been assigned.");
-        }
-
-        _currentCamera.Activate();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player")) {
-            Activate();
-        }
-    }
-
-    #endregion
+#endregion
 }

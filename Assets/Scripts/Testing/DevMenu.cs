@@ -46,4 +46,9 @@ public class DevMenu : Singleton<DevMenu> {
     {
         SceneManager.sceneLoaded -= CloseDevMenu;
     }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

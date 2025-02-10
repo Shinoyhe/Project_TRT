@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardPickup : Interactable {
 
-    [SerializeField] private InventoryCard CardToGive;
+    [SerializeField] private InventoryCardData CardToGive;
 
     public override void Highlight() {
         // ADD SHADER FOR HIGHLIGHT

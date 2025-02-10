@@ -32,7 +32,7 @@ public class DialogueManager : MonoBehaviour {
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
-    private InventoryCard _prizeCard;
+    private InventoryCardData _prizeCard;
     private GameObject _barterInstance;
 
     // Initializers and Update ================================================================
@@ -95,7 +95,7 @@ public class DialogueManager : MonoBehaviour {
         _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
     }
 
-    public void SetPrizeCard(InventoryCard prizeCard) {
+    public void SetPrizeCard(InventoryCardData prizeCard) {
         _prizeCard = prizeCard;
     }
 

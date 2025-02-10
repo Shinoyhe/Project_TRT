@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bf5943d399a0e540a80a0341cd79c25, type: 3}
-  m_Name: B Card
+  m_Name: A Card
   m_EditorClassIdentifier: 
-  CardName: B Card
-  Type: 1
-  ID: b_card
-  Description: This is B card
-  Sprite: {fileID: 21300000, guid: 698a6ef157b96e644a7ee6a82c125718, type: 3}
-  StartingLocation: My Mom's House!?
+  CardName: A Card
+  Type: 0
+  ID: a_card
+  Description: This is a card
+  Sprite: {fileID: 21300000, guid: 64a4aabb5bd8f3e4e918e385720cf9b7, type: 3}
+  StartingLocation: Your Mom's House
   ContextData:
   - origin: 0
     contextInfo:
-      relevant: 0
-      context: 'IDK :shrug:'
+      relevant: 1
+      context: Hi :)
   - origin: 1
     contextInfo:
       relevant: 1
-      context: Only I know
+      context: Yeah I know about this one
   - origin: 2
     contextInfo:
-      relevant: 0
-      context: 'IDK :Shrug:'
+      relevant: 1
+      context: hell eyah

@@ -15,6 +15,7 @@ public class ElevatorController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform objectRoot;
 
+    [BoxGroup("Setup"), SerializeField] private InventoryCardData requiredCard;
     [BoxGroup("Setup"), SerializeField] private Transform startingWaypoint;
     [BoxGroup("Setup"), SerializeField, Range(0f, 10f)] private float movementDurationSeconds;
     #endregion
@@ -34,6 +35,8 @@ public class ElevatorController : MonoBehaviour
     [Button("Move Elevator")]
     public void MoveElevator()
     {
+        if (!GameManager.Inventory.HasCard(requiredCard)) return;
+
         if ((startingWaypointIndex == waypoints.Count - 1 && nextIndexModifier > 0) ||
             (startingWaypointIndex == 0 && nextIndexModifier < 0))
         {

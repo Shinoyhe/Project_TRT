@@ -1,13 +1,11 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-
-public enum CardTypes { 
-    INFO, 
-    ITEM 
-}
+using static GameEnums;
 
 
 [CreateAssetMenu(fileName = "InventoryCard", menuName = "ScriptableObjects/InventoryCard", order = 1)]
-public class InventoryCard : ScriptableObject
+public class InventoryCardData : ScriptableObject
 {
     public string CardName;
 
@@ -16,4 +14,7 @@ public class InventoryCard : ScriptableObject
     public string ID;
     public string Description;
     public Sprite Sprite;
+    public string StartingLocation;
+
+    public List<ContextOriginPair> ContextData = new List<ContextOriginPair>();
 }

@@ -469,12 +469,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 113523554}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!4 &371831719 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4035792607936705534, guid: 2a2e453ba175cbc4c9579c670db15878,
-    type: 3}
-  m_PrefabInstance: {fileID: 523764835}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &523764835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -483,50 +477,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2555861292970549495, guid: 2a2e453ba175cbc4c9579c670db15878,
-        type: 3}
-      propertyPath: waypoints.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2555861292970549495, guid: 2a2e453ba175cbc4c9579c670db15878,
-        type: 3}
-      propertyPath: movementDurationSeconds
-      value: 3.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 2555861292970549495, guid: 2a2e453ba175cbc4c9579c670db15878,
-        type: 3}
-      propertyPath: waypoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 592473711}
-    - target: {fileID: 3630262091862132011, guid: 2a2e453ba175cbc4c9579c670db15878,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.07
-      objectReference: {fileID: 0}
     - target: {fileID: 3663829017008449524, guid: 2a2e453ba175cbc4c9579c670db15878,
         type: 3}
       propertyPath: m_Name
       value: Elevator
-      objectReference: {fileID: 0}
-    - target: {fileID: 5032522665522065334, guid: 2a2e453ba175cbc4c9579c670db15878,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368363016885411650, guid: 2a2e453ba175cbc4c9579c670db15878,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6159926056947480381, guid: 2a2e453ba175cbc4c9579c670db15878,
-        type: 3}
-      propertyPath: platform
-      value: 
-      objectReference: {fileID: 371831719}
-    - target: {fileID: 6821942880589385831, guid: 2a2e453ba175cbc4c9579c670db15878,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.07
       objectReference: {fileID: 0}
     - target: {fileID: 8518807652300261211, guid: 2a2e453ba175cbc4c9579c670db15878,
         type: 3}
@@ -655,12 +609,6 @@ CapsuleCollider:
   m_Height: 5.075967
   m_Direction: 1
   m_Center: {x: 0, y: 2.0379834, z: 0}
---- !u!4 &592473711 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8990483132448940255, guid: 2a2e453ba175cbc4c9579c670db15878,
-    type: 3}
-  m_PrefabInstance: {fileID: 523764835}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &829349624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1076,11 +1024,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6074142200603486058, guid: d7b8be9e5f8f8024691d1d3b751d45b5,
-        type: 3}
-      propertyPath: m_StepOffset
-      value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 8583860041712276947, guid: d7b8be9e5f8f8024691d1d3b751d45b5,
         type: 3}

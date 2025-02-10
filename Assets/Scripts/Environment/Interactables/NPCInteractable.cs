@@ -3,7 +3,7 @@ using UnityEngine;
 public class NpcInteractable : Interactable
 {
     [SerializeField] private Vector3 dialogueBubbleOffset;
-    [SerializeField] private InventoryCard cardToGiveOnWin;
+    [SerializeField] private InventoryCardData cardToGiveOnWin;
     [SerializeField] private TextAsset npcConversation;
 
     public override void Highlight()

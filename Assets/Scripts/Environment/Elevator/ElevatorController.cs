@@ -29,6 +29,26 @@ public class ElevatorController : MonoBehaviour
     #region ========== [ PUBLIC METHODS ] ==========
 
     /// <summary>
+    /// Moves the elevator along the Waypoints in order, reverses when it reaches the end.
+    /// </summary>
+    [Button("Move Elevator")]
+    public void MoveElevator()
+    {
+        if ((startingWaypointIndex == waypoints.Count - 1 && nextIndexModifier > 0) ||
+            (startingWaypointIndex == 0 && nextIndexModifier < 0))
+        {
+            nextIndexModifier *= -1;
+        }
+        int targetWaypointIndex = startingWaypointIndex + nextIndexModifier;
+        Transform targetWaypoint = waypoints[targetWaypointIndex];
+
+        objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds).SetEase(Ease.InOutQuad);
+
+        startingWaypoint = targetWaypoint;
+        SetStartingWaypointIndex();
+    }
+
+    /// <summary>
     /// Snaps the position of Object in the elevator to the selected starting waypoint
     /// </summary>
     [SerializeField, Button("Snap Object to Waypoint")]
@@ -89,22 +109,6 @@ public class ElevatorController : MonoBehaviour
         {
             Debug.LogError("Elevator: Could not get Starting Waypoint Index, waypoint is not in Waypoints list.");
         }
-    }
-
-    [SerializeField, Button("Move Elevator")]
-    private void MoveElevator()
-    {
-        if ((startingWaypointIndex == waypoints.Count - 1 && nextIndexModifier > 0) || 
-            (startingWaypointIndex == 0 && nextIndexModifier < 0)) {
-            nextIndexModifier *= -1;
-        }
-        int targetWaypointIndex = startingWaypointIndex + nextIndexModifier;
-        Transform targetWaypoint = waypoints[targetWaypointIndex];
-    
-        objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds).SetEase(Ease.InOutQuad);
-        
-        startingWaypoint = targetWaypoint;
-        SetStartingWaypointIndex();
     }
     
     void OnValidate()

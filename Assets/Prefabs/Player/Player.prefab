@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1904016434436971752}
   serializedVersion: 2
   m_LocalRotation: {x: 0.062137444, y: 1.8170587e-15, z: -1.1312599e-16, w: 0.9980676}
-  m_LocalPosition: {x: 0, y: 3, z: -8}
+  m_LocalPosition: {x: 0.11663914, y: 2.9999998, z: -7.534658}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -101,7 +101,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 0.00001
+  field of view: 1
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 9035282436424910295}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,9 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c458e1f588f88942a756ebd6a7f861f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookSensitivity: 1
-  InvertYAxis: 0
-  InvertXAxis: 0
+  IsActive: 0
 --- !u!1 &8208938610237536702
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +453,7 @@ Transform:
   m_GameObject: {fileID: 8208938610237536702}
   serializedVersion: 2
   m_LocalRotation: {x: 0.062137444, y: -1.2253604e-10, z: 7.628818e-12, w: 0.9980676}
-  m_LocalPosition: {x: 0, y: 3, z: -8}
+  m_LocalPosition: {x: 0.11663914, y: 2.9999998, z: -7.534658}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

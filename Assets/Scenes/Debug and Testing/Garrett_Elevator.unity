@@ -477,6 +477,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2555861292970549495, guid: 2a2e453ba175cbc4c9579c670db15878,
+        type: 3}
+      propertyPath: requiredCard
+      value: 
+      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+        type: 2}
+    - target: {fileID: 2555861292970549495, guid: 2a2e453ba175cbc4c9579c670db15878,
+        type: 3}
+      propertyPath: requiredInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+        type: 2}
     - target: {fileID: 3663829017008449524, guid: 2a2e453ba175cbc4c9579c670db15878,
         type: 3}
       propertyPath: m_Name
@@ -584,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueBubbleOffset: {x: -2.02, y: 4.17, z: 0}
-  cardToGiveOnWin: {fileID: 11400000, guid: 37d76c22448d8cb4ab619e7e711477ec, type: 2}
+  cardToGiveOnWin: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a, type: 2}
   npcConversation: {fileID: 4900000, guid: 78fae791d8e25a445ac2b2e5cfc5205f, type: 3}
 --- !u!136 &586339378
 CapsuleCollider:
@@ -1085,7 +1097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f180e348c2fa8b40a088b24fdc3c576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardToGive: {fileID: 11400000, guid: ad34e67878a583c4ea4c51dc30a77dbc, type: 2}
+  CardToGive: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
 --- !u!65 &1251134710
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1406,6 +1418,29 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1250298454}
+    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
+        type: 3}
+      propertyPath: AllCardDatas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
+        type: 3}
+      propertyPath: AllCardDatas.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+        type: 2}
+    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
+        type: 3}
+      propertyPath: AllCardDatas.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a,
+        type: 2}
+    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
+        type: 3}
+      propertyPath: AllCardDatas.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a35804eb59b84c4a8de3434821d7ddc,
+        type: 2}
     - target: {fileID: 8480042010274908795, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
         type: 3}
       propertyPath: m_LocalPosition.x

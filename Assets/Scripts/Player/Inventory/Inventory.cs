@@ -105,7 +105,7 @@ public class Inventory : MonoBehaviour
 
     public void RemoveCard(InventoryCardData card)
     {
-        if (!CardInInventory(card)) {
+        if (!HasCard(card)) {
             Debug.LogError("Cannot remove card. Card is not in inventory.");
             return;
         }
@@ -116,6 +116,19 @@ public class Inventory : MonoBehaviour
         cardToRemove.CurrentlyOwn = false;
 
         OnInventoryUpdated?.Invoke();
+    }
+
+    /// <summary>
+    /// Is the InventoryCardData in the Inventory?
+    /// </summary>
+    /// <returns></returns>
+    public bool HasCard(InventoryCardData cardData)
+    {
+        foreach (InventoryCard card in Cards)
+        {
+            if (card.Data == cardData) return true;
+        }
+        return false;
     }
 
     public void Clear()
@@ -243,18 +256,6 @@ public class Inventory : MonoBehaviour
             if (card.ID == cardID) return true;
         }
         
-        return false;
-    }
-
-    /// <summary>
-    /// Is the InventoryCardData in the Inventory?
-    /// </summary>
-    /// <returns></returns>
-    private bool CardInInventory(InventoryCardData cardData)
-    {
-        foreach (InventoryCard card in Cards) { 
-            if (card.Data == cardData) return true;
-        }
         return false;
     }
 

@@ -13,13 +13,17 @@ public class TimeLoopManager : MonoBehaviour
     // Read-only display, for the inspector
     [SerializeField, ReadOnly] 
     private string DEBUG_timeLeft;
+
+    // Public accessor, for other scripts
+    public bool LoopPaused  => _loopPaused;
+
     // Called when the loop time is fully elapsed. Awaits a callback.
     public System.Action<System.Action> LoopElapsed;
 
     // Misc Internal Variables ====================================================================
 
     private float _secondsLeft;
-    private bool _shouldCountDown;
+    private bool _loopPaused;
     private bool _loopDone;
 
     // Intializers ================================================================================
@@ -34,7 +38,7 @@ public class TimeLoopManager : MonoBehaviour
         _secondsLeft = loopMinutes * 60;
 
         _loopDone = false;
-        _shouldCountDown = true;
+        _loopPaused = false;
     }
 
     // Finalizers =================================================================================
@@ -63,7 +67,7 @@ public class TimeLoopManager : MonoBehaviour
 
     void Update()
     {
-        if (_loopDone || !_shouldCountDown) return;
+        if (_loopDone || _loopPaused) return;
 
         DEBUG_timeLeft = $"{Mathf.Floor(_secondsLeft/60f):00}:{Mathf.Floor(_secondsLeft%60):00}";
         _secondsLeft -= Time.deltaTime;
@@ -87,6 +91,6 @@ public class TimeLoopManager : MonoBehaviour
 
     public void SetLoopPaused(bool value)
     {
-        _shouldCountDown = value;
+        _loopPaused = value;
     }
 }

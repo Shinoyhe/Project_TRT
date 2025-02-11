@@ -82,6 +82,7 @@ public class DialogueManager : MonoBehaviour
         if (_onDelay) return false;
 
         _inConversation = true;
+        GameManager.TimeLoopManager.SetLoopPaused(true);
 
         // Create UI instance
         _dialogueUiManager = SetupUi(npcBubblePos, GameManager.Player.Transform.position);
@@ -307,6 +308,8 @@ public class DialogueManager : MonoBehaviour
         _inConversation = false;
         _currentStory = null;
         _dialogueUiManager = null;
+
+        GameManager.TimeLoopManager.SetLoopPaused(false);
 
         Destroy(_dialogueUiInstance);
         GameManager.PlayerInput.IsActive = enablePlayerInput;

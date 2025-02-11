@@ -2422,7 +2422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e87f6c9f76e9c48a2047fbef97aad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefix: <u>Time Until SEGFAULT</u><br><size=200%>
+  unpausedPrefix: <u>Time Until SEGFAULT</u><br><size=200%>
+  pausedPrefix: '<u>Time Until SEGFAULT</u><br><size=200%>[][] '
   suffix: </size>
 --- !u!1 &8999147276422481688
 GameObject:

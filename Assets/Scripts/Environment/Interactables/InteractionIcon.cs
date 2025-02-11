@@ -18,9 +18,10 @@ public class InteractionIcon : MonoBehaviour
     [Tooltip("Hide animation ease type"), SerializeField] private Ease hideEase = Ease.OutSine;
     [Tooltip("For when the interaction icon is moving to a different point while visible."), SerializeField] private float moveSpeed = 10f;
 
-    [ReadOnly] private Transform _targetTransfrom = null;
-    [ReadOnly] private Vector3 _targetPosition = Vector3.zero;
-    [ReadOnly] private Vector3 _position = Vector3.zero;
+    private Transform _targetTransfrom = null;
+    private Vector3 _targetPosition = Vector3.zero;
+    private Vector3 _position = Vector3.zero;
+    private bool _active = false;
 
 
     /// <summary>
@@ -28,6 +29,9 @@ public class InteractionIcon : MonoBehaviour
     /// </summary>
     public void Show(Vector3 worldPosition, float scale = 1)
     {
+        if (_active && worldPosition != _targetPosition) return;
+
+        _active = true;
         MoveTo(worldPosition);
         AnimateShow(scale);
         if (!IsVisible()) _position = _targetPosition;
@@ -39,6 +43,9 @@ public class InteractionIcon : MonoBehaviour
     /// </summary>
     public void Show(Transform transform, float scale = 1)
     {
+        if (_active && transform != _targetTransfrom) return;
+
+        _active = true;
         MoveTo(transform);
         AnimateShow(scale);
         if (!IsVisible()) _position = _targetPosition;
@@ -50,6 +57,9 @@ public class InteractionIcon : MonoBehaviour
     /// </summary>
     public void Hide()
     {
+        if (!_active) return;
+
+        _active = false;
         transform.DOKill();
         transform.DOScale(0, hideDuration).SetEase(hideEase);
     }
@@ -71,20 +81,26 @@ public class InteractionIcon : MonoBehaviour
     private void MoveTo(Transform transform)
     {
         _targetTransfrom = transform;
-        _targetPosition = transform.position;
+        _targetPosition = _targetTransfrom.position;
     }
 
 
     private void Animate()
     {
-        // Update position
-        _position = Vector3.Lerp(_position, _targetPosition, Time.deltaTime * moveSpeed);
-
         // Rotate the icon
         transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
 
         // Bob the icon up and down
         transform.position = _targetPosition + Vector3.up * Mathf.Sin(Time.time * bobSpeed) * bobIntensity;
+    }
+
+    private void UpdatePosition()
+    {
+        // Update from Target Transform
+        if (_targetTransfrom != null) _targetPosition = _targetTransfrom.position;
+
+        // Update position
+        _position = Vector3.Lerp(_position, _targetPosition, Time.deltaTime * moveSpeed);
     }
 
 
@@ -105,6 +121,7 @@ public class InteractionIcon : MonoBehaviour
         if (!IsVisible()) return;
 
         Animate();
+        UpdatePosition();
 
         // Update the target position if we have a target transform
         if (_targetTransfrom != null) _targetPosition = _targetTransfrom.position;

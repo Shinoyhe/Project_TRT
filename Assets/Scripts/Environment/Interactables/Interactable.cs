@@ -1,4 +1,5 @@
 using UnityEngine;
+using NaughtyAttributes;
 
 /// <summary>
 /// Abstract class for any world objects the player can interact with.
@@ -8,6 +9,13 @@ using UnityEngine;
 /// </summary>
 public abstract class Interactable : MonoBehaviour
 {
+    [BoxGroup("Interact Icon Position")]
+    public bool UseTransform = false;
+    [BoxGroup("Interact Icon Position")] [ShowIf("UseTransform")]
+    public Transform IconTransformPosition;
+    [BoxGroup("Interact Icon Position")] [HideIf("UseTransform")]
+    public Vector3 IconLocalPosition = Vector3.up;
+
     private void Start() 
     {
         Debug.Assert(GetComponent<Collider>() != null, "Interactable requires an attatched collider.");

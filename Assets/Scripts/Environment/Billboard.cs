@@ -48,7 +48,8 @@ public class Billboard : MonoBehaviour
     #region ======== [ PRIVATE METHOD ] ========
     void Start()
     {
-        if (Target == null) {
+        if (Target == null)
+        {
             Target = GameManager.Player.MovePivot;
         }
     }
@@ -56,7 +57,8 @@ public class Billboard : MonoBehaviour
 
     void Reset()
     {
-        if (Target == null) {
+        if (Target == null)
+        {
             Target = GameManager.Player.MovePivot;
         }
     }
@@ -66,14 +68,12 @@ public class Billboard : MonoBehaviour
     {
         if (Target == null) return;
 
-        switch (Mode) {
-            case BillboardMode.FaceTarget:
-                _targetRotation = UpdateFacingTarget();
-                break;
-            case BillboardMode.MatchRotation:
-                _targetRotation = UpdateMatchingRotation();
-                break;
-        }
+        _targetRotation = Mode switch
+        {
+            BillboardMode.FaceTarget => UpdateFacingTarget(),
+            BillboardMode.MatchRotation => UpdateMatchingRotation(),
+            _ => _targetRotation
+        };
 
         transform.rotation = Quaternion.Lerp(transform.rotation, _targetRotation, lerpSpeed * Time.deltaTime);
     }

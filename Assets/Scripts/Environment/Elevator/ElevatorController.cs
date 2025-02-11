@@ -7,7 +7,6 @@ using DG.Tweening;
 [ExecuteAlways]
 public class ElevatorController : MonoBehaviour
 {
-
     #region ========== [ PARAMETERS ] ==========
 
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
@@ -35,7 +34,7 @@ public class ElevatorController : MonoBehaviour
     [Button("Move Elevator")]
     public void MoveElevator()
     {
-        if (!GameManager.Inventory.HasCard(requiredCard)) return;
+        if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
 
         if ((startingWaypointIndex == waypoints.Count - 1 && nextIndexModifier > 0) ||
             (startingWaypointIndex == 0 && nextIndexModifier < 0))

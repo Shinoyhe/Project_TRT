@@ -54,7 +54,7 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// </summary>
     private void CheckHighlight() 
     {
-        // Remove destroyed _accessibleInteractables
+        // Remove destroyed from _accessibleInteractables
         _accessibleInteractables.RemoveAll(item => item == null);
 
         if (highlightedInteractable == null) 
@@ -67,9 +67,9 @@ public class PlayerInteractionHandler : MonoBehaviour {
             {
                 HighlightNearest();
             }
-            else if (_accessibleInteractables.Count == 1) 
+            else if (_accessibleInteractables.Count == 0) 
             {
-                return;
+                interactionIcon.Hide();
             }
         }
         else 

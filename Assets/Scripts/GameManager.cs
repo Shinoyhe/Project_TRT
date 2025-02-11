@@ -26,14 +26,10 @@ public class GameManager : Singleton<GameManager>
 
     public void FindPlayer()
     {
-        Debug.Log("FindPlayer called.");
-
         GameObject playerParent = GameObject.FindWithTag(playerTag).transform.root.gameObject;
-        Debug.Log($"PlayerParent{(playerParent==null?" not":"")} found");
 
         if (playerParent != null) {
             player = playerParent.GetComponentInChildren<Player>();
-            Debug.Log($"Player{(player==null?" not":"")} found");
         }
     }
 }

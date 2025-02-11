@@ -7,7 +7,7 @@ public class CardPickup : Interactable {
     [SerializeField] private InventoryCardData CardToGive;
 
     public override void Highlight() {
-        // ADD SHADER FOR HIGHLIGHT
+        Debug.Log("Highlight");
     }
 
     public override void Interaction() {

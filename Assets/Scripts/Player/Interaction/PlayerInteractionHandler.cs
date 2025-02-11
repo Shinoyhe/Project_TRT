@@ -7,6 +7,11 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// <summary>
     /// The interactable that will be interacted with when the player tries to interact
     /// </summary>
+    [SerializeField] private InteractionIcon interactionIcon;
+
+    /// <summary>
+    /// The interactable that will be interacted with when the player tries to interact
+    /// </summary>
     [SerializeField] private Interactable highlightedInteractable;
 
     /// <summary>
@@ -25,7 +30,8 @@ public class PlayerInteractionHandler : MonoBehaviour {
     {
         CheckHighlight();
 
-        if(GameManager.PlayerInput.GetPrimaryTriggerDown() || GameManager.PlayerInput.GetAffirmDown()){
+        if (GameManager.PlayerInput.GetPrimaryTriggerDown() || GameManager.PlayerInput.GetAffirmDown())
+        {
             Interact();
         }
     }
@@ -35,7 +41,8 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// </summary>
     public void Interact() 
     {
-        if (highlightedInteractable == null) {
+        if (highlightedInteractable == null) 
+        {
             return;
         }
         highlightedInteractable.GetComponent<Interactable>().Interaction();
@@ -46,18 +53,29 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// </summary>
     private void CheckHighlight() 
     {
-        if (highlightedInteractable == null) {
-            if (_accessibleInteractables.Count == 1) {
+        if (highlightedInteractable == null) 
+        {
+            if (_accessibleInteractables.Count == 1) 
+            {
                 HandlerHighlight(_accessibleInteractables.ElementAt(0));
-            } else if (_accessibleInteractables.Count > 1) {
+            } 
+            else if (_accessibleInteractables.Count > 1) 
+            {
                 HighlightNearest();
-            } else if (_accessibleInteractables.Count == 1) {
+            }
+            else if (_accessibleInteractables.Count == 1) 
+            {
                 return;
             }
-        } else {
-            if (_accessibleInteractables.Count > 1) {
+        }
+        else 
+        {
+            if (_accessibleInteractables.Count > 1) 
+            {
                 HighlightNearest();
-            } else if (_accessibleInteractables.Count == 0) {
+            } 
+            else if (_accessibleInteractables.Count == 0) 
+            {
                 Debug.LogWarning("WARNING: PlayerInteractionHandler: CheckHighlight: Highlighted " +
                                  "interactable found with empty accessible interactables list");
                 HandlerUnHighlight();
@@ -73,18 +91,21 @@ public class PlayerInteractionHandler : MonoBehaviour {
         // get the nearest interactable the player can interact with
         Interactable nearestInteractable = highlightedInteractable;
         float distanceToNearest = float.MaxValue;
-        foreach(Interactable curInteractable in _accessibleInteractables) {
+        foreach(Interactable curInteractable in _accessibleInteractables) 
+        {
             if (curInteractable == null) continue;
             float distanceToCurrent = Vector3.Distance(transform.position, 
                                                        curInteractable.transform.position);
                                                        
-            if (distanceToCurrent < distanceToNearest) {
+            if (distanceToCurrent < distanceToNearest) 
+            {
                 nearestInteractable = curInteractable;
                 distanceToNearest = distanceToCurrent;
             }
         }
 
-        if (nearestInteractable == highlightedInteractable) {
+        if (nearestInteractable == highlightedInteractable) 
+        {
             return;
         }
 
@@ -100,6 +121,7 @@ public class PlayerInteractionHandler : MonoBehaviour {
         HandlerUnHighlight();
         highlightedInteractable = newHighlight;
         highlightedInteractable.Highlight();
+        ShowInteractIcon(newHighlight);
     }
 
     /// <summary>
@@ -112,7 +134,20 @@ public class PlayerInteractionHandler : MonoBehaviour {
         }
 
         highlightedInteractable.UnHighlight();
+        interactionIcon.Hide();
         highlightedInteractable = null;
+    }
+
+    private void ShowInteractIcon(Interactable newHighlight)
+    {
+        if (newHighlight.UseTransform)
+        {
+            interactionIcon.Show(newHighlight.IconTransformPosition);
+        }
+        else
+        {
+            interactionIcon.Show(newHighlight.IconLocalPosition + newHighlight.transform.position);
+        }
     }
 
     /// <summary>

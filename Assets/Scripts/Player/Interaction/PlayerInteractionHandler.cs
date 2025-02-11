@@ -133,7 +133,8 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// </summary>
     private void HandlerUnHighlight() 
     {
-        if (highlightedInteractable == null) {
+        if (highlightedInteractable == null) 
+        {
             return;
         }
 
@@ -166,13 +167,15 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// <returns>Returns true if interactable successfully added, false if not</returns>
     private bool AddAccessibleInteractable(Interactable newInteractable) 
     {
-        if (newInteractable == null) {
+        if (newInteractable == null) 
+        {
             Debug.LogError("ERROR: PlayerInteractionHandler: AddAccessibleInteractable: Cannot " +
                            "add null item");
             return false;
         }
 
-        if (_accessibleInteractables.Contains(newInteractable)) {
+        if (_accessibleInteractables.Contains(newInteractable)) 
+        {
             Debug.LogWarning("WARNING: PlayerInteractionHandler: AddAccessibleInteractable: " +
                              "Tried to add duplicate interactable");
             return false;
@@ -189,7 +192,8 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// <returns>returns true if succesfully removed, and false if there was nothing to remove</returns>
     private bool RemoveAccesibleInteractable(Interactable markedInteractable) 
     {
-        if (markedInteractable == null) {
+        if (markedInteractable == null) 
+        {
             Debug.LogError("ERROR: PlayerInteractionHandler: RemoveAccesibleInteractable: Cannot remove null item");
             return false;
         }
@@ -204,8 +208,10 @@ public class PlayerInteractionHandler : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) 
     {
-        if (other) {
-            if (other.TryGetComponent<Interactable>(out var otherInteractable)) {
+        if (other) 
+        {
+            if (other.TryGetComponent<Interactable>(out var otherInteractable)) 
+            {
                 AddAccessibleInteractable(otherInteractable);
             }
         }
@@ -215,8 +221,10 @@ public class PlayerInteractionHandler : MonoBehaviour {
     {
         Interactable otherInteractable = other.GetComponent<Interactable>();
 
-        if ((otherInteractable != null) && _accessibleInteractables.Contains(otherInteractable)) {
-            if (otherInteractable == highlightedInteractable) {
+        if ((otherInteractable != null) && _accessibleInteractables.Contains(otherInteractable)) 
+        {
+            if (otherInteractable == highlightedInteractable) 
+            {
                 HandlerUnHighlight();
             }
             RemoveAccesibleInteractable(otherInteractable);

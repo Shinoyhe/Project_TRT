@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CardPickup : Interactable 
-{ 
+{
     [SerializeField] private InventoryCardData CardToGive;
 
     public override void Highlight() {

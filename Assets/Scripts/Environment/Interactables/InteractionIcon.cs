@@ -6,7 +6,6 @@ using DG.Tweening;
 
 public class InteractionIcon : MonoBehaviour
 {
-
     #region ======== [ PARAMETERS ] ========
 
     [InfoBox("General Parameters"), Tooltip("How fast the icon spins around."), SerializeField] private float rotationSpeed = 45;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class PlayerInteractionHandler : MonoBehaviour {
 
@@ -17,7 +18,7 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// <summary>
     /// List of interactables that the player is in range to interact with
     /// </summary>
-    private List<Interactable> _accessibleInteractables;
+    [ReadOnly] [SerializeField] private List<Interactable> _accessibleInteractables;
 
     void Start()
     {
@@ -53,6 +54,9 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// </summary>
     private void CheckHighlight() 
     {
+        // Remove destroyed _accessibleInteractables
+        _accessibleInteractables.RemoveAll(item => item == null);
+
         if (highlightedInteractable == null) 
         {
             if (_accessibleInteractables.Count == 1) 
@@ -140,6 +144,11 @@ public class PlayerInteractionHandler : MonoBehaviour {
 
     private void ShowInteractIcon(Interactable newHighlight)
     {
+        if (newHighlight == null)
+        {
+            interactionIcon.Hide();
+        }
+
         if (newHighlight.UseTransform)
         {
             interactionIcon.Show(newHighlight.IconTransformPosition);

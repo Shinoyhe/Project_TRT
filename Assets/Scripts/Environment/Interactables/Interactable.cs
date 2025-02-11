@@ -9,6 +9,8 @@ using NaughtyAttributes;
 /// </summary>
 public abstract class Interactable : MonoBehaviour
 {
+
+
     [BoxGroup("Interact Icon Position")]
     public bool UseTransform = false;
     [BoxGroup("Interact Icon Position")] [ShowIf("UseTransform")]

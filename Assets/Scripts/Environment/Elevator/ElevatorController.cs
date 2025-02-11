@@ -35,7 +35,7 @@ public class ElevatorController : MonoBehaviour
     [Button("Move Elevator")]
     public void MoveElevator()
     {
-        if (!GameManager.Inventory.HasCard(requiredCard)) return;
+        if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
 
         if ((startingWaypointIndex == waypoints.Count - 1 && nextIndexModifier > 0) ||
             (startingWaypointIndex == 0 && nextIndexModifier < 0))

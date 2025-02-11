@@ -88,6 +88,7 @@ public class InteractionIcon : MonoBehaviour
         _targetPosition = worldPosition;
     }
 
+
     private void MoveTo(Transform transform)
     {
         _targetTransfrom = transform;
@@ -103,6 +104,7 @@ public class InteractionIcon : MonoBehaviour
         // Bob the icon up and down
         transform.position = _targetPosition + Vector3.up * Mathf.Sin(Time.time * bobSpeed) * bobIntensity;
     }
+
 
     private void UpdatePosition()
     {

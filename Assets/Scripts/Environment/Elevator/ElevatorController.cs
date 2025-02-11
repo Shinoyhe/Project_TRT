@@ -7,7 +7,6 @@ using DG.Tweening;
 [ExecuteAlways]
 public class ElevatorController : MonoBehaviour
 {
-
     #region ========== [ PARAMETERS ] ==========
 
     [SerializeField] private List<Transform> waypoints = new List<Transform>();

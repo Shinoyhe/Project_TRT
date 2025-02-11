@@ -9,7 +9,7 @@ public class TimeLoopManager : MonoBehaviour
     [SerializeField, Tooltip("The amount of time, in minutes, it takes for the loop to end.")] 
     private float loopMinutes = 8;
     // Public accessor, for other scripts
-    public float SecondsLeft => _secondsLeft * 60;
+    public float SecondsLeft => _secondsLeft;
     // Read-only display, for the inspector
     [SerializeField, ReadOnly] 
     private string DEBUG_timeLeft;
@@ -71,9 +71,12 @@ public class TimeLoopManager : MonoBehaviour
         if (_secondsLeft <= 0) {
             _loopDone = true;
 
+            GameManager.PlayerInput.IsActive = false;
+            GameManager.UiInput.IsActive = false;
+
             // LoopElapsed is null with 0 subscribers, and non-null otherwise.
             if (LoopElapsed != null) {
-                LoopElapsed.Invoke(CallbackDone);    
+                LoopElapsed.Invoke(CallbackDone);
             } else {
                 CallbackDone();
             }            

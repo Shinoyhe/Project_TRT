@@ -95,9 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d535c4894ae9647a4e59cf79b2364b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueUiPrefab: {fileID: 8005697584356534663, guid: a43636c37c7551c4a9708853bd50a584,
+  uiParent: {fileID: 0}
+  dialogueUiPrefab: {fileID: 8005697584356534663, guid: a43636c37c7551c4a9708853bd50a584,
     type: 3}
-  BarterContainerPrefab: {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d,
+  barterContainerPrefab: {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d,
     type: 3}
 --- !u!114 &7739117665189127466
 MonoBehaviour:

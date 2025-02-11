@@ -9,11 +9,11 @@ using NaughtyAttributes;
 /// </summary>
 public abstract class Interactable : MonoBehaviour
 {
-    [Header("Interact Icon Position")]
+    [BoxGroup("Interact Icon Position")]
     public bool UseTransform = false;
-    [ShowIf("UseTransform")]
+    [BoxGroup("Interact Icon Position")] [ShowIf("UseTransform")]
     public Transform IconTransformPosition;
-    [HideIf("UseTransform")]
+    [BoxGroup("Interact Icon Position")] [HideIf("UseTransform")]
     public Vector3 IconLocalPosition = Vector3.up;
 
     private void Start() 

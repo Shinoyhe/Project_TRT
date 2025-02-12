@@ -8,11 +8,11 @@ public class CardUser : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField, Tooltip("The number of cards we draw each turn by default.\n\nDefault: 3")]
-    private int BaseDrawSize = 3;
+    private int baseDrawSize = 3;
 
     [Header("Card Piles")]
     [SerializeField, Tooltip("A list of PlayingCard we have in our deck. Populates our DrawPile.")]
-    private PlayingCard[] DebugStartingDeck;
+    private PlayingCard[] debugStartingDeck;
     // The draw pile as a read-only list.
     public ReadOnlyCollection<PlayingCard> DrawPileList { get { return _drawPile.AsReadOnly(); }}
     // The hand as a read-only list.
@@ -24,7 +24,11 @@ public class CardUser : MonoBehaviour
 
     // A public enum used as shorthand to identify the three places cards can be- the Draw Pile,
     // the Hand, and the Discard Pile.
-    public enum CardPile { DrawPile, Hand, DiscardPile }
+    public enum CardPile { 
+        DrawPile, 
+        Hand, 
+        DiscardPile 
+    }
 
     // Actions ================
 
@@ -59,7 +63,7 @@ public class CardUser : MonoBehaviour
         // Initialize _drawPile and _pileToList.
         // ================
 
-        foreach (PlayingCard data in DebugStartingDeck) {
+        foreach (PlayingCard data in debugStartingDeck) {
             // Clone cards from our startingDeck into our drawpile.
             PlayingCard dataInstance = Instantiate(data);
             dataInstance.name = data.name;
@@ -114,7 +118,7 @@ public class CardUser : MonoBehaviour
     /// </summary>
     public void DrawHand()
     {
-        Draw(BaseDrawSize);
+        Draw(baseDrawSize);
     }
 
     /// <summary>

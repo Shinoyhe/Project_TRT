@@ -60,7 +60,7 @@ jobs:
       - name: Upload WebGL Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
-          name: Build-WebGL
+          name: Project_TRT-WebGL
           path: ${{ vars.BUILD_PATH }}
           if-no-files-found: warn
 
@@ -101,7 +101,7 @@ jobs:
       - name: Upload Windows Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
-          name: Build-Windows
+          name: Project_TRT-Windows
           path: ${{ vars.BUILD_PATH }}
           if-no-files-found: warn
 
@@ -142,6 +142,6 @@ jobs:
       - name: Upload MacOS Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
-          name: Build-MacOS
+          name: Project_TRT-MacOS
           path: ${{ vars.BUILD_PATH }}
           if-no-files-found: warn

@@ -67,6 +67,8 @@ public class TimeLoopManager : MonoBehaviour
 
     void Update()
     {
+        // Adding a test comment.
+        
         if (_loopDone || _loopPaused) return;
 
         DEBUG_timeLeft = $"{Mathf.Floor(_secondsLeft/60f):00}:{Mathf.Floor(_secondsLeft%60):00}";

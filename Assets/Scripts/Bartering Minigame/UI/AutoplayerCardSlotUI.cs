@@ -13,6 +13,10 @@ public class AutoPlayerCardSlotUI : MonoBehaviour
     [SerializeField, Tooltip("The sprite on this slot when our state is set to null.")]
     private Sprite nullSprite;
 
+    // Misc Internal Variables ====================================================================
+
+    private static Color _nullColor = new(1,1,1,0.5f);
+
     // Initializers ===============================================================================
 
     private void Awake()
@@ -30,12 +34,12 @@ public class AutoPlayerCardSlotUI : MonoBehaviour
     {
         if (card == null) {
             mainImage.sprite = nullSprite;
-            mainImage.color = Color.white;
+            mainImage.color = _nullColor;
             mainText.text = "";
         } else {
-            mainImage.sprite = null;
-            mainImage.color = card.DEBUG_COLOR;
-            mainText.text = card.Id;
+            mainImage.sprite = card.MainSprite;
+            mainImage.color = Color.white;
+            // mainText.text = card.Id;
         }
     }
 }

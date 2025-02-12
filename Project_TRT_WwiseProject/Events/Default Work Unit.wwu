@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{786D3133-AA90-4087-8E2A-F719CCC92CFD}" SchemaVersion="123">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{786D3133-AA90-4087-8E2A-F719CCC92CFD}" PersistMode="Standalone">
+			<ChildrenList>
+				<Folder Name="MusicEvents" ID="{8FCB98BB-3986-44C6-980F-D12D17CB9504}" ShortID="178357386">
+					<ChildrenList>
+						<Event Name="MusicStateCalm" ID="{B711D0D4-20AB-4A39-B4E9-82305BA67D38}">
+							<ChildrenList>
+								<Action Name="" ID="{BC695A87-D62D-4A9D-B09D-CB38646EC5C4}" ShortID="443131382">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Calm" ID="{4A916F2C-FEA7-4172-9C63-FC5255A5BA9D}" WorkUnitID="{5295B7E6-B0B8-4F63-8A96-7D61276F57FA}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="MusicStateActive" ID="{E855E7B5-D595-4826-AD8A-374F605FCF53}">
+							<ChildrenList>
+								<Action Name="" ID="{E21F0306-3C5B-4160-B644-92886C167003}" ShortID="31338886">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Active" ID="{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}" WorkUnitID="{5295B7E6-B0B8-4F63-8A96-7D61276F57FA}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="StartEnvironmentMusic" ID="{95DED10A-BAFA-4517-9EB7-3E06DDBA7B76}">
+							<ChildrenList>
+								<Action Name="" ID="{270CD915-047E-4F18-8E92-8D19304417A5}" ShortID="728333106">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnviromentSequence" ID="{1FF7DC03-7415-4276-8283-4018BA65C84E}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="PauseEnvironmentMusic" ID="{E86A3296-7F22-496B-BD16-5FCCBC20504E}">
+							<ChildrenList>
+								<Action Name="" ID="{7E55EEC8-4847-492F-B366-9D7FA4A3DAB4}" ShortID="941718113">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="7"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnviromentSequence" ID="{1FF7DC03-7415-4276-8283-4018BA65C84E}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="StopEnvironmentMusic" ID="{EFEE06EC-4A3D-41B2-9883-2E17938F0EF1}">
+							<ChildrenList>
+								<Action Name="" ID="{6D4E7058-9235-479F-8C58-885CA5D477FB}" ShortID="1040242334">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnviromentSequence" ID="{1FF7DC03-7415-4276-8283-4018BA65C84E}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ResumeEnvironmentMusic" ID="{417CD789-3F05-4A40-8360-23E0159080AF}">
+							<ChildrenList>
+								<Action Name="" ID="{9F397117-AEBE-48AC-8634-C6D5AFD1C946}" ShortID="482653556">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="9"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="EnviromentSequence" ID="{1FF7DC03-7415-4276-8283-4018BA65C84E}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

@@ -17,6 +17,7 @@ public class ElevatorController : MonoBehaviour
     [BoxGroup("Setup"), SerializeField] private InventoryCardData requiredCard;
     [BoxGroup("Setup"), SerializeField] private Transform startingWaypoint;
     [BoxGroup("Setup"), SerializeField, Range(0f, 10f)] private float movementDurationSeconds;
+    [BoxGroup("Setup"), SerializeField] private GameObject door;
     #endregion
 
     #region ========== [ PRIVATE PROPERTIES ] ==========
@@ -39,7 +40,7 @@ public class ElevatorController : MonoBehaviour
         if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
         if (moving) { return; }
 
-        moving = true;
+        SetMoving(true);
 
         if ((startingWaypointIndex == waypoints.Count - 1 && nextIndexModifier > 0) ||
             (startingWaypointIndex == 0 && nextIndexModifier < 0))
@@ -50,7 +51,7 @@ public class ElevatorController : MonoBehaviour
         Transform targetWaypoint = waypoints[targetWaypointIndex];
 
         objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds)
-            .SetEase(Ease.InOutQuad).OnComplete(() => { moving = false; });
+            .SetEase(Ease.InOutQuad).OnComplete(() => { SetMoving(false); });
 
         startingWaypoint = targetWaypoint;
         SetStartingWaypointIndex();
@@ -62,7 +63,7 @@ public class ElevatorController : MonoBehaviour
         if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
         if (moving) return;
 
-        moving = true;
+        SetMoving(true);
         int targetIndex = GetWaypointIndex(targetWaypoint);
 
         if (startingWaypointIndex == targetIndex) return;
@@ -77,7 +78,7 @@ public class ElevatorController : MonoBehaviour
         // Moving from start to end: InOutQuad, duration is movementDurationSeconds
         if (startingWaypointIndex == currentWaypointIndex && NextWaypointIs(targetWaypoint)) {
             objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds)
-                .SetEase(Ease.InOutQuad).OnComplete(() => { moving = false; });
+                .SetEase(Ease.InOutQuad).OnComplete(() => { SetMoving(false); });
             startingWaypoint = targetWaypoint;
             SetStartingWaypointIndex();
             return;
@@ -89,7 +90,7 @@ public class ElevatorController : MonoBehaviour
             Transform nextWaypoint = waypoints[currentWaypointIndex + nextIndexModifier];
 
             objectRoot.transform.DOMove(nextWaypoint.position, movementDurationSeconds)
-                .SetEase(Ease.InQuad).OnComplete(() => { moving = false; MoveElevator(targetWaypoint); });
+                .SetEase(Ease.InQuad).OnComplete(() => { SetMoving(false); MoveElevator(targetWaypoint); });
             currentWaypointIndex += nextIndexModifier;
             return;
         }
@@ -100,7 +101,7 @@ public class ElevatorController : MonoBehaviour
             Transform nextWaypoint = waypoints[currentWaypointIndex + nextIndexModifier];
 
             objectRoot.transform.DOMove(nextWaypoint.position, movementDurationSeconds * .75f)
-                .SetEase(Ease.Linear).OnComplete(() => { moving = false; MoveElevator(targetWaypoint); });
+                .SetEase(Ease.Linear).OnComplete(() => { SetMoving(false); MoveElevator(targetWaypoint); });
             currentWaypointIndex += nextIndexModifier;
             return;
         }
@@ -109,7 +110,7 @@ public class ElevatorController : MonoBehaviour
         if (startingWaypointIndex != currentWaypointIndex && NextWaypointIs(targetWaypoint))
         {
             objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds)
-                .SetEase(Ease.OutQuad).OnComplete(() => { moving = false; });
+                .SetEase(Ease.OutQuad).OnComplete(() => { SetMoving(false); });
             startingWaypoint = targetWaypoint;
             SetStartingWaypointIndex();
             return;
@@ -208,6 +209,13 @@ public class ElevatorController : MonoBehaviour
         {
             SnapObjectToWaypoint();
         }
+    }
+
+    private void SetMoving(bool value)
+    {
+        moving = value;
+        if (moving) { door.SetActive(true); }
+        else { door.SetActive(false); }
     }
 
     void Start()

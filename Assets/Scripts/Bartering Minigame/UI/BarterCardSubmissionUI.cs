@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -8,27 +6,27 @@ public class BarterCardSubmissionUI : MonoBehaviour
     // Parameters and Publics =====================================================================
 
     [SerializeField, Tooltip("The BarterDirector in this scene.")]
-    private BarterDirector Director;
+    private BarterDirector director;
     [SerializeField, Tooltip("DEBUG- DISPLAY CURRENT STATE.")]
     private TMP_Text DEBUG_StateDisplay;
 
     [Header("Player Card Region")]
     [SerializeField, Tooltip("The UI prefab consisting of a single player card slot.")]
-    private GameObject PlayerCardSlotPrefab;
+    private GameObject playerCardSlotPrefab;
     [SerializeField, Tooltip("A RectTransform used as the area where we can spawn player card slots.")]
-    private RectTransform PlayerCardSlotZone;
+    private RectTransform playerCardSlotZone;
 
     [Header("Opp Card Region")]
     [SerializeField, Tooltip("The UI prefab consisting of a single opp card slot.")]
-    private GameObject OppCardSlotPrefab;
+    private GameObject oppCardSlotPrefab;
     [SerializeField, Tooltip("A RectTransform used as the area where we can spawn opp card slots.")]
-    private RectTransform OppCardSlotZone;
+    private RectTransform oppCardSlotZone;
     
     [Header("MatchSlots")]
     [SerializeField, Tooltip("The UI prefab consisting of a single match slot.")]
-    private GameObject MatchSlotPrefab;
+    private GameObject matchSlotPrefab;
     [SerializeField, Tooltip("A RectTransform used as the area where we can spawn MatchSlotUI.")]
-    private RectTransform MatchSlotZone;
+    private RectTransform matchSlotZone;
     
     // Misc Internal Variables ====================================================================
 
@@ -55,28 +53,25 @@ public class BarterCardSubmissionUI : MonoBehaviour
     private void Awake()
     {
         // TODO: Test all this at different resolutions.
-        _playerCardSlotBounds = new(PlayerCardSlotZone.offsetMin.x, PlayerCardSlotZone.offsetMax.x);
-        _oppCardSlotBounds = new(OppCardSlotZone.offsetMin.x, OppCardSlotZone.offsetMax.x);
-        _matchSlotBounds = new(MatchSlotZone.offsetMin.x, MatchSlotZone.offsetMax.x);
+        _playerCardSlotBounds = new(playerCardSlotZone.offsetMin.x, playerCardSlotZone.offsetMax.x);
+        _oppCardSlotBounds = new(oppCardSlotZone.offsetMin.x, oppCardSlotZone.offsetMax.x);
+        _matchSlotBounds = new(matchSlotZone.offsetMin.x, matchSlotZone.offsetMax.x);
 
         // Array inits ================
 
         // Initialize our slot arrays!
-        _playerCardSlots = new PlayerCardSlot[Director.CardsToPlay];
-        _oppCardSlots = new AutoPlayerCardSlotUI[Director.CardsToPlay];
-        _matchSlots = new MatchSlotUI[Director.CardsToPlay];
-    }
+        _playerCardSlots = new PlayerCardSlot[director.CardsToPlay];
+        _oppCardSlots = new AutoPlayerCardSlotUI[director.CardsToPlay];
+        _matchSlots = new MatchSlotUI[director.CardsToPlay];
 
-    private void Start()
-    {
         // Slot inits ================
 
         // Instantiate our objects in our arrays.
-        for (int i=0; i<Director.CardsToPlay; i++)
+        for (int i=0; i<director.CardsToPlay; i++)
         {
             // Initialize our Player CardSlots!
-            GameObject playerSlot = PlaceSlot(i, PlayerCardSlotPrefab, _playerCardSlotBounds, 
-                                              PlayerCardSlotZone);
+            GameObject playerSlot = PlaceSlot(i, playerCardSlotPrefab, _playerCardSlotBounds, 
+                                              playerCardSlotZone);
             _playerCardSlots[i] = playerSlot.GetComponent<PlayerCardSlot>();
 
             // Sub to PlayerCardSlot actions
@@ -84,21 +79,21 @@ public class BarterCardSubmissionUI : MonoBehaviour
             _playerCardSlots[i].OnSetCard += OnSlotSetCard;
 
             // Initialize our Opp CardSlots!
-            GameObject oppSlot = PlaceSlot(i, OppCardSlotPrefab, _oppCardSlotBounds, 
-                                           OppCardSlotZone);
+            GameObject oppSlot = PlaceSlot(i, oppCardSlotPrefab, _oppCardSlotBounds, 
+                                           oppCardSlotZone);
             _oppCardSlots[i] = oppSlot.GetComponent<AutoPlayerCardSlotUI>();
             // Initialize our MatchSlots!
-            GameObject matchSlot = PlaceSlot(i, MatchSlotPrefab, _matchSlotBounds, MatchSlotZone);
+            GameObject matchSlot = PlaceSlot(i, matchSlotPrefab, _matchSlotBounds, matchSlotZone);
             _matchSlots[i] = matchSlot.GetComponent<MatchSlotUI>();
         }
 
         // Action subs ================
 
-        Director.OnOppCardsSet -= UpdateOppCards;
-        Director.OnOppCardsSet += UpdateOppCards;
+        director.OnOppCardsSet -= UpdateOppCards;
+        director.OnOppCardsSet += UpdateOppCards;
 
-        Director.OnMatchArraySet -= UpdateMatchIcons;
-        Director.OnMatchArraySet += UpdateMatchIcons;
+        director.OnMatchArraySet -= UpdateMatchIcons;
+        director.OnMatchArraySet += UpdateMatchIcons;
 
         // Locals =====================
 
@@ -106,7 +101,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
         GameObject PlaceSlot(int i, GameObject prefab, Vector2 xBounds, Transform parent)
         {
             // For later, center our indices in the range.
-            float normalizedI = (i + 1) / (float)(Director.CardsToPlay + 1);
+            float normalizedI = (i + 1) / (float)(director.CardsToPlay + 1);
 
             GameObject slotObject = Instantiate(prefab, parent);
             float x = Mathf.Lerp(xBounds.x, xBounds.y, normalizedI);
@@ -121,7 +116,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
     {
         // TODO: Replace this with an action-based implementation, that only switches the string
         // when we enter a new state.
-        DEBUG_StateDisplay.text = "Current State:\n" + Director.GetCurrentStateName();
+        DEBUG_StateDisplay.text = "Current State:\n" + director.GetCurrentStateName();
     }
 
     // Public accessors ===========================================================================
@@ -147,13 +142,13 @@ public class BarterCardSubmissionUI : MonoBehaviour
         for (int i=0; i<_playerCardSlots.Length; i++) {
             if (_playerCardSlots[i] == slot) {
                 PlayingCard playingCard = (card != null) ? card.PlayingCard : null;
-                Director.SetPlayerCard(playingCard, i);
+                director.SetPlayerCard(playingCard, i);
                 return;
             }
         }
     }
 
-    private void UpdateOppCards(PlayingCard[] results)
+    private void UpdateOppCards(PlayingCard[] oppCards)
     {
         // Update the displayed opponent cards. Called via an action from the BarterDirector.
         //
@@ -161,8 +156,10 @@ public class BarterCardSubmissionUI : MonoBehaviour
         //       the UI changes to match.
         // ================
 
+        Debug.Log("UpdateOppCards called");
+
         // Case 1, null array- set all slots to the null sprite.
-        if (results == null) {
+        if (oppCards == null) {
             foreach (AutoPlayerCardSlotUI slot in _oppCardSlots) {
                 slot.DisplayCard(null);
             }
@@ -170,16 +167,16 @@ public class BarterCardSubmissionUI : MonoBehaviour
         }
 
         // Case 2, nonnull array but wrong size- raise an error.
-        if (results.Length != _matchSlots.Length) {
+        if (oppCards.Length != _matchSlots.Length) {
             Debug.LogError("BarterCardSubmissionUI Error: UpdateCards failed. results array "
-                        + $"length ({results.Length}) and slots array length "
+                        + $"length ({oppCards.Length}) and slots array length "
                         + $"({_oppCardSlots.Length}) do not match.");
             return;
         }
 
         // Case 3, nonnull array and right size- set sprites.
-        for (int i=0; i<results.Length; i++) {
-            _oppCardSlots[i].DisplayCard(results[i]);
+        for (int i=0; i<oppCards.Length; i++) {
+            _oppCardSlots[i].DisplayCard(oppCards[i]);
         }
     }
 

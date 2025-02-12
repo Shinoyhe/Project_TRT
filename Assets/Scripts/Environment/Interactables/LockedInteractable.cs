@@ -6,11 +6,25 @@ using UnityEngine.Events;
 public class LockedInteractable : Interactable
 {
     public InventoryCardData RequiredCard;
+    public bool Locked = true;
     [SerializeField] private UnityEvent callbackFunction;
 
     public override void Interaction()
     {
-        throw new System.NotImplementedException();
+        if (GameManager.Inventory.HasCard(RequiredCard))
+        {
+            Locked = false;
+            
+            if (RequiredCard.Type == GameEnums.CardTypes.ITEM)
+            {
+                GameManager.Inventory.RemoveCard(RequiredCard);
+            }
+        }
+
+        if (!Locked)
+        {
+            callbackFunction.Invoke();
+        }
     }
 
     public override void Highlight()

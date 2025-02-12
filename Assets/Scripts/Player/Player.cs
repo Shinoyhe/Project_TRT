@@ -23,9 +23,9 @@ public class Player : MonoBehaviour
     
     private void Awake()
     {
-        if (!GameManager.Player){
-            GameManager.Instance.player = this;
-            Debug.Log(GameManager.Instance.player);
-        }
+        // if (!GameManager.Player){
+        //     GameManager.Instance.player = this;
+        //     Debug.Log(GameManager.Instance.player);
+        // }
     }
 }

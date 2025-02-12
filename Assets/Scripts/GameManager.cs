@@ -1,5 +1,6 @@
 using UnityEngine;
 using NaughtyAttributes;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -31,5 +32,10 @@ public class GameManager : Singleton<GameManager>
         if (playerParent != null) {
             player = playerParent.GetComponentInChildren<Player>();
         }
+    }
+    
+    private void Start() 
+    {
+        SceneManager.sceneLoaded += (_,_) => FindPlayer();
     }
 }

@@ -171,11 +171,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 158421345764971396, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: _inventory
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 278437146184916424, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -235,16 +230,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddCard
-      objectReference: {fileID: 0}
-    - target: {fileID: 7895029819783036092, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: CreditsCanvas
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7895029819783036092, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: OptionsCanvas
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9106350191481724383, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
@@ -587,7 +572,7 @@ MonoBehaviour:
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 3, z: 0}
   dialogueBubbleOffset: {x: -2.02, y: 4.17, z: 0}
-  cardToGiveOnWin: {fileID: 11400000, guid: 37d76c22448d8cb4ab619e7e711477ec, type: 2}
+  cardToGiveOnWin: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
   npcConversation: {fileID: 4900000, guid: 78fae791d8e25a445ac2b2e5cfc5205f, type: 3}
 --- !u!136 &586339378
 CapsuleCollider:
@@ -1131,7 +1116,7 @@ MonoBehaviour:
   UseTransform: 0
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 1, z: 0}
-  CardToGive: {fileID: 11400000, guid: ad34e67878a583c4ea4c51dc30a77dbc, type: 2}
+  CardToGive: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
 --- !u!65 &1251134710
 BoxCollider:
   m_ObjectHideFlags: 0

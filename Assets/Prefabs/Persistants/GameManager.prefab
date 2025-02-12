@@ -95,11 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d535c4894ae9647a4e59cf79b2364b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiParent: {fileID: 0}
+  masterCanvas: {fileID: 0}
   dialogueUiPrefab: {fileID: 8005697584356534663, guid: a43636c37c7551c4a9708853bd50a584,
     type: 3}
-  barterContainerPrefab: {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d,
-    type: 3}
+  barterContainerPrefab:
+  - {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d, type: 3}
+  - {fileID: 5336207575644925963, guid: a4f8e34929f7be748a6525a5d9a1dd41, type: 3}
+  - {fileID: 5336207575644925963, guid: de8e196b792fd774aa7629a946e9142b, type: 3}
 --- !u!114 &7739117665189127466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51801f099b85cc478c82a4b31b4b623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllCardDatas: []
+  AllCardDatas:
+  - {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
+  - {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a, type: 2}
+  - {fileID: 11400000, guid: 5a35804eb59b84c4a8de3434821d7ddc, type: 2}
   AllCards: []
   StartingCards: []
   Cards: []
@@ -128,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8929dd9bd8d8efe49b07b167d7eb6205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loopMinutes: 1
+  loopMinutes: 3
   DEBUG_timeLeft: 
 --- !u!1 &8203694426375556501
 GameObject:

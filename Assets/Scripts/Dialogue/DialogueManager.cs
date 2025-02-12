@@ -2,6 +2,7 @@ using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Processes Ink file and controls conversation flow.
@@ -16,7 +17,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField, Tooltip("The prefab for dialogue UI.")]
     private GameObject dialogueUiPrefab;
     [SerializeField, Tooltip("The prefab for the bartering minigame.")]
-    private GameObject barterContainerPrefab;
+    private List<GameObject> barterContainerPrefab;
+    private int _barterIndex = 0;
 
     public struct ProcessedTags {
 
@@ -47,7 +49,16 @@ public class DialogueManager : MonoBehaviour
         _onDelay = false;
 
         if (masterCanvas == null) {
-            Debug.LogError("DialogueManager Error: masterCanvas was null.");
+            HelpMe();
+            Debug.LogWarning("DialogueManager Error: masterCanvas was null.");
+        }
+        SceneManager.sceneLoaded += (_,_) => HelpMe();
+    }
+    
+    private void HelpMe(){
+        GameObject temp = GameObject.FindWithTag("MasterCanvas");
+        if(temp){
+            masterCanvas = temp.GetComponent<Canvas>();
         }
     }
 
@@ -250,6 +261,12 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "barter":
                     foundTags.IsBarterTrigger = true;
+                    if (value != ""){
+                        _barterIndex = int.Parse(value);
+                    }
+                    else {
+                        _barterIndex = 0;
+                    }
                     break;
             }
         }
@@ -263,7 +280,7 @@ public class DialogueManager : MonoBehaviour
     void StartBarter()
     {
         Debug.Log("Barter Starting!");
-        _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity, 
+        _barterInstance = Instantiate(barterContainerPrefab[_barterIndex], Vector3.zero, Quaternion.identity, 
                                       masterCanvas.transform);
         BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
         barterDirectorOfInstance.OnWin += WinBarter;

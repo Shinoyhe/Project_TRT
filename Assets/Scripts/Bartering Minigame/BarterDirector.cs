@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 public class BarterDirector : MonoBehaviour
@@ -51,6 +52,7 @@ public class BarterDirector : MonoBehaviour
     private bool[] _matchArray = null;
     // The BarterStateMachine that manages our turns!
     private BarterStateMachine _machine = null;
+    private float startTime = 0;
 
     // Initializers ===============================================================================
 
@@ -65,6 +67,8 @@ public class BarterDirector : MonoBehaviour
         _machine = new(this, playerCardUser, oppCardUser, oppDuration, computeDuration);
         _machine.SetDebug(debugMode);
         _machine.StartMachine();
+        
+        startTime = Time.time;
     }
 
     // Update methods =============================================================================
@@ -203,9 +207,20 @@ public class BarterDirector : MonoBehaviour
 
     public void TriggerWin() {
         OnWin?.Invoke();
+        AddLogEntry("Win");
     }
 
     public void TriggerLose() {
         OnLose?.Invoke();
+        AddLogEntry("Lose");
+    }
+    
+    private void AddLogEntry(string outcome){
+        #if !UNITY_WEBGL && !UNITY_EDITOR
+        float timeSpent = Time.time - startTime;
+        string paddedid = BarterResponses.id.PadRight(10).Substring(0, 10);
+        string message = $"Barter Type: {paddedid} | Time Spent: {timeSpent} | Outcome: {outcome}\n";
+        File.AppendAllText(Application.dataPath+"/Log.txt", message);
+        #endif
     }
 }

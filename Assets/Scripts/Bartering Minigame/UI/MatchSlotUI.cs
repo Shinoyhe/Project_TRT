@@ -16,13 +16,14 @@ public class MatchSlotUI : MonoBehaviour
 
     // Misc Internal Variables ====================================================================
 
-    private Image icon;
+    private Image _icon;
+    private static Color _nullColor = new(1,1,1,0.5f);
 
     // Initializers ===============================================================================
 
     private void Awake()
     {
-        icon = GetComponent<Image>();
+        _icon = GetComponent<Image>();
     }
 
     // Public manipulators ========================================================================
@@ -35,10 +36,17 @@ public class MatchSlotUI : MonoBehaviour
     {
         // Add fancy animations here!
 
-        icon.sprite = type switch {
-            MatchType.Right => rightSprite,
-            MatchType.Wrong => wrongSprite,
-            _ => emptySprite
+        switch (type) {
+            case MatchType.Right:
+                _icon.sprite = rightSprite;
+                break;
+            case MatchType.Wrong:
+                _icon.sprite = wrongSprite;
+                break;
+            default:
+                _icon.sprite = emptySprite;
+                _icon.color = _nullColor;
+                break;
         };
     }
 }

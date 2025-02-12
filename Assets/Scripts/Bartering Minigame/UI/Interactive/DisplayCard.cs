@@ -39,6 +39,7 @@ public class DisplayCard : MonoBehaviour
     // Parameters ================    
     private float _dragAlpha = 1;
     private Vector3 _baseLocalScale;
+    private static Color _nullColor = new(1,1,1,0.5f);
 
     // State ================
     // Whether or not the card can be interacted with right now.
@@ -80,13 +81,13 @@ public class DisplayCard : MonoBehaviour
         // Read from the PlayingCard field and populate the display objects.
 
         if (PlayingCard) {
-            mainImage.sprite = null;
-            mainImage.color = PlayingCard.DEBUG_COLOR;
+            mainImage.sprite = PlayingCard.MainSprite;
+            mainImage.color = Color.white;
 
-            mainText.text = PlayingCard.Id;
+            // mainText.text = PlayingCard.Id;
         } else {
             mainImage.sprite = null;
-            mainImage.color = Color.white;
+            mainImage.color = _nullColor;
 
             mainText.text = "";
         }

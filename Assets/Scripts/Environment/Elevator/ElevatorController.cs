@@ -23,6 +23,8 @@ public class ElevatorController : MonoBehaviour
 
     private int startingWaypointIndex = -1;
     private int nextIndexModifier = 1;
+    private int currentWaypointIndex = 0;
+    private bool moving = false;
 
     #endregion
 
@@ -35,6 +37,9 @@ public class ElevatorController : MonoBehaviour
     public void MoveElevator()
     {
         if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
+        if (moving) { return; }
+
+        moving = true;
 
         if ((startingWaypointIndex == waypoints.Count - 1 && nextIndexModifier > 0) ||
             (startingWaypointIndex == 0 && nextIndexModifier < 0))
@@ -44,10 +49,71 @@ public class ElevatorController : MonoBehaviour
         int targetWaypointIndex = startingWaypointIndex + nextIndexModifier;
         Transform targetWaypoint = waypoints[targetWaypointIndex];
 
-        objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds).SetEase(Ease.InOutQuad);
+        objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds)
+            .SetEase(Ease.InOutQuad).OnComplete(() => { moving = false; });
 
         startingWaypoint = targetWaypoint;
         SetStartingWaypointIndex();
+    }
+
+
+    public void MoveElevator(Transform targetWaypoint)
+    {
+        if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
+        if (moving) return;
+
+        moving = true;
+        int targetIndex = GetWaypointIndex(targetWaypoint);
+
+        if (startingWaypointIndex == targetIndex) return;
+
+        // Set nextIndexModifier so that we are moving towards the target
+        if ((startingWaypointIndex > targetIndex && nextIndexModifier > 0) ||
+            (startingWaypointIndex < targetIndex && nextIndexModifier < 0))
+        {
+            nextIndexModifier *= -1;
+        }
+
+        // Moving from start to end: InOutQuad, duration is movementDurationSeconds
+        if (startingWaypointIndex == currentWaypointIndex && NextWaypointIs(targetWaypoint)) {
+            objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds)
+                .SetEase(Ease.InOutQuad).OnComplete(() => { moving = false; });
+            startingWaypoint = targetWaypoint;
+            SetStartingWaypointIndex();
+            return;
+        }
+
+        // Moving from start to in-between: InQuad, duration is movementDurationSeconds
+        if (startingWaypointIndex == currentWaypointIndex && !NextWaypointIs(targetWaypoint))
+        {
+            Transform nextWaypoint = waypoints[currentWaypointIndex + nextIndexModifier];
+
+            objectRoot.transform.DOMove(nextWaypoint.position, movementDurationSeconds)
+                .SetEase(Ease.InQuad).OnComplete(() => { moving = false; MoveElevator(targetWaypoint); });
+            currentWaypointIndex += nextIndexModifier;
+            return;
+        }
+
+        // Moving from in-between to in-between: no ease, duration is a bit shorter
+        if (startingWaypointIndex != currentWaypointIndex && !NextWaypointIs(targetWaypoint))
+        {
+            Transform nextWaypoint = waypoints[currentWaypointIndex + nextIndexModifier];
+
+            objectRoot.transform.DOMove(nextWaypoint.position, movementDurationSeconds * .75f)
+                .SetEase(Ease.Linear).OnComplete(() => { moving = false; MoveElevator(targetWaypoint); });
+            currentWaypointIndex += nextIndexModifier;
+            return;
+        }
+
+        // Moving from in-between to end: OutQuad, duration is movementDurationSeconds
+        if (startingWaypointIndex != currentWaypointIndex && NextWaypointIs(targetWaypoint))
+        {
+            objectRoot.transform.DOMove(targetWaypoint.position, movementDurationSeconds)
+                .SetEase(Ease.OutQuad).OnComplete(() => { moving = false; });
+            startingWaypoint = targetWaypoint;
+            SetStartingWaypointIndex();
+            return;
+        }
     }
 
     /// <summary>
@@ -95,22 +161,45 @@ public class ElevatorController : MonoBehaviour
 
     #region ========== [ PRIVATE METHODS ] ==========
 
+    private int GetWaypointIndex(Transform targetWaypoint)
+    {
+        int returnIndex = -1;
+
+        for (int i = 0; i < waypoints.Count; i++)
+        {
+            if (waypoints[i] == targetWaypoint)
+            {
+                returnIndex = i;
+                break;
+            }
+        }
+        if (returnIndex == -1)
+        {
+            Debug.LogError("Elevator: Could not get Waypoint Index, waypoint is not in Waypoints list.");
+        }
+
+        return returnIndex;
+    }
+
+    private bool NextWaypointIs(Transform waypoint)
+    {
+        int tempWaypointIndex = currentWaypointIndex + nextIndexModifier;
+        if ((tempWaypointIndex >= waypoints.Count) ||
+            (tempWaypointIndex < 0))
+        {
+            nextIndexModifier *= -1;
+            tempWaypointIndex = currentWaypointIndex + nextIndexModifier;
+        }
+
+        return waypoints[tempWaypointIndex] == waypoint;
+    }
+
     private void SetStartingWaypointIndex()
     {
         if (!startingWaypoint) Debug.LogError("Elevator: Starting Waypoint not Assigned");
 
-        for (int i = 0; i < waypoints.Count; i++)
-        {
-            if (waypoints[i] == startingWaypoint)
-            {
-                startingWaypointIndex = i;
-                break;
-            }
-        }
-        if (startingWaypointIndex == -1)
-        {
-            Debug.LogError("Elevator: Could not get Starting Waypoint Index, waypoint is not in Waypoints list.");
-        }
+        startingWaypointIndex = GetWaypointIndex(startingWaypoint);
+        currentWaypointIndex = startingWaypointIndex;
     }
     
     void OnValidate()

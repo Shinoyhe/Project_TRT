@@ -65,10 +65,11 @@ public class ElevatorController : MonoBehaviour
         if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
         if (_moving) return;
 
-        SetMoving(true);
         int targetIndex = GetWaypointIndex(targetWaypoint);
 
         if (_startingWaypointIndex == targetIndex) return;
+
+        SetMoving(true);
 
         // Set nextIndexModifier so that we are moving towards the target
         if ((_startingWaypointIndex > targetIndex && _nextIndexModifier > 0) ||

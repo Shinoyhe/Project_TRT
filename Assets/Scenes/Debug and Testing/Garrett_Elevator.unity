@@ -525,6 +525,12 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -1.04
       objectReference: {fileID: 0}
+    - target: {fileID: 6852952478080575646, guid: 2a2e453ba175cbc4c9579c670db15878,
+        type: 3}
+      propertyPath: RequiredCard
+      value: 
+      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+        type: 2}
     - target: {fileID: 8518807652300261211, guid: 2a2e453ba175cbc4c9579c670db15878,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -777,7 +783,7 @@ GameObject:
   - component: {fileID: 765084529}
   - component: {fileID: 765084528}
   - component: {fileID: 765084527}
-  - component: {fileID: 765084526}
+  - component: {fileID: 765084531}
   m_Layer: 0
   m_Name: Call Button 3
   m_TagString: Untagged
@@ -801,23 +807,6 @@ Transform:
   - {fileID: 666786831}
   m_Father: {fileID: 2044122392}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &765084526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 765084524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dafa096c8eb09984b98f0209a7376943, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseTransform: 0
-  IconTransformPosition: {fileID: 0}
-  IconLocalPosition: {x: 0, y: 1, z: 0}
-  controller: {fileID: 806480348}
-  waypoint: {fileID: 855052018}
 --- !u!65 &765084527
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -910,6 +899,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765084524}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &765084531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765084524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770fbfc5e7b1a644cb07670ed3f05dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseTransform: 0
+  IconTransformPosition: {fileID: 0}
+  IconLocalPosition: {x: 0, y: 1, z: 0}
+  RequiredCard: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
+  Locked: 1
+  callbackFunction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 806480348}
+        m_TargetAssemblyTypeName: ElevatorController, Assembly-CSharp
+        m_MethodName: MoveElevator
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 855052018}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &806480348 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2555861292970549495, guid: 2a2e453ba175cbc4c9579c670db15878,
@@ -1599,7 +1620,7 @@ GameObject:
   - component: {fileID: 1749603507}
   - component: {fileID: 1749603506}
   - component: {fileID: 1749603505}
-  - component: {fileID: 1749603504}
+  - component: {fileID: 1749603509}
   m_Layer: 0
   m_Name: Call Button 2
   m_TagString: Untagged
@@ -1623,23 +1644,6 @@ Transform:
   - {fileID: 657282683}
   m_Father: {fileID: 2044122392}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1749603504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749603502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dafa096c8eb09984b98f0209a7376943, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseTransform: 0
-  IconTransformPosition: {fileID: 0}
-  IconLocalPosition: {x: 0, y: 1, z: 0}
-  controller: {fileID: 806480348}
-  waypoint: {fileID: 631056116}
 --- !u!65 &1749603505
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1732,6 +1736,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1749603502}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1749603509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749603502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770fbfc5e7b1a644cb07670ed3f05dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseTransform: 0
+  IconTransformPosition: {fileID: 0}
+  IconLocalPosition: {x: 0, y: 1, z: 0}
+  RequiredCard: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
+  Locked: 1
+  callbackFunction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 806480348}
+        m_TargetAssemblyTypeName: ElevatorController, Assembly-CSharp
+        m_MethodName: MoveElevator
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 631056116}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &2019132104
 PrefabInstance:
   m_ObjectHideFlags: 0

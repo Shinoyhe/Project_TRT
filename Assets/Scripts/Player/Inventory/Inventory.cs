@@ -124,9 +124,14 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     public bool HasCard(InventoryCardData cardData)
     {
+        if (cardData == null) {
+            Debug.LogError("Inventory: HasCard: null reference exception");
+            return false;
+        }
+
         foreach (InventoryCard card in Cards)
         {
-            if (card.Data == cardData) return true;
+            if (card.Data.ID == cardData.ID) return true;
         }
         return false;
     }

@@ -662,8 +662,9 @@ MonoBehaviour:
   UseTransform: 0
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 1, z: 0}
-  RequiredCard: {fileID: 0}
-  Locked: 1
+  RequiredCard: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
+  removeIfItem: 0
+  locked: 1
   callbackFunction:
     m_PersistentCalls:
       m_Calls:
@@ -952,7 +953,7 @@ MonoBehaviour:
   - {fileID: 3630262091862132011}
   - {fileID: 5032522665522065334}
   objectRoot: {fileID: 6821942880589385831}
-  requiredCard: {fileID: 0}
+  requiredCard: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
   startingWaypoint: {fileID: 3630262091862132011}
   movementDurationSeconds: 3.28
   door: {fileID: 372068390514332966}

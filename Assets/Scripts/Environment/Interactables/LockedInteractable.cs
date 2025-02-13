@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class LockedInteractable : Interactable
 {
     public InventoryCardData RequiredCard;
-    public bool Locked = true;
+    [SerializeField] private bool removeIfItem = false;
+    [SerializeField] private bool locked = true;
     [SerializeField] private UnityEvent callbackFunction;
 
     public override void Interaction()
     {
         if (GameManager.Inventory.HasCard(RequiredCard))
         {
-            Locked = false;
+            locked = false;
             
-            if (RequiredCard.Type == GameEnums.CardTypes.ITEM)
+            if (RequiredCard.Type == GameEnums.CardTypes.ITEM && removeIfItem)
             {
                 GameManager.Inventory.RemoveCard(RequiredCard);
             }
         }
 
-        if (!Locked)
+        if (!locked)
         {
             callbackFunction.Invoke();
         }

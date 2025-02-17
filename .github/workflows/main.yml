@@ -1,0 +1,141 @@
+name: Unity Build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - build
+    paths:
+      - "Assets/**/*"
+      - "Packages/**/*"
+      - "ProjectSettings/**/*"
+      - .github/workflows/main.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true # cancel if a new push is made
+
+permissions:
+  actions: read
+  pull-requests: write
+  checks: write
+  id-token: write
+  contents: write
+
+jobs:
+  buildWebGL:
+    name: Build For WebGL
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clean up Docker to free up space
+        run: docker system prune -af
+
+      # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          buildName: Project_TRT
+
+      # Output
+      - name: Upload WebGL Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: Project_TRT-WebGL
+          path: ${{ vars.BUILD_PATH }}
+          if-no-files-found: warn
+
+  buildWindows:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clean up Docker to free up space
+        run: docker system prune -af
+
+      # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneWindows64
+          buildName: Project_TRT
+
+      # Output
+      - name: Upload Windows Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: Project_TRT-Windows
+          path: ${{ vars.BUILD_PATH }}
+          if-no-files-found: warn
+
+  buildMacOS:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clean up Docker to free up space
+        run: docker system prune -af
+
+      # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneOSX
+          buildName: Project_TRT
+
+      # Output
+      - name: Upload MacOS Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: Project_TRT-MacOS
+          path: ${{ vars.BUILD_PATH }}
+          if-no-files-found: warn

@@ -95,4 +95,8 @@ public class TimeLoopManager : MonoBehaviour
     {
         _loopPaused = value;
     }
+    
+    public void ResetLoop(){
+        _secondsLeft = 0;
+    }
 }

@@ -7,9 +7,8 @@ public class PlayingCard : ScriptableObject
 
     [Tooltip("An ID used for debug purposes.")]
     public string Id;
-    [Tooltip("An debug color that is applied to a DisplayCard with this PlayingCard as data."
-           + "TODO: Add non-color ways of distinguishing PlayingCards, for accessibility.")]
-    public Color DEBUG_COLOR = Color.white;
+    [Tooltip("The sprite applied to a DisplayCard with this PlayingCard as data.")]
+    public Sprite MainSprite;
 
     // Public methods =============================================================================
 

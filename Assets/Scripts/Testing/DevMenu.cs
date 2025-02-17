@@ -29,12 +29,17 @@ public class DevMenu : Singleton<DevMenu> {
         Time.timeScale = _devOn ? 0 : _initalTimescale;
     }
     
-    void CloseDevMenu(Scene s, LoadSceneMode lsm)
+    void CloseDevMenu()
     {
         _devOn = false;
         
         devMenu.SetActive(_devOn);
         Time.timeScale = 1;
+    }
+    
+    void CloseDevMenu(Scene s, LoadSceneMode lsm)
+    {
+        CloseDevMenu();
     }
     
     private void OnEnable()
@@ -45,5 +50,19 @@ public class DevMenu : Singleton<DevMenu> {
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= CloseDevMenu;
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    
+    public void ResetLoop(){
+        CloseDevMenu();
+        GameManager.TimeLoopManager.ResetLoop();
+    }
+    
+    public void PauseLoop(){
+        GameManager.TimeLoopManager.SetLoopPaused(!GameManager.TimeLoopManager.LoopPaused);
     }
 }

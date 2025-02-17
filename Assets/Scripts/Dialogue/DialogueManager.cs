@@ -6,13 +6,17 @@ using UnityEngine;
 /// <summary>
 /// Processes Ink file and controls conversation flow.
 /// </summary>
-public class DialogueManager : MonoBehaviour {
-
+public class DialogueManager : MonoBehaviour 
+{
     // Parameters =================================================================================
 
     [Header("Dependencies")]
-    public GameObject DialogueUiPrefab;
-    public GameObject BarterContainerPrefab;
+    [SerializeField, Tooltip("The Canvas we spawn UI prefabs under.")]
+    private Canvas masterCanvas;
+    [SerializeField, Tooltip("The prefab for dialogue UI.")]
+    private GameObject dialogueUiPrefab;
+    [SerializeField, Tooltip("The prefab for the bartering minigame.")]
+    private GameObject barterContainerPrefab;
 
     public struct ProcessedTags {
 
@@ -32,17 +36,23 @@ public class DialogueManager : MonoBehaviour {
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
-    private InventoryCard _prizeCard;
+    private InventoryCardData _prizeCard;
     private GameObject _barterInstance;
 
     // Initializers and Update ================================================================
 
-    protected void Awake() {
+    protected void Awake()
+    {
         _inConversation = false;
         _onDelay = false;
+
+        if (masterCanvas == null) {
+            Debug.LogError("DialogueManager Error: masterCanvas was null.");
+        }
     }
 
-    private void Update() {
+    private void Update()
+    {
 
         if (_inConversation == false) return;
 
@@ -66,11 +76,13 @@ public class DialogueManager : MonoBehaviour {
     /// <returns> True if conversation started successfully. </returns>
     /// <param name="inkJson"> Ink file conversation will use. </param>
     /// <param name="npcBubblePos"> Where we want a NPC speech bubble.</param>
-    public bool StartConversation(TextAsset inkJson, Vector3 npcBubblePos) {
+    public bool StartConversation(TextAsset inkJson, Vector3 npcBubblePos)
+    {
         if (_inConversation) return false;
         if (_onDelay) return false;
 
         _inConversation = true;
+        GameManager.TimeLoopManager.SetLoopPaused(true);
 
         // Create UI instance
         _dialogueUiManager = SetupUi(npcBubblePos, GameManager.Player.Transform.position);
@@ -86,7 +98,8 @@ public class DialogueManager : MonoBehaviour {
     /// <summary>
     /// Callback to show choices when text finishes displaying.
     /// </summary>
-    public void ShowChoicesCallBack() {
+    public void ShowChoicesCallBack()
+    {
 
         if (_dialogueUiManager == null) {
             ThrowNullError("ShowChoicesCallBack()", "DialogueUiManager");
@@ -95,7 +108,8 @@ public class DialogueManager : MonoBehaviour {
         _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
     }
 
-    public void SetPrizeCard(InventoryCard prizeCard) {
+    public void SetPrizeCard(InventoryCardData prizeCard)
+    {
         _prizeCard = prizeCard;
     }
 
@@ -107,13 +121,15 @@ public class DialogueManager : MonoBehaviour {
     /// <param name="npcBubblePos"> World pos of NPC Speech bubble. </param>
     /// <param name="playerBubblePos"> World pos of Player Speech bubble. </param>
     /// <returns> The Dialogue UI's manager script. </returns>
-    DialogueUiManager SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos) {
+    DialogueUiManager SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos)
+    {
 
-        if (DialogueUiPrefab == null) {
+        if (dialogueUiPrefab == null) {
             ThrowNullError("SetupUi()", "DialogueUiPrefab");
         }
 
-        _dialogueUiInstance = Instantiate(DialogueUiPrefab, Vector3.zero, Quaternion.identity);
+        _dialogueUiInstance = Instantiate(dialogueUiPrefab, Vector3.zero, Quaternion.identity, 
+                                          masterCanvas.transform);
 
         if (_dialogueUiInstance == null) {
             ThrowNullError("SetupUi()", "DialogueUiInstance");
@@ -131,7 +147,8 @@ public class DialogueManager : MonoBehaviour {
     /// Processes player input and displays the next line.
     /// </summary>
     /// <param name="choiceIndex"></param>
-    void ProcessDialogueChoice(int choiceIndex) {
+    void ProcessDialogueChoice(int choiceIndex)
+    {
 
         if (_dialogueUiManager == null) {
             ThrowNullError("ProcessDialogueChoice()", "dialougeUiManager");
@@ -149,7 +166,8 @@ public class DialogueManager : MonoBehaviour {
     /// Check if _currentStory is over.
     /// </summary>
     /// <returns> True if story is over. False otherwise. </returns>
-    bool AtEndOfStory() {
+    bool AtEndOfStory()
+    {
         if (_currentStory == null) {
             Debug.LogError("Called AtEndOfStory() with no story initialized.");
         }
@@ -164,7 +182,8 @@ public class DialogueManager : MonoBehaviour {
     /// Show next line of current conversation.
     /// </summary>
     /// <returns> True if a line was available, false otherwise.</returns>
-    void ShowNextLine() {
+    void ShowNextLine()
+    {
 
         // Precondition: Must have a story set
         if (_currentStory == null) {
@@ -208,7 +227,8 @@ public class DialogueManager : MonoBehaviour {
     /// </summary>
     /// <param name="lineTags">Ink tags</param>
     /// <returns>Our new ProcessedTag struct.</returns>
-    ProcessedTags ProcessTags(List<string> lineTags) {
+    ProcessedTags ProcessTags(List<string> lineTags)
+    {
 
         if (lineTags == null) {
             ThrowNullError("ProcessTags()", "tag array");
@@ -240,9 +260,11 @@ public class DialogueManager : MonoBehaviour {
     /// <summary>
     /// Creates a barter game instance and hooks up callbacks.
     /// </summary>
-    void StartBarter() {
+    void StartBarter()
+    {
         Debug.Log("Barter Starting!");
-        _barterInstance = Instantiate(BarterContainerPrefab, Vector3.zero, Quaternion.identity);
+        _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity, 
+                                      masterCanvas.transform);
         BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
         barterDirectorOfInstance.OnWin += WinBarter;
         barterDirectorOfInstance.OnLose += LoseBarter;
@@ -252,7 +274,8 @@ public class DialogueManager : MonoBehaviour {
     /// <summary>
     /// Call on Barter Win, give player card.
     /// </summary>
-    void WinBarter() {
+    void WinBarter()
+    {
         if (_prizeCard != null) {
             GameManager.Inventory.AddCard(_prizeCard);
         }
@@ -262,14 +285,16 @@ public class DialogueManager : MonoBehaviour {
     /// <summary>
     /// Call on Barter lose, just cleans up.
     /// </summary>
-    void LoseBarter() {
+    void LoseBarter()
+    {
         CleanupBarter();
     }
 
     /// <summary>
     /// Handles cleanup of barter minigame.
     /// </summary>
-    void CleanupBarter() {
+    void CleanupBarter()
+    {
         Destroy(_barterInstance);
         GameManager.PlayerInput.IsActive = true;
     }
@@ -278,10 +303,13 @@ public class DialogueManager : MonoBehaviour {
     /// Called to kill UI and prep for next dialogue.
     /// </summary>
     /// <param name="enablePlayerInput"> True if we want to enable player input after ending story. </param>
-    void EndStory(bool enablePlayerInput) {
+    void EndStory(bool enablePlayerInput)
+    {
         _inConversation = false;
         _currentStory = null;
         _dialogueUiManager = null;
+
+        GameManager.TimeLoopManager.SetLoopPaused(false);
 
         Destroy(_dialogueUiInstance);
         GameManager.PlayerInput.IsActive = enablePlayerInput;
@@ -289,12 +317,14 @@ public class DialogueManager : MonoBehaviour {
         StartCoroutine(ConversationDelay());
     }
 
-    void ThrowNullError(string functionOrigin, string whatWasNull) {
+    void ThrowNullError(string functionOrigin, string whatWasNull)
+    {
         Debug.LogError("Called " + functionOrigin + " with a null " + whatWasNull + ".");
     }
 
     // Delay to prevent ghost inputs, convo ends and starts right again.
-    IEnumerator ConversationDelay() {
+    IEnumerator ConversationDelay()
+    {
         yield return new WaitForSeconds(0.25f);
         _onDelay = false;
     }

@@ -7,14 +7,14 @@ public class InventoryCanvas : MonoBehaviour
     [SerializeField] private GridLayoutGroup _grid;
     [SerializeField] private GameObject _inventoryCardPrefab;
 
-    private List<InventoryCard> _inventoryCardScriptableObjects;
+    private List<InventoryCardData> _inventoryCardScriptableObjects;
     private List<GameObject> _inventoryCardGameObjects = new List<GameObject>();
 
     private void OnEnable()
     {
         GameManager.Inventory.OnInventoryUpdated -= UpdateUI;
         GameManager.Inventory.OnInventoryUpdated += UpdateUI;
-        _inventoryCardScriptableObjects = GameManager.Inventory.Get();
+        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
 
         UpdateUI();
     }
@@ -36,12 +36,12 @@ public class InventoryCanvas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _inventoryCardScriptableObjects = GameManager.Inventory.Get();
+        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
     }
 
     private void UpdateUI()
     {
-        _inventoryCardScriptableObjects = GameManager.Inventory.Get();
+        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
         UpdateCardGameObjects();
     }
 
@@ -54,7 +54,7 @@ public class InventoryCanvas : MonoBehaviour
         }
         _inventoryCardGameObjects.Clear();
 
-        foreach (InventoryCard card in _inventoryCardScriptableObjects) {
+        foreach (InventoryCardData card in _inventoryCardScriptableObjects) {
             
             GameObject newCard = Instantiate(_inventoryCardPrefab, _grid.transform);
             newCard.GetComponent<InventoryCardObject>().SetData(card);

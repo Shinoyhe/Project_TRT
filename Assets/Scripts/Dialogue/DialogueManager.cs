@@ -269,6 +269,8 @@ public class DialogueManager : MonoBehaviour
         barterDirectorOfInstance.OnWin += WinBarter;
         barterDirectorOfInstance.OnLose += LoseBarter;
         GameManager.PlayerInput.IsActive = false;
+
+        //MusicManager.play
     }
 
     /// <summary>

@@ -21,6 +21,8 @@ public class MusicManager : Singleton<MusicManager>
             musicEventsDict[musicEvents[i].GetEventName()] = musicEvents[i];
             if (musicEvents[i].playOnInit) musicEvents[i].Play(this.gameObject); Debug.Log("hi");
         }
+
+        Debug.Log("Here's the events: " + musicEventsDict.Values);
     }
 
     private void OnDestroy()

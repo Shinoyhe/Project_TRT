@@ -13,8 +13,11 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID BART_CARD_PLACE = 3630843069U;
+        static const AkUniqueID BART_CARD_SHUFFLE = 362751767U;
         static const AkUniqueID MUSICSTATEACTIVE = 1623677187U;
         static const AkUniqueID MUSICSTATECALM = 821441420U;
+        static const AkUniqueID MUSICSTATEPLAYERSPAWAN = 1764214806U;
         static const AkUniqueID PAUSEENVIRONMENTMUSIC = 396180185U;
         static const AkUniqueID RESUMEENVIRONMENTMUSIC = 3562268364U;
         static const AkUniqueID STARTENVIRONMENTMUSIC = 1918643091U;
@@ -31,7 +34,9 @@ namespace AK
             {
                 static const AkUniqueID ACTIVE = 58138747U;
                 static const AkUniqueID CALM = 3753286132U;
+                static const AkUniqueID MAILBOTBARTER = 1029337087U;
                 static const AkUniqueID NONE = 748895195U;
+                static const AkUniqueID PLAYERSPAWN = 2064283983U;
             } // namespace STATE
         } // namespace MUSICSTATE
 
@@ -46,6 +51,7 @@ namespace AK
     {
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID MUSIC = 3991942870U;
+        static const AkUniqueID SFX = 393239870U;
     } // namespace BANKS
 
     namespace BUSSES

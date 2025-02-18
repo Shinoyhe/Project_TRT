@@ -10,7 +10,8 @@ public class GameManager : Singleton<GameManager>
     public static UiInputHandler UiInput { get { return Instance.uiInput; } }
     public static Inventory Inventory { get { return Instance.inventory; } }
     public static TimeLoopManager TimeLoopManager { get { return Instance.timeLoopManager; } }
-    public static Player Player { get { return Instance.player; } }
+    public static Player Player { get { return Instance._player; } }
+    public static Canvas MasterCanvas { get { return Instance._masterCanvas; } }
 
     // Backing fields =============================================================================
 
@@ -20,16 +21,31 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private Inventory inventory;
     [SerializeField] private TimeLoopManager timeLoopManager;
     [SerializeField, Tag] private string playerTag;
-    [SerializeField] private Player player;
+    [SerializeField, ReadOnly] private Player _player;
+    [SerializeField, Tag] private string masterCanvasTag;
+    [SerializeField, ReadOnly] private Canvas _masterCanvas;
 
     // Initializers ===============================================================================
 
     public void FindPlayer()
     {
+        print("FindPlayer() called");
+
         GameObject playerParent = GameObject.FindWithTag(playerTag).transform.root.gameObject;
 
         if (playerParent != null) {
-            player = playerParent.GetComponentInChildren<Player>();
+            _player = playerParent.GetComponentInChildren<Player>();
+        }
+    }
+
+    public void FindMasterCanvas()
+    {
+        print("FindMasterCanvas() called");
+
+        GameObject masterCanvasObj = GameObject.FindWithTag(masterCanvasTag);
+
+        if (masterCanvasObj != null) {
+            _masterCanvas = masterCanvasObj.GetComponentInChildren<Canvas>();
         }
     }
 }

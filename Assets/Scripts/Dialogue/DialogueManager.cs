@@ -11,8 +11,6 @@ public class DialogueManager : MonoBehaviour
     // Parameters =================================================================================
 
     [Header("Dependencies")]
-    [SerializeField, Tooltip("The Canvas we spawn UI prefabs under.")]
-    private Canvas masterCanvas;
     [SerializeField, Tooltip("The prefab for dialogue UI.")]
     private GameObject dialogueUiPrefab;
     [SerializeField, Tooltip("The prefab for the bartering minigame.")]
@@ -45,10 +43,6 @@ public class DialogueManager : MonoBehaviour
     {
         _inConversation = false;
         _onDelay = false;
-
-        if (masterCanvas == null) {
-            Debug.LogError("DialogueManager Error: masterCanvas was null.");
-        }
     }
 
     private void Update()
@@ -129,7 +123,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         _dialogueUiInstance = Instantiate(dialogueUiPrefab, Vector3.zero, Quaternion.identity, 
-                                          masterCanvas.transform);
+                                          GameManager.MasterCanvas.transform);
 
         if (_dialogueUiInstance == null) {
             ThrowNullError("SetupUi()", "DialogueUiInstance");
@@ -264,7 +258,7 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("Barter Starting!");
         _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity, 
-                                      masterCanvas.transform);
+                                      GameManager.MasterCanvas.transform);
         BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
         barterDirectorOfInstance.OnWin += WinBarter;
         barterDirectorOfInstance.OnLose += LoseBarter;

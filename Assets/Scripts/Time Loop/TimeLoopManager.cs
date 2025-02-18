@@ -28,6 +28,12 @@ public class TimeLoopManager : MonoBehaviour
 
     // Intializers ================================================================================
 
+    private void Awake()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;   
+    }
+
     private void Start()
     {
         InitializeTimer();
@@ -45,8 +51,6 @@ public class TimeLoopManager : MonoBehaviour
 
     public void CallbackDone() 
     {
-        // TODO: Take us to the stasis scene.
-
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -58,6 +62,7 @@ public class TimeLoopManager : MonoBehaviour
         GameManager.UiInput.IsActive = true;
 
         GameManager.Instance.FindPlayer();
+        GameManager.Instance.FindMasterCanvas();
         InitializeTimer();
 
         SceneManager.sceneLoaded -= OnSceneLoaded;

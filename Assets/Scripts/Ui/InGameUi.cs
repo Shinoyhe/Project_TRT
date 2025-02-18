@@ -30,12 +30,14 @@ public class InGameUi : MonoBehaviour
     public void SwitchToHudScreen() 
     {
         SwitchCanvas(HudCanvas);
+        GameManager.TimeLoopManager.SetLoopPaused(false);
         _currentCanvasState = CanvasState.HudCanvas;
     }
 
     public void SwitchToInventory() 
     {
         SwitchCanvas(InventoryCanvas);
+        GameManager.TimeLoopManager.SetLoopPaused(true);
         _currentCanvasState = CanvasState.InventoryCanvas;
     }
 

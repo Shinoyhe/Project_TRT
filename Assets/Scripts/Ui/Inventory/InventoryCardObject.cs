@@ -48,7 +48,7 @@ public class InventoryCardObject : MonoBehaviour
             itemNameText.text = _card.CardName;
             itemSpriteImage.sprite = _card.Sprite;
             itemDescriptionText.text = _card.Description;
-        } else if (_card.Type != GameEnums.CardTypes.INFO) {
+        } else if (_card.Type == GameEnums.CardTypes.INFO) {
             InventoryCard cardWrapper = GameManager.Inventory.GetCardFromData(_card);
 
             // disable the item layout and enable the info

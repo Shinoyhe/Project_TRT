@@ -68,13 +68,32 @@ public class InventoryCardObject : MonoBehaviour
             // Associate with ContextData[?].origin? it is a GameEnums.ContextOrigins
 
             // infoNPC1Sprite.sprite = null;
-            infoNPC1Context.text = cardWrapper.ContextData[0].contextInfo.context;
+            if (cardWrapper.KnowsContext(cardWrapper.ContextData[0].origin))
+            {
+                infoNPC1Context.text = cardWrapper.ContextData[0].contextInfo.context;
+            } else {
+                infoNPC1Context.text = "";
+            }
 
             // infoNPC2Sprite.sprite = null;
-            infoNPC2Context.text = cardWrapper.ContextData[1].contextInfo.context;
+            if (cardWrapper.KnowsContext(cardWrapper.ContextData[1].origin))
+            {
+                infoNPC2Context.text = cardWrapper.ContextData[1].contextInfo.context;
+            }
+            else
+            {
+                infoNPC2Context.text = "";
+            }
 
             //infoNPC2Sprite.sprite = null;
-            infoNPC3Context.text = cardWrapper.ContextData[2].contextInfo.context;
+            if (cardWrapper.KnowsContext(cardWrapper.ContextData[2].origin))
+            {
+                infoNPC3Context.text = cardWrapper.ContextData[2].contextInfo.context;
+            }
+            else
+            {
+                infoNPC3Context.text = "";
+            }
         }
 
         CardName = _card.CardName;

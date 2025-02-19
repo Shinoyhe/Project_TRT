@@ -135,7 +135,8 @@ public class InventoryCard
     /// <returns>Whether or not the player has learned a given context</returns>
     public bool KnowsContext(ContextOrigins origin)
     {
-        return false;
+        if (!ContextsLearned.Contains(origin)) return false;
+        return true;
     }
 
 }

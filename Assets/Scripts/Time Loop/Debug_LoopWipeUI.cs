@@ -13,12 +13,12 @@ public class Debug_LoopWipeUI : MonoBehaviour
         _image = GetComponent<Image>();
         _image.fillAmount = 0;
 
-        GameManager.TimeLoopManager.LoopElapsed += AnimateWipe;
+        TimeLoopManager.LoopElapsed += AnimateWipe;
     }
 
     private void OnDestroy()
     {
-        GameManager.TimeLoopManager.LoopElapsed -= AnimateWipe;
+        TimeLoopManager.LoopElapsed -= AnimateWipe;
     }
 
     private void AnimateWipe(System.Action callback)

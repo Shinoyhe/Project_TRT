@@ -59,10 +59,10 @@ public class DevMenu : Singleton<DevMenu> {
     
     public void ResetLoop(){
         CloseDevMenu();
-        GameManager.TimeLoopManager.ResetLoop();
+        TimeLoopManager.ResetLoop();
     }
     
     public void PauseLoop(){
-        GameManager.TimeLoopManager.SetLoopPaused(!GameManager.TimeLoopManager.LoopPaused);
+        TimeLoopManager.SetLoopPaused(!TimeLoopManager.LoopPaused);
     }
 }

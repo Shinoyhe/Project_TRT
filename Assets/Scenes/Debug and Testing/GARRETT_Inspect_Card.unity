@@ -196,6 +196,17 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddCard
       objectReference: {fileID: 0}
+    - target: {fileID: 1675156994310368087, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+        type: 2}
+    - target: {fileID: 1675156994310368087, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: InventoryCardData, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1891927937381935492, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -206,6 +217,17 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RemoveCard
       objectReference: {fileID: 0}
+    - target: {fileID: 1891927937381935492, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+        type: 2}
+    - target: {fileID: 1891927937381935492, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: InventoryCardData, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3165433572979686180, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -215,6 +237,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3165433572979686180, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a,
+        type: 2}
+    - target: {fileID: 3165433572979686180, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: InventoryCardData, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4629297870969853365, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
@@ -235,6 +268,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 6046698224005878662, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a35804eb59b84c4a8de3434821d7ddc,
+        type: 2}
+    - target: {fileID: 6046698224005878662, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: InventoryCardData, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270819785474008675, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7895029819783036092, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
@@ -347,7 +396,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3532468560186198436, guid: 142379524301d744ca9ed258108220b9, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 142379524301d744ca9ed258108220b9, type: 3}

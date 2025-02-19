@@ -31,10 +31,14 @@ public class GameManager : Singleton<GameManager>
     {
         print("FindPlayer() called");
 
-        GameObject playerParent = GameObject.FindWithTag(playerTag).transform.root.gameObject;
+        GameObject playerObj = GameObject.FindWithTag(playerTag);
 
-        if (playerParent != null) {
-            _player = playerParent.GetComponentInChildren<Player>();
+        if (playerObj != null) {
+            GameObject playerParent = playerObj.transform.root.gameObject;
+
+            if (playerParent != null) {
+                _player = playerParent.GetComponentInChildren<Player>();
+            }
         }
     }
 

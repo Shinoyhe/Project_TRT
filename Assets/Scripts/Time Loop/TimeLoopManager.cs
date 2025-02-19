@@ -30,13 +30,17 @@ public class TimeLoopManager : MonoBehaviour
 
     private void Awake()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneLoaded += OnSceneLoaded;   
+        if (isActiveAndEnabled) {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
     }
 
     private void Start()
     {
-        InitializeTimer();
+        if (isActiveAndEnabled) {    
+            InitializeTimer();
+        }
     }
 
     public void InitializeTimer()

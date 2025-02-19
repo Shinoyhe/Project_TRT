@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,11 +13,7 @@ public class InventoryCanvas : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Inventory.OnInventoryUpdated -= UpdateUI;
-        GameManager.Inventory.OnInventoryUpdated += UpdateUI;
-        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
-
-        UpdateUI();
+        StartCoroutine("WaitForGameManager");
     }
 
     private void OnDisable()
@@ -59,10 +56,17 @@ public class InventoryCanvas : MonoBehaviour
             GameObject newCard = Instantiate(_inventoryCardPrefab, _grid.transform);
             newCard.GetComponent<InventoryCardObject>().SetData(card);
             _inventoryCardGameObjects.Add(newCard);
-
-            foreach (GameObject oldcard in _inventoryCardGameObjects) {
-                print(oldcard.GetComponent<InventoryCardObject>().CardName);
-            }
         }
+    }
+
+    private IEnumerator WaitForGameManager()
+    {
+        yield return new WaitUntil(() => GameManager.Instance != null);
+
+        GameManager.Inventory.OnInventoryUpdated -= UpdateUI;
+        GameManager.Inventory.OnInventoryUpdated += UpdateUI;
+        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
+
+        UpdateUI();
     }
 }

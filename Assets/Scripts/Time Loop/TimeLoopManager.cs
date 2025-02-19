@@ -4,21 +4,24 @@ using UnityEngine.SceneManagement;
 
 public class TimeLoopManager : MonoBehaviour
 {
+    // Works as a modified, lightweight singleton.
+    public static TimeLoopManager Instance { get; private set; }
+
     // Parameters and publics =====================================================================
 
     [SerializeField, Tooltip("The amount of time, in minutes, it takes for the loop to end.")] 
     private float loopMinutes = 8;
     // Public accessor, for other scripts
-    public float SecondsLeft => _secondsLeft;
+    public static float SecondsLeft => Instance._secondsLeft;
     // Read-only display, for the inspector
     [SerializeField, ReadOnly] 
     private string DEBUG_timeLeft;
 
     // Public accessor, for other scripts
-    public bool LoopPaused  => _loopPaused;
+    public static bool LoopPaused  => Instance._loopPaused;
 
     // Called when the loop time is fully elapsed. Awaits a callback.
-    public System.Action<System.Action> LoopElapsed;
+    public static System.Action<System.Action> LoopElapsed;
 
     // Misc Internal Variables ====================================================================
 
@@ -30,6 +33,13 @@ public class TimeLoopManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         if (isActiveAndEnabled) {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -100,12 +110,12 @@ public class TimeLoopManager : MonoBehaviour
 
     // Misc manipulators ==========================================================================
 
-    public void SetLoopPaused(bool value)
+    public static void SetLoopPaused(bool value)
     {
-        _loopPaused = value;
+        Instance._loopPaused = value;
     }
     
-    public void ResetLoop(){
-        _secondsLeft = 0;
+    public static void ResetLoop(){
+        Instance._secondsLeft = 0;
     }
 }

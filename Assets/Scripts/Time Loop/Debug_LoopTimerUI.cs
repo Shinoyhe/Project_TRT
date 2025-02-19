@@ -20,12 +20,15 @@ public class Debug_LoopTimerUI : MonoBehaviour
 
     private void Update()
     {
-        float s = Mathf.Max(0, TimeLoopManager.SecondsLeft);
-        string timeString = $"{Mathf.Floor(s/60f):00}:{Mathf.Floor(s%60):00}";
+        if (TimeLoopManager.Instance != null) {
+            float s = Mathf.Max(0, TimeLoopManager.SecondsLeft);
+            string prefix = TimeLoopManager.LoopPaused ? pausedPrefix : unpausedPrefix;
 
-        // Percentage label
-        string prefix = TimeLoopManager.LoopPaused ? pausedPrefix : unpausedPrefix;
-        _textObject.text = prefix + timeString + suffix;
+            string timeString = $"{Mathf.Floor(s/60f):00}:{Mathf.Floor(s%60):00}";
+            _textObject.text = prefix + timeString + suffix;
+        } else {
+            _textObject.text = "<size=110%>TimeLoopManager.Instance is null</size>";
+        }
     }
 }
 

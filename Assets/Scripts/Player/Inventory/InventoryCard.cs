@@ -129,4 +129,13 @@ public class InventoryCard
 
         return true;
     }
+
+    /// <summary>
+    /// </summary>
+    /// <returns>Whether or not the player has learned a given context</returns>
+    public bool KnowsContext(ContextOrigins origin)
+    {
+        return false;
+    }
+
 }

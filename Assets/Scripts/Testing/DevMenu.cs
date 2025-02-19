@@ -57,12 +57,18 @@ public class DevMenu : Singleton<DevMenu> {
         Application.Quit();
     }
     
-    public void ResetLoop(){
+    public void ResetLoop()
+    {
         CloseDevMenu();
-        TimeLoopManager.ResetLoop();
+        if (TimeLoopManager.Instance != null) {
+            TimeLoopManager.ResetLoop();
+        }
     }
     
-    public void PauseLoop(){
-        TimeLoopManager.SetLoopPaused(!TimeLoopManager.LoopPaused);
+    public void PauseLoop()
+    {
+        if (TimeLoopManager.Instance != null) {
+            TimeLoopManager.SetLoopPaused(!TimeLoopManager.LoopPaused);
+        }
     }
 }

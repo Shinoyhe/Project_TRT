@@ -144,8 +144,8 @@ MonoBehaviour:
         guid: b5e755e895d52648ad8a374f605fcf53
       Path: Events\Default Work Unit\MusicEvents\MusicStateActive
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: MusicStateCalm
       guid: d4d011b7ab20394ab4e982305ba67d38
       id: 821441420
@@ -164,8 +164,8 @@ MonoBehaviour:
         guid: d4d011b7ab20394ab4e982305ba67d38
       Path: Events\Default Work Unit\MusicEvents\MusicStateCalm
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: PauseEnvironmentMusic
       guid: 96326ae8227f6b49bd165fccbc20504e
       id: 396180185
@@ -184,8 +184,8 @@ MonoBehaviour:
         guid: 96326ae8227f6b49bd165fccbc20504e
       Path: Events\Default Work Unit\MusicEvents\PauseEnvironmentMusic
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: ResumeEnvironmentMusic
       guid: 89d77c41053f404a836023e0159080af
       id: 3562268364
@@ -204,8 +204,8 @@ MonoBehaviour:
         guid: 89d77c41053f404a836023e0159080af
       Path: Events\Default Work Unit\MusicEvents\ResumeEnvironmentMusic
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: StartEnvironmentMusic
       guid: 0ad1de95faba17459eb73e06ddba7b76
       id: 1918643091
@@ -224,8 +224,8 @@ MonoBehaviour:
         guid: 0ad1de95faba17459eb73e06ddba7b76
       Path: Events\Default Work Unit\MusicEvents\StartEnvironmentMusic
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: StopEnvironmentMusic
       guid: ec06eeef3d4ab24198832e17938f0ef1
       id: 2557824689
@@ -244,8 +244,8 @@ MonoBehaviour:
         guid: ec06eeef3d4ab24198832e17938f0ef1
       Path: Events\Default Work Unit\MusicEvents\StopEnvironmentMusic
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
   - PhysicalPath: Events\Music.wwu
     PathAndIcons:
     - ElementName: Events

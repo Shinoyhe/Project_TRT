@@ -1,106 +1,138 @@
+using System;
+using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-public class MusicManager : Singleton<MusicManager>
+
+/// <summary>
+/// Custom data structure to assign a string name to a Wwise event in the inspector.
+/// </summary>
+[System.Serializable]
+public class MusicStateEventPair
 {
-    [SerializeField] private List<AudioEvent> musicEvents = new();
-    private Dictionary<string, AudioEvent> musicEventsDict = new();
-    private AudioEvent focusedMusic;
-    private Stack<AudioEvent> allCurrentMusic;
+    public string stateName;
+    public AK.Wwise.Event musicEvent;
+}
+
+
+/// <summary>
+/// Specifically manages a Music Switch Container in Wwise and triggers Wwise events to change music functionality.
+/// </summary>
+[Serializable]
+public class MusicManager : MonoBehaviour
+{
+    // Serialize a list of all state trigger events
+    [SerializeField] private TriggerEvents _events;
+
+    // Change this to a List of MusicStateEventPair
+    [SerializeField] private List<MusicStateEventPair> musicStateEventsList;
+
+    private Dictionary<string, AK.Wwise.Event> musicStateEventsDict = new Dictionary<string, AK.Wwise.Event>();
+
 
     private void Start()
     {
         InitializeAudioEventsDictionary();
     }
 
+    /// <summary>
+    /// USes the musicStateEventsList populated from the inspector and converts it to a dictionary.
+    /// </summary>
     private void InitializeAudioEventsDictionary()
     {
-        for (int i = 0; i < musicEvents.Count; ++i)
+        // Populate the state event dictionary from the given serialized list.
+        foreach (var pair in musicStateEventsList)
         {
-            musicEventsDict[musicEvents[i].GetEventName()] = musicEvents[i];
-            if (musicEvents[i].playOnInit) musicEvents[i].Play(this.gameObject); Debug.Log("hi");
+            musicStateEventsDict.Add(pair.stateName, pair.musicEvent);
         }
 
-        Debug.Log("Here's the events: " + musicEventsDict.Values);
+        // I may create a "playOnInit" variable to avoid hardcoding playing music on initialization
+        SetMusicState("PlayerSpawn");
+        PlayMusic(gameObject);
     }
 
     private void OnDestroy()
     {
-        //focusedMusic.Free();
-    }
-
-    public AudioEvent GetMusic(string musicName)
-    {
-        return musicEventsDict[musicName];
+        Debug.Log("Called destroy :)");
+        //StopCurrentMusic();
     }
 
     #region Music Management
-    public void PlayMusic(string newMusicName)
+    public void PlayMusic(GameObject attenuationPoint)
     {
-        if (focusedMusic != null)
+        if (_events.startEvent == null)
+            return;
+
+        if (attenuationPoint == null)
         {
-            allCurrentMusic.Push(focusedMusic);
+            Debug.LogError("No Attenuation Point set for event " + name);
+            return;
         }
 
-        AudioEvent newMusic = GetMusic(newMusicName);
-        focusedMusic = newMusic;
-        focusedMusic.Play();
+        //_eventInstance.setCallback(_eventCallback);
+        _events.startEvent.Post(attenuationPoint);
+        //isPlaying = true;
     }
 
-    public void PauseCurrentMusic()
+    public void PauseCurrentMusic(GameObject attenuationPoint)
     {
-        focusedMusic.Pause();
+        if (_events.pauseEvent == null)
+            return;
+
+        if (attenuationPoint == null)
+        {
+            Debug.LogError("No Attenuation Point set for event " + name);
+            return;
+        }
+
+        //_eventInstance.setCallback(_eventCallback);
+        _events.pauseEvent.Post(attenuationPoint);
+        //isPlaying = true;
     }
 
-    public void ResumeCurrentMusic()
+    public void ResumeCurrentMusic(GameObject attenuationPoint)
     {
-        focusedMusic?.Resume();
+        if (_events.resumeEvent == null)
+            return;
+
+        if (attenuationPoint == null)
+        {
+            Debug.LogError("No Attenuation Point set for event " + name);
+            return;
+        }
+
+        //_eventInstance.setCallback(_eventCallback);
+        _events.resumeEvent.Post(attenuationPoint);
+        //isPlaying = true;
     }
 
     public void StopCurrentMusic()
     {
-        if (focusedMusic != null)
-        {
-            focusedMusic.Stop();
-        }
+        if (_events.stopEvent == null)
+            return;
+
+        //_eventInstance.setCallback(_eventCallback);
+        _events.stopEvent.Post(gameObject); // I don't wanna use an
+        //isPlaying = true;
     }
 
-    public void FadeoutCurrentMusic()
-    {
-        if (focusedMusic != null)
-        {
-            focusedMusic.Fadeout();
-        }
-    }
-
-    public void SwitchMusic(AudioEvent newMusic)
-    {
-        StopCurrentMusic();
-
-        focusedMusic = newMusic;
-        focusedMusic.Play();
-    }
-
-    public void CrossfadeMusic(AudioEvent newMusic)
-    {
-        FadeoutCurrentMusic();
-
-        focusedMusic = newMusic;
-        focusedMusic.Play();
-    }
-
-    public void SwitchAfterFadeout(AudioEvent newMusic)
-    {
-        if (focusedMusic != null)
-        {
-            //focusedMusic.OnComplete(newMusic.Play);
-            focusedMusic.Fadeout();
-        }
-    }
     #endregion
 
-    #region Parameter Management
+    #region State Management
+    /// <summary>
+    /// Sets current state of music container to one specified by the state name parameter.
+    /// </summary>
+    /// <param name="stateName"> String value of desired state to transition to. Should be the same name as found in Wwise project. </param>
+    public void SetMusicState(string stateName)
+    {
+        if (musicStateEventsDict.ContainsKey(stateName))
+        {
+            musicStateEventsDict[stateName].Post(gameObject);
+        }
+    }
 
     #endregion
 }

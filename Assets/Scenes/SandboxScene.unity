@@ -419,10 +419,15 @@ PrefabInstance:
       propertyPath: musicEvents.Array.size
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9110059251031622243, guid: 18d4c015a9fae0947962be4f5d61594f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2643591595807653029, guid: 18d4c015a9fae0947962be4f5d61594f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1142598421}
   m_SourcePrefab: {fileID: 100100000, guid: 18d4c015a9fae0947962be4f5d61594f, type: 3}
 --- !u!1 &203844586
 GameObject:
@@ -1000,6 +1005,58 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a49536efcd00e14294f8f40b33641dd, type: 3}
+--- !u!1 &1142598417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2643591595807653029, guid: 18d4c015a9fae0947962be4f5d61594f,
+    type: 3}
+  m_PrefabInstance: {fileID: 198230254}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1142598421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142598417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e55bb5fa9b173d49812c5b09c72aa5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _events:
+    startEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: f0c5872dd07b7634e8cd6ac5b0a7d6c3,
+        type: 2}
+    pauseEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: e9a2d8df8b939844da4c84d9a95c8a2f,
+        type: 2}
+    resumeEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 1444bc706fde0a148b0498cae8f62c9f,
+        type: 2}
+    stopEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: f8b283a7895b78343b5b55ddcc08c4f4,
+        type: 2}
+  musicStateEventsList:
+  - stateName: PlayerSpawn
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 7e8bf312332fb6a45919873cbc424c6f,
+        type: 2}
+  - stateName: MailbotBarter
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 5ac7455830fd48749a58b7efcebbb234,
+        type: 2}
 --- !u!1 &1160234425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,6 +1420,7 @@ GameObject:
   - component: {fileID: 1398672825}
   - component: {fileID: 1398672824}
   - component: {fileID: 1398672826}
+  - component: {fileID: 1398672827}
   m_Layer: 0
   m_Name: WwiseGlobal
   m_TagString: Untagged
@@ -1429,6 +1487,32 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: ecb40a8b1f36de74ebe76cf6310a46b1,
+      type: 2}
+  decodeBank: 0
+  overrideLoadSetting: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
+--- !u!114 &1398672827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398672823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e699a8c540eee98439418a908e76ecc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a5e933a32c5ebcd44a4f56b5ec486866,
       type: 2}
   decodeBank: 0
   overrideLoadSetting: 0
@@ -1696,6 +1780,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1250298454}
+    - target: {fileID: 3546394063840808889, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
+        type: 3}
+      propertyPath: musicManager
+      value: 
+      objectReference: {fileID: 1142598421}
     - target: {fileID: 8480042010274908795, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
         type: 3}
       propertyPath: m_LocalPosition.x

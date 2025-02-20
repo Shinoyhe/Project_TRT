@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{335496CC-45EA-4922-B9FA-C65217B7662E}",
     "Language": "SFX",
-    "Hash": "{C2A576F9-94D3-38C7-8308-81F80453E74E}",
+    "Hash": "{E103506D-D066-404A-A71E-3CDEC0E4E7DC}",
     "ObjectPath": "\\SoundBanks\\SFX\\SFX",
     "ShortName": "SFX",
     "Path": "SFX.bnk",
@@ -32,6 +32,14 @@
       "CachePath": "EF/{EF0A5AF0-64E2-FD60-CD74-3FC6BEE904E6}.wem"
      },
      {
+      "Id": "446356882",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ENV_Interaction_Arrow_Show.wav",
+      "CachePath": "36/{36BEFF7D-ED81-201A-300F-0E9137661932}.wem"
+     },
+     {
       "Id": "452573080",
       "Language": "SFX",
       "Streaming": "false",
@@ -48,6 +56,14 @@
       "CachePath": "A9/{A92FFD3E-E46E-D16F-0192-671BE9B4E2D8}.wem"
      },
      {
+      "Id": "867121991",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ENV_Interaction_Arrow_Hide.wav",
+      "CachePath": "E6/{E6824AD6-E88F-7807-B407-58FD5D4E848E}.wem"
+     },
+     {
       "Id": "874945742",
       "Language": "SFX",
       "Streaming": "false",
@@ -62,6 +78,14 @@
       "Location": "Memory",
       "ShortName": "BART_card_shuffle\\Card Shuffle Cards.wav",
       "CachePath": "A4/{A4F1AAF7-2921-5D8B-9E81-FD6E6AF9A922}.wem"
+     },
+     {
+      "Id": "927523262",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BART_card_select.wav",
+      "CachePath": "53/{538CBB89-EBF9-C255-6BB8-76D7E3A2FA59}.wem"
      }
     ],
     "Events": [
@@ -89,6 +113,20 @@
       ]
      },
      {
+      "Id": "349408092",
+      "Name": "BART_Card_Select",
+      "ObjectPath": "\\Events\\UI\\BarteringUI\\BART_Card_Select",
+      "GUID": "{99304796-FD4B-474F-98FD-562F78C0B029}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.10825397",
+      "DurationMax": "0.10825397",
+      "MediaRefs": [
+       {
+        "Id": "927523262"
+       }
+      ]
+     },
+     {
       "Id": "362751767",
       "Name": "BART_Card_Shuffle",
       "ObjectPath": "\\Events\\UI\\BarteringUI\\BART_Card_Shuffle",
@@ -104,10 +142,38 @@
         "Id": "879942249"
        }
       ]
+     },
+     {
+      "Id": "3804709036",
+      "Name": "ENV_Interaction_Arrow_Hide",
+      "ObjectPath": "\\Events\\UI\\EnvironmentUI\\ENV_Interaction_Arrow_Hide",
+      "GUID": "{98977FE6-2B3D-418D-98FA-E5033E8D4006}",
+      "DurationType": "OneShot",
+      "DurationMin": "1.2314739",
+      "DurationMax": "1.2314739",
+      "MediaRefs": [
+       {
+        "Id": "867121991"
+       }
+      ]
+     },
+     {
+      "Id": "1995159183",
+      "Name": "ENV_Interaction_Arrow_Show",
+      "ObjectPath": "\\Events\\UI\\EnvironmentUI\\ENV_Interaction_Arrow_Show",
+      "GUID": "{2FF39951-651E-4108-8845-9B47F1CC9721}",
+      "DurationType": "OneShot",
+      "DurationMin": "1.2314739",
+      "DurationMax": "1.2314739",
+      "MediaRefs": [
+       {
+        "Id": "446356882"
+       }
+      ]
      }
     ]
    }
   ],
-  "FileHash": "{0B8C25FE-DD8E-2075-D995-7ED4CE1CFAF2}"
+  "FileHash": "{474B7D52-2688-19B4-2270-9221FC750E90}"
  }
 }

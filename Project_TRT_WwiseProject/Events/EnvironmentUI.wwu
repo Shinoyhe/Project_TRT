@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{8A2FE84B-5FF0-4B9C-B20A-C0E39BAD8DAE}" SchemaVersion="123" RootDocumentID="{DC67F875-991A-4906-8DF4-975D819BEC40}" ParentDocumentID="{DC67F875-991A-4906-8DF4-975D819BEC40}">
+	<Events>
+		<WorkUnit Name="EnvironmentUI" ID="{8A2FE84B-5FF0-4B9C-B20A-C0E39BAD8DAE}" OwnerID="{DC67F875-991A-4906-8DF4-975D819BEC40}" PersistMode="Nested">
+			<ChildrenList>
+				<Event Name="ENV_Interaction_Arrow_Show" ID="{2FF39951-651E-4108-8845-9B47F1CC9721}">
+					<ChildrenList>
+						<Action Name="" ID="{EA63ED3B-8A33-4710-B18A-0FA79021432A}" ShortID="28809979">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Interaction_Arrow_Show" ID="{FE13E885-A586-4256-9864-F1528E99B570}" WorkUnitID="{6DBF4580-954D-4819-8DE3-31A967B3F104}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="ENV_Interaction_Arrow_Hide" ID="{98977FE6-2B3D-418D-98FA-E5033E8D4006}">
+					<ChildrenList>
+						<Action Name="" ID="{B2232E46-9BA4-437B-B6EA-35B1E6F9C8DE}" ShortID="445904131">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Interaction_Arrow_Hide" ID="{DCD11DCB-E04E-4F29-8B52-7A72BC0BAECA}" WorkUnitID="{6DBF4580-954D-4819-8DE3-31A967B3F104}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

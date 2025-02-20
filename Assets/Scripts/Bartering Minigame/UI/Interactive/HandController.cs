@@ -39,6 +39,8 @@ public class HandController : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField]
+    private AudioEvent cardSelectSFX;
+    [SerializeField]
     private AudioEvent cardPlaceSFX;
     [SerializeField]
     private AudioEvent cardShuffleSFX;
@@ -233,6 +235,8 @@ public class HandController : MonoBehaviour
                 card.SubmitSlot.SetCard(null);
                 card.SetSubmitted(null);
             }
+
+            cardSelectSFX.Play(gameObject);
         }
     }
 

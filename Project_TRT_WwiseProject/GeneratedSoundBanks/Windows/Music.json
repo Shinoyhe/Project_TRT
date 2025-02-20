@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{2CAF7C27-18E4-40A7-871C-C075A9250659}",
     "Language": "SFX",
-    "Hash": "{A0610743-0DE2-3B97-3AC2-B0F9AD550E03}",
+    "Hash": "{6DCC04F6-1A4A-DB98-D084-ABBF5C3C4F43}",
     "ObjectPath": "\\SoundBanks\\Music\\Music",
     "ShortName": "Music",
     "Path": "Music.bnk",
@@ -30,14 +30,6 @@
       "Location": "Memory",
       "ShortName": "EnvAttempt4.2.wav",
       "CachePath": "85/{8568FB55-E3E0-AF9D-E18B-7D6E2C4A9A5B}.wem"
-     },
-     {
-      "Id": "417247961",
-      "Language": "SFX",
-      "Streaming": "false",
-      "Location": "Memory",
-      "ShortName": "EnvAttempt5.wav",
-      "CachePath": "7C/{7CB4D243-D61B-C4A1-CB1E-F44307A1AFCC}.wem"
      },
      {
       "Id": "879061896",
@@ -77,6 +69,25 @@
       ]
      },
      {
+      "Id": "237747687",
+      "Name": "MusicStateBartering",
+      "ObjectPath": "\\Events\\Music\\MusicEvents\\MusicStateBartering",
+      "GUID": "{9DEDD160-9B2C-4960-A7A8-726AA1C20465}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "ActionSetState": [
+       {
+        "GroupId": "1021618141",
+        "Id": "1029337087",
+        "Name": "MailbotBarter",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicState\\MailbotBarter",
+        "GUID": "{220970BA-3873-4295-B08E-35E3D335D7F9}"
+       }
+      ]
+     },
+     {
       "Id": "821441420",
       "Name": "MusicStateCalm",
       "ObjectPath": "\\Events\\Music\\MusicEvents\\MusicStateCalm",
@@ -96,9 +107,9 @@
       ]
      },
      {
-      "Id": "1764214806",
-      "Name": "MusicStatePlayerSpawan",
-      "ObjectPath": "\\Events\\Music\\MusicEvents\\MusicStatePlayerSpawan",
+      "Id": "1031159975",
+      "Name": "MusicStatePlayerSpawn",
+      "ObjectPath": "\\Events\\Music\\MusicEvents\\MusicStatePlayerSpawn",
       "GUID": "{615BFAC6-D261-4C48-A196-83ACAEBF5061}",
       "MaxAttenuation": "0",
       "DurationType": "OneShot",
@@ -115,62 +126,255 @@
       ]
      },
      {
-      "Id": "396180185",
-      "Name": "PauseEnvironmentMusic",
-      "ObjectPath": "\\Events\\Music\\MusicEvents\\PauseEnvironmentMusic",
+      "Id": "1127073398",
+      "Name": "PauseMusic",
+      "ObjectPath": "\\Events\\Music\\MusicEvents\\PauseMusic",
       "GUID": "{E86A3296-7F22-496B-BD16-5FCCBC20504E}",
       "MaxAttenuation": "0",
       "DurationType": "OneShot",
       "DurationMin": "0",
       "DurationMax": "0",
-      "MediaRefs": [
+      "SwitchContainers": [
        {
-        "Id": "375964416"
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "3753286132",
+         "GUID": "{4A916F2C-FEA7-4172-9C63-FC5255A5BA9D}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "879061896"
+         }
+        ]
        },
        {
-        "Id": "417247961"
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "58138747",
+         "GUID": "{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "375964416"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "2064283983",
+         "GUID": "{34160084-965A-46DB-A8F6-BFA9644AC295}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "1001349004"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "1029337087",
+         "GUID": "{220970BA-3873-4295-B08E-35E3D335D7F9}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "38607711"
+         }
+        ]
        }
       ]
      },
      {
-      "Id": "3562268364",
-      "Name": "ResumeEnvironmentMusic",
-      "ObjectPath": "\\Events\\Music\\MusicEvents\\ResumeEnvironmentMusic",
+      "Id": "2170724709",
+      "Name": "ResumeMusic",
+      "ObjectPath": "\\Events\\Music\\MusicEvents\\ResumeMusic",
       "GUID": "{417CD789-3F05-4A40-8360-23E0159080AF}",
       "MaxAttenuation": "0",
       "DurationType": "OneShot",
       "DurationMin": "0",
       "DurationMax": "0",
-      "MediaRefs": [
+      "SwitchContainers": [
        {
-        "Id": "1001349004"
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "3753286132",
+         "GUID": "{4A916F2C-FEA7-4172-9C63-FC5255A5BA9D}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "879061896"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "58138747",
+         "GUID": "{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "375964416"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "2064283983",
+         "GUID": "{34160084-965A-46DB-A8F6-BFA9644AC295}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "1001349004"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "1029337087",
+         "GUID": "{220970BA-3873-4295-B08E-35E3D335D7F9}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "38607711"
+         }
+        ]
        }
       ]
      },
      {
-      "Id": "1918643091",
-      "Name": "StartEnvironmentMusic",
-      "ObjectPath": "\\Events\\Music\\MusicEvents\\StartEnvironmentMusic",
+      "Id": "3827058668",
+      "Name": "StartMusic",
+      "ObjectPath": "\\Events\\Music\\MusicEvents\\StartMusic",
       "GUID": "{95DED10A-BAFA-4517-9EB7-3E06DDBA7B76}",
       "DurationType": "Infinite",
-      "MediaRefs": [
+      "SwitchContainers": [
        {
-        "Id": "1001349004"
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "3753286132",
+         "GUID": "{4A916F2C-FEA7-4172-9C63-FC5255A5BA9D}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "879061896"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "58138747",
+         "GUID": "{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "375964416"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "2064283983",
+         "GUID": "{34160084-965A-46DB-A8F6-BFA9644AC295}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "1001349004"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "1029337087",
+         "GUID": "{220970BA-3873-4295-B08E-35E3D335D7F9}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "38607711"
+         }
+        ]
        }
       ]
      },
      {
-      "Id": "2557824689",
-      "Name": "StopEnvironmentMusic",
-      "ObjectPath": "\\Events\\Music\\MusicEvents\\StopEnvironmentMusic",
+      "Id": "1917263390",
+      "Name": "StopMusic",
+      "ObjectPath": "\\Events\\Music\\MusicEvents\\StopMusic",
       "GUID": "{EFEE06EC-4A3D-41B2-9883-2E17938F0EF1}",
       "MaxAttenuation": "0",
       "DurationType": "OneShot",
       "DurationMin": "0",
       "DurationMax": "0",
-      "MediaRefs": [
+      "SwitchContainers": [
        {
-        "Id": "1001349004"
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "3753286132",
+         "GUID": "{4A916F2C-FEA7-4172-9C63-FC5255A5BA9D}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "879061896"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "58138747",
+         "GUID": "{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "375964416"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "2064283983",
+         "GUID": "{34160084-965A-46DB-A8F6-BFA9644AC295}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "1001349004"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "1029337087",
+         "GUID": "{220970BA-3873-4295-B08E-35E3D335D7F9}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "38607711"
+         }
+        ]
        }
       ]
      }
@@ -214,17 +418,9 @@
        }
       ]
      }
-    ],
-    "Triggers": [
-     {
-      "Id": "3157003241",
-      "Name": "Test",
-      "ObjectPath": "\\Triggers\\Default Work Unit\\Test",
-      "GUID": "{A1F7C023-FE54-4D4F-BB4C-BB0E19D72476}"
-     }
     ]
    }
   ],
-  "FileHash": "{4D318D07-74A3-96F3-97E3-DF5ECE179967}"
+  "FileHash": "{5E251033-84DE-4287-7BEE-4222B6DFA272}"
  }
 }

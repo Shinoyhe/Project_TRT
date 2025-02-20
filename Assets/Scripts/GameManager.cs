@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
     public static Inventory Inventory { get { return Instance.inventory; } }
     public static TimeLoopManager TimeLoopManager { get { return Instance.timeLoopManager; } }
     public static Player Player { get { return Instance.player; } }
+    public static MusicManager MusicManager { get { return Instance.musicManager; } }
 
     // Backing fields =============================================================================
 
@@ -21,6 +22,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private TimeLoopManager timeLoopManager;
     [SerializeField, Tag] private string playerTag;
     [SerializeField] private Player player;
+    [SerializeField] private MusicManager musicManager;
 
     // Initializers ===============================================================================
 

@@ -79,7 +79,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Music
     guid: 5f5c2e836df59d41833026f7bc293cab
     GuidInternal: 
-    m_lastTime: -8584617584928843520
+    m_lastTime: -8584616821207660676
     List:
     - name: Music
       guid: 277caf2ce418a740871cc075a9250659
@@ -106,7 +106,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\SFX
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
-    m_lastTime: -8584617606560991364
+    m_lastTime: -8584616785789650539
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -137,7 +137,7 @@ MonoBehaviour:
     ParentPath: Events\UI\BarteringUI
     guid: 40c947321f41084491c4b5b163ca6270
     GuidInternal: 
-    m_lastTime: -8584617630259841066
+    m_lastTime: -8584616785978650447
     List:
     - name: BART_Card_Place
       guid: 70703cae49201248868554261706e95e
@@ -159,6 +159,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.36506742
       minDuration: 0.2205631
+    - name: BART_Card_Select
+      guid: 964730994bfd4f4798fd562f78c0b029
+      id: 349408092
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Card_Select
+        ObjectType: 3
+        guid: 964730994bfd4f4798fd562f78c0b029
+      Path: Events\UI\BarteringUI\BART_Card_Select
+      maxAttenuation: 0
+      maxDuration: 0.10825397
+      minDuration: 0.10825397
     - name: BART_Card_Shuffle
       guid: b449ce3c4af3804489b557b99f3ceb39
       id: 362751767
@@ -203,7 +223,7 @@ MonoBehaviour:
     ParentPath: Events\Music
     guid: 1baa49cfe5a4fe438cbe031c55500853
     GuidInternal: 
-    m_lastTime: -8584617587179143704
+    m_lastTime: -8584615901118819950
     List:
     - name: MusicEvents
       guid: bb98cb8f8639c644980fd12d17cb9504
@@ -242,6 +262,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+    - name: MusicStateBartering
+      guid: 60d1ed9d2c9b6049a7a8726aa1c20465
+      id: 237747687
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStateBartering
+        ObjectType: 3
+        guid: 60d1ed9d2c9b6049a7a8726aa1c20465
+      Path: Events\Music\MusicEvents\MusicStateBartering
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - name: MusicStateCalm
       guid: d4d011b7ab20394ab4e982305ba67d38
       id: 821441420
@@ -262,9 +302,9 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: MusicStatePlayerSpawan
+    - name: MusicStatePlayerSpawn
       guid: c6fa5b6161d2484ca19683acaebf5061
-      id: 1764214806
+      id: 1031159975
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -275,16 +315,16 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: MusicStatePlayerSpawan
+      - ElementName: MusicStatePlayerSpawn
         ObjectType: 3
         guid: c6fa5b6161d2484ca19683acaebf5061
-      Path: Events\Music\MusicEvents\MusicStatePlayerSpawan
+      Path: Events\Music\MusicEvents\MusicStatePlayerSpawn
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: PauseEnvironmentMusic
+    - name: PauseMusic
       guid: 96326ae8227f6b49bd165fccbc20504e
-      id: 396180185
+      id: 1127073398
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -295,16 +335,16 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: PauseEnvironmentMusic
+      - ElementName: PauseMusic
         ObjectType: 3
         guid: 96326ae8227f6b49bd165fccbc20504e
-      Path: Events\Music\MusicEvents\PauseEnvironmentMusic
+      Path: Events\Music\MusicEvents\PauseMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: ResumeEnvironmentMusic
+    - name: ResumeMusic
       guid: 89d77c41053f404a836023e0159080af
-      id: 3562268364
+      id: 2170724709
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -315,16 +355,16 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: ResumeEnvironmentMusic
+      - ElementName: ResumeMusic
         ObjectType: 3
         guid: 89d77c41053f404a836023e0159080af
-      Path: Events\Music\MusicEvents\ResumeEnvironmentMusic
+      Path: Events\Music\MusicEvents\ResumeMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: StartEnvironmentMusic
+    - name: StartMusic
       guid: 0ad1de95faba17459eb73e06ddba7b76
-      id: 1918643091
+      id: 3827058668
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -335,16 +375,16 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: StartEnvironmentMusic
+      - ElementName: StartMusic
         ObjectType: 3
         guid: 0ad1de95faba17459eb73e06ddba7b76
-      Path: Events\Music\MusicEvents\StartEnvironmentMusic
+      Path: Events\Music\MusicEvents\StartMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: StopEnvironmentMusic
+    - name: StopMusic
       guid: ec06eeef3d4ab24198832e17938f0ef1
-      id: 2557824689
+      id: 1917263390
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -355,10 +395,10 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: StopEnvironmentMusic
+      - ElementName: StopMusic
         ObjectType: 3
         guid: ec06eeef3d4ab24198832e17938f0ef1
-      Path: Events\Music\MusicEvents\StopEnvironmentMusic
+      Path: Events\Music\MusicEvents\StopMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -544,7 +584,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 050000000600000007000000090000000a0000000c0000000e0000001200000017000000
+  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000a0000000c0000000e000000100000001200000017000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

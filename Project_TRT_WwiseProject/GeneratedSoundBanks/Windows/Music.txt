@@ -1,11 +1,12 @@
 Event	ID	Name			Wwise Object Path	Notes
-	396180185	PauseEnvironmentMusic			\Music\MusicEvents\PauseEnvironmentMusic	
+	237747687	MusicStateBartering			\Music\MusicEvents\MusicStateBartering	
 	821441420	MusicStateCalm			\Music\MusicEvents\MusicStateCalm	
+	1031159975	MusicStatePlayerSpawn			\Music\MusicEvents\MusicStatePlayerSpawn	
+	1127073398	PauseMusic			\Music\MusicEvents\PauseMusic	
 	1623677187	MusicStateActive			\Music\MusicEvents\MusicStateActive	
-	1764214806	MusicStatePlayerSpawan			\Music\MusicEvents\MusicStatePlayerSpawan	
-	1918643091	StartEnvironmentMusic			\Music\MusicEvents\StartEnvironmentMusic	
-	2557824689	StopEnvironmentMusic			\Music\MusicEvents\StopEnvironmentMusic	
-	3562268364	ResumeEnvironmentMusic			\Music\MusicEvents\ResumeEnvironmentMusic	
+	1917263390	StopMusic			\Music\MusicEvents\StopMusic	
+	2170724709	ResumeMusic			\Music\MusicEvents\ResumeMusic	
+	3827058668	StartMusic			\Music\MusicEvents\StartMusic	
 
 State Group	ID	Name			Wwise Object Path	Notes
 	1021618141	MusicState			\Default Work Unit\MusicState	
@@ -17,13 +18,9 @@ State	ID	Name	State Group			Notes
 	2064283983	PlayerSpawn	MusicState			
 	3753286132	Calm	MusicState			
 
-Trigger	ID	Name			Wwise Object Path	Notes
-	3157003241	Test			\Default Work Unit\Test	
-
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	38607711	MUSC_Mailbot	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\7B\{7B374558-F72C-55F8-CBA4-59BCB748CDDA}.wem		\Interactive Music Hierarchy\Default Work Unit\EnvironmentSwitch\Bartering\MUSC_Mailbot\MUSC_Mailbot		9153828
-	375964416	EnvAttempt4_2	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\85\{8568FB55-E3E0-AF9D-E18B-7D6E2C4A9A5B}.wem		\Interactive Music Hierarchy\Default Work Unit\EnvironmentSwitch\Active\Active\EnvAttempt4_2		2288528
-	417247961	EnvAttempt5	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\7C\{7CB4D243-D61B-C4A1-CB1E-F44307A1AFCC}.wem		\Interactive Music Hierarchy\Default Work Unit\EnviromentSequence\EnvAttempt5\EnvAttempt5		3984664
-	879061896	EnvAttempt4_1	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\24\{248734C3-BD17-67AA-D9B8-5EEC0829AF5F}.wem		\Interactive Music Hierarchy\Default Work Unit\EnvironmentSwitch\Calm\Calm\EnvAttempt4_1		1144316
-	1001349004	MUSC_Player_Spawn	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\07\{07E0E2B4-FEE7-F974-98F4-4EB60C93778D}.wem		\Interactive Music Hierarchy\Default Work Unit\EnvironmentSwitch\PlayerSpawn\MUSC_Player_Spawn\MUSC_Player_Spawn		10838112
+	38607711	MUSC_Mailbot	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\7B\{7B374558-F72C-55F8-CBA4-59BCB748CDDA}.wem		\Interactive Music Hierarchy\Default Work Unit\MusicSwitch\Bartering\MUSC_Mailbot\MUSC_Mailbot		9153828
+	375964416	EnvAttempt4_2	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\85\{8568FB55-E3E0-AF9D-E18B-7D6E2C4A9A5B}.wem		\Interactive Music Hierarchy\Default Work Unit\MusicSwitch\Active\Active\EnvAttempt4_2		2288528
+	879061896	EnvAttempt4_1	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\24\{248734C3-BD17-67AA-D9B8-5EEC0829AF5F}.wem		\Interactive Music Hierarchy\Default Work Unit\MusicSwitch\Calm\Calm\EnvAttempt4_1		1144316
+	1001349004	MUSC_Player_Spawn	C:\Users\micha\Documents\Unity Projects\Project_TRT\Project_TRT_WwiseProject\.cache\07\{07E0E2B4-FEE7-F974-98F4-4EB60C93778D}.wem		\Interactive Music Hierarchy\Default Work Unit\MusicSwitch\PlayerSpawn\MUSC_Player_Spawn\MUSC_Player_Spawn		10838112
 

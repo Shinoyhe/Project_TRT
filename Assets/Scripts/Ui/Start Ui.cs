@@ -10,6 +10,7 @@ public class StartUi : MonoBehaviour {
     public Canvas Credits;
     public Canvas Options;
     public Canvas AccessibilityCheck;
+    public Canvas Controls;
 
     public enum StartUiState {
         Title = 0,
@@ -18,7 +19,8 @@ public class StartUi : MonoBehaviour {
         NewGame = 3,
         ContinueGame = 4,
         Quit = 5,
-        AccessibilityCheck = 6
+        AccessibilityCheck = 6,
+        Controls = 7
     }
 
     private StartUiState _currentCanvasState;
@@ -54,6 +56,7 @@ public class StartUi : MonoBehaviour {
     public void MoveToNewGame() => MoveTo(StartUiState.NewGame);
     public void MoveToContinueGame() => MoveTo(StartUiState.ContinueGame);
     public void MoveToQuit() => MoveTo(StartUiState.Quit);
+    public void MoveToControls() => MoveTo(StartUiState.Controls);
 
 
     // Private Helper Methods ====================================================================
@@ -84,6 +87,10 @@ public class StartUi : MonoBehaviour {
             case StartUiState.AccessibilityCheck:
                 // Insert animation!
                 AccessibilityCheck.gameObject.SetActive(false);
+                break;
+            case StartUiState.Controls:
+                // Insert animation!
+                Controls.gameObject.SetActive(false);
                 break;
         }
 
@@ -132,6 +139,10 @@ public class StartUi : MonoBehaviour {
             case StartUiState.AccessibilityCheck:
                 // Insert animation!
                 AccessibilityCheck.gameObject.SetActive(true);
+                break;
+            case StartUiState.Controls:
+                // Insert animation!
+                Controls.gameObject.SetActive(true);
                 break;
         }
 

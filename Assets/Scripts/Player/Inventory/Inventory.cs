@@ -247,6 +247,19 @@ public class Inventory : MonoBehaviour
         OnInventoryUpdated?.Invoke();
     }
 
+    /// <summary>
+    /// </summary>
+    /// <returns>The InventoryCard associated with the cardData ScriptableObject in AllCards</returns>
+    public InventoryCard GetCardFromData(InventoryCardData cardData)
+    {
+        foreach (InventoryCard card in AllCards)
+        {
+            if (card.Data == cardData) { return card; }
+        }
+        Debug.LogError("Inventory: GetCardFromData: Could not find card.");
+        return null;
+    }
+
     #endregion
 
     #region ---------- Private Methods ----------
@@ -262,16 +275,6 @@ public class Inventory : MonoBehaviour
         }
         
         return false;
-    }
-
-    private InventoryCard GetCardFromData(InventoryCardData cardData)
-    {
-        foreach (InventoryCard card in AllCards)
-        {
-            if (card.Data == cardData) { return card; }
-        }
-        Debug.LogError("Could not find card.");
-        return null;
     }
 
     #endregion

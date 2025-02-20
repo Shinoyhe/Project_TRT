@@ -34,6 +34,11 @@ public class InventoryCardObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the data of this UI object to the card given
+    /// </summary>
+    /// <param name="newCard">The cardData to fill</param>
+    /// <returns></returns>
     public void SetData(InventoryCardData newCard)
     {
         if (newCard == null) return;

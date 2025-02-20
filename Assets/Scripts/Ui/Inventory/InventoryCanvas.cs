@@ -36,29 +36,40 @@ public class InventoryCanvas : MonoBehaviour
         _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
     }
 
-    private void UpdateUI()
-    {
-        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
-        UpdateCardGameObjects();
-    }
-
+    /// <summary>
+    /// Updates all of the Card UI elements on the screen to ensure they have accurate data
+    /// </summary>
+    /// <returns></returns>
     private void UpdateCardGameObjects()
     {
-        foreach (GameObject cardObject in _inventoryCardGameObjects) {
-            if (cardObject != null) {
+        foreach (GameObject cardObject in _inventoryCardGameObjects)
+        {
+            if (cardObject != null)
+            {
                 Destroy(cardObject);
             }
         }
         _inventoryCardGameObjects.Clear();
 
-        foreach (InventoryCardData card in _inventoryCardScriptableObjects) {
-            
+        foreach (InventoryCardData card in _inventoryCardScriptableObjects)
+        {
+
             GameObject newCard = Instantiate(_inventoryCardPrefab, _grid.transform);
             newCard.GetComponent<InventoryCardObject>().SetData(card);
             _inventoryCardGameObjects.Add(newCard);
         }
     }
 
+    private void UpdateUI()
+    {
+        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
+        UpdateCardGameObjects();
+    }
+
+    /// <summary>
+    /// Once the GameManager object exists, sets up the inventory screen
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator WaitForGameManager()
     {
         yield return new WaitUntil(() => GameManager.Instance != null);

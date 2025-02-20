@@ -82,6 +82,7 @@ public class InventoryCard
 
     #endregion
 
+    #region ========= [ PUBLIC METHODS ] =========
 
     public InventoryCard()
     {
@@ -112,6 +113,19 @@ public class InventoryCard
     }
 
     /// <summary>
+    /// </summary>
+    /// <returns>Whether or not the player has learned a given context</returns>
+    public bool KnowsContext(ContextOrigins origin)
+    {
+        if (!ContextsLearned.Contains(origin)) return false;
+        return true;
+    }
+
+    #endregion
+
+    #region ========= [ PRIVATE METHODS ] =========
+
+    /// <summary>
     /// Checks the ContextData and returns if it is valid. Looks for duplicate ContextOrigins and 
     /// </summary>
     /// <returns></returns>
@@ -130,13 +144,5 @@ public class InventoryCard
         return true;
     }
 
-    /// <summary>
-    /// </summary>
-    /// <returns>Whether or not the player has learned a given context</returns>
-    public bool KnowsContext(ContextOrigins origin)
-    {
-        if (!ContextsLearned.Contains(origin)) return false;
-        return true;
-    }
-
+    #endregion
 }

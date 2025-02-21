@@ -6,6 +6,9 @@ public class InGameUi : MonoBehaviour
 {
     // Parameters =================================================================================
 
+    [Header("Shared Dependency")]
+    public Canvas NavBar;
+
     // Dialogue
     [Header("Dependencies")]
     public Canvas Default;
@@ -40,6 +43,37 @@ public class InGameUi : MonoBehaviour
         // Swap with Accessibility Check
         MoveTo(UiStates.Default);
     }
+    
+    /// <summary>
+    /// Check for player input and update UI.
+    /// </summary>
+    public void Update() {
+
+        if(GameManager.PlayerInput.GetMenu1Down()) {
+            if (_currentCanvasState == UiStates.Inventory) {
+                MoveToDefault();
+            } else {
+                MoveToInventory();
+            }
+        }
+
+        if (GameManager.PlayerInput.GetMenu2Down()) {
+            if (_currentCanvasState == UiStates.Journal) {
+                MoveToDefault();
+            } else {
+                MoveToJournal();
+            }
+        }
+
+        if (GameManager.PlayerInput.GetStartDown()) {
+            if (_currentCanvasState == UiStates.Pause) {
+                MoveToDefault();
+            } else {
+                MoveToPause();
+            }
+        }
+    }
+
     // Public Utility Methods ====================================================================
 
     /// <summary>
@@ -63,11 +97,23 @@ public class InGameUi : MonoBehaviour
     public void MoveToInventory() => MoveTo(UiStates.Inventory);
     public void MoveToBartering() => MoveTo(UiStates.Bartering);
 
-    public void Update() {
-    
-    }
-
     // Private Helper Methods ====================================================================
+
+    /// <summary>
+    /// Show or hide the Nav Bar based on the state.
+    /// </summary>
+    /// <param name="currentState"></param>
+    void ToggleNavBar(UiStates currentState) {
+
+        bool usingNavBar = false;
+
+        if(currentState == UiStates.Pause || currentState == UiStates.Journal || currentState == UiStates.Inventory) {
+            usingNavBar = true;
+        }
+
+        // Add Animation here!
+        NavBar.gameObject.SetActive(usingNavBar);
+    }
 
 
     /// <summary>
@@ -124,6 +170,9 @@ public class InGameUi : MonoBehaviour
 
         // Set our new state
         _currentCanvasState = stateToStart;
+
+        // Setup Nav Bar if needed!
+        ToggleNavBar(_currentCanvasState);
 
         switch (stateToStart) {
             case UiStates.Default:

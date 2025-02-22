@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{3279C956-3F7F-40C1-A7C9-81DB296EEB22}" SchemaVersion="123">
+	<Busses>
+		<WorkUnit Name="SFX" ID="{3279C956-3F7F-40C1-A7C9-81DB296EEB22}" PersistMode="Standalone">
+			<ChildrenList>
+				<Bus Name="SFX Bus" ID="{13BA7EA8-CF56-4CB2-92D3-FFA36C367830}">
+					<ReferenceList>
+						<Reference Name="AudioDevice" PluginName="System" CompanyID="0" PluginID="174" PluginType="7">
+							<ObjectRef Name="System" ID="{BBE257BB-2AC2-4832-BFE3-C16A0779831E}" WorkUnitID="{C971FB2F-3831-40BB-B641-76F8288A873E}"/>
+						</Reference>
+					</ReferenceList>
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{60C9E63A-12DB-45C6-A548-ED731318091C}" ShortID="148353573">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="BusVolume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="SFXVolume" ID="{7C64FE3A-B5B3-434F-8D06-8914AB1C8A1F}" WorkUnitID="{65E06BB7-A22A-4C14-A2F1-C95EF14073C4}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{E95CDB8D-2A71-45D6-A636-5A80373B3563}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-200</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>50</XPos>
+																<YPos>-0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>10</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
+				</Bus>
+			</ChildrenList>
+		</WorkUnit>
+	</Busses>
+</WwiseDocument>

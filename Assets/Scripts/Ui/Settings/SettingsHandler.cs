@@ -3,7 +3,7 @@ using UnityEngine;
 public class SettingsHandler : MonoBehaviour
 {
     private ResolutionFullscreenHandler resFullscreen;
-    //private AccessibilitySettingsHandler accessibility;
+    private AccessibilitySettingsHandler accessibility;
 
     public void Initialize()
     {
@@ -14,11 +14,11 @@ public class SettingsHandler : MonoBehaviour
         //volumeHandler = GetComponentInChildren<FMODVolumeHandler>(includeInactive:true);
         //volumeHandler.Initialize();
 
-        resFullscreen = GetComponentInChildren<ResolutionFullscreenHandler>(includeInactive:true);
+        resFullscreen = GetComponent<ResolutionFullscreenHandler>();
         resFullscreen.Initialize();
 
-        //accessibility = GetComponentInChildren<AccessibilitySettingsHandler>(includeInactive:true);
-        //accessibility.Initialize();
+        accessibility = GetComponent<AccessibilitySettingsHandler>();
+        accessibility.Initialize();
     }
 
     private void Start()

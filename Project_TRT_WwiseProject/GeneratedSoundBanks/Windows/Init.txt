@@ -10,13 +10,15 @@ State	ID	Name	State Group			Notes
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
 	988953028	SFXVolume			\SFX\SFXVolume	
+	1204480359	AmbienceVolume			\Ambience\AmbienceVolume	
 	2346531308	MusicVolume			\Music\MusicVolume	
 	2918011349	MasterVolume			\Default Work Unit\MasterVolume	
 
 Audio Bus	ID	Name			Wwise Object Path	Notes
-	1502772432	SFX Bus			\SFX\SFX Bus	
-	3127962312	Music Bus			\Music\Music Bus	
+	1502772432	SFX Bus			\Default Work Unit\Master Audio Bus\SFX Bus	
+	3127962312	Music Bus			\Default Work Unit\Master Audio Bus\Music Bus	
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+	4202237879	Ambience Bus			\Default Work Unit\Master Audio Bus\Ambience Bus	
 
 Audio Devices	ID	Name	Type				Notes
 	2317455096	No_Output	No Output			

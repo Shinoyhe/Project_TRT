@@ -30,6 +30,7 @@ public class UIAudioSlider : MonoBehaviour
     // Display name will be the same as the FMOD Bus, unless displayNameOverride exists.
     private string ParseDisplayName()
     {
+        if (displayNameOverride != "") { return displayNameOverride; }
         return bus.ToString();
     }
 

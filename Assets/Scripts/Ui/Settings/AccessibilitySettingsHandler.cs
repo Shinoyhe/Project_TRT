@@ -71,7 +71,7 @@ public class AccessibilitySettingsHandler : MonoBehaviour
         // Load UI values from settings
 
         if (screenshakeSlider != null) screenshakeSlider.value = screenshakeScaling;
-        if (screenshakeReadout != null) screenshakeReadout.text = screenshakeScaling.ToString();
+        if (screenshakeReadout != null) UpdateScreenshakeText();
 
         if (flashingToggle != null) flashingToggle.isOn = disableFlashing;
 
@@ -101,6 +101,11 @@ public class AccessibilitySettingsHandler : MonoBehaviour
     {
         screenshakeScaling = value;
         Settings.ScreenShakeScalar = screenshakeScaling;
+    }
+
+    public void UpdateScreenshakeText()
+    {
+        screenshakeReadout.text = $"{(int) (screenshakeScaling * 100)}%";
     }
 
     public void SetDisableFlashing(bool value)

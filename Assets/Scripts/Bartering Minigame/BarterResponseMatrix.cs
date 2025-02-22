@@ -2,9 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-
-
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -30,23 +27,11 @@ public class BarterResponseMatrix : ScriptableObject
     public State defaultState = State.NEUTRAL;
     public Dictionary<PlayingCard, Dictionary<PlayingCard, State>> oppPlayerToMatch;
 
-    // Misc Internal Variables ====================================================================
-
-
-
     // Initializers ===============================================================================
 
     private void OnEnable()
     {
         UpdateOppCards();
-    }
-
-    /// <summary>
-    /// Populate our internal response lookup table. MUST be called before GetResponse() is used.
-    /// </summary>
-    public void Initialize()
-    {
-        return;
     }
 
     /// <summary>
@@ -70,17 +55,9 @@ public class BarterResponseMatrix : ScriptableObject
         return oppPlayerToMatch[oppCard][playerCard];
     }
 
-    public void SetMatch(PlayingCard oppCard, PlayingCard playerCard, State match)
-    {
-        oppPlayerToMatch[oppCard][playerCard] = match;
-    }
+    // Editor-friendly methods ====================================================================
 
-    public void RemoveDuplicateOppCards()
-    {
-        oppCards = oppCards.Distinct().Where(x => x != null).ToArray();
-    }
-
-    public void UpdateOppCards()
+    private void UpdateOppCards()
     {
         oppPlayerToMatch ??= new();
 
@@ -105,150 +82,203 @@ public class BarterResponseMatrix : ScriptableObject
                 // And when this card is played by the player.
                 foreach (PlayingCard existingCard in oppPlayerToMatch.Keys) {
                     oppPlayerToMatch[existingCard][newCard] = State.NEUTRAL;
-                    Debug.Log($"Set card at ({existingCard}, {newCard}) to NEUTRAL");
 
                     if (!newCard.Matches(existingCard)) {
                         oppPlayerToMatch[newCard][existingCard] = State.NEUTRAL;
-                        Debug.Log($"Set card at ({newCard}, {existingCard}) to NEUTRAL");
                     }
                 }
             }
         }
     }
-}
 
-#if UNITY_EDITOR
-[CustomEditor(typeof(BarterResponseMatrix))]
-public class EditorSpawnTemplate : Editor
-{
-    private BarterResponseMatrix _matrix;
-    // Check, empty character, or cross
-    private string[] _stateOpts = new []{"✓", "‎", "✗"};
-    private int[,] _choiceIndex;
-    private int _lastCount;
-    private static uint _idLength = 3;
-    private string[] _oppCardNames;
-
-    private void OnEnable()
+    private void SetMatch(PlayingCard oppCard, PlayingCard playerCard, State match)
     {
-        _matrix = (BarterResponseMatrix)target;
-
-        _matrix.RemoveDuplicateOppCards();
-        _matrix.UpdateOppCards();
-
-        _lastCount = _matrix.OppCards.Length;
-
-        RegenerateTableHeaders();
-
-        _choiceIndex = new int[_lastCount,_lastCount];
-        for (int r=0; r < _lastCount; r++) {
-            for (int c=0; c < _lastCount; c++) {
-                PlayingCard oppCard = _matrix.OppCards[c];
-                PlayingCard playerCard = _matrix.OppCards[r];
-                _choiceIndex[r,c] = (int)_matrix.GetMatch(oppCard, playerCard);
-            }
-        }
+        oppPlayerToMatch[oppCard][playerCard] = match;
     }
 
-    public override void OnInspectorGUI()
+    private void RemoveDuplicateOppCards()
     {
-        if (!_matrix) return;
+        oppCards = oppCards.Distinct().Where(x => x != null).ToArray();
+    }
 
-        serializedObject.Update();
+    // Editor class ===============================================================================
 
-        if (_matrix.OppCards.Length < _lastCount) {
-            UpdateMatrix();
-        }
+    #if UNITY_EDITOR
+    [CustomEditor(typeof(BarterResponseMatrix))]
+    public class EditorSpawnTemplate : Editor
+    {
+        private BarterResponseMatrix _matrix;
+        // Check, empty character, or cross
+        private static readonly string[] _stateOpts = new []{"✓", "‎", "✗"};
+        private static readonly uint _idLength = 3;
+        private int[,] _choiceIndex;
+        private int _lastCount;
+        
+        private string[] _oppCardNames;
 
-        if (GUILayout.Button("Update OppCards in Matrix")) {
-            UpdateMatrix();
-        }
+        private void OnEnable()
+        {
+            _matrix = (BarterResponseMatrix)target;
 
-        EditorGUILayout.BeginHorizontal();
-            EditorGUIUtility.labelWidth = 1;
-            EditorGUILayout.LabelField("Opponent >", EditorStyles.miniLabel);
-            for (int c = 0; c < _lastCount; c++) {
-                EditorGUILayout.LabelField(GetShortId(c), EditorStyles.boldLabel);
-            }
-        EditorGUILayout.EndHorizontal();
+            _matrix.RemoveDuplicateOppCards();
+            _matrix.UpdateOppCards();
 
-        EditorGUILayout.LabelField("Player v", EditorStyles.miniLabel);
+            _lastCount = _matrix.OppCards.Length;
 
-        for (int r = 0; r < _lastCount; r++) {
-            EditorGUILayout.BeginHorizontal();
+            RegenerateTableHeaders();
 
-                EditorGUIUtility.labelWidth = 1;
-                EditorGUILayout.LabelField(GetShortId(r), EditorStyles.boldLabel);
-
-                for (int c = 0; c < _lastCount; c++) {
-
-                    Color color = (BarterResponseMatrix.State)_choiceIndex[r,c] switch {
-                        BarterResponseMatrix.State.POSITIVE => Color.green,
-                        BarterResponseMatrix.State.NEGATIVE => Color.red,
-                        _ => Color.white
-                    };
-
-                    GUI.backgroundColor = color;
-                    int newIndex = EditorGUILayout.Popup(_choiceIndex[r,c], _stateOpts);
-                    // If changed, write back an update.
-                    if (newIndex != _choiceIndex[r,c]) {
-                        _choiceIndex[r,c] = newIndex;
-                        _matrix.SetMatch(_matrix.OppCards[c], _matrix.OppCards[r], 
-                                         (BarterResponseMatrix.State)newIndex);
-                    }   
+            _choiceIndex = new int[_lastCount,_lastCount];
+            for (int r=0; r < _lastCount; r++) {
+                for (int c=0; c < _lastCount; c++) {
+                    PlayingCard oppCard = _matrix.OppCards[c];
+                    PlayingCard playerCard = _matrix.OppCards[r];
+                    _choiceIndex[r,c] = (int)_matrix.GetMatch(oppCard, playerCard);
                 }
+            }
+        }
 
+        public override void OnInspectorGUI()
+        {
+            if (!_matrix) return;
+
+            serializedObject.Update();
+
+            if (_matrix.OppCards.Length < _lastCount) {
+                UpdateMatrix();
+            }
+
+            if (GUILayout.Button("Update OppCards in Matrix")) {
+                UpdateMatrix();
+            }
+
+            EditorGUILayout.BeginHorizontal();
+                EditorGUIUtility.labelWidth = 1;
+                EditorGUILayout.LabelField("Opponent >", EditorStyles.miniLabel);
+                for (int c = 0; c < _lastCount; c++) {
+                    EditorGUILayout.LabelField(GetShortId(c), EditorStyles.boldLabel);
+                }
             EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.LabelField("Player v", EditorStyles.miniLabel);
+
+            for (int r = 0; r < _lastCount; r++) {
+                EditorGUILayout.BeginHorizontal();
+
+                    EditorGUIUtility.labelWidth = 1;
+                    EditorGUILayout.LabelField(GetShortId(r), EditorStyles.boldLabel);
+
+                    for (int c = 0; c < _lastCount; c++) {
+
+                        Color color = (State)_choiceIndex[r,c] switch {
+                            State.POSITIVE => Color.green,
+                            State.NEGATIVE => Color.red,
+                            _ => Color.white
+                        };
+
+                        GUI.backgroundColor = color;
+                        int newIndex = EditorGUILayout.Popup(_choiceIndex[r,c], _stateOpts);
+                        // If changed, write back an update.
+                        if (newIndex != _choiceIndex[r,c]) {
+                            _choiceIndex[r,c] = newIndex;
+                            _matrix.SetMatch(_matrix.OppCards[c], _matrix.OppCards[r], 
+                                            (State)newIndex);
+                        }   
+                    }
+
+                EditorGUILayout.EndHorizontal();
+                GUI.backgroundColor = Color.white;
+            }
+
+            // Reset label width and GUI color.
+            EditorGUIUtility.labelWidth = 0;
+            GUI.backgroundColor = Color.white;
+
+            serializedObject.ApplyModifiedProperties();
+
+            base.OnInspectorGUI();
+
+            // ================
+            // Debug testing
+            // ================
+
+            // MiscEditorMethods.HorizontalLine(Color.white);
+
+            EditorGUILayout.BeginHorizontal();
+                EditorGUIUtility.labelWidth = 1;
+                EditorGUILayout.LabelField("Opponent >", EditorStyles.miniLabel);
+                for (int c = 0; c < _lastCount; c++) {
+                    EditorGUILayout.LabelField(GetShortId(c), EditorStyles.boldLabel);
+                }
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.LabelField("Player v", EditorStyles.miniLabel);
+
+            for (int r = 0; r < _lastCount; r++) {
+                EditorGUILayout.BeginHorizontal();
+
+                    EditorGUIUtility.labelWidth = 1;
+                    EditorGUILayout.LabelField(GetShortId(r), EditorStyles.boldLabel);
+
+                    for (int c = 0; c < _lastCount; c++) {
+
+                        Color color = (State)_choiceIndex[r,c] switch {
+                            State.POSITIVE => Color.green,
+                            State.NEGATIVE => Color.red,
+                            _ => Color.white
+                        };
+
+                        if (GUILayout.Button("Test")) {
+                            Debug.Log($"Opp({_matrix.OppCards[c]}) Player({_matrix.OppCards[r]}) "
+                                    + $"= {_matrix.GetMatch(_matrix.OppCards[c], _matrix.OppCards[r])}");
+                        }
+                    }
+
+                EditorGUILayout.EndHorizontal();
+                GUI.backgroundColor = Color.white;
+            }
+
+            // Reset label width and GUI color.
+            EditorGUIUtility.labelWidth = 0;
             GUI.backgroundColor = Color.white;
         }
 
-        // Reset label width and GUI color.
-        EditorGUIUtility.labelWidth = 0;
-        GUI.backgroundColor = Color.white;
+        private void UpdateMatrix()
+        {
+            _matrix.RemoveDuplicateOppCards();
+            _matrix.UpdateOppCards();
 
-        serializedObject.ApplyModifiedProperties();
-
-        base.OnInspectorGUI();
-    }
-
-    private void UpdateMatrix()
-    {
-        _matrix.RemoveDuplicateOppCards();
-        _matrix.UpdateOppCards();
-
-        _lastCount = _matrix.OppCards.Length;
-        _choiceIndex = new int[_lastCount, _lastCount];
-        for (int r = 0; r < _lastCount; r++) {
-            for (int c = 0; c < _lastCount; c++) {
-                PlayingCard oppCard = _matrix.OppCards[c];
-                PlayingCard playerCard = _matrix.OppCards[r];
-                _choiceIndex[r, c] = (int)_matrix.GetMatch(oppCard, playerCard);
+            _lastCount = _matrix.OppCards.Length;
+            _choiceIndex = new int[_lastCount, _lastCount];
+            for (int r = 0; r < _lastCount; r++) {
+                for (int c = 0; c < _lastCount; c++) {
+                    PlayingCard oppCard = _matrix.OppCards[c];
+                    PlayingCard playerCard = _matrix.OppCards[r];
+                    _choiceIndex[r, c] = (int)_matrix.GetMatch(oppCard, playerCard);
+                }
             }
+
+            RegenerateTableHeaders();
         }
 
-        RegenerateTableHeaders();
-    }
-
-    private void RegenerateTableHeaders()
-    {
-        _oppCardNames = _matrix.OppCards.Select(x => (x != null) ? x.Id : "Null").ToArray();
-    }
-
-    private string GetShortId(int i)
-    {
-        // return $"{i}";
-
-        if (i < 0 || i >= _oppCardNames.Length) {
-            Debug.LogError($"BarterResponseMatrix Editor Error: GetShortId failed. Index ({i}) was "
-                         + $"out of range of _oppCardNames (length {_oppCardNames.Length}).");
-            return "Null";
+        private void RegenerateTableHeaders()
+        {
+            _oppCardNames = _matrix.OppCards.Select(x => (x != null) ? x.Id : "Null").ToArray();
         }
 
-        // Take our abbreviated length, or the full id length, whichever is shorter.
-        string id = _oppCardNames[i];
-        int length = (int)Mathf.Min(_idLength, id.Length);
+        private string GetShortId(int i)
+        {
+            if (i < 0 || i >= _oppCardNames.Length) {
+                Debug.LogError($"BarterResponseMatrix Editor Error: GetShortId failed. Index ({i}) was "
+                            + $"out of range of _oppCardNames (length {_oppCardNames.Length}).");
+                return "Null";
+            }
 
-        return id[0..length];
+            // Take our abbreviated length, or the full id length, whichever is shorter.
+            string id = _oppCardNames[i];
+            int length = (int)Mathf.Min(_idLength, id.Length);
+
+            return id[0..length];
+        }
     }
+    #endif
 }
-#endif

@@ -59,7 +59,7 @@ public class UIAudioSlider : MonoBehaviour
 
     public void UpdateText(System.Single value)
     {
-        // Convert from range 0 - 2 to range 0 - 200
-        valueObj.GetComponent<TMP_Text>().text = (value * 100).ToString("f0") + "%";
+        // Convert from range 0 - 100 to range 0 - 200
+        valueObj.GetComponent<TMP_Text>().text = (value * 2).ToString("f0") + "%";
     }
 }

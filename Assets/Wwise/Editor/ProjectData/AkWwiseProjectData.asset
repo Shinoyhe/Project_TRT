@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 587ca0226052be4e9b8540a22c4f2092
     GuidInternal: 
-    m_lastTime: -8584613477687797496
+    m_lastTime: -8584613468141955542
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -441,8 +441,22 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: be288e71c0cc3c439b7b4bfb6a1a4c72
     GuidInternal: 
-    m_lastTime: -8584616603806933542
-    List: []
+    m_lastTime: -8584613468462925916
+    List:
+    - name: MasterVolume
+      guid: 59d20be76f82c04d9077f7a3d88c2dfc
+      id: 2918011349
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: be288e71c0cc3c439b7b4bfb6a1a4c72
+      - ElementName: MasterVolume
+        ObjectType: 13
+        guid: 59d20be76f82c04d9077f7a3d88c2dfc
+      Path: Game Parameters\Default Work Unit\MasterVolume
   - PhysicalPath: Game Parameters\Music.wwu
     PathAndIcons:
     - ElementName: Game Parameters
@@ -652,7 +666,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 050000000600000007000000090000000a0000000c0000000e00000012000000170000001f00000021000000
+  ExpandedWaapiItemIds: 01000000050000000600000007000000090000000a0000000c0000000e00000012000000170000001f000000200000002100000022000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

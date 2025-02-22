@@ -45,7 +45,7 @@ public class UIAudioSlider : MonoBehaviour
         }
         else
         {
-            volume = bus.GetGlobalValue();
+            volume = GetComponent<Slider>().value;
         }
         
         GetComponent<Slider>().value = volume;

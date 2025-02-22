@@ -64,9 +64,7 @@ public class ResolutionFullscreenHandler : MonoBehaviour
         HashSet<Vector2Int> resolutionSet = new();
         foreach (Resolution r in Screen.resolutions)
         {
-            // We want to add two things to this set, per default resolution.
-            // 1. A square aspect ratio, with side length equal to the shortest side
-            //    of the default resolution.
+            // We want to add one things to this set, per default resolution.
             // 2. The default resolution.
             // If the default resolution is shorter than 16:9, skip BOTH these steps!
             // ================
@@ -74,10 +72,6 @@ public class ResolutionFullscreenHandler : MonoBehaviour
             // If the aspect ratio is equal to 16:9 or is taller...
             if (r.width / r.height <= 16f / 9f)
             {
-                // Find the shortest dimension, and add a square version of it.
-                int shortest = (r.width < r.height) ? r.width : r.height;
-                resolutionSet.Add(new(shortest, shortest));
-
                 resolutionSet.Add(new(r.width, r.height));
             }
         }

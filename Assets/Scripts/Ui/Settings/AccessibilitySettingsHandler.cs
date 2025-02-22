@@ -24,13 +24,9 @@ public class AccessibilitySettingsHandler : MonoBehaviour
     [BoxGroup("UI Elements"), SerializeField, Tooltip("The toggle controlling our One Hand Mode.")]
     Toggle OneHandModeToggle;
 
-    [BoxGroup("Values"), SerializeField, Tooltip("A float that we scale our screenshake by."), ReadOnly]
     private float screenshakeScaling;
-    [BoxGroup("Values"), SerializeField, Tooltip("A bool value for reducing flashing."), ReadOnly]
     private bool disableFlashing;
-    [BoxGroup("Values"), SerializeField, Tooltip("A bool value for enabling SFX Captions."), ReadOnly]
     private bool enableSFXCaptions;
-    [BoxGroup("Values"), SerializeField, Tooltip("A bool value for enabling One Hand Mode."), ReadOnly]
     private bool enableOneHandMode;
 
     // ==============================================================

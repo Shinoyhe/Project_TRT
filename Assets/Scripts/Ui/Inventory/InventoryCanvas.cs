@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,11 +13,7 @@ public class InventoryCanvas : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Inventory.OnInventoryUpdated -= UpdateUI;
-        GameManager.Inventory.OnInventoryUpdated += UpdateUI;
-        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
-
-        UpdateUI();
+        StartCoroutine("WaitForGameManager");
     }
 
     private void OnDisable()
@@ -39,30 +36,48 @@ public class InventoryCanvas : MonoBehaviour
         _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
     }
 
+    /// <summary>
+    /// Updates all of the Card UI elements on the screen to ensure they have accurate data
+    /// </summary>
+    /// <returns></returns>
+    private void UpdateCardGameObjects()
+    {
+        foreach (GameObject cardObject in _inventoryCardGameObjects)
+        {
+            if (cardObject != null)
+            {
+                Destroy(cardObject);
+            }
+        }
+        _inventoryCardGameObjects.Clear();
+
+        foreach (InventoryCardData card in _inventoryCardScriptableObjects)
+        {
+
+            GameObject newCard = Instantiate(_inventoryCardPrefab, _grid.transform);
+            newCard.GetComponent<InventoryCardObject>().SetData(card);
+            _inventoryCardGameObjects.Add(newCard);
+        }
+    }
+
     private void UpdateUI()
     {
         _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
         UpdateCardGameObjects();
     }
 
-    private void UpdateCardGameObjects()
+    /// <summary>
+    /// Once the GameManager object exists, sets up the inventory screen
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator WaitForGameManager()
     {
-        foreach (GameObject cardObject in _inventoryCardGameObjects) {
-            if (cardObject != null) {
-                Destroy(cardObject);
-            }
-        }
-        _inventoryCardGameObjects.Clear();
+        yield return new WaitUntil(() => GameManager.Instance != null);
 
-        foreach (InventoryCardData card in _inventoryCardScriptableObjects) {
-            
-            GameObject newCard = Instantiate(_inventoryCardPrefab, _grid.transform);
-            newCard.GetComponent<InventoryCardObject>().SetData(card);
-            _inventoryCardGameObjects.Add(newCard);
+        GameManager.Inventory.OnInventoryUpdated -= UpdateUI;
+        GameManager.Inventory.OnInventoryUpdated += UpdateUI;
+        _inventoryCardScriptableObjects = GameManager.Inventory.GetDatas();
 
-            foreach (GameObject oldcard in _inventoryCardGameObjects) {
-                print(oldcard.GetComponent<InventoryCardObject>().CardName);
-            }
-        }
+        UpdateUI();
     }
 }

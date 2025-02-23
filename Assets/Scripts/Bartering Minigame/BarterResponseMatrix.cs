@@ -9,21 +9,13 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "New BarterResponseMatrix", menuName = "Bartering/BarterResponseMatrix")]
 public class BarterResponseMatrix : ScriptableObject
 {
-    // Parameters and Publics =====================================================================
+    // Helper classes and enums ===================================================================
 
     public enum State {
         POSITIVE,
         NEUTRAL,
         NEGATIVE,
     }
-
-    [Tooltip("An ID used for debug purposes.")]
-    public string id;
-    [SerializeField, Tooltip("The cards that this opponent can play.")]
-    private PlayingCard[] oppCards = new PlayingCard[0];
-    public PlayingCard[] OppCards => oppCards;
-    [Tooltip("The default state returned whenever the player plays a card not in OppCards.")]
-    public State defaultState = State.NEUTRAL;
 
     [System.Serializable]
     public class CardCardStateTriplet {
@@ -39,15 +31,20 @@ public class BarterResponseMatrix : ScriptableObject
         }
     }
 
-    [SerializeField] private List<CardCardStateTriplet> editorMatchList;
-    public Dictionary<PlayingCard, Dictionary<PlayingCard, State>> runtimeMatchDict;
+    // Parameters and Publics =====================================================================
 
-    // Editor-time methods ========================================================================
+    [Tooltip("An ID used for debug purposes.")]
+    public string id;
+    [SerializeField, Tooltip("The cards that this opponent can play.")]
+    private PlayingCard[] oppCards = new PlayingCard[0];
+    public PlayingCard[] OppCards => oppCards;
+    [Tooltip("The default state returned whenever the player plays a card not in OppCards.")]
+    public State defaultState = State.NEUTRAL;
 
-    private void OnEnable()
-    {
-        UpdateTriplets();
-    }
+    // Misc Internal Variables ====================================================================
+
+    [SerializeField] private List<CardCardStateTriplet> _editorMatchList;
+    public Dictionary<PlayingCard, Dictionary<PlayingCard, State>> _runtimeMatchDict;    
 
     // Runtime methods ============================================================================
 
@@ -57,18 +54,18 @@ public class BarterResponseMatrix : ScriptableObject
     /// </summary>
     public void InitializeDict()
     {
-        if (runtimeMatchDict == null) {
-            runtimeMatchDict = new();
+        if (_runtimeMatchDict == null) {
+            _runtimeMatchDict = new();
         } else {
-            runtimeMatchDict.Clear();
+            _runtimeMatchDict.Clear();
         }
 
-        foreach (var triplet in editorMatchList) {
-            if (!runtimeMatchDict.ContainsKey(triplet.OppCard)) {
-                runtimeMatchDict[triplet.OppCard] = new();
+        foreach (var triplet in _editorMatchList) {
+            if (!_runtimeMatchDict.ContainsKey(triplet.OppCard)) {
+                _runtimeMatchDict[triplet.OppCard] = new();
             }
 
-            runtimeMatchDict[triplet.OppCard][triplet.PlayerCard] = triplet.Match;
+            _runtimeMatchDict[triplet.OppCard][triplet.PlayerCard] = triplet.Match;
         }
     }
 
@@ -86,44 +83,49 @@ public class BarterResponseMatrix : ScriptableObject
             return State.NEUTRAL;
         }
 
-        if (!runtimeMatchDict[oppCard].ContainsKey(playerCard)) {
+        if (!_runtimeMatchDict[oppCard].ContainsKey(playerCard)) {
             return defaultState;
         }
 
         // Else, our indexing is valid!
-        return runtimeMatchDict[oppCard][playerCard];
+        return _runtimeMatchDict[oppCard][playerCard];
     }
 
-    // Editor-friend methods ======================================================================
+    // Editor-time methods ========================================================================
 
-    private void UpdateTriplets()
+    private void OnEnable()
+    {
+        UpdateTripletsEditor();
+    }
+
+    private void UpdateTripletsEditor()
     {
         // Updates our dictionary based on the contents of our OppCards list.
         // ================
 
         // Lazily initialize- if null, create.
-        // editorMatchList ??= new();
+        _editorMatchList ??= new();
 
         // Remove missing cards.
         // Iterate through an array copy, so we can remove from the list without getting changed-
         // while-iterating errors.
-        foreach (var triplet in editorMatchList.ToArray()) {
+        foreach (var triplet in _editorMatchList.ToArray()) {
             // If one of the triplet's cards isn't in our valid list, remove the triplet.
             if (!OppCards.Contains(triplet.OppCard) || !OppCards.Contains(triplet.PlayerCard)) {
-                editorMatchList.Remove(triplet);
+                _editorMatchList.Remove(triplet);
             }
         }
 
         // Add new cards.
         foreach (PlayingCard oppCard in OppCards) {
             // If we don't have any triplets with our oppCard, instantiate them.
-            if (!editorMatchList.Any(x => x.OppCard == oppCard || x.PlayerCard == oppCard)) {
+            if (!_editorMatchList.Any(x => x.OppCard == oppCard || x.PlayerCard == oppCard)) {
                 foreach (PlayingCard playerCard in OppCards) {
                     // Add the opponent-player pair...
-                    editorMatchList.Add(new(oppCard, playerCard, State.NEUTRAL));
+                    _editorMatchList.Add(new(oppCard, playerCard, State.NEUTRAL));
                     // and the player-opponent pair (if they're not the same)
                     if (oppCard != playerCard) {
-                        editorMatchList.Add(new(playerCard, oppCard, State.NEUTRAL));
+                        _editorMatchList.Add(new(playerCard, oppCard, State.NEUTRAL));
                     }
                 }
             }
@@ -133,20 +135,33 @@ public class BarterResponseMatrix : ScriptableObject
 
     private void SetMatchEditor(PlayingCard oppCard, PlayingCard playerCard, State match)
     {
-        var triplet = editorMatchList.Find(x => x.OppCard == oppCard && x.PlayerCard == playerCard);
+        // Searches _editorMatchList for a CardCardState triplet that matches both cards, then 
+        // set that triplet's state to match.
+        // Searching the list manually is expensive, so we only use this at editor-time.
+        // ================
+
+        var triplet = _editorMatchList.Find(x => x.OppCard == oppCard && 
+                                            x.PlayerCard == playerCard);
         triplet.Match = match;
     }
 
     private State GetMatchEditor(PlayingCard oppCard, PlayingCard playerCard)
     {
-        var triplet = editorMatchList.Find(x => x.OppCard == oppCard && 
-                                           x.PlayerCard == playerCard);
+        // Searches _editorMatchList for a CardCardState triplet that matches both cards, then 
+        // returns that triplet's state.
+        // Searching the list manually is expensive, so we only use this at editor-time.
+        // ================
+
+        var triplet = _editorMatchList.Find(x => x.OppCard == oppCard && 
+                                            x.PlayerCard == playerCard);
         return triplet.Match;
     }
 
-    private void CleanUpOppCards()
+    private void CleanOppCardsEditor()
     {
-        // Remove duplicates and null cards.
+        // Remove duplicates and null cards from oppCards.
+        // ================
+
         oppCards = oppCards.Distinct().Where(x => x != null).ToArray();
     }
 
@@ -174,8 +189,8 @@ public class BarterResponseMatrix : ScriptableObject
 
         // An int array that holds the state of all the dropdowns.
         private int[,] _choiceIndex;
-        // As of the last time we checked, the length of _matrix.OppCards
-        private int _lastCount;
+        // As of the last time we checked, the length of _matrix.oppCards
+        private int _lastCount = 0;
         // Where we store the IDs of cards, used to print headers.
         private string[] _cardIds;
 
@@ -269,6 +284,9 @@ public class BarterResponseMatrix : ScriptableObject
             Multispace(3);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("defaultState"));
 
+            // Multispace(3);
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("_editorMatchList"));
+
             // Save our changes to the asset.
             serializedObject.ApplyModifiedProperties();
         }
@@ -282,8 +300,8 @@ public class BarterResponseMatrix : ScriptableObject
             // repaints our _choiceIndex array, and rewrites our headers.
             // ================
 
-            _matrix.CleanUpOppCards();
-            _matrix.UpdateTriplets();
+            _matrix.CleanOppCardsEditor();
+            _matrix.UpdateTripletsEditor();
 
             _lastCount = _matrix.OppCards.Length;
             _choiceIndex = new int[_lastCount, _lastCount];
@@ -301,13 +319,20 @@ public class BarterResponseMatrix : ScriptableObject
 
         private void RegenerateCardIds()
         {
-            _cardIds = _matrix.OppCards.Select(x => (x != null) ? x.Id : "Null").ToArray();
+            // Recreate the _cardIds array, used for matrix headers.
+            // ================
+
+            _cardIds = _matrix.oppCards.Select(x => (x != null) ? x.Id : "Null").ToArray();
         }
 
         //  Visual helpers ========================================================================
 
         private string GetShortId(int i)
         {
+            // Given a index in our _cardIds list, returns the header at that index, abbreviated to
+            // _idLength.
+            // ================
+
             if (i < 0 || i >= _cardIds.Length) {
                 Debug.LogError($"BarterResponseMatrix Editor Error: GetShortId failed. Index ({i}) was "
                             + $"out of range of _oppCardNames (length {_cardIds.Length}).");
@@ -323,6 +348,9 @@ public class BarterResponseMatrix : ScriptableObject
 
         private static void HorizontalLine(Color color) 
         {
+            // Creates a horizontal line across the editor GUI.
+            // ================
+            
             _horizontalLine.normal.background = EditorGUIUtility.whiteTexture;
             _horizontalLine.margin = new RectOffset(0, 0, 4, 4);
             _horizontalLine.fixedHeight = 1;

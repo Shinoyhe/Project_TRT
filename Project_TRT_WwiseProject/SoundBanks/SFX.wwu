@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{E9929CF3-8C8D-4FF1-9D79-F84C53EB00B3}" SchemaVersion="123">
+	<SoundBanks>
+		<WorkUnit Name="SFX" ID="{E9929CF3-8C8D-4FF1-9D79-F84C53EB00B3}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="SFX" ID="{335496CC-45EA-4922-B9FA-C65217B7662E}">
+					<ObjectInclusionList>
+						<ObjectRef Name="BART_Card_Shuffle" ID="{3CCE49B4-F34A-4480-89B5-57B99F3CEB39}" WorkUnitID="{3247C940-411F-4408-91C4-B5B163CA6270}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="BART_Card_Place" ID="{AE3C7070-2049-4812-8685-54261706E95E}" WorkUnitID="{3247C940-411F-4408-91C4-B5B163CA6270}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

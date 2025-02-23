@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{3247C940-411F-4408-91C4-B5B163CA6270}" SchemaVersion="123" RootDocumentID="{DC67F875-991A-4906-8DF4-975D819BEC40}" ParentDocumentID="{DC67F875-991A-4906-8DF4-975D819BEC40}">
+	<Events>
+		<WorkUnit Name="BarteringUI" ID="{3247C940-411F-4408-91C4-B5B163CA6270}" OwnerID="{DC67F875-991A-4906-8DF4-975D819BEC40}" PersistMode="Nested">
+			<ChildrenList>
+				<Event Name="BART_Card_Place" ID="{AE3C7070-2049-4812-8685-54261706E95E}">
+					<ChildrenList>
+						<Action Name="" ID="{8C99768E-09A0-48FF-B813-8764DF55AEBF}" ShortID="42606610">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BART_card_place" ID="{F582E229-E706-4A0A-A6C8-F72CFC6CBCB2}" WorkUnitID="{7C65D6C1-222E-48DF-8415-47416B8AB09F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="BART_Card_Shuffle" ID="{3CCE49B4-F34A-4480-89B5-57B99F3CEB39}">
+					<ChildrenList>
+						<Action Name="" ID="{4EDD8760-5E15-4D7C-B41F-9C2C3B613A09}" ShortID="170895776">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BART_card_shuffle" ID="{65817C17-528E-46C2-B5BE-C13E445B4C18}" WorkUnitID="{7C65D6C1-222E-48DF-8415-47416B8AB09F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

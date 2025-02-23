@@ -1,0 +1,113 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "393239870",
+    "Type": "User",
+    "GUID": "{335496CC-45EA-4922-B9FA-C65217B7662E}",
+    "Language": "SFX",
+    "Hash": "{5D29BD06-CB38-6D43-D658-4C54C25146B1}",
+    "ObjectPath": "\\SoundBanks\\SFX\\SFX",
+    "ShortName": "SFX",
+    "Path": "SFX.bnk",
+    "Media": [
+     {
+      "Id": "275695072",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BART_card_shuffle\\Card Shuffle Sparkle.wav",
+      "CachePath": "35/{35BA2F4F-FE44-7D87-0CB7-EBF391C360A2}.wem"
+     },
+     {
+      "Id": "376631816",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BART_card_place\\BART_card_place_3.wav",
+      "CachePath": "EF/{EF0A5AF0-64E2-FD60-CD74-3FC6BEE904E6}.wem"
+     },
+     {
+      "Id": "452573080",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BART_card_place\\BART_card_place_2.wav",
+      "CachePath": "28/{284F5E22-F38D-32C3-30C9-11C6A37C9BB2}.wem"
+     },
+     {
+      "Id": "613268131",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BART_card_place\\BART_card_place_4.wav",
+      "CachePath": "A9/{A92FFD3E-E46E-D16F-0192-671BE9B4E2D8}.wem"
+     },
+     {
+      "Id": "874945742",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BART_card_place\\BART_card_place_1.wav",
+      "CachePath": "32/{327B9D13-E3A1-FE17-FA99-D9A6AD4B93E3}.wem"
+     },
+     {
+      "Id": "879942249",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BART_card_shuffle\\Card Shuffle Cards.wav",
+      "CachePath": "A4/{A4F1AAF7-2921-5D8B-9E81-FD6E6AF9A922}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3630843069",
+      "Name": "BART_Card_Place",
+      "ObjectPath": "\\Events\\UI\\BarteringUI\\BART_Card_Place",
+      "GUID": "{AE3C7070-2049-4812-8685-54261706E95E}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.2205631",
+      "DurationMax": "0.36506742",
+      "MediaRefs": [
+       {
+        "Id": "376631816"
+       },
+       {
+        "Id": "452573080"
+       },
+       {
+        "Id": "613268131"
+       },
+       {
+        "Id": "874945742"
+       }
+      ]
+     },
+     {
+      "Id": "362751767",
+      "Name": "BART_Card_Shuffle",
+      "ObjectPath": "\\Events\\UI\\BarteringUI\\BART_Card_Shuffle",
+      "GUID": "{3CCE49B4-F34A-4480-89B5-57B99F3CEB39}",
+      "DurationType": "OneShot",
+      "DurationMin": "1.0506803",
+      "DurationMax": "1.0679057",
+      "MediaRefs": [
+       {
+        "Id": "275695072"
+       },
+       {
+        "Id": "879942249"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{511E4C67-56C7-69A0-6FB1-E8E15527E5CF}"
+ }
+}

@@ -119,13 +119,13 @@ public class InGameUi : MonoBehaviour
 
         switch (currentState) {
             case UiStates.Pause:
-                _navBarController.SetNavBarSelection(2);
+                _navBarController.InitNavBar(2);
                 break;
             case UiStates.Journal:
-                _navBarController.SetNavBarSelection(1);
+                _navBarController.InitNavBar(1);
                 break;
             case UiStates.Inventory:
-                _navBarController.SetNavBarSelection(0);
+                _navBarController.InitNavBar(0);
                 break;
         }
     }

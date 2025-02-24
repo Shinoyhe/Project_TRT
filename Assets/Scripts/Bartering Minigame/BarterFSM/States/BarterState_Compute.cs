@@ -41,39 +41,40 @@ public class BarterState_Compute : BarterBaseState
             return;
         }
 
+        // Reset our neutrals.
+        _machine.Dir.ResetNeutrals();
+
         // Calculate the number of correct matches.
-        int numCorrect = 0;
-        bool[] matchArray = new bool[oppCards.Length];
+        float score = 0;
+        var matchArray = new BarterResponseMatrix.State[oppCards.Length];
         
         if (playerCards != null) {
-            OppBarterResponses responses = _machine.Dir.BarterResponses;        
+            BarterResponseMatrix responses = _machine.Dir.BarterResponses;        
 
             for (int i = 0; i < oppCards.Length; i++) {
                 // Match up the player cards to the NPC's preferences.
-                PlayingCard desiredResponse = responses.GetResponse(oppCards[i]);
+                matchArray[i] = responses.GetMatch(oppCards[i], playerCards[i]);
 
-                // Store the correct matchups in the match array.
-                if (desiredResponse.Matches(playerCards[i])) {
-                    numCorrect++;
-                    matchArray[i] = true;
-                } else {
-                    matchArray[i] = false;
+                if (matchArray[i] == BarterResponseMatrix.State.NEUTRAL) {
+                    _machine.Dir.SetNeutral(i);
                 }
+
+                score += matchArray[i] switch {
+                    BarterResponseMatrix.State.POSITIVE => _machine.Dir.WillingnessPerMatch,
+                    BarterResponseMatrix.State.NEGATIVE => _machine.Dir.WillingnessPerFail,
+                    _ => 0
+                };
             }
         } else {
             for (int i = 0; i < oppCards.Length; i++) {
-                matchArray[i] = false;
+                matchArray[i] = BarterResponseMatrix.State.NEGATIVE;
             }
         }
 
         // Set the match array before nudging willingness.
         _machine.Dir.SetMatchArray(matchArray);
 
-        // Change willingness based on the result.
-        float correctAmount = numCorrect*_machine.Dir.WillingnessPerMatch;
-        float incorrectAmount = (oppCards.Length-numCorrect)*_machine.Dir.WillingnessPerFail;
-
-        _machine.Dir.NudgeWillingness(correctAmount+incorrectAmount);
+        _machine.Dir.NudgeWillingness(score);
 
         DoneComputing();
     }

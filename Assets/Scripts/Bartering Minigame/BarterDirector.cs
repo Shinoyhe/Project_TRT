@@ -25,7 +25,7 @@ public class BarterDirector : MonoBehaviour
 
     [Header("Object References")]
     [SerializeField, Tooltip("The tone responses the opposing NPC prefers.")]
-    public OppBarterResponses BarterResponses;
+    public BarterResponseMatrix BarterResponses;
     [SerializeField, Tooltip("The card user used by the opposing NPC.")]
     private CardUser oppCardUser;
     [SerializeField, Tooltip("The card user used by the player.")]
@@ -36,7 +36,7 @@ public class BarterDirector : MonoBehaviour
     // Actions for when arrays are updated.
     public System.Action<PlayingCard[]> OnOppCardsSet;
     public System.Action<PlayingCard[]> OnPlayerCardsSet;
-    public System.Action<bool[]> OnMatchArraySet;
+    public System.Action<BarterResponseMatrix.State[]> OnMatchArraySet;
     // Action for when the full non-null set of player cards is submitted.
     public System.Action OnPlayerAllCardsSet;
     // Action for win and loss
@@ -48,7 +48,8 @@ public class BarterDirector : MonoBehaviour
     // Arrays storing the current submissions for both sets of cards and whether each pair matches.
     private PlayingCard[] _oppCards = null;
     private PlayingCard[] _playerCards = null;
-    private bool[] _matchArray = null;
+    private BarterResponseMatrix.State[] _matchArray = null;
+    private bool[] _lastRoundNeutrals = null;
     // The BarterStateMachine that manages our turns!
     private BarterStateMachine _machine = null;
 
@@ -83,7 +84,9 @@ public class BarterDirector : MonoBehaviour
 
     public PlayingCard[] GetPlayerCards() { return _playerCards; }
 
-    public bool[] GetMatchArray() { return _matchArray; }
+    public BarterResponseMatrix.State[] GetMatchArray() { return _matchArray; }
+
+    public bool[] GetLastRoundNeutrals() { return _lastRoundNeutrals; }
 
     public string GetCurrentStateName() { return _machine.CurrentState.StateName; }
 
@@ -186,8 +189,8 @@ public class BarterDirector : MonoBehaviour
     /// <summary>
     /// Used to submit an full array of matches between cards.
     /// </summary>
-    /// <param name="matchArray">bool[] - the full array of bool matches to submit.</param>
-    public void SetMatchArray(bool[] matchArray)
+    /// <param name="matchArray">BarterResponseMatrix.State[] - the full array of bool matches to submit.</param>
+    public void SetMatchArray(BarterResponseMatrix.State[] matchArray)
     {
         // Validate the array. We accept two states:
         //  * A null array, signifying 'no matches to show'.
@@ -201,11 +204,48 @@ public class BarterDirector : MonoBehaviour
         OnMatchArraySet?.Invoke(matchArray);
     }
 
-    public void TriggerWin() {
+    /// <summary>
+    /// Set all logged neutrals to false, in preparation for a new batch.
+    /// </summary>
+    public void ResetNeutrals()
+    {
+        // If our _lastRoundNeutrals array is null, set it to an empty array of the right size.
+        _lastRoundNeutrals ??= new bool[CardsToPlay];
+
+        for (int i = 0; i < CardsToPlay; i++) {
+            _lastRoundNeutrals[i] = false;
+        }
+    }
+
+    /// <summary>
+    /// Set a neutral to true.
+    /// </summary>
+    /// <param name="indexInArray">int - the index of the match to log as a neutral.</param>
+    public void SetNeutral(int indexInArray)
+    {
+        if (_lastRoundNeutrals == null) {
+            Debug.LogError($"BarterDirector Error: SetNeutral failed. _lastRoundNeutrals "
+                         + $"was null. Call ResetNeutrals() first to initialize.");
+        } 
+        
+        if (indexInArray < 0 || indexInArray >= _lastRoundNeutrals.Length) {
+            Debug.LogError($"BarterDirector Error: SetNeutral failed. indexInArray "
+                         + $"({indexInArray}) was beyond the bounds of the array (length "
+                         + $"{_lastRoundNeutrals.Length})");
+        }
+
+        _lastRoundNeutrals[indexInArray] = true;
+    }
+
+    // Endgame methods ============================================================================
+
+    public void TriggerWin() 
+    {
         OnWin?.Invoke();
     }
 
-    public void TriggerLose() {
+    public void TriggerLose() 
+    {
         OnLose?.Invoke();
     }
 }

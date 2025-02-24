@@ -44,7 +44,7 @@ public class BarterResponseMatrix : ScriptableObject
     // Misc Internal Variables ====================================================================
 
     [SerializeField] private List<CardCardStateTriplet> _editorMatchList;
-    public Dictionary<PlayingCard, Dictionary<PlayingCard, State>> _runtimeMatchDict;    
+    private Dictionary<string, Dictionary<string, State>> _runtimeMatchDict;    
 
     // Runtime methods ============================================================================
 
@@ -52,7 +52,7 @@ public class BarterResponseMatrix : ScriptableObject
     /// Called once at runtime, before this matrix is ever read from. Loads our triplet list into
     /// our runtime dictionary.
     /// </summary>
-    public void InitializeDict()
+    public void Initialize()
     {
         if (_runtimeMatchDict == null) {
             _runtimeMatchDict = new();
@@ -61,11 +61,11 @@ public class BarterResponseMatrix : ScriptableObject
         }
 
         foreach (var triplet in _editorMatchList) {
-            if (!_runtimeMatchDict.ContainsKey(triplet.OppCard)) {
-                _runtimeMatchDict[triplet.OppCard] = new();
+            if (!_runtimeMatchDict.ContainsKey(triplet.OppCard.Id)) {
+                _runtimeMatchDict[triplet.OppCard.Id] = new();
             }
 
-            _runtimeMatchDict[triplet.OppCard][triplet.PlayerCard] = triplet.Match;
+            _runtimeMatchDict[triplet.OppCard.Id][triplet.PlayerCard.Id] = triplet.Match;
         }
     }
 
@@ -77,18 +77,22 @@ public class BarterResponseMatrix : ScriptableObject
     /// <returns>State - State.POSITIVE, State.NEUTRAL, or State.NEGATIVE.</returns>
     public State GetMatch(PlayingCard oppCard, PlayingCard playerCard)
     {
-        if (!oppCards.Contains(oppCard)) {
+        foreach (var card in oppCards) {
+            Debug.Log($"{card.Id}");
+        }
+
+        if (!oppCards.Any(x => x.Matches(oppCard))) {
             Debug.LogError($"BarterResponseMatrix Error: GetMatch failed. Supplied opponent card "
-                         + $"(id {oppCard}) was not in oppPlayerToMatch dictionary.");
+                         + $"(id {oppCard}) was not in oppCards.");
             return State.NEUTRAL;
         }
 
-        if (!_runtimeMatchDict[oppCard].ContainsKey(playerCard)) {
+        if (!_runtimeMatchDict[oppCard.Id].ContainsKey(playerCard.Id)) {
             return defaultState;
         }
 
         // Else, our indexing is valid!
-        return _runtimeMatchDict[oppCard][playerCard];
+        return _runtimeMatchDict[oppCard.Id][playerCard.Id];
     }
 
     // Editor-time methods ========================================================================

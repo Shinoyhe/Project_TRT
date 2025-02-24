@@ -180,7 +180,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
         }
     }
 
-    private void UpdateMatchIcons(bool[] results)
+    private void UpdateMatchIcons(BarterResponseMatrix.State[] results)
     {
         // Update the displayed opponent cards. Called via an action from the BarterDirector.
         //
@@ -206,8 +206,13 @@ public class BarterCardSubmissionUI : MonoBehaviour
 
         // Case 3, nonnull array and right size- set sprites.
         for (int i=0; i<results.Length; i++) {
-            MatchSlotUI.MatchType matchType = results[i] ? MatchSlotUI.MatchType.Right 
-                                                         : MatchSlotUI.MatchType.Wrong;
+            // Convert from state types to UI display types.
+            var matchType = results[i] switch {
+                BarterResponseMatrix.State.POSITIVE => MatchSlotUI.MatchType.Right,
+                BarterResponseMatrix.State.NEGATIVE => MatchSlotUI.MatchType.Wrong,
+                _ => MatchSlotUI.MatchType.Neutral
+            };
+
             _matchSlots[i].SetState(matchType);
         }
     }

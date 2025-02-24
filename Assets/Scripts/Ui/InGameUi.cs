@@ -33,12 +33,15 @@ public class InGameUi : MonoBehaviour
     }
 
     private UiStates _currentCanvasState;
+    private NavBarController _navBarController;
 
     // Initializers and Update ================================================================
     void Start() {
         if (Default == null) {
             Debug.LogError("Default Canvas dependency not set.");
         }
+
+        _navBarController = NavBar.gameObject.GetComponent<NavBarController>();
 
         // Swap with Accessibility Check
         MoveTo(UiStates.Default);
@@ -113,6 +116,18 @@ public class InGameUi : MonoBehaviour
 
         // Add Animation here!
         NavBar.gameObject.SetActive(usingNavBar);
+
+        switch (currentState) {
+            case UiStates.Pause:
+                _navBarController.SetNavBarSelection(2);
+                break;
+            case UiStates.Journal:
+                _navBarController.SetNavBarSelection(1);
+                break;
+            case UiStates.Inventory:
+                _navBarController.SetNavBarSelection(0);
+                break;
+        }
     }
 
 
@@ -128,6 +143,7 @@ public class InGameUi : MonoBehaviour
         switch (stateToStop) {
             case UiStates.Default:
                 // Insert animation!
+                GameManager.Player.Movement.TogglePlayerMovement(false);
                 Default.gameObject.SetActive(false);
                 break;
             case UiStates.Pause:
@@ -177,6 +193,7 @@ public class InGameUi : MonoBehaviour
         switch (stateToStart) {
             case UiStates.Default:
                 // Insert animation!
+                GameManager.Player.Movement.TogglePlayerMovement(true);
                 Default.gameObject.SetActive(true);
                 break;
             case UiStates.Pause:

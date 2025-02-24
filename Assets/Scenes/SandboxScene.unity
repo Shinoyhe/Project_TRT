@@ -171,56 +171,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 158421345764971396, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: _inventory
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 278437146184916424, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 941152210}
-    - target: {fileID: 278437146184916424, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AddCard
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675156994310368087, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 941152210}
     - target: {fileID: 1675156994310368087, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AddCard
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891927937381935492, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 941152210}
     - target: {fileID: 1891927937381935492, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RemoveCard
-      objectReference: {fileID: 0}
-    - target: {fileID: 3165433572979686180, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 941152210}
     - target: {fileID: 3165433572979686180, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AddCard
-      objectReference: {fileID: 0}
-    - target: {fileID: 4629297870969853365, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 23.841797
-      objectReference: {fileID: 0}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 941152210}
     - target: {fileID: 5761779680460996703, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_Name
@@ -231,21 +201,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 941152210}
-    - target: {fileID: 6046698224005878662, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AddCard
-      objectReference: {fileID: 0}
-    - target: {fileID: 7895029819783036092, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: CreditsCanvas
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7895029819783036092, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: OptionsCanvas
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 9106350191481724383, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_Pivot.x
@@ -587,7 +542,7 @@ MonoBehaviour:
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 3, z: 0}
   dialogueBubbleOffset: {x: -2.02, y: 4.17, z: 0}
-  cardToGiveOnWin: {fileID: 11400000, guid: 37d76c22448d8cb4ab619e7e711477ec, type: 2}
+  cardToGiveOnWin: {fileID: 0}
   npcConversation: {fileID: 4900000, guid: 78fae791d8e25a445ac2b2e5cfc5205f, type: 3}
 --- !u!136 &586339378
 CapsuleCollider:
@@ -1198,7 +1153,7 @@ MonoBehaviour:
   UseTransform: 0
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 1, z: 0}
-  CardToGive: {fileID: 11400000, guid: ad34e67878a583c4ea4c51dc30a77dbc, type: 2}
+  CardToGive: {fileID: 0}
 --- !u!65 &1251134710
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1630,6 +1585,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7171928165715084208, guid: 73a929ca284549147ba072c21c0fe640,
+        type: 3}
+      propertyPath: loopMinutes
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8369108087881288927, guid: 73a929ca284549147ba072c21c0fe640,
         type: 3}

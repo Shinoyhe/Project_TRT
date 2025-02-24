@@ -15,7 +15,6 @@ public class InGameUi : MonoBehaviour
     public Canvas Pause;
     public Canvas Options;
     public Canvas Controls;
-    public Canvas RebindControls;
     public Canvas Journal;
     public Canvas Inventory;
     public Canvas Bartering;
@@ -26,7 +25,6 @@ public class InGameUi : MonoBehaviour
         Options, 
         MoveToTitle,
         Controls,
-        RebindControls,
         Journal, 
         Inventory,
         Bartering 
@@ -95,7 +93,6 @@ public class InGameUi : MonoBehaviour
     public void MoveToOptions() => MoveTo(UiStates.Options);
     public void MoveToTitle() => MoveTo(UiStates.MoveToTitle);
     public void MoveToControls() => MoveTo(UiStates.Controls);
-    public void MoveToControlsRebind() => MoveTo(UiStates.RebindControls);
     public void MoveToJournal() => MoveTo(UiStates.Journal);
     public void MoveToInventory() => MoveTo(UiStates.Inventory);
     public void MoveToBartering() => MoveTo(UiStates.Bartering);
@@ -122,10 +119,10 @@ public class InGameUi : MonoBehaviour
                 _navBarController.InitNavBar(2);
                 break;
             case UiStates.Journal:
-                _navBarController.InitNavBar(1);
+                _navBarController.InitNavBar(0);
                 break;
             case UiStates.Inventory:
-                _navBarController.InitNavBar(0);
+                _navBarController.InitNavBar(1);
                 break;
         }
     }
@@ -157,10 +154,6 @@ public class InGameUi : MonoBehaviour
             case UiStates.Controls:
                 // Insert animation!
                 Controls.gameObject.SetActive(false);
-                break;
-            case UiStates.RebindControls:
-                // Insert animation!
-                RebindControls.gameObject.SetActive(false);
                 break;
             case UiStates.Journal:
                 // Insert animation!
@@ -211,10 +204,6 @@ public class InGameUi : MonoBehaviour
             case UiStates.Controls:
                 // Insert animation!
                 Controls.gameObject.SetActive(true);
-                break;
-            case UiStates.RebindControls:
-                // Insert animation!
-                RebindControls.gameObject.SetActive(true);
                 break;
             case UiStates.Journal:
                 // Insert animation!

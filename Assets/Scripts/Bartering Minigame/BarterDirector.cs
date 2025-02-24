@@ -10,6 +10,8 @@ public class BarterDirector : MonoBehaviour
     [Header("Parameters")]
     [Tooltip("The number of tone cards each player must play.\n\nDefault: 3")]
     public int CardsToPlay = 3;
+    [Tooltip("The number of tone cards the opponent has in its deck.\n\nDefault: 16")]
+    public int OppDeckSize = 16;
     [SerializeField, Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
     private float decayPerSecond = 5;
     [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1")]

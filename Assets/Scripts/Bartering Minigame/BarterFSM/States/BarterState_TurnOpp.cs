@@ -45,7 +45,7 @@ public class BarterState_TurnOpp : BarterBaseState
         var handList = _machine.OppCardUser.HandList;
         
         // The opponent must have enough cards in its hand to play. If we don't, exit.
-        if (cardsToPlay > handList.Count ) {
+        if (cardsToPlay > handList.Count) {
             Debug.LogError("BarterState_TurnOpp Error: Enter failed. The BarterDirector wants the "
                         + $"opponent CardUser to play more cards ({cardsToPlay}) than it has in "
                         + $"its hand ({handList.Count})");

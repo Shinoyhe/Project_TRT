@@ -156,8 +156,6 @@ public class BarterCardSubmissionUI : MonoBehaviour
         //       the UI changes to match.
         // ================
 
-        Debug.Log("UpdateOppCards called");
-
         // Case 1, null array- set all slots to the null sprite.
         if (oppCards == null) {
             foreach (AutoPlayerCardSlotUI slot in _oppCardSlots) {

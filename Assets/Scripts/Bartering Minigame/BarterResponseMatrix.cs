@@ -77,10 +77,6 @@ public class BarterResponseMatrix : ScriptableObject
     /// <returns>State - State.POSITIVE, State.NEUTRAL, or State.NEGATIVE.</returns>
     public State GetMatch(PlayingCard oppCard, PlayingCard playerCard)
     {
-        foreach (var card in oppCards) {
-            Debug.Log($"{card.Id}");
-        }
-
         if (!oppCards.Any(x => x.Matches(oppCard))) {
             Debug.LogError($"BarterResponseMatrix Error: GetMatch failed. Supplied opponent card "
                          + $"(id {oppCard}) was not in oppCards.");

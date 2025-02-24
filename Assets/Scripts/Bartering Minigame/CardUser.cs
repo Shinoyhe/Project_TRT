@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 public class CardUser : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class CardUser : MonoBehaviour
 
     [Header("Card Piles")]
     [SerializeField, Tooltip("A list of PlayingCard we have in our deck. Populates our DrawPile.")]
-    private PlayingCard[] debugStartingDeck;
+    private PlayingCard[] startingDeck;
     // The draw pile as a read-only list.
     public ReadOnlyCollection<PlayingCard> DrawPileList { get { return _drawPile.AsReadOnly(); }}
     // The hand as a read-only list.
@@ -57,13 +58,55 @@ public class CardUser : MonoBehaviour
 
     /// <summary>
     /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
+    /// Sets the deck to be deckSize cards big, containing only cards in matrix.OppCards.
+    /// </summary>
+    /// <param name="matrix">BarterResponseMatrix - the matrix from which we use OppCards.</param>
+    /// <param name="deckSize">int - the size of our deck.</param>
+    public void Initialize(BarterResponseMatrix matrix, int deckSize)
+    {
+        Initialize(matrix.OppCards.ToList(), deckSize);
+    }
+
+    /// <summary>
+    /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
+    /// Sets the deck to be deckSize cards big, containing only cards in source.
+    /// </summary>
+    /// <param name="matrix">BarterResponseMatrix - the matrix from which we use OppCards.</param>
+    /// <param name="deckSize">int - the size of our deck.</param>
+    public void Initialize(List<PlayingCard> source, int deckSize)
+    {
+        source = source.ToHashSet().ToList();
+        
+        int numEach = deckSize / source.Count;
+        int remainder = deckSize % source.Count;
+
+        List<PlayingCard> tempDeck = new();
+
+        // Equally distribute the cards between different types.
+        for (int i = 0; i < source.Count; i++) {
+            for (int j = 0; j < numEach; j++) {
+                tempDeck.Add(source[i]);
+            }
+
+            if (i < remainder) {
+                tempDeck.Add(source[i]);   
+            }
+        }
+
+        startingDeck = tempDeck.ToArray();
+
+        Initialize();
+    }
+
+    /// <summary>
+    /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
     /// </summary>
     public void Initialize()
     {
         // Initialize _drawPile and _pileToList.
         // ================
 
-        foreach (PlayingCard data in debugStartingDeck) {
+        foreach (PlayingCard data in startingDeck) {
             // Clone cards from our startingDeck into our drawpile.
             PlayingCard dataInstance = Instantiate(data);
             dataInstance.name = data.name;

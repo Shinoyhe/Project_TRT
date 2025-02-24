@@ -28,6 +28,9 @@ public class BarterDirector : MonoBehaviour
     [Header("Object References")]
     [SerializeField, Tooltip("The tone responses the opposing NPC prefers.")]
     public BarterResponseMatrix BarterResponses;
+    [SerializeField, Tooltip("The BarterNeutralBehavior scriptable object that defines what "
+                           + "happens when a neutral match is encountered.")]
+    public BarterNeutralBehavior NeutralBehavior;
     [SerializeField, Tooltip("The card user used by the opposing NPC.")]
     private CardUser oppCardUser;
     [SerializeField, Tooltip("The card user used by the player.")]

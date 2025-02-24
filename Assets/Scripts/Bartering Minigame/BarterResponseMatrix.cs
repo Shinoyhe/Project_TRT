@@ -118,19 +118,13 @@ public class BarterResponseMatrix : ScriptableObject
 
         // Add new cards.
         foreach (PlayingCard oppCard in OppCards) {
-            // If we don't have any triplets with our oppCard, instantiate them.
-            if (!_editorMatchList.Any(x => x.OppCard == oppCard || x.PlayerCard == oppCard)) {
-                foreach (PlayingCard playerCard in OppCards) {
-                    // Add the opponent-player pair...
+            foreach (PlayingCard playerCard in OppCards) {
+                // If the pair doesn't exist, add it.
+                if (!TripletExistsEditor(oppCard, playerCard)) {
                     _editorMatchList.Add(new(oppCard, playerCard, State.NEUTRAL));
-                    // and the player-opponent pair (if they're not the same)
-                    if (oppCard != playerCard) {
-                        _editorMatchList.Add(new(playerCard, oppCard, State.NEUTRAL));
-                    }
                 }
             }
         }
-        
     }
 
     private void SetMatchEditor(PlayingCard oppCard, PlayingCard playerCard, State match)
@@ -155,6 +149,18 @@ public class BarterResponseMatrix : ScriptableObject
         var triplet = _editorMatchList.Find(x => x.OppCard == oppCard && 
                                             x.PlayerCard == playerCard);
         return triplet.Match;
+    }
+
+    private bool TripletExistsEditor(PlayingCard oppCard, PlayingCard playerCard)
+    {
+        // Searches _editorMatchList for a CardCardState triplet that matches both cards, then 
+        // returns that triplet's state.
+        // Searching the list manually is expensive, so we only use this at editor-time.
+        // ================
+
+        var triplet = _editorMatchList.Find(x => x.OppCard == oppCard && 
+                                            x.PlayerCard == playerCard);
+        return triplet != null;
     }
 
     private void CleanOppCardsEditor()

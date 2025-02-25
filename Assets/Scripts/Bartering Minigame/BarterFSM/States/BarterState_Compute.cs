@@ -103,6 +103,9 @@ public class BarterState_Compute : BarterBaseState
 
     public override void Exit() 
     {
+        // Log the match in our history!
+        _machine.Dir.LogMatchHistory();
+
         // Clear the submitted OppCards / PlayerCards.
         // This has the side-effect of updating our UI, animating a discard.
         _machine.Dir.SetOppCards(null);

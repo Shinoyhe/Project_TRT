@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class BarterDirector : MonoBehaviour
@@ -38,6 +41,12 @@ public class BarterDirector : MonoBehaviour
     [Tooltip("The HandController used by the player.")]
     public HandController PlayerHandController;
 
+    [Header("Miscellaneous")]
+    [ReadOnly, Tooltip("The queue of the last N matches that have been played.")]
+    public List<MatchHistory> MatchHistories = new();
+    [SerializeField, Tooltip("The maximum N matches that we display to the player.")]
+    private int maxHistories = 3;
+
     // Actions for when arrays are updated.
     public System.Action<PlayingCard[]> OnOppCardsSet;
     public System.Action<PlayingCard[]> OnPlayerCardsSet;
@@ -57,6 +66,21 @@ public class BarterDirector : MonoBehaviour
     private bool[] _lastRoundNeutrals = null;
     // The BarterStateMachine that manages our turns!
     private BarterStateMachine _machine = null;
+
+    // Helper classes =============================================================================
+
+    [System.Serializable]
+    public class MatchHistory
+    {
+        public PlayingCard[] OppCards;
+        public PlayingCard[] PlayerCards;
+
+        public MatchHistory(PlayingCard[] oppCards, PlayingCard[] playerCards)
+        {
+            OppCards = oppCards.ToArray();
+            PlayerCards = playerCards.ToArray();
+        }
+    }
 
     // Initializers ===============================================================================
 
@@ -240,6 +264,21 @@ public class BarterDirector : MonoBehaviour
         }
 
         _lastRoundNeutrals[indexInArray] = true;
+    }
+
+    /// <summary>
+    /// Logs the current state of our oppCards and playerCards to our MatchHistories list.
+    /// </summary>
+    public void LogMatchHistory()
+    {
+        MatchHistory currentMatchHistory = new(_oppCards, _playerCards);
+
+        // We subtract 1 from maxHistories so that if we're exactly at capacity, we still trim 1.
+        int historiesExcess = MatchHistories.Count - (maxHistories-1);
+        if (historiesExcess > 0) {
+            MatchHistories.RemoveRange(0, historiesExcess);
+        }
+        MatchHistories.Add(currentMatchHistory);
     }
 
     // Endgame methods ============================================================================

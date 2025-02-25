@@ -208,6 +208,35 @@ public class CardUser : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Searches the pile for a card that matches the supplied card, and returns its index.
+    /// </summary>
+    /// <param name="pile">CardPile - the pile to search.</param>
+    /// <param name="match">PlayingCard - the card we're comparing our cards against.</param>
+    /// <returns>Returns the index the match is at in the list, if found, and -1 if not.</returns>
+    public int SearchFor(CardPile pile, PlayingCard match)
+    {
+        var pileList = _pileToList[pile];
+        for (int i = 0; i < pileList.Count; i++) {
+            if (pileList[i] != null && pileList[i].Matches(match)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /// <summary>
+    /// Moves a card from a pile to the hand.
+    /// </summary>
+    /// <param name="pile">CardPile - the pile that the card to move is in.</param>
+    /// <param name="sourceIndex">int - the index in the original pile of the card to move.</param>
+    /// <returns>int - the index in the hand of the moved card.</returns>
+    public int MoveToHand(CardPile pile, int sourceIndex)
+    {
+        return RemoveAtFromPushTo(sourceIndex, pile, CardPile.Hand);
+    }
+
     // Pile-editing methods =======================================================================
 
     private void SwapItems<T>(List<T> pile, int indexA, int indexB)
@@ -272,7 +301,7 @@ public class CardUser : MonoBehaviour
         }
     }
 
-    private void RemoveAtFromPushTo(int indexInFromPile, CardPile fromPile, CardPile toPile, bool addToBack=false)
+    private int RemoveAtFromPushTo(int indexInFromPile, CardPile fromPile, CardPile toPile, bool addToBack=false)
     {
         // Attempts to remove the card at indexInFromPile from fromPile and
         // pushes it to the start of toPile. Raises an error if index is too
@@ -285,7 +314,7 @@ public class CardUser : MonoBehaviour
         if (indexInFromPile < 0 || indexInFromPile >= fromList.Count) {
             Debug.LogError($"CardUser Error. RemoveAtPushTo failed. indexInFromPile "
                          + $"{indexInFromPile} was outside the bounds of the list.", this);
-            return;
+            return -1;
         }
 
         // Moving the card ================
@@ -293,7 +322,8 @@ public class CardUser : MonoBehaviour
         PlayingCard card = fromList[indexInFromPile];
         fromList.RemoveAt(indexInFromPile);
         // If adding to the back, insert at the final index, otherwise use the first.
-        toList.Insert(addToBack ? toList.Count : 0, card);
+        int insertIndex = addToBack ? toList.Count : 0;
+        toList.Insert(insertIndex, card);
 
         // HandDelta stuff ================
 
@@ -320,6 +350,9 @@ public class CardUser : MonoBehaviour
 
             OnHandUpdated?.Invoke(delta);
         }
+
+        // Return! ========================
+        return insertIndex;
     }
 
     // Helper classes =============================================================================

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   willingness: 50
   CardsToPlay: 3
-  OppDeckSize: 16
+  OppDeckSize: 32
   decayPerSecond: 5
   oppDuration: 1
   computeDuration: 1.5
@@ -56,9 +56,12 @@ MonoBehaviour:
   WillingnessPerFail: -5
   debugMode: 0
   BarterResponses: {fileID: 11400000, guid: 4df41baae4ac8884d9b9ab903aa274e5, type: 2}
+  NeutralBehavior: {fileID: 0}
   oppCardUser: {fileID: 2653959349668452647}
   playerCardUser: {fileID: 4641091018970181357}
   PlayerHandController: {fileID: 0}
+  MatchHistories: []
+  maxHistories: 3
 --- !u!1 &7864941220729989563
 GameObject:
   m_ObjectHideFlags: 0

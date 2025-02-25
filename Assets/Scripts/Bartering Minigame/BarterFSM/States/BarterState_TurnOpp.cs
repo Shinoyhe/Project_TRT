@@ -58,10 +58,13 @@ public class BarterState_TurnOpp : BarterBaseState
         }
         
         // Play cards.
+        bool[] lastRoundNeutrals = _machine.Dir.GetLastRoundNeutrals();
+        
         for (int i = 0; i < cardsToPlay; i++) {
-            if (_machine.Dir.GetLastRoundNeutrals()[i]) {
+            if (lastRoundNeutrals != null && lastRoundNeutrals[i]) {
                 // If this slot had a neutral match last round, apply our NeutralBehavior effect.
-                _playedCards[i] = _machine.Dir.NeutralBehavior.GetCard(_machine.OppCardUser);
+                _playedCards[i] = _machine.Dir.NeutralBehavior.GetCard(_machine.Dir, 
+                                                                       _machine.OppCardUser, i);
             } else {
                 // Otherwise, enemy picks cards randomly and stores them in an array!
                 int handIndex = Random.Range(0, handList.Count);

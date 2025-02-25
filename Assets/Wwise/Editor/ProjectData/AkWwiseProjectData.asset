@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: d2e647656401fa48b0d64a886d907446
     GuidInternal: 
-    m_lastTime: -8584617541943310038
+    m_lastTime: -8584616603804391232
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,8 +38,25 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 587ca0226052be4e9b8540a22c4f2092
     GuidInternal: 
-    m_lastTime: -8584617541943750142
+    m_lastTime: -8584613403160293874
     List:
+    - name: Ambience Bus
+      guid: b98c6c284c7de7449139c8391e920f9c
+      id: 4202237879
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 587ca0226052be4e9b8540a22c4f2092
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Ambience Bus
+        ObjectType: 2
+        guid: b98c6c284c7de7449139c8391e920f9c
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Ambience Bus
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
       id: 3803692087
@@ -54,6 +71,40 @@ MonoBehaviour:
         ObjectType: 2
         guid: d8a41415a61d2a41a17e75ca0c2149f3
       Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
+    - name: Music Bus
+      guid: 883656adb723a945b273cd51079ae47a
+      id: 3127962312
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 587ca0226052be4e9b8540a22c4f2092
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Music Bus
+        ObjectType: 2
+        guid: 883656adb723a945b273cd51079ae47a
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music Bus
+    - name: SFX Bus
+      guid: 6f814b3bff92544dbea1c89250720378
+      id: 1502772432
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 587ca0226052be4e9b8540a22c4f2092
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: SFX Bus
+        ObjectType: 2
+        guid: 6f814b3bff92544dbea1c89250720378
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\SFX Bus
   BankWwu:
   - PhysicalPath: SoundBanks\Default Work Unit.wwu
     PathAndIcons:
@@ -66,7 +117,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 04fe062a3bbc02478aebf9ed87255f35
     GuidInternal: 
-    m_lastTime: -8584617541943330043
+    m_lastTime: -8584616603804511337
     List: []
   - PhysicalPath: SoundBanks\Music.wwu
     PathAndIcons:
@@ -79,7 +130,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Music
     guid: 5f5c2e836df59d41833026f7bc293cab
     GuidInternal: 
-    m_lastTime: -8584617541943330043
+    m_lastTime: -8584613403158430369
     List:
     - name: Music
       guid: 277caf2ce418a740871cc075a9250659
@@ -95,7 +146,90 @@ MonoBehaviour:
         ObjectType: 7
         guid: 277caf2ce418a740871cc075a9250659
       Path: SoundBanks\Music\Music
+  - PhysicalPath: SoundBanks\SFX.wwu
+    PathAndIcons:
+    - ElementName: SoundBanks
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: SFX
+      ObjectType: 12
+      guid: f39c92e98d8cf14f9d79f84c53eb00b3
+    ParentPath: SoundBanks\SFX
+    guid: f39c92e98d8cf14f9d79f84c53eb00b3
+    GuidInternal: 
+    m_lastTime: -8584613403158430369
+    List:
+    - name: SFX
+      guid: cc965433ea452249b9fac65217b7662e
+      id: 393239870
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: SFX
+        ObjectType: 12
+        guid: f39c92e98d8cf14f9d79f84c53eb00b3
+      - ElementName: SFX
+        ObjectType: 7
+        guid: cc965433ea452249b9fac65217b7662e
+      Path: SoundBanks\SFX\SFX
   EventWwu:
+  - PhysicalPath: Events\BarteringUI.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: UI
+      ObjectType: 12
+      guid: 75f867dc1a9906498df4975d819bec40
+    - ElementName: BarteringUI
+      ObjectType: 12
+      guid: 40c947321f41084491c4b5b163ca6270
+    ParentPath: Events\UI\BarteringUI
+    guid: 40c947321f41084491c4b5b163ca6270
+    GuidInternal: 
+    m_lastTime: -8584613403163032094
+    List:
+    - name: BART_Card_Place
+      guid: 70703cae49201248868554261706e95e
+      id: 3630843069
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Card_Place
+        ObjectType: 3
+        guid: 70703cae49201248868554261706e95e
+      Path: Events\UI\BarteringUI\BART_Card_Place
+      maxAttenuation: 0
+      maxDuration: 0.36506742
+      minDuration: 0.2205631
+    - name: BART_Card_Shuffle
+      guid: b449ce3c4af3804489b557b99f3ceb39
+      id: 362751767
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Card_Shuffle
+        ObjectType: 3
+        guid: b449ce3c4af3804489b557b99f3ceb39
+      Path: Events\UI\BarteringUI\BART_Card_Shuffle
+      maxAttenuation: 0
+      maxDuration: 1.0679057
+      minDuration: 1.0506803
   - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Events
@@ -107,145 +241,8 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 33316d7890aa87408e2af719ccc92cfd
     GuidInternal: 
-    m_lastTime: -8584617541944510322
-    List:
-    - name: MusicEvents
-      guid: bb98cb8f8639c644980fd12d17cb9504
-      id: 2858168685
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 33316d7890aa87408e2af719ccc92cfd
-      - ElementName: MusicEvents
-        ObjectType: 4
-        guid: bb98cb8f8639c644980fd12d17cb9504
-      Path: Events\Default Work Unit\MusicEvents
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: MusicStateActive
-      guid: b5e755e895d52648ad8a374f605fcf53
-      id: 1623677187
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 33316d7890aa87408e2af719ccc92cfd
-      - ElementName: MusicEvents
-        ObjectType: 4
-        guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: MusicStateActive
-        ObjectType: 3
-        guid: b5e755e895d52648ad8a374f605fcf53
-      Path: Events\Default Work Unit\MusicEvents\MusicStateActive
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: MusicStateCalm
-      guid: d4d011b7ab20394ab4e982305ba67d38
-      id: 821441420
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 33316d7890aa87408e2af719ccc92cfd
-      - ElementName: MusicEvents
-        ObjectType: 4
-        guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: MusicStateCalm
-        ObjectType: 3
-        guid: d4d011b7ab20394ab4e982305ba67d38
-      Path: Events\Default Work Unit\MusicEvents\MusicStateCalm
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: PauseEnvironmentMusic
-      guid: 96326ae8227f6b49bd165fccbc20504e
-      id: 396180185
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 33316d7890aa87408e2af719ccc92cfd
-      - ElementName: MusicEvents
-        ObjectType: 4
-        guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: PauseEnvironmentMusic
-        ObjectType: 3
-        guid: 96326ae8227f6b49bd165fccbc20504e
-      Path: Events\Default Work Unit\MusicEvents\PauseEnvironmentMusic
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: ResumeEnvironmentMusic
-      guid: 89d77c41053f404a836023e0159080af
-      id: 3562268364
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 33316d7890aa87408e2af719ccc92cfd
-      - ElementName: MusicEvents
-        ObjectType: 4
-        guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: ResumeEnvironmentMusic
-        ObjectType: 3
-        guid: 89d77c41053f404a836023e0159080af
-      Path: Events\Default Work Unit\MusicEvents\ResumeEnvironmentMusic
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: StartEnvironmentMusic
-      guid: 0ad1de95faba17459eb73e06ddba7b76
-      id: 1918643091
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 33316d7890aa87408e2af719ccc92cfd
-      - ElementName: MusicEvents
-        ObjectType: 4
-        guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: StartEnvironmentMusic
-        ObjectType: 3
-        guid: 0ad1de95faba17459eb73e06ddba7b76
-      Path: Events\Default Work Unit\MusicEvents\StartEnvironmentMusic
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: StopEnvironmentMusic
-      guid: ec06eeef3d4ab24198832e17938f0ef1
-      id: 2557824689
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 33316d7890aa87408e2af719ccc92cfd
-      - ElementName: MusicEvents
-        ObjectType: 4
-        guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: StopEnvironmentMusic
-        ObjectType: 3
-        guid: ec06eeef3d4ab24198832e17938f0ef1
-      Path: Events\Default Work Unit\MusicEvents\StopEnvironmentMusic
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+    m_lastTime: -8584613403163022097
+    List: []
   - PhysicalPath: Events\Music.wwu
     PathAndIcons:
     - ElementName: Events
@@ -257,9 +254,206 @@ MonoBehaviour:
     ParentPath: Events\Music
     guid: 1baa49cfe5a4fe438cbe031c55500853
     GuidInternal: 
-    m_lastTime: -8584617541944510322
+    m_lastTime: -8584613403163012088
+    List:
+    - name: MusicEvents
+      guid: bb98cb8f8639c644980fd12d17cb9504
+      id: 2858168685
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      Path: Events\Music\MusicEvents
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: MusicStateActive
+      guid: b5e755e895d52648ad8a374f605fcf53
+      id: 1623677187
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStateActive
+        ObjectType: 3
+        guid: b5e755e895d52648ad8a374f605fcf53
+      Path: Events\Music\MusicEvents\MusicStateActive
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: MusicStateCalm
+      guid: d4d011b7ab20394ab4e982305ba67d38
+      id: 821441420
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStateCalm
+        ObjectType: 3
+        guid: d4d011b7ab20394ab4e982305ba67d38
+      Path: Events\Music\MusicEvents\MusicStateCalm
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: MusicStatePlayerSpawan
+      guid: c6fa5b6161d2484ca19683acaebf5061
+      id: 1764214806
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStatePlayerSpawan
+        ObjectType: 3
+        guid: c6fa5b6161d2484ca19683acaebf5061
+      Path: Events\Music\MusicEvents\MusicStatePlayerSpawan
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: PauseEnvironmentMusic
+      guid: 96326ae8227f6b49bd165fccbc20504e
+      id: 396180185
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: PauseEnvironmentMusic
+        ObjectType: 3
+        guid: 96326ae8227f6b49bd165fccbc20504e
+      Path: Events\Music\MusicEvents\PauseEnvironmentMusic
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ResumeEnvironmentMusic
+      guid: 89d77c41053f404a836023e0159080af
+      id: 3562268364
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: ResumeEnvironmentMusic
+        ObjectType: 3
+        guid: 89d77c41053f404a836023e0159080af
+      Path: Events\Music\MusicEvents\ResumeEnvironmentMusic
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: StartEnvironmentMusic
+      guid: 0ad1de95faba17459eb73e06ddba7b76
+      id: 1918643091
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: StartEnvironmentMusic
+        ObjectType: 3
+        guid: 0ad1de95faba17459eb73e06ddba7b76
+      Path: Events\Music\MusicEvents\StartEnvironmentMusic
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: StopEnvironmentMusic
+      guid: ec06eeef3d4ab24198832e17938f0ef1
+      id: 2557824689
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: StopEnvironmentMusic
+        ObjectType: 3
+        guid: ec06eeef3d4ab24198832e17938f0ef1
+      Path: Events\Music\MusicEvents\StopEnvironmentMusic
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+  - PhysicalPath: Events\UI.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: UI
+      ObjectType: 12
+      guid: 75f867dc1a9906498df4975d819bec40
+    ParentPath: Events\UI
+    guid: 75f867dc1a9906498df4975d819bec40
+    GuidInternal: 
+    m_lastTime: -8584613403163012088
     List: []
   RtpcWwu:
+  - PhysicalPath: Game Parameters\Ambience.wwu
+    PathAndIcons:
+    - ElementName: Game Parameters
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Ambience
+      ObjectType: 12
+      guid: 1364dfa97885f64c975561aade985960
+    ParentPath: Game Parameters\Ambience
+    guid: 1364dfa97885f64c975561aade985960
+    GuidInternal: 
+    m_lastTime: -8584613403162962076
+    List:
+    - name: AmbienceVolume
+      guid: 01dd239d2ba1e14984ac00064dd75e62
+      id: 1204480359
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Ambience
+        ObjectType: 12
+        guid: 1364dfa97885f64c975561aade985960
+      - ElementName: AmbienceVolume
+        ObjectType: 13
+        guid: 01dd239d2ba1e14984ac00064dd75e62
+      Path: Game Parameters\Ambience\AmbienceVolume
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Game Parameters
@@ -271,8 +465,76 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: be288e71c0cc3c439b7b4bfb6a1a4c72
     GuidInternal: 
-    m_lastTime: -8584617541944510322
-    List: []
+    m_lastTime: -8584613403162952080
+    List:
+    - name: MasterVolume
+      guid: 59d20be76f82c04d9077f7a3d88c2dfc
+      id: 2918011349
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: be288e71c0cc3c439b7b4bfb6a1a4c72
+      - ElementName: MasterVolume
+        ObjectType: 13
+        guid: 59d20be76f82c04d9077f7a3d88c2dfc
+      Path: Game Parameters\Default Work Unit\MasterVolume
+  - PhysicalPath: Game Parameters\Music.wwu
+    PathAndIcons:
+    - ElementName: Game Parameters
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Music
+      ObjectType: 12
+      guid: d5202f5c1fdb7e4592a92fb8427c1e09
+    ParentPath: Game Parameters\Music
+    guid: d5202f5c1fdb7e4592a92fb8427c1e09
+    GuidInternal: 
+    m_lastTime: -8584613403162952080
+    List:
+    - name: MusicVolume
+      guid: 4d5e195f502dd74ead8860aef95d5310
+      id: 2346531308
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: d5202f5c1fdb7e4592a92fb8427c1e09
+      - ElementName: MusicVolume
+        ObjectType: 13
+        guid: 4d5e195f502dd74ead8860aef95d5310
+      Path: Game Parameters\Music\MusicVolume
+  - PhysicalPath: Game Parameters\SFX.wwu
+    PathAndIcons:
+    - ElementName: Game Parameters
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: SFX
+      ObjectType: 12
+      guid: b76be0652aa2144ca2f1c95ef14073c4
+    ParentPath: Game Parameters\SFX
+    guid: b76be0652aa2144ca2f1c95ef14073c4
+    GuidInternal: 
+    m_lastTime: -8584613403162952080
+    List:
+    - name: SFXVolume
+      guid: 3afe647cb3b54f438d068914ab1c8a1f
+      id: 988953028
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: SFX
+        ObjectType: 12
+        guid: b76be0652aa2144ca2f1c95ef14073c4
+      - ElementName: SFXVolume
+        ObjectType: 13
+        guid: 3afe647cb3b54f438d068914ab1c8a1f
+      Path: Game Parameters\SFX\SFXVolume
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
     PathAndIcons:
@@ -285,7 +547,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: e6b79552b8b0634f8a967d61276f57fa
     GuidInternal: 
-    m_lastTime: -8584617541943320040
+    m_lastTime: -8584613403158360358
     List:
     - name: MusicState
       guid: 5df940ae313415468d9b77fe40be0b6c
@@ -334,6 +596,22 @@ MonoBehaviour:
         - ElementName: Calm
           ObjectType: 8
           guid: 2c6f914aa7fe72419c63fc5255a5ba9d
+      - name: MailbotBarter
+        guid: ba70092273389542b08e35e3d335d7f9
+        id: 1029337087
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e6b79552b8b0634f8a967d61276f57fa
+        - ElementName: MusicState
+          ObjectType: 9
+          guid: 5df940ae313415468d9b77fe40be0b6c
+        - ElementName: MailbotBarter
+          ObjectType: 8
+          guid: ba70092273389542b08e35e3d335d7f9
       - name: None
         guid: 1162ecb9dd81564cbc1ee4da0611b591
         id: 748895195
@@ -350,6 +628,22 @@ MonoBehaviour:
         - ElementName: None
           ObjectType: 8
           guid: 1162ecb9dd81564cbc1ee4da0611b591
+      - name: PlayerSpawn
+        guid: 840016345a96db46a8f6bfa9644ac295
+        id: 2064283983
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e6b79552b8b0634f8a967d61276f57fa
+        - ElementName: MusicState
+          ObjectType: 9
+          guid: 5df940ae313415468d9b77fe40be0b6c
+        - ElementName: PlayerSpawn
+          ObjectType: 8
+          guid: 840016345a96db46a8f6bfa9644ac295
       ValueGuids: []
       ValueIcons: []
       valuesInternal: []
@@ -365,7 +659,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: 4106411ba585644787ebc92dd1cdc4ca
     GuidInternal: 
-    m_lastTime: -8584617541943320040
+    m_lastTime: -8584616603804441278
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -379,7 +673,7 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 9df9aa54af8cab4ea76b42f4ee8eaa58
     GuidInternal: 
-    m_lastTime: -8584617541943320040
+    m_lastTime: -8584616603804421256
     List:
     - name: Test
       guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
@@ -396,7 +690,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0500000006000000070000000c0000000e00000017000000
+  ExpandedWaapiItemIds: 01000000050000000600000007000000090000000a0000000c0000000e00000012000000170000001f00000020000000210000002200000024000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

@@ -13,13 +13,22 @@ using UnityEngine.EventSystems;
 public static class MusicActionsManager
 {
     public static event Action<string> OnStateChanged;
+    public static event Action OnStateChangedToPreviousState;
 
     /// <summary>
-    /// Public function for other scripts to use to invoke a state change.
+    /// Public function for other scripts to use to invoke a state change by name.
     /// </summary>
     public static void ChangeMusicState(string newState)
     {
         OnStateChanged?.Invoke(newState); // Notify all subscribers
+    }
+
+    /// <summary>
+    /// Public function for music transition triggers to revert to a previous.
+    /// </summary>
+    public static void ChangeToPreviousMusicState()
+    {
+        OnStateChangedToPreviousState?.Invoke(); // Notify all subscribers
     }
 }
 
@@ -46,6 +55,11 @@ public class MusicManager : MonoBehaviour
     // Change this to a List of MusicStateEventPair
     [SerializeField] private List<MusicStateEventPair> musicStateEventsList;
 
+    [SerializeField]
+    private string startingMusicState;
+    private string currentMusicState;
+    private string previousMusicState;
+
     private Dictionary<string, AK.Wwise.Event> musicStateEventsDict = new Dictionary<string, AK.Wwise.Event>();
 
 
@@ -66,24 +80,31 @@ public class MusicManager : MonoBehaviour
         }
 
         // I may create a "playOnInit" variable to avoid hardcoding playing music on initialization.
-        SetMusicState("PlayerSpawn");
+        startingMusicState = "PlayerSpawn";
+        currentMusicState = startingMusicState;
+        previousMusicState = startingMusicState;
+
+        SetMusicState(startingMusicState);
         PlayMusic(gameObject);
     }
 
     private void OnEnable()
     {
         MusicActionsManager.OnStateChanged += SetMusicState;
+        MusicActionsManager.OnStateChangedToPreviousState += SetMusicStateToPreviousState;
     }
 
     private void OnDisable()
     {
         MusicActionsManager.OnStateChanged -= SetMusicState;
+        MusicActionsManager.OnStateChangedToPreviousState -= SetMusicStateToPreviousState;
     }
 
     private void OnDestroy()
     {
         StopCurrentMusic();
         MusicActionsManager.OnStateChanged -= SetMusicState;
+        MusicActionsManager.OnStateChangedToPreviousState -= SetMusicStateToPreviousState;
     }
 
     #region Music Management
@@ -156,9 +177,28 @@ public class MusicManager : MonoBehaviour
     {
         if (musicStateEventsDict.ContainsKey(stateName))
         {
+            // Update music state attributes
+            previousMusicState = currentMusicState;
+            currentMusicState = stateName;
+
             musicStateEventsDict[stateName].Post(gameObject);
+        }
+        else
+        {
+            Debug.LogWarning("The state " + stateName + " could not be found.");
         }
     }
 
+    /// <summary>
+    /// Sets current state of music container to one last played. Used for the Music Transition Trigger.
+    /// </summary>
+    public void SetMusicStateToPreviousState()
+    {
+        SetMusicState(previousMusicState);
+    }
+
     #endregion
+
+    public string GetCurrentState() => currentMusicState;
+    public string GetPreviousState() => previousMusicState;
 }

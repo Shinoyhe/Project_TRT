@@ -24,8 +24,8 @@ public class BarterState_EndLoss : BarterBaseState
         Debug.Log("Player loses!");
         _machine.Dir.TriggerLose();
 
-        // Triggers music manager to play overworld music
-        MusicActionsManager.ChangeMusicState("PlayerSpawn");
+        // Triggers music manager to return to previously playing music
+        MusicActionsManager.ChangeToPreviousMusicState();
         
         //_machine.Dir.StartCoroutine(DEBUG_Reload());
     }

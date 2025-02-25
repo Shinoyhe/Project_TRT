@@ -270,8 +270,6 @@ public class DialogueManager : MonoBehaviour
         barterDirectorOfInstance.OnLose += LoseBarter;
         GameManager.PlayerInput.IsActive = false;
 
-        // Trying the new callbacks
-        //GameManager.MusicManager.SetMusicState("MailbotBarter");
         MusicActionsManager.ChangeMusicState("MailbotBarter");
     }
 

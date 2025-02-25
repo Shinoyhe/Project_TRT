@@ -106,7 +106,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\SFX
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
-    m_lastTime: -8584611532364125266
+    m_lastTime: -8584611495881881132
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -335,7 +335,7 @@ MonoBehaviour:
     ParentPath: Events\Environment
     guid: 851bf5aefe549d489c25241343bb6f59
     GuidInternal: 
-    m_lastTime: -8584611535591399785
+    m_lastTime: -8584611518612046066
     List: []
   - PhysicalPath: Events\EnvironmentUI.wwu
     PathAndIcons:
@@ -583,6 +583,42 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+  - PhysicalPath: Events\Objects.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Environment
+      ObjectType: 12
+      guid: 851bf5aefe549d489c25241343bb6f59
+    - ElementName: Objects
+      ObjectType: 12
+      guid: f53d68a94c6e354d9f4eeee3b0dcd364
+    ParentPath: Events\Environment\Objects
+    guid: f53d68a94c6e354d9f4eeee3b0dcd364
+    GuidInternal: 
+    m_lastTime: -8584611518402013613
+    List:
+    - name: ItemPickup
+      guid: a49014c5961d434a9e487d2d5ea73295
+      id: 1851462748
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Objects
+        ObjectType: 12
+        guid: f53d68a94c6e354d9f4eeee3b0dcd364
+      - ElementName: ItemPickup
+        ObjectType: 3
+        guid: a49014c5961d434a9e487d2d5ea73295
+      Path: Events\Environment\Objects\ItemPickup
+      maxAttenuation: 0
+      maxDuration: 2.634626
+      minDuration: 2.634626
   - PhysicalPath: Events\Player.wwu
     PathAndIcons:
     - ElementName: Events

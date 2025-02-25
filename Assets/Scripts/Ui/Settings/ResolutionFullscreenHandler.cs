@@ -64,16 +64,7 @@ public class ResolutionFullscreenHandler : MonoBehaviour
         HashSet<Vector2Int> resolutionSet = new();
         foreach (Resolution r in Screen.resolutions)
         {
-            // We want to add one things to this set, per default resolution.
-            // 2. The default resolution.
-            // If the default resolution is shorter than 16:9, skip BOTH these steps!
-            // ================
-
-            // If the aspect ratio is equal to 16:9 or is taller...
-            if (r.width / r.height <= 16f / 9f)
-            {
-                resolutionSet.Add(new(r.width, r.height));
-            }
+            resolutionSet.Add(new(r.width, r.height));
         }
         resolutions = resolutionSet.ToArray();
 

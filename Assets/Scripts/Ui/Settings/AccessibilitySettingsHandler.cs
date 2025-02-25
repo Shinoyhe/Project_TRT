@@ -15,7 +15,7 @@ public class AccessibilitySettingsHandler : MonoBehaviour
 
     [BoxGroup("UI Elements"), SerializeField, Tooltip("The slider controlling our screenshake scaling.")]
     Slider screenshakeSlider;
-    [BoxGroup("UI Elements"), SerializeField, Tooltip("The slider controlling our screenshake scaling.")]
+    [BoxGroup("UI Elements"), SerializeField, Tooltip("The label for our screenshake scaling.")]
     TMP_Text screenshakeReadout;
     [BoxGroup("UI Elements"), SerializeField, Tooltip("The toggle controlling our flashing reduction.")]
     Toggle flashingToggle;

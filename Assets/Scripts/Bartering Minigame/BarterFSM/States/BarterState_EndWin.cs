@@ -23,6 +23,10 @@ public class BarterState_EndWin : BarterBaseState
     {
         Debug.Log("Player wins!");
         _machine.Dir.TriggerWin();
+
+        // Triggers music manager to play overworld music
+        MusicActionsManager.ChangeMusicState("PlayerSpawn");
+
         //_machine.Dir.StartCoroutine(DEBUG_Reload());
     }
 

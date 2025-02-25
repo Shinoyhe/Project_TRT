@@ -106,7 +106,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\SFX
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
-    m_lastTime: -8584616785789650539
+    m_lastTime: -8584615775998317969
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -137,8 +137,100 @@ MonoBehaviour:
     ParentPath: Events\UI\BarteringUI
     guid: 40c947321f41084491c4b5b163ca6270
     GuidInternal: 
-    m_lastTime: -8584616785978650447
+    m_lastTime: -8584612490384138139
     List:
+    - name: BART_0_Correct
+      guid: df9024692129844587e66e327a8b7c78
+      id: 3855663406
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Scored_Hands
+        ObjectType: 4
+        guid: a7d842d121ce554bafc673b2b4509b5c
+      - ElementName: BART_0_Correct
+        ObjectType: 3
+        guid: df9024692129844587e66e327a8b7c78
+      Path: Events\UI\BarteringUI\BART_Scored_Hands\BART_0_Correct
+      maxAttenuation: 0
+      maxDuration: 1.05
+      minDuration: 1.05
+    - name: BART_1_Correct
+      guid: bcc9a9ec503aeb4a9c75d9e517675d7e
+      id: 1852144075
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Scored_Hands
+        ObjectType: 4
+        guid: a7d842d121ce554bafc673b2b4509b5c
+      - ElementName: BART_1_Correct
+        ObjectType: 3
+        guid: bcc9a9ec503aeb4a9c75d9e517675d7e
+      Path: Events\UI\BarteringUI\BART_Scored_Hands\BART_1_Correct
+      maxAttenuation: 0
+      maxDuration: 0.73
+      minDuration: 0.73
+    - name: BART_2_Correct
+      guid: 48f39463e442ce4f9b3f612376665e35
+      id: 1309566264
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Scored_Hands
+        ObjectType: 4
+        guid: a7d842d121ce554bafc673b2b4509b5c
+      - ElementName: BART_2_Correct
+        ObjectType: 3
+        guid: 48f39463e442ce4f9b3f612376665e35
+      Path: Events\UI\BarteringUI\BART_Scored_Hands\BART_2_Correct
+      maxAttenuation: 0
+      maxDuration: 1.09
+      minDuration: 1.09
+    - name: BART_3_Correct
+      guid: cbefe0984b821246bf9f035718d4f8ec
+      id: 3315406357
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Scored_Hands
+        ObjectType: 4
+        guid: a7d842d121ce554bafc673b2b4509b5c
+      - ElementName: BART_3_Correct
+        ObjectType: 3
+        guid: cbefe0984b821246bf9f035718d4f8ec
+      Path: Events\UI\BarteringUI\BART_Scored_Hands\BART_3_Correct
+      maxAttenuation: 0
+      maxDuration: 0.78
+      minDuration: 0.78
     - name: BART_Card_Place
       guid: 70703cae49201248868554261706e95e
       id: 3630843069
@@ -199,6 +291,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 1.0679057
       minDuration: 1.0506803
+    - name: BART_Scored_Hands
+      guid: a7d842d121ce554bafc673b2b4509b5c
+      id: 3018713218
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Scored_Hands
+        ObjectType: 4
+        guid: a7d842d121ce554bafc673b2b4509b5c
+      Path: Events\UI\BarteringUI\BART_Scored_Hands
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Events
@@ -212,6 +324,62 @@ MonoBehaviour:
     GuidInternal: 
     m_lastTime: -8584617595952268450
     List: []
+  - PhysicalPath: Events\EnvironmentUI.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: UI
+      ObjectType: 12
+      guid: 75f867dc1a9906498df4975d819bec40
+    - ElementName: EnvironmentUI
+      ObjectType: 12
+      guid: 4be82f8af05f9c4bb20ac0e39bad8dae
+    ParentPath: Events\UI\EnvironmentUI
+    guid: 4be82f8af05f9c4bb20ac0e39bad8dae
+    GuidInternal: 
+    m_lastTime: -8584615775998407251
+    List:
+    - name: ENV_Interaction_Arrow_Hide
+      guid: e67f97983d2b8d4198fae5033e8d4006
+      id: 3804709036
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: EnvironmentUI
+        ObjectType: 12
+        guid: 4be82f8af05f9c4bb20ac0e39bad8dae
+      - ElementName: ENV_Interaction_Arrow_Hide
+        ObjectType: 3
+        guid: e67f97983d2b8d4198fae5033e8d4006
+      Path: Events\UI\EnvironmentUI\ENV_Interaction_Arrow_Hide
+      maxAttenuation: 0
+      maxDuration: 1.2314739
+      minDuration: 1.2314739
+    - name: ENV_Interaction_Arrow_Show
+      guid: 5199f32f1e65084188459b47f1cc9721
+      id: 1995159183
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: EnvironmentUI
+        ObjectType: 12
+        guid: 4be82f8af05f9c4bb20ac0e39bad8dae
+      - ElementName: ENV_Interaction_Arrow_Show
+        ObjectType: 3
+        guid: 5199f32f1e65084188459b47f1cc9721
+      Path: Events\UI\EnvironmentUI\ENV_Interaction_Arrow_Show
+      maxAttenuation: 0
+      maxDuration: 1.2314739
+      minDuration: 1.2314739
   - PhysicalPath: Events\Music.wwu
     PathAndIcons:
     - ElementName: Events
@@ -413,7 +581,7 @@ MonoBehaviour:
     ParentPath: Events\UI
     guid: 75f867dc1a9906498df4975d819bec40
     GuidInternal: 
-    m_lastTime: -8584617630814292684
+    m_lastTime: -8584615843233276450
     List: []
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
@@ -584,7 +752,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000a0000000c0000000e000000100000001200000017000000
+  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000a0000000b0000000c0000000e000000100000001200000017000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

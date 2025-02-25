@@ -13,6 +13,10 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID BART_0_CORRECT = 3855663406U;
+        static const AkUniqueID BART_1_CORRECT = 1852144075U;
+        static const AkUniqueID BART_2_CORRECT = 1309566264U;
+        static const AkUniqueID BART_3_CORRECT = 3315406357U;
         static const AkUniqueID BART_CARD_PLACE = 3630843069U;
         static const AkUniqueID BART_CARD_SELECT = 349408092U;
         static const AkUniqueID BART_CARD_SHUFFLE = 362751767U;

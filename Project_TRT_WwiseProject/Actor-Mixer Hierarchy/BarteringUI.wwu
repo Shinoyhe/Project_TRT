@@ -223,6 +223,119 @@
 						<ActiveSource Name="BART_card_select" ID="{D9DBC174-85F4-4260-A004-B6EE95E3F024}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Folder Name="BART_scoreing_feedback" ID="{68F6CF9B-48DE-48CD-8CE6-DF36702A6168}" ShortID="1044874409">
+					<ChildrenList>
+						<Sound Name="BART_dummy_mama_amazing" ID="{8AB1A967-1CCC-4D2E-9DCC-B1411ABECAA6}" ShortID="789502258">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="BART_dummy_mama_amazing" ID="{5A7F34C4-7C45-415C-9E80-D33155F3CEC6}">
+									<Language>SFX</Language>
+									<AudioFile>BART_scoreing_feedback\BART_dummy_mama_amazing.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="385361105"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="BART_dummy_mama_amazing" ID="{5A7F34C4-7C45-415C-9E80-D33155F3CEC6}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="BART_dummy_mama_nice" ID="{3FD6E2BB-E51F-4101-9711-46759031CCFD}" ShortID="61650577">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="BART_dummy_mama_nice" ID="{BD7BD469-945D-490E-9598-77913EB8C2DB}">
+									<Language>SFX</Language>
+									<AudioFile>BART_scoreing_feedback\BART_dummy_mama_nice.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="959897286"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="BART_dummy_mama_nice" ID="{BD7BD469-945D-490E-9598-77913EB8C2DB}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="BART_dummy_mama_slow" ID="{CDB35DDF-E4EC-44A9-89E1-86E09C1E832A}" ShortID="672832100">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="BART_dummy_mama_slow" ID="{B4571EBD-ABB4-44E2-A22A-2376F80F03A3}">
+									<Language>SFX</Language>
+									<AudioFile>BART_scoreing_feedback\BART_dummy_mama_slow.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="906076427"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="BART_dummy_mama_slow" ID="{B4571EBD-ABB4-44E2-A22A-2376F80F03A3}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="BART_dummy_mama_perfect" ID="{D7B43EFE-B12F-4A35-84EB-7B64B81E8781}" ShortID="713547416">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="BART_dummy_mama_perfect" ID="{43A9F01D-7AA5-4D4E-A0D1-17796E69D91B}">
+									<Language>SFX</Language>
+									<AudioFile>BART_dummy_mama_perfect.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="2284311"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="BART_dummy_mama_perfect" ID="{43A9F01D-7AA5-4D4E-A0D1-17796E69D91B}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

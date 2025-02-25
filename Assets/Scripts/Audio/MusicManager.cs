@@ -8,6 +8,22 @@ using UnityEngine.EventSystems;
 
 
 /// <summary>
+/// Manages System Actions used by the Music Manager to allow anonymous signals to be sent from other scripts.
+/// </summary>
+public static class MusicActionsManager
+{
+    public static event Action<string> OnStateChanged;
+
+    /// <summary>
+    /// Public function for other scripts to use to invoke a state change.
+    /// </summary>
+    public static void ChangeMusicState(string newState)
+    {
+        OnStateChanged?.Invoke(newState); // Notify all subscribers
+    }
+}
+
+/// <summary>
 /// Custom data structure to assign a string name to a Wwise event in the inspector.
 /// </summary>
 [System.Serializable]
@@ -49,15 +65,27 @@ public class MusicManager : MonoBehaviour
             musicStateEventsDict.Add(pair.stateName, pair.musicEvent);
         }
 
-        // I may create a "playOnInit" variable to avoid hardcoding playing music on initialization
+        // I may create a "playOnInit" variable to avoid hardcoding playing music on initialization.
         SetMusicState("PlayerSpawn");
         PlayMusic(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        MusicActionsManager.OnStateChanged += SetMusicState;
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("Called disable :(");
+        MusicActionsManager.OnStateChanged -= SetMusicState;
     }
 
     private void OnDestroy()
     {
         Debug.Log("Called destroy :)");
-        //StopCurrentMusic();
+        StopCurrentMusic();
+        MusicActionsManager.OnStateChanged -= SetMusicState;
     }
 
     #region Music Management

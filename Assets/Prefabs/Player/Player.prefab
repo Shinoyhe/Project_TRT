@@ -254,6 +254,79 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionIcon: {fileID: 5387680805659258484}
   highlightedInteractable: {fileID: 0}
+  _accessibleInteractables: []
+  interactionIconEnterSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []
+  interactionIconLeaveSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!1 &3870256125407273809
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +362,7 @@ Transform:
   - {fileID: 5083528762976515683}
   - {fileID: 1767942433717707359}
   - {fileID: 6354053430944878471}
+  - {fileID: 6747850849085161326}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9035282436424910295
@@ -426,6 +500,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 0
+--- !u!1 &8196725101302620934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6747850849085161326}
+  m_Layer: 0
+  m_Name: PlayerSFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6747850849085161326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8196725101302620934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4274486823486971512}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8208938610237536702
 GameObject:
   m_ObjectHideFlags: 0

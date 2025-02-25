@@ -36,6 +36,54 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Folder Name="BART_Scored_Hands" ID="{D142D8A7-CE21-4B55-AFC6-73B2B4509B5C}" ShortID="213738128">
+					<ChildrenList>
+						<Event Name="BART_0_Correct" ID="{692490DF-2921-4584-87E6-6E327A8B7C78}">
+							<ChildrenList>
+								<Action Name="" ID="{5E3E1B1D-CF69-4004-8DA0-4E06047BA748}" ShortID="579419717">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BART_dummy_mama_slow" ID="{CDB35DDF-E4EC-44A9-89E1-86E09C1E832A}" WorkUnitID="{7C65D6C1-222E-48DF-8415-47416B8AB09F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="BART_1_Correct" ID="{ECA9C9BC-3A50-4AEB-9C75-D9E517675D7E}">
+							<ChildrenList>
+								<Action Name="" ID="{D6230884-CDA5-4E7A-B14F-46C67DF1D8D5}" ShortID="469170889">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BART_dummy_mama_nice" ID="{3FD6E2BB-E51F-4101-9711-46759031CCFD}" WorkUnitID="{7C65D6C1-222E-48DF-8415-47416B8AB09F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="BART_2_Correct" ID="{6394F348-42E4-4FCE-9B3F-612376665E35}">
+							<ChildrenList>
+								<Action Name="" ID="{8B123BFF-190B-44D2-B05F-726D03142722}" ShortID="995042300">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BART_dummy_mama_amazing" ID="{8AB1A967-1CCC-4D2E-9DCC-B1411ABECAA6}" WorkUnitID="{7C65D6C1-222E-48DF-8415-47416B8AB09F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="BART_3_Correct" ID="{98E0EFCB-824B-4612-BF9F-035718D4F8EC}">
+							<ChildrenList>
+								<Action Name="" ID="{AB3D3F8F-EF3F-4DA3-B54D-2908A3503121}" ShortID="971382523">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BART_dummy_mama_perfect" ID="{D7B43EFE-B12F-4A35-84EB-7B64B81E8781}" WorkUnitID="{7C65D6C1-222E-48DF-8415-47416B8AB09F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

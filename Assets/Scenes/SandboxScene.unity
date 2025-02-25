@@ -1254,6 +1254,18 @@ PrefabInstance:
       propertyPath: controls
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9135874550164538560, guid: d7b8be9e5f8f8024691d1d3b751d45b5,
+        type: 3}
+      propertyPath: interactionIconEnterSFX._events.startEvent.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 60ede754e974d9540afc961a689d16db,
+        type: 2}
+    - target: {fileID: 9135874550164538560, guid: d7b8be9e5f8f8024691d1d3b751d45b5,
+        type: 3}
+      propertyPath: interactionIconLeaveSFX._events.startEvent.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ee84aa12451b1d498ccf9cf2195d11d,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 4790079400297129873, guid: d7b8be9e5f8f8024691d1d3b751d45b5, type: 3}
     m_RemovedGameObjects:

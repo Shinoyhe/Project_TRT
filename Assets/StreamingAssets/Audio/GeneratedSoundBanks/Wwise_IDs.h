@@ -22,11 +22,13 @@ namespace AK
         static const AkUniqueID BART_CARD_SHUFFLE = 362751767U;
         static const AkUniqueID ENV_INTERACTION_ARROW_HIDE = 3804709036U;
         static const AkUniqueID ENV_INTERACTION_ARROW_SHOW = 1995159183U;
+        static const AkUniqueID ITEMPICKUP = 1851462748U;
         static const AkUniqueID MUSICSTATEACTIVE = 1623677187U;
         static const AkUniqueID MUSICSTATEBARTERING = 237747687U;
         static const AkUniqueID MUSICSTATECALM = 821441420U;
         static const AkUniqueID MUSICSTATEPLAYERSPAWN = 1031159975U;
         static const AkUniqueID PAUSEMUSIC = 1127073398U;
+        static const AkUniqueID PLAYERFOOTSTEPS = 1681012287U;
         static const AkUniqueID RESUMEMUSIC = 2170724709U;
         static const AkUniqueID STARTMUSIC = 3827058668U;
         static const AkUniqueID STOPMUSIC = 1917263390U;

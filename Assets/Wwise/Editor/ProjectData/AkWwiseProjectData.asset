@@ -106,7 +106,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\SFX
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
-    m_lastTime: -8584615775998317969
+    m_lastTime: -8584611532364125266
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -323,6 +323,19 @@ MonoBehaviour:
     guid: 33316d7890aa87408e2af719ccc92cfd
     GuidInternal: 
     m_lastTime: -8584617595952268450
+    List: []
+  - PhysicalPath: Events\Environment.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Environment
+      ObjectType: 12
+      guid: 851bf5aefe549d489c25241343bb6f59
+    ParentPath: Events\Environment
+    guid: 851bf5aefe549d489c25241343bb6f59
+    GuidInternal: 
+    m_lastTime: -8584611535591399785
     List: []
   - PhysicalPath: Events\EnvironmentUI.wwu
     PathAndIcons:
@@ -570,6 +583,42 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+  - PhysicalPath: Events\Player.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Environment
+      ObjectType: 12
+      guid: 851bf5aefe549d489c25241343bb6f59
+    - ElementName: Player
+      ObjectType: 12
+      guid: d5f674957249a840bcf4382b6f3925ec
+    ParentPath: Events\Environment\Player
+    guid: d5f674957249a840bcf4382b6f3925ec
+    GuidInternal: 
+    m_lastTime: -8584611532505355678
+    List:
+    - name: PlayerFootsteps
+      guid: 84795c876ed0ab43a382ca7872053bb8
+      id: 1681012287
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Player
+        ObjectType: 12
+        guid: d5f674957249a840bcf4382b6f3925ec
+      - ElementName: PlayerFootsteps
+        ObjectType: 3
+        guid: 84795c876ed0ab43a382ca7872053bb8
+      Path: Events\Environment\Player\PlayerFootsteps
+      maxAttenuation: 0
+      maxDuration: 0.34805208
+      minDuration: 0.2416875
   - PhysicalPath: Events\UI.wwu
     PathAndIcons:
     - ElementName: Events

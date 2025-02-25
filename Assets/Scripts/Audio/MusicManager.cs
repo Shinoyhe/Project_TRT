@@ -77,13 +77,11 @@ public class MusicManager : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("Called disable :(");
         MusicActionsManager.OnStateChanged -= SetMusicState;
     }
 
     private void OnDestroy()
     {
-        Debug.Log("Called destroy :)");
         StopCurrentMusic();
         MusicActionsManager.OnStateChanged -= SetMusicState;
     }

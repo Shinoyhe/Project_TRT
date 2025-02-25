@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Object References")]
 	[SerializeField] private Transform forwardTransform;
 	[SerializeField] private Animator animator;
+	[SerializeField] private PlayerSFX playerSFX;
 	private CharacterController _characterController;
 
 	#endregion

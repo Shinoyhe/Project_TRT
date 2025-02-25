@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{335496CC-45EA-4922-B9FA-C65217B7662E}",
     "Language": "SFX",
-    "Hash": "{453EC217-65AE-5377-A76C-9D79C35263AC}",
+    "Hash": "{0E8A7BB2-A6D5-0255-676A-686C4D582031}",
     "ObjectPath": "\\SoundBanks\\SFX\\SFX",
     "ShortName": "SFX",
     "Path": "SFX.bnk",
@@ -24,12 +24,36 @@
       "CachePath": "AA/{AAB985ED-E5C6-B7E3-74EC-D5D6AC458887}.wem"
      },
      {
+      "Id": "29287396",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ENV_Player_Footstep_Wood\\Footstep03.wav",
+      "CachePath": "64/{64C146F5-0B63-71D1-0930-2297B3BCEE21}.wem"
+     },
+     {
+      "Id": "84044283",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ENV_Player_Footstep_Wood\\Footstep01.wav",
+      "CachePath": "EC/{EC361BEC-2EFC-1AC4-DEF5-987537C652DE}.wem"
+     },
+     {
       "Id": "275695072",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "BART_card_shuffle\\Card Shuffle Sparkle.wav",
       "CachePath": "35/{35BA2F4F-FE44-7D87-0CB7-EBF391C360A2}.wem"
+     },
+     {
+      "Id": "363062097",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ENV_Objects_Item_Pickup.wav",
+      "CachePath": "96/{9681A1F0-F1B4-C2B5-833A-D60BD37DF77F}.wem"
      },
      {
       "Id": "376631816",
@@ -118,6 +142,14 @@
       "Location": "Memory",
       "ShortName": "BART_scoreing_feedback\\BART_dummy_mama_nice.wav",
       "CachePath": "1E/{1EFD7AA9-C54C-3E0D-FAFD-B97A03A71F0B}.wem"
+     },
+     {
+      "Id": "1019905703",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ENV_Player_Footstep_Wood\\Footstep02.wav",
+      "CachePath": "B1/{B1D7AEB3-93D0-4CB1-F2CA-C9BA78908F56}.wem"
      }
     ],
     "Events": [
@@ -258,10 +290,44 @@
         "Id": "446356882"
        }
       ]
+     },
+     {
+      "Id": "1851462748",
+      "Name": "ItemPickup",
+      "ObjectPath": "\\Events\\Environment\\Objects\\ItemPickup",
+      "GUID": "{C51490A4-1D96-4A43-9E48-7D2D5EA73295}",
+      "DurationType": "OneShot",
+      "DurationMin": "2.634626",
+      "DurationMax": "2.634626",
+      "MediaRefs": [
+       {
+        "Id": "363062097"
+       }
+      ]
+     },
+     {
+      "Id": "1681012287",
+      "Name": "PlayerFootsteps",
+      "ObjectPath": "\\Events\\Environment\\Player\\PlayerFootsteps",
+      "GUID": "{875C7984-D06E-43AB-A382-CA7872053BB8}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.2416875",
+      "DurationMax": "0.34805208",
+      "MediaRefs": [
+       {
+        "Id": "29287396"
+       },
+       {
+        "Id": "84044283"
+       },
+       {
+        "Id": "1019905703"
+       }
+      ]
      }
     ]
    }
   ],
-  "FileHash": "{13EE3D13-6965-6C6D-A6F4-1A0AFFF2F50C}"
+  "FileHash": "{8939A560-F496-9314-2547-833DADA38715}"
  }
 }

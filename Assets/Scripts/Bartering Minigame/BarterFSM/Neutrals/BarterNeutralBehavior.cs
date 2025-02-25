@@ -2,6 +2,11 @@ using UnityEngine;
 
 public abstract class BarterNeutralBehavior : ScriptableObject
 {
+    [Tooltip("The ID of this behavior.")]
+    public string id;
+    [SerializeField, TextArea, Tooltip("A description of this behavior's effects.")]
+    private string description;
+
     public abstract PlayingCard GetCard(BarterDirector dir, CardUser cardUser, int matchIndex);
 
     /// <summary>

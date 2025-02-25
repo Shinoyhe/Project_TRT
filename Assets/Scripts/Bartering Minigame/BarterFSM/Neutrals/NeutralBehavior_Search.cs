@@ -1,8 +1,10 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New NeutralBehavior_Search", menuName = "Bartering/NeutralBehavior/Search")]
 public class NeutralBehavior_Search : BarterNeutralBehavior
 {   
+    [HorizontalLine]
     [SerializeField, Tooltip("The card we want to play in the neutral slot.")]
     private PlayingCard cardToPlay;
 

@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New NeutralBehavior_Repeat", menuName = "Bartering/NeutralBehavior/Repeat")]
@@ -8,6 +9,7 @@ public class NeutralBehavior_Repeat : BarterNeutralBehavior
         PLAYER
     }
 
+    [HorizontalLine]
     [SerializeField, Tooltip("Whether we should repeat the card from the opponent's or the "
                            + "player's last hand.")]
     private RepeatTarget repeatTarget;

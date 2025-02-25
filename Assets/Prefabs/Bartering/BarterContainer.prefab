@@ -186,6 +186,23 @@ PrefabInstance:
       propertyPath: cardUser
       value: 
       objectReference: {fileID: 4310819930113310696}
+    - target: {fileID: 4119366081100176294, guid: 29610d6cbfcfcfb4a9b1a1db32e70762,
+        type: 3}
+      propertyPath: cardShuffleSFX.playOnInit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119366081100176294, guid: 29610d6cbfcfcfb4a9b1a1db32e70762,
+        type: 3}
+      propertyPath: cardPlaceSFX._events.startEvent.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: ab3f02c7ea3ea2e4c8c9fea204bb6c2c,
+        type: 2}
+    - target: {fileID: 4119366081100176294, guid: 29610d6cbfcfcfb4a9b1a1db32e70762,
+        type: 3}
+      propertyPath: cardShuffleSFX._events.startEvent.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 67adec2414a1ffa4b81cf2757ab09a7d,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 0}
     m_RemovedGameObjects: []

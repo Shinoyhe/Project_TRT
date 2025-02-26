@@ -7,6 +7,9 @@ public class SetDefaultSelection : MonoBehaviour
 {
     public Button DefaultButton;
     private void OnEnable() {
-        DefaultButton.Select();
+
+        if (DefaultButton != null) {
+            DefaultButton.Select();
+        }
     }
 }

@@ -9,6 +9,8 @@ public class InventoryCardObject : MonoBehaviour
 
     [SerializeField] private Image backCardImage;
 
+    public InventoryCardObject inspectCard;
+
     [SerializeField, BoxGroup("Item Layout")] private GameObject itemLayoutObject;
     [SerializeField, BoxGroup("Item Layout")] private TMP_Text itemNameText;
     [SerializeField, BoxGroup("Item Layout")] private Image itemSpriteImage;
@@ -28,13 +30,22 @@ public class InventoryCardObject : MonoBehaviour
     [HideInInspector] public string CardDescription;
     [HideInInspector] public string CardID;
 
+    private bool inspected = false;
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         if (_card != null) {
             SetData(_card);
+        } else {
+            SetCardToEmpty();
         }
-        SetCardToEmpty();
+    }
+
+    private void OnDisable() {
+        Navigation allNav = new Navigation();
+        allNav.mode = Navigation.Mode.Automatic;
+        gameObject.GetComponent<Button>().navigation = allNav;
+        inspected = false;
     }
 
     /// <summary>
@@ -118,5 +129,27 @@ public class InventoryCardObject : MonoBehaviour
         infoLayoutObject.SetActive(false);
 
         backCardImage.color = Color.gray;
+    }
+
+    public void OnSelected() {
+
+        if (inspected == false) {
+
+            if (_card == null) return;
+            inspectCard.gameObject.SetActive(true);
+            inspectCard.SetData(_card);
+            Navigation noNav = new Navigation();
+            noNav.mode = Navigation.Mode.None;
+            gameObject.GetComponent<Button>().navigation = noNav;
+            inspected = true;
+
+        } else {
+            inspectCard.gameObject.SetActive(false);
+            Navigation allNav = new Navigation();
+            allNav.mode = Navigation.Mode.Automatic;
+            gameObject.GetComponent<Button>().navigation = allNav;
+            inspected = false;
+        }
+
     }
 }

@@ -171,21 +171,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2777009496499672824, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 24.999985
-      objectReference: {fileID: 0}
-    - target: {fileID: 2777009496499672824, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -12.500008
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301192728339506633, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 120
-      objectReference: {fileID: 0}
     - target: {fileID: 5761779680460996703, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_Name
@@ -733,7 +718,7 @@ MonoBehaviour:
   UseTransform: 0
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 1, z: 0}
-  CardToGive: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a, type: 2}
+  CardToGive: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
 --- !u!65 &871651305
 BoxCollider:
   m_ObjectHideFlags: 0

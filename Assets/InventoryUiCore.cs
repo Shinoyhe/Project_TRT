@@ -10,6 +10,7 @@ public class InventoryUiCore : MonoBehaviour
     public GridLayoutGroup InfoCardsGrid;
     public GridLayoutGroup ItemGrid;
     public GameObject InventoryCardPrefab;
+    public InventoryCardObject inspectCard;
 
     public int InfoCardMaxCount = 10;
     public int ItemCardMaxCount = 10;
@@ -32,6 +33,7 @@ public class InventoryUiCore : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("On Enable!");
+        inspectCard.gameObject.SetActive(false);
 
         if (_firstUpdateNotDone) {
             OnFirstUpdate();
@@ -52,18 +54,20 @@ public class InventoryUiCore : MonoBehaviour
             GameObject newCard = Instantiate(InventoryCardPrefab, InfoCardsGrid.transform);
 
             // Pair card with data
+            newCard.GetComponent<InventoryCardObject>().inspectCard = inspectCard;
             newCard.GetComponent<InventoryCardObject>().SetCardToEmpty();
 
             // Add card to our tracked instances
             _currentInfoCardInstances.Add(newCard);
         }
-
+         
         for (int i = 0; i < ItemCardMaxCount; i++) {
 
             // Create a new card instance
             GameObject newCard = Instantiate(InventoryCardPrefab, ItemGrid.transform);
 
             // Pair card with data
+            newCard.GetComponent<InventoryCardObject>().inspectCard = inspectCard;
             newCard.GetComponent<InventoryCardObject>().SetCardToEmpty();
 
             // Add card to our tracked instances

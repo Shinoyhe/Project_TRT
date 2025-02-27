@@ -7,6 +7,8 @@ public class InventoryCardObject : MonoBehaviour
 {
     [SerializeField] private InventoryCardData _card;
 
+    [SerializeField] private Image backCardImage;
+
     [SerializeField, BoxGroup("Item Layout")] private GameObject itemLayoutObject;
     [SerializeField, BoxGroup("Item Layout")] private TMP_Text itemNameText;
     [SerializeField, BoxGroup("Item Layout")] private Image itemSpriteImage;
@@ -32,6 +34,7 @@ public class InventoryCardObject : MonoBehaviour
         if (_card != null) {
             SetData(_card);
         }
+        SetCardToEmpty();
     }
 
     /// <summary>
@@ -44,7 +47,8 @@ public class InventoryCardObject : MonoBehaviour
         if (newCard == null) return;
         
         _card = newCard;
-        
+        backCardImage.color = Color.white;
+
         if (_card.Type == GameEnums.CardTypes.ITEM) {
             // Disable the info layout and enable the item
             itemLayoutObject.SetActive(true);
@@ -104,5 +108,15 @@ public class InventoryCardObject : MonoBehaviour
         CardName = _card.CardName;
         CardDescription = _card.Description;
         CardName = _card.ID;
+    }
+
+    /// <summary>
+    /// Sets card to empty!
+    /// </summary>
+    public void SetCardToEmpty() {
+        itemLayoutObject.SetActive(false);
+        infoLayoutObject.SetActive(false);
+
+        backCardImage.color = Color.gray;
     }
 }

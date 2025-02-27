@@ -249,6 +249,7 @@ public class Inventory : MonoBehaviour
 
         Cards.Sort(comparison);
         OnInventoryUpdated?.Invoke();
+        inventoryLastUpdateTime = Time.time;
     }
 
     /// <summary>

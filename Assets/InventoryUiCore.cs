@@ -11,13 +11,18 @@ public class InventoryUiCore : MonoBehaviour
     public GridLayoutGroup ItemGrid;
     public GameObject InventoryCardPrefab;
 
+    public int InfoCardMaxCount = 10;
+    public int ItemCardMaxCount = 10;
+
     #endregion
 
     #region ======== [ PRIVATE PROPERTIES ] ========
 
-    private List<GameObject> _currentCardInstances = new List<GameObject>();
+    private List<GameObject> _currentInfoCardInstances = new List<GameObject>();
+    private List<GameObject> _currentItemCardInstances = new List<GameObject>();
+
     private float _lastUpdateTime = 0f;
-    private bool _firstUpdate = false;
+    private bool _firstUpdateNotDone = true;
 
     #endregion
 
@@ -26,69 +31,101 @@ public class InventoryUiCore : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
+        Debug.Log("On Enable!");
+
+        if (_firstUpdateNotDone) {
+            OnFirstUpdate();
+        }
+
         OnUiUpdate();
     }
 
     #endregion
 
     #region ======== [ PRIVATE METHODS ] ========
+    
+    private void OnFirstUpdate() {
+
+        for (int i = 0; i < InfoCardMaxCount; i++) {
+
+            // Create a new card instance
+            GameObject newCard = Instantiate(InventoryCardPrefab, InfoCardsGrid.transform);
+
+            // Pair card with data
+            newCard.GetComponent<InventoryCardObject>().SetCardToEmpty();
+
+            // Add card to our tracked instances
+            _currentInfoCardInstances.Add(newCard);
+        }
+
+        for (int i = 0; i < ItemCardMaxCount; i++) {
+
+            // Create a new card instance
+            GameObject newCard = Instantiate(InventoryCardPrefab, ItemGrid.transform);
+
+            // Pair card with data
+            newCard.GetComponent<InventoryCardObject>().SetCardToEmpty();
+
+            // Add card to our tracked instances
+            _currentItemCardInstances.Add(newCard);
+        }
+
+        List<InventoryCardData> dataForAllCards = GameManager.Inventory.GetDatas();
+        PopulateGrids(ref dataForAllCards);
+
+        _firstUpdateNotDone = false;
+    }
 
     private void OnUiUpdate() {
 
         bool outOfDateInformation = Mathf.Abs(_lastUpdateTime - GameManager.Inventory.inventoryLastUpdateTime) > 0.025f;
 
-        if (!outOfDateInformation && _firstUpdate == true) {
+        if (!outOfDateInformation) {
             return;
         }
 
         _lastUpdateTime = GameManager.Inventory.inventoryLastUpdateTime;
-        _firstUpdate = true;
 
         List<InventoryCardData> dataForAllCards = GameManager.Inventory.GetDatas();
         PopulateGrids(ref dataForAllCards);        
     }
 
-    private void ClearGrids() {
-        foreach(GameObject card in _currentCardInstances) {
-            Destroy(card);
+    private void ClearGrid() {
+        foreach(GameObject card in _currentItemCardInstances) {
+            card.GetComponent<InventoryCardObject>().SetCardToEmpty();
         }
 
-        _currentCardInstances.Clear();
+        foreach (GameObject card in _currentInfoCardInstances) {
+            card.GetComponent<InventoryCardObject>().SetCardToEmpty();
+        }
     }
 
     private void PopulateGrids(ref List<InventoryCardData> dataForAllCards) {
 
         // Clear Grid!
-        ClearGrids();
+        ClearGrid();
+
+        int currentAddedInfo = 0;
+        int currentAddedItem = 0;
 
         // Go through each card data X
         foreach (InventoryCardData card in dataForAllCards) {
 
             // Find what grid to add card to.
 
-            Transform cardGridTransform = null;
-
             switch (card.Type) {
                 case GameEnums.CardTypes.INFO:
-                    cardGridTransform = InfoCardsGrid.transform;
+
+                    _currentInfoCardInstances[currentAddedInfo].GetComponent<InventoryCardObject>().SetData(card);
+                    currentAddedInfo += 1;
+
                     break;
                 case GameEnums.CardTypes.ITEM:
-                    cardGridTransform = ItemGrid.transform;
+
+                    _currentItemCardInstances[currentAddedItem].GetComponent<InventoryCardObject>().SetData(card);
+                    currentAddedItem += 1;
                     break;
             }
-
-            if(cardGridTransform == null) {
-                Debug.LogError("Card has no assigned parent when populating UI grid.");
-            }
-
-            // Create card
-            GameObject newCard = Instantiate(InventoryCardPrefab, cardGridTransform);
-
-            // Pair card with data
-            newCard.GetComponent<InventoryCardObject>().SetData(card);
-
-            // Add card to our tracked instances
-            _currentCardInstances.Add(newCard);
         }
     }
 

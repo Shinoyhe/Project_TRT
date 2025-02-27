@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7198147195480083390}
   - component: {fileID: 2334186633066417863}
   - component: {fileID: 7739117665189127466}
+  - component: {fileID: 7984151849308001299}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,11 +54,11 @@ MonoBehaviour:
   playerInput: {fileID: 7198147195480083390}
   uiInput: {fileID: 297495919439177883}
   inventory: {fileID: 7739117665189127466}
-  timeLoopManager: {fileID: 0}
   playerTag: Player
   _player: {fileID: 0}
   masterCanvasTag: MasterCanvas
   _masterCanvas: {fileID: 0}
+  barterStarter: {fileID: 0}
 --- !u!114 &297495919439177883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,8 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueUiPrefab: {fileID: 8005697584356534663, guid: a43636c37c7551c4a9708853bd50a584,
     type: 3}
-  barterContainerPrefab: {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d,
-    type: 3}
 --- !u!114 &7739117665189127466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +111,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51801f099b85cc478c82a4b31b4b623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllCardDatas: []
+  AllCardDatas:
+  - {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
+  - {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a, type: 2}
+  - {fileID: 11400000, guid: 5a35804eb59b84c4a8de3434821d7ddc, type: 2}
   AllCards: []
   StartingCards: []
   Cards: []
+--- !u!114 &7984151849308001299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056866332689036431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb17fd28f98f39458ad3062a9e575d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barterContainerPrefab: {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d,
+    type: 3}
+  BarterResponseMatrix: {fileID: 0}
+  BarterNeutralBehaviour: {fileID: 0}
+  PrizeCard: {fileID: 0}
+  DecayPerSecond: 5
+  WillingnessPerMatch: 5
+  WillingnessPerFail: -5
+  StartingWillingness: 50
 --- !u!1 &8203694426375556501
 GameObject:
   m_ObjectHideFlags: 0

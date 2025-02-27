@@ -587,8 +587,15 @@ MonoBehaviour:
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 3, z: 0}
   dialogueBubbleOffset: {x: -2.02, y: 4.17, z: 0}
-  cardToGiveOnWin: {fileID: 11400000, guid: 37d76c22448d8cb4ab619e7e711477ec, type: 2}
+  cardToGiveOnWin: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
   npcConversation: {fileID: 4900000, guid: 78fae791d8e25a445ac2b2e5cfc5205f, type: 3}
+  BarterResponseMatrix: {fileID: 0}
+  BarterNeutralBehaviour: {fileID: 0}
+  PrizeCard: {fileID: 0}
+  DecayPerSecond: 5.6
+  WillingnessPerMatch: 5
+  WillingnessPerFail: -5
+  StartingWillingness: 50
 --- !u!136 &586339378
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1151,18 +1158,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1977936496}
   m_SourcePrefab: {fileID: 100100000, guid: d7b8be9e5f8f8024691d1d3b751d45b5, type: 3}
---- !u!114 &1250298454 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9035282436424910295, guid: d7b8be9e5f8f8024691d1d3b751d45b5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1250298453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a90b43738e1497749b2117ff6b9fffc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1251134707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,12 +1280,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!223 &1339484688 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 837961958174819109, guid: 142379524301d744ca9ed258108220b9,
-    type: 3}
-  m_PrefabInstance: {fileID: 151932038}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1421335577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5083528762976515683, guid: d7b8be9e5f8f8024691d1d3b751d45b5,
@@ -1659,44 +1648,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2334186633066417863, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: masterCanvas
-      value: 
-      objectReference: {fileID: 1339484688}
-    - target: {fileID: 3546394063840808889, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1250298454}
-    - target: {fileID: 3546394063840808889, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: timeLoopManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: AllCardDatas.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: AllCardDatas.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
-        type: 2}
-    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: AllCardDatas.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a,
-        type: 2}
-    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: AllCardDatas.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 5a35804eb59b84c4a8de3434821d7ddc,
-        type: 2}
     - target: {fileID: 8480042010274908795, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
         type: 3}
       propertyPath: m_LocalPosition.x

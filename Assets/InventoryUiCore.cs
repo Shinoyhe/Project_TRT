@@ -16,6 +16,8 @@ public class InventoryUiCore : MonoBehaviour
     #region ======== [ PRIVATE PROPERTIES ] ========
 
     private List<GameObject> _currentCardInstances = new List<GameObject>();
+    private float _lastUpdateTime = 0f;
+    private bool _firstUpdate = false;
 
     #endregion
 
@@ -32,9 +34,18 @@ public class InventoryUiCore : MonoBehaviour
     #region ======== [ PRIVATE METHODS ] ========
 
     private void OnUiUpdate() {
-        Debug.Log("Inventory Updated");
+
+        bool outOfDateInformation = Mathf.Abs(_lastUpdateTime - GameManager.Inventory.inventoryLastUpdateTime) > 0.025f;
+
+        if (!outOfDateInformation && _firstUpdate == true) {
+            return;
+        }
+
+        _lastUpdateTime = GameManager.Inventory.inventoryLastUpdateTime;
+        _firstUpdate = true;
+
         List<InventoryCardData> dataForAllCards = GameManager.Inventory.GetDatas();
-        PopulateGrids(ref dataForAllCards);
+        PopulateGrids(ref dataForAllCards);        
     }
 
     private void ClearGrids() {

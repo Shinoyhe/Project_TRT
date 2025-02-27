@@ -8,6 +8,7 @@ public class BaseTabButton : MonoBehaviour
 {
     [Header("Object References")]
     [Required] [SerializeField] private JournalCanvas journal;
+    public JournalCanvas.TabType tabType = JournalCanvas.TabType.NPC;
     private Button button;
 
     /// <summary>
@@ -47,14 +48,4 @@ public class JournalNPCButton : BaseTabButton
 {
     [Header("Parameter")]
     [Label("NPC Data")] public NPCData npcData;
-}
-
-public class JournalInfoButton : BaseTabButton
-{
-    
-}
-
-public class JournalItemButton : BaseTabButton
-{
-    
 }

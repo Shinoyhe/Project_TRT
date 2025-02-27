@@ -6,7 +6,7 @@ using TMPro;
 
 public class JournalCanvas : MonoBehaviour
 {
-    private enum TabType
+    public enum TabType
     {
         NPC, Info, Item
     }
@@ -34,13 +34,9 @@ public class JournalCanvas : MonoBehaviour
             _currentTabButton = tabButton;
         }
 
-        var tabType = tabButton switch
-        {
-            JournalNPCButton => TabType.NPC,
-            JournalInfoButton => TabType.Info,
-            JournalItemButton => TabType.Item,
-            _ => TabType.NPC
-        };
+        var tabType = tabButton.tabType;
+
+        SwitchTabType(tabType);
     }
 
 
@@ -52,7 +48,7 @@ public class JournalCanvas : MonoBehaviour
     {
         if (_currentTabType == tabType) return;
 
-        GameObject oldTab = tabType switch
+        GameObject oldTab = _currentTabType switch
         {
             TabType.NPC => NPCMain,
             TabType.Info => InfoMain,
@@ -71,8 +67,15 @@ public class JournalCanvas : MonoBehaviour
         oldTab?.SetActive(false);
         newTab?.SetActive(true);
 
+        _currentTabType = tabType;
+    }
+
+
+    private void LoadTab()
+    {
 
     }
+
 
     /// <summary>
     /// Loads the NPC Data to be displayed

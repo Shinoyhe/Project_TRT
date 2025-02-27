@@ -196,8 +196,16 @@ public class BarterDirector : MonoBehaviour
                          + $"{_playerCards.Length})");
         }
 
-        _playerCards[indexInArray] = playerCard;
+        if (playerCard != null) {
+            // If the new submission is nonnull, note that it's submitted.
+            playerCard.PlayerSubmitted = true;
+        } else {
+            // If the new submission is null, note that the old one is unsubmitted.
+            _playerCards[indexInArray].PlayerSubmitted = false;
+        }
 
+        _playerCards[indexInArray] = playerCard;
+        
         // Check if all slots are non-null.
         foreach (PlayingCard card in _playerCards) {
             // If we encounter any null card, we shouldn't submit.
@@ -211,8 +219,11 @@ public class BarterDirector : MonoBehaviour
     /// Clear all submitted player cards.
     /// </summary>
     public void ClearPlayerCards() 
-    { 
-        System.Array.Clear(_playerCards, 0, _playerCards.Length);
+    {
+        for (int i = 0; i < _playerCards.Length; i++) {
+            _playerCards[i].PlayerSubmitted = false;
+            _playerCards[i] = null;
+        }
     }
 
     /// <summary>

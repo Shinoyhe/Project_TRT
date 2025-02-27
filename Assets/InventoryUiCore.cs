@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryUiCore : MonoBehaviour
-{
+public class InventoryUiCore : MonoBehaviour {
     #region ======== [ OBJECT REFERENCES ] ========
 
     public GridLayoutGroup InfoCardsGrid;
@@ -25,13 +24,14 @@ public class InventoryUiCore : MonoBehaviour
     private float _lastUpdateTime = 0f;
     private bool _firstUpdateNotDone = true;
 
+    private bool inspecting = false;
+
     #endregion
 
     #region ======== [ INIT METHODS ] ========
 
     // Start is called before the first frame update
-    private void OnEnable()
-    {
+    private void OnEnable() {
         Debug.Log("On Enable!");
         inspectCard.gameObject.SetActive(false);
 
@@ -39,48 +39,89 @@ public class InventoryUiCore : MonoBehaviour
             OnFirstUpdate();
         }
 
-        OnUiUpdate();
+        CheckForUpdate();
+    }
+
+    #endregion
+
+    #region ======== [ PUBLIC METHODS ] ========
+
+    /// <summary>
+    /// Start inspecting a card in the inventory.
+    /// </summary>
+    /// <param name="dataToShow">Card data to show in the inspect screen.</param>
+    public void InspectCard(InventoryCardData dataToShow) {
+
+        if (dataToShow == null) return;
+
+        inspectCard.gameObject.SetActive(true);
+        inspectCard.SetData(dataToShow);
+        inspecting = true;
+
+    }
+
+    /// <summary>
+    /// Hide the inspection popup!
+    /// </summary>
+    public void StopInspecting() {
+        
+        inspectCard.gameObject.SetActive(false);
+        inspecting = false;
     }
 
     #endregion
 
     #region ======== [ PRIVATE METHODS ] ========
-    
+
+    /// <summary>
+    /// Creates the inventory grid of InventoryCardObjects to use later!
+    /// Only triggers once, the first OnEnable call for this object.
+    /// </summary>
     private void OnFirstUpdate() {
 
+        // Instance Info Cards
         for (int i = 0; i < InfoCardMaxCount; i++) {
-
-            // Create a new card instance
-            GameObject newCard = Instantiate(InventoryCardPrefab, InfoCardsGrid.transform);
-
-            // Pair card with data
-            newCard.GetComponent<InventoryCardObject>().inspectCard = inspectCard;
-            newCard.GetComponent<InventoryCardObject>().SetCardToEmpty();
-
-            // Add card to our tracked instances
+            GameObject newCard = InstanceNewCard(InfoCardsGrid.transform);
             _currentInfoCardInstances.Add(newCard);
         }
-         
+
+        // Instance Item Cards
         for (int i = 0; i < ItemCardMaxCount; i++) {
-
-            // Create a new card instance
-            GameObject newCard = Instantiate(InventoryCardPrefab, ItemGrid.transform);
-
-            // Pair card with data
-            newCard.GetComponent<InventoryCardObject>().inspectCard = inspectCard;
-            newCard.GetComponent<InventoryCardObject>().SetCardToEmpty();
-
-            // Add card to our tracked instances
+            GameObject newCard = InstanceNewCard(ItemGrid.transform);
             _currentItemCardInstances.Add(newCard);
         }
 
+        // Populate cards with inventory data
         List<InventoryCardData> dataForAllCards = GameManager.Inventory.GetDatas();
         PopulateGrids(ref dataForAllCards);
 
+        // Prevent next executions
         _firstUpdateNotDone = false;
     }
 
-    private void OnUiUpdate() {
+    /// <summary>
+    /// Instances a new InventoryCardObject in the scene with no data.
+    /// </summary>
+    /// <param name="parentInScene"> Parent to create card under. </param>
+    /// <returns></returns>
+    private GameObject InstanceNewCard(Transform parentInScene) {
+
+        GameObject newCard = Instantiate(InventoryCardPrefab, parentInScene);
+
+        // Setup data
+        InventoryCardObject objectScript = newCard.GetComponent<InventoryCardObject>();
+        objectScript.Parent = this;
+        objectScript.SetCardToEmpty();
+
+        // Return our new instance
+        return newCard;
+    }
+
+    /// <summary>
+    /// Each onEnable() checks if inventory content needs to be updated!
+    /// If so populates again!
+    /// </summary>
+    private void CheckForUpdate() {
 
         bool outOfDateInformation = Mathf.Abs(_lastUpdateTime - GameManager.Inventory.inventoryLastUpdateTime) > 0.025f;
 
@@ -88,14 +129,18 @@ public class InventoryUiCore : MonoBehaviour
             return;
         }
 
-        _lastUpdateTime = GameManager.Inventory.inventoryLastUpdateTime;
-
+        // If out of dat info, do a new update!
         List<InventoryCardData> dataForAllCards = GameManager.Inventory.GetDatas();
-        PopulateGrids(ref dataForAllCards);        
+        PopulateGrids(ref dataForAllCards);
+
+        _lastUpdateTime = GameManager.Inventory.inventoryLastUpdateTime;
     }
 
+    /// <summary>
+    /// Clear grid data to repopulate with new data.
+    /// </summary>
     private void ClearGrid() {
-        foreach(GameObject card in _currentItemCardInstances) {
+        foreach (GameObject card in _currentItemCardInstances) {
             card.GetComponent<InventoryCardObject>().SetCardToEmpty();
         }
 
@@ -104,6 +149,10 @@ public class InventoryUiCore : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Fill grid with our inventory data!
+    /// </summary>
+    /// <param name="dataForAllCards">Data to fill inventory grid with!</param>
     private void PopulateGrids(ref List<InventoryCardData> dataForAllCards) {
 
         // Clear Grid!

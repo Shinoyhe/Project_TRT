@@ -5,17 +5,20 @@ using UnityEngine.UI;
 
 public class InventoryCardObject : MonoBehaviour
 {
+    #region ======== [ OBJECT REFERENCES ] ========
+    [Header("Data")]
     [SerializeField] private InventoryCardData _card;
 
+    [Header("Global Dependencies")]
     [SerializeField] private Image backCardImage;
 
-    public InventoryCardObject inspectCard;
-
+    [Header("Item Layout")]
     [SerializeField, BoxGroup("Item Layout")] private GameObject itemLayoutObject;
     [SerializeField, BoxGroup("Item Layout")] private TMP_Text itemNameText;
     [SerializeField, BoxGroup("Item Layout")] private Image itemSpriteImage;
     [SerializeField, BoxGroup("Item Layout")] private TMP_Text itemDescriptionText;
 
+    [Header("Info Layout")]
     [SerializeField, BoxGroup("Info Layout")] private GameObject infoLayoutObject;
     [SerializeField, BoxGroup("Info Layout")] private TMP_Text infoNameText;
     [SerializeField, BoxGroup("Info Layout")] private TMP_Text infoDescriptionText;
@@ -26,14 +29,34 @@ public class InventoryCardObject : MonoBehaviour
     [SerializeField, BoxGroup("Info Layout")] private Image infoNPC3Sprite;
     [SerializeField, BoxGroup("Info Layout")] private TMP_Text infoNPC3Context;
 
+    #endregion
+
+    #region ======== [ INTERNAL PROPERTIES ] ========
+
     [HideInInspector] public string CardName;
     [HideInInspector] public string CardDescription;
     [HideInInspector] public string CardID;
 
+    [HideInInspector] public InventoryUiCore Parent;
+
     private bool inspected = false;
+    private Navigation None;
+    private Navigation All;
+
+    #endregion
+
+    #region ======== [ INIT METHODS ] ========
 
     // Start is called before the first frame update
     void Start() {
+
+        // Create Navigation instances
+        None = new Navigation();
+        None.mode = Navigation.Mode.None;
+
+        All = new Navigation();
+        All.mode = Navigation.Mode.Automatic;
+
         if (_card != null) {
             SetData(_card);
         } else {
@@ -42,11 +65,13 @@ public class InventoryCardObject : MonoBehaviour
     }
 
     private void OnDisable() {
-        Navigation allNav = new Navigation();
-        allNav.mode = Navigation.Mode.Automatic;
-        gameObject.GetComponent<Button>().navigation = allNav;
+        gameObject.GetComponent<Button>().navigation = All;
         inspected = false;
     }
+
+    #endregion
+
+    #region ======== [ PUBLIC METHODS ] ========
 
     /// <summary>
     /// Sets the data of this UI object to the card given
@@ -135,21 +160,24 @@ public class InventoryCardObject : MonoBehaviour
 
         if (inspected == false) {
 
-            if (_card == null) return;
-            inspectCard.gameObject.SetActive(true);
-            inspectCard.SetData(_card);
-            Navigation noNav = new Navigation();
-            noNav.mode = Navigation.Mode.None;
-            gameObject.GetComponent<Button>().navigation = noNav;
+            // Show card
+            Parent.InspectCard(_card);
+
+            // Disable navigation
+            gameObject.GetComponent<Button>().navigation = None;
             inspected = true;
 
         } else {
-            inspectCard.gameObject.SetActive(false);
-            Navigation allNav = new Navigation();
-            allNav.mode = Navigation.Mode.Automatic;
-            gameObject.GetComponent<Button>().navigation = allNav;
+            
+            // Hide card
+            Parent.StopInspecting();
+
+            // Enable navigation
+            gameObject.GetComponent<Button>().navigation = All;
             inspected = false;
         }
 
     }
+
+    #endregion
 }

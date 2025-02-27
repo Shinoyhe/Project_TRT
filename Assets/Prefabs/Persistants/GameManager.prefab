@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7198147195480083390}
   - component: {fileID: 2334186633066417863}
   - component: {fileID: 7739117665189127466}
-  - component: {fileID: 7984151849308001299}
+  - component: {fileID: 7792286873378010446}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -58,7 +58,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   masterCanvasTag: MasterCanvas
   _masterCanvas: {fileID: 0}
-  barterStarter: {fileID: 0}
+  barterStarter: {fileID: 7792286873378010446}
 --- !u!114 &297495919439177883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   AllCards: []
   StartingCards: []
   Cards: []
---- !u!114 &7984151849308001299
+--- !u!114 &7792286873378010446
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

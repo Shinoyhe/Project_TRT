@@ -4,7 +4,6 @@ using UnityEngine;
 public class NpcInteractable : Interactable
 {
     [SerializeField] private Vector3 dialogueBubbleOffset;
-    [SerializeField] private InventoryCardData cardToGiveOnWin;
     [SerializeField] private TextAsset npcConversation;
 
     [BoxGroup("Barter Settings")] public BarterResponseMatrix BarterResponseMatrix;
@@ -57,7 +56,7 @@ public class NpcInteractable : Interactable
             Debug.LogError("NPCInteractable: Could not find BarterNeutralBehaviour");
         }
 
-        barterStarter.PrizeCard = cardToGiveOnWin;
+        barterStarter.PrizeCard = PrizeCard;
         barterStarter.DecayPerSecond = DecayPerSecond;
         barterStarter.WillingnessPerMatch = WillingnessPerMatch;
         barterStarter.WillingnessPerFail = WillingnessPerFail;

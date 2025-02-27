@@ -65,6 +65,16 @@ public class BarterStarter : MonoBehaviour
 
     // Private Methods ============================================================================
 
+    private void Start()
+    {
+
+    }
+
+    private void Update()
+    {
+        
+    }
+
     /// <summary>
     /// Call on Barter Win, give player card.
     /// </summary>

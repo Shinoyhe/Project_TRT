@@ -17,7 +17,8 @@ public class DevMenu : Singleton<DevMenu> {
     void Update()
     {
         if (_input == null) { return; }
-        if (_input.GetDebugDown() == true) { ToggleDevMenu(); }
+        else if (_input.GetDebugDown() && _input.GetProgressDialogueDown()) {ResetGame();}
+        else if (_input.GetDebugDown()) { ToggleDevMenu(); }
     }
     
     void ToggleDevMenu() 
@@ -52,6 +53,8 @@ public class DevMenu : Singleton<DevMenu> {
         SceneManager.sceneLoaded -= CloseDevMenu;
     }
     
+    
+    #region Public Methods
     public void QuitGame()
     {
         Application.Quit();
@@ -61,6 +64,7 @@ public class DevMenu : Singleton<DevMenu> {
     {
         CloseDevMenu();
         if (TimeLoopManager.Instance != null) {
+            TimeLoopManager.SetLoopPaused(false);
             TimeLoopManager.ResetLoop();
         }
     }
@@ -71,4 +75,12 @@ public class DevMenu : Singleton<DevMenu> {
             TimeLoopManager.SetLoopPaused(!TimeLoopManager.LoopPaused);
         }
     }
+    
+    public void ResetGame(){
+        if (GameManager.Inventory != null) {
+            GameManager.Inventory.Clear();
+        }
+        SceneManager.LoadScene(0);
+    }
+    #endregion
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MusicManager : Singleton<MusicManager>
 {
     [SerializeField] private List<AudioEvent> musicEvents = new();
+    [SerializeField] private List<AK.Wwise.RTPC> buses = new();
     private Dictionary<string, AudioEvent> musicEventsDict = new();
     private AudioEvent focusedMusic;
     private Stack<AudioEvent> allCurrentMusic;
@@ -23,6 +24,17 @@ public class MusicManager : Singleton<MusicManager>
         }
 
         Debug.Log("Here's the events: " + musicEventsDict.Values);
+        
+        foreach (AK.Wwise.RTPC bus in buses){
+            string busName = bus.ToString().Replace("Volume", "");
+            if (PlayerPrefs.HasKey(busName))
+            {
+                bus.SetGlobalValue(PlayerPrefs.GetFloat(busName));
+            }
+            else{
+                bus.SetGlobalValue(50);
+            }
+        }
     }
 
     private void OnDestroy()

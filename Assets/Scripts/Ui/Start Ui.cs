@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartUi : MonoBehaviour {
     // Parameters =================================================================================
@@ -36,6 +37,10 @@ public class StartUi : MonoBehaviour {
     {
         SwitchCanvas(CreditsCanvas);
         _currentCanvasState = CanvasState.Credits;
+    }
+    
+    public void StartGame(){
+        SceneManager.LoadScene(1);
     }
 
     // Private Helper Methods ====================================================================

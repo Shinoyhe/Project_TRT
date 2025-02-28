@@ -1,6 +1,7 @@
 using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 /// <summary>
@@ -14,16 +15,19 @@ public class DialogueManager : MonoBehaviour
     [SerializeField, Tooltip("The prefab for dialogue UI.")]
     private GameObject dialogueUiPrefab;
     [SerializeField, Tooltip("The prefab for the bartering minigame.")]
-    private GameObject barterContainerPrefab;
+    private List<GameObject> barterContainerPrefab;
+    private int _barterIndex = 0;
 
     public struct ProcessedTags {
 
         public bool IsNpcTalking;
         public bool IsBarterTrigger;
+        public bool IsLoopTrigger;
 
         public ProcessedTags(bool isBarterTrigger = false, bool isNpcTalking = false) {
             IsNpcTalking = isNpcTalking;
             IsBarterTrigger = isBarterTrigger;
+            IsLoopTrigger = false;
         }
     }
 
@@ -206,6 +210,11 @@ public class DialogueManager : MonoBehaviour
             EndStory(false);
             return;
         }
+        else if(foundTags.IsLoopTrigger){
+            EndStory(false);
+            TimeLoopManager.ResetLoop();
+            return;
+        }
 
         // Queue next line
         bool lineHasChoices = _currentStory.currentChoices.Count > 0;
@@ -244,6 +253,15 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "barter":
                     foundTags.IsBarterTrigger = true;
+                    if (value != "") {
+                        _barterIndex = int.Parse(value);
+                    }
+                    else {
+                        _barterIndex = 0;
+                    }
+                    break;
+                case "exp":
+                    foundTags.IsLoopTrigger = true;
                     break;
             }
         }
@@ -257,7 +275,7 @@ public class DialogueManager : MonoBehaviour
     void StartBarter()
     {
         Debug.Log("Barter Starting!");
-        _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity, 
+        _barterInstance = Instantiate(barterContainerPrefab[_barterIndex], Vector3.zero, Quaternion.identity, 
                                       GameManager.MasterCanvas.transform);
         BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
         barterDirectorOfInstance.OnWin += WinBarter;

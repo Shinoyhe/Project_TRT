@@ -53,7 +53,6 @@ MonoBehaviour:
   playerInput: {fileID: 7198147195480083390}
   uiInput: {fileID: 297495919439177883}
   inventory: {fileID: 7739117665189127466}
-  timeLoopManager: {fileID: 0}
   playerTag: Player
   _player: {fileID: 0}
   masterCanvasTag: MasterCanvas
@@ -98,8 +97,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueUiPrefab: {fileID: 8005697584356534663, guid: a43636c37c7551c4a9708853bd50a584,
     type: 3}
-  barterContainerPrefab: {fileID: 5336207575644925963, guid: b781af24075511b4fae11fcf4864b31d,
-    type: 3}
+  barterContainerPrefab:
+  - {fileID: 5336207575644925963, guid: cbd1d5b7e0b5f2d43a1a72d803a786a2, type: 3}
+  - {fileID: 5336207575644925963, guid: 889feba7371501542854fcf2f37046f0, type: 3}
+  - {fileID: 5336207575644925963, guid: 0a22662c8ff5efd4fb4706dad624907e, type: 3}
+  - {fileID: 5336207575644925963, guid: 5bd664b912dacd344a3a4f011781a453, type: 3}
+  - {fileID: 5336207575644925963, guid: a27f8962e1f759041ab2fcac8f5ae344, type: 3}
+  - {fileID: 5336207575644925963, guid: 6897105f3aa68f14cba295a8e328d3e1, type: 3}
+  - {fileID: 5336207575644925963, guid: 20faa95d26927a841aef36434d9b5ab8, type: 3}
 --- !u!114 &7739117665189127466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +117,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51801f099b85cc478c82a4b31b4b623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllCardDatas: []
+  AllCardDatas:
+  - {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
+  - {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a, type: 2}
+  - {fileID: 11400000, guid: 5a35804eb59b84c4a8de3434821d7ddc, type: 2}
+  - {fileID: 11400000, guid: b631ef7c16d6ae04490478bb54d9ce3d, type: 2}
+  - {fileID: 11400000, guid: 9f2dd020f7489f043b705882dc34d642, type: 2}
+  - {fileID: 11400000, guid: 0f99de3986fb73c49a299789810a08bb, type: 2}
+  - {fileID: 11400000, guid: ba2195b6e38c1304c8db24b23f757028, type: 2}
+  - {fileID: 11400000, guid: f6a68e7237dc31346873ece76e1b42b0, type: 2}
+  - {fileID: 11400000, guid: 11c9614c5fe71dd4699abe63492fc3aa, type: 2}
+  - {fileID: 11400000, guid: 98003fc965a991446847019d395927c3, type: 2}
   AllCards: []
   StartingCards: []
   Cards: []

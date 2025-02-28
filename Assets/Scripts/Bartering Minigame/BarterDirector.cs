@@ -292,4 +292,9 @@ public class BarterDirector : MonoBehaviour
     {
         OnLose?.Invoke();
     }
+    
+    // EMERGENCY DEV STUFF
+    public void SetDecay(float nDecay){
+        decayPerSecond = nDecay;
+    }
 }

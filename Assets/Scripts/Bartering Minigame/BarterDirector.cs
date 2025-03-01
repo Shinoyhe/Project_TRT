@@ -74,11 +74,14 @@ public class BarterDirector : MonoBehaviour
     {
         public PlayingCard[] OppCards;
         public PlayingCard[] PlayerCards;
+        public BarterResponseMatrix.State[] Matches;
 
-        public MatchHistory(PlayingCard[] oppCards, PlayingCard[] playerCards)
+        public MatchHistory(PlayingCard[] oppCards, PlayingCard[] playerCards, 
+                            BarterResponseMatrix.State[] matches)
         {
             OppCards = oppCards.ToArray();
             PlayerCards = playerCards.ToArray();
+            Matches = matches;
         }
     }
 
@@ -282,14 +285,12 @@ public class BarterDirector : MonoBehaviour
     /// </summary>
     public void LogMatchHistory()
     {
-        MatchHistory currentMatchHistory = new(_oppCards, _playerCards);
-
-        // We subtract 1 from maxHistories so that if we're exactly at capacity, we still trim 1.
-        int historiesExcess = MatchHistories.Count - (maxHistories-1);
-        if (historiesExcess > 0) {
-            MatchHistories.RemoveRange(0, historiesExcess);
+        MatchHistory currentMatchHistory = new(_oppCards, _playerCards, _matchArray);
+        MatchHistories.Insert(0, currentMatchHistory);
+        // Trim the excess.
+        if (MatchHistories.Count > maxHistories) {
+            MatchHistories.RemoveRange(maxHistories, MatchHistories.Count-maxHistories);
         }
-        MatchHistories.Add(currentMatchHistory);
     }
 
     // Endgame methods ============================================================================

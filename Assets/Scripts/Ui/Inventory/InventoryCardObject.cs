@@ -1,10 +1,10 @@
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryCardObject : MonoBehaviour
-{
+public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     #region ======== [ OBJECT REFERENCES ] ========
     [Header("Data")]
     [SerializeField] private InventoryCardData _card;
@@ -165,14 +165,14 @@ public class InventoryCardObject : MonoBehaviour
 
         backCardImage.color = Color.gray;
     }
-
-    public void OnSelected() {
-
+    public void OnSelect(BaseEventData eventData) {
         if (scroller != null) {
             scroller.FrameCardInGrid(index);
         } else {
             Debug.Log("Scroller is found to be null!");
         }
+    }
+    public void OnSelected() {
 
         if (_card == null) return;
 

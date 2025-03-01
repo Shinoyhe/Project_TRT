@@ -193,7 +193,7 @@ public class DialogueManager : MonoBehaviour
 
         // If choice was Action, skip the line.
         if (foundTags.IsBarterTrigger) {
-            GameManager.BarterStarter.StartBarter();
+            GameManager.BarterStarter.PresentItem();
             EndStory(false);
             return;
         }

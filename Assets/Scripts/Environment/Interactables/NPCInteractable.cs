@@ -58,7 +58,24 @@ public class NpcInteractable : Interactable
             Debug.LogError("NPCInteractable: Could not find BarterNeutralBehaviour");
         }
 
-        barterStarter.PrizeCard = PrizeCard;
+        if (AcceptedCard != null)
+        {
+            barterStarter.AcceptedCard = AcceptedCard;
+        }
+        else
+        {
+            Debug.LogError("NPCInteractable: Could not find AcceptedCard");
+        }
+
+        if (PrizeCard != null)
+        {
+            barterStarter.PrizeCard = PrizeCard;
+        }
+        else
+        {
+            Debug.LogError("NPCInteractable: Could not find PrizeCard");
+        }
+
         barterStarter.DecayPerSecond = DecayPerSecond;
         barterStarter.WillingnessPerMatch = WillingnessPerMatch;
         barterStarter.WillingnessPerFail = WillingnessPerFail;

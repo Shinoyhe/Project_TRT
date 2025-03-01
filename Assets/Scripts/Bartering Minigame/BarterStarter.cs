@@ -10,6 +10,7 @@ public class BarterStarter : MonoBehaviour
 
     [BoxGroup("Barter Settings"), ReadOnly] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings"), ReadOnly] public BarterNeutralBehavior BarterNeutralBehaviour;
+    [BoxGroup("Barter Settings"), ReadOnly] public InventoryCardData AcceptedCard;
     [BoxGroup("Barter Settings"), ReadOnly] public InventoryCardData PrizeCard;
     [BoxGroup("Barter Settings"), ReadOnly] public float DecayPerSecond = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerMatch = 5;

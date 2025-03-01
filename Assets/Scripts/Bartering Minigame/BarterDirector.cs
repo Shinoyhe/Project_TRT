@@ -14,8 +14,8 @@ public class BarterDirector : MonoBehaviour
     public float WillingnessPerMatch = 5;
     [Tooltip("The amount Willingness is changed by on a unsuccessful, nonmatching response.\n\nDefault: -5")]
     public float WillingnessPerFail = -5;
-    [SerializeField, Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
-    private float decayPerSecond = 5;
+    [Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
+    public float DecayPerSecond = 5;
 
     [Header("Cards")]
     [Tooltip("The number of tone cards each player must play.\n\nDefault: 3")]

@@ -26,6 +26,9 @@ public class InventoryUiCore : MonoBehaviour {
 
     private bool inspecting = false;
 
+    private AutoScrollGrid InfoGridScroller;
+    private AutoScrollGrid ItemGridScroller;
+
     #endregion
 
     #region ======== [ INIT METHODS ] ========
@@ -33,6 +36,10 @@ public class InventoryUiCore : MonoBehaviour {
     // Start is called before the first frame update
     private void OnEnable() {
         Debug.Log("On Enable!");
+
+        InfoGridScroller = InfoCardsGrid.gameObject.GetComponent<AutoScrollGrid>();
+        ItemGridScroller = ItemGrid.gameObject.GetComponent<AutoScrollGrid>();
+
         inspectCard.gameObject.SetActive(false);
 
         if (_firstUpdateNotDone) {
@@ -83,12 +90,22 @@ public class InventoryUiCore : MonoBehaviour {
         for (int i = 0; i < InfoCardMaxCount; i++) {
             GameObject newCard = InstanceNewCard(InfoCardsGrid.transform);
             _currentInfoCardInstances.Add(newCard);
+
+            InventoryCardObject inventoryCardObject = newCard.GetComponent<InventoryCardObject>();
+
+            inventoryCardObject.SetIndex(i);
+            inventoryCardObject.SetScroller(InfoGridScroller);
         }
 
         // Instance Item Cards
         for (int i = 0; i < ItemCardMaxCount; i++) {
             GameObject newCard = InstanceNewCard(ItemGrid.transform);
             _currentItemCardInstances.Add(newCard);
+
+            InventoryCardObject inventoryCardObject = newCard.GetComponent<InventoryCardObject>();
+
+            inventoryCardObject.SetIndex(i);
+            inventoryCardObject.SetScroller(ItemGridScroller);
         }
 
         // Populate cards with inventory data
@@ -169,13 +186,19 @@ public class InventoryUiCore : MonoBehaviour {
             switch (card.Type) {
                 case GameEnums.CardTypes.INFO:
 
-                    _currentInfoCardInstances[currentAddedInfo].GetComponent<InventoryCardObject>().SetData(card);
+                    InventoryCardObject currentInfoCard = _currentInfoCardInstances[currentAddedInfo].GetComponent<InventoryCardObject>();
+
+                    currentInfoCard.SetData(card);
+
                     currentAddedInfo += 1;
 
                     break;
                 case GameEnums.CardTypes.ITEM:
 
-                    _currentItemCardInstances[currentAddedItem].GetComponent<InventoryCardObject>().SetData(card);
+                    InventoryCardObject currentItemCard = _currentItemCardInstances[currentAddedItem].GetComponent<InventoryCardObject>();
+
+                    currentItemCard.SetData(card);
+
                     currentAddedItem += 1;
                     break;
             }

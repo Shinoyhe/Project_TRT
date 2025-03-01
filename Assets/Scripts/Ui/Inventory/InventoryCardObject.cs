@@ -40,6 +40,8 @@ public class InventoryCardObject : MonoBehaviour
     [HideInInspector] public InventoryUiCore Parent;
 
     private bool inspected = false;
+    private int index;
+    private AutoScrollGrid scroller;
     private Navigation None;
     private Navigation All;
 
@@ -146,6 +148,14 @@ public class InventoryCardObject : MonoBehaviour
         CardName = _card.ID;
     }
 
+    public void SetIndex(int index) {
+        this.index = index;
+    }
+
+    public void SetScroller(AutoScrollGrid scroller) {
+        this.scroller = scroller;
+    }
+
     /// <summary>
     /// Sets card to empty!
     /// </summary>
@@ -157,6 +167,14 @@ public class InventoryCardObject : MonoBehaviour
     }
 
     public void OnSelected() {
+
+        if (scroller != null) {
+            scroller.FrameCardInGrid(index);
+        } else {
+            Debug.Log("Scroller is found to be null!");
+        }
+
+        if (_card == null) return;
 
         if (inspected == false) {
 

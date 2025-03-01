@@ -7,29 +7,32 @@ public class BarterDirector : MonoBehaviour
 {
     // Parameters =================================================================================
 
+    [Header("Willingness")]
     [SerializeField, Range(0, 100), Tooltip("The current willingness percentage, from 0-100.")]
     private float willingness = 50;
-
-    [Header("Parameters")]
-    [Tooltip("The number of tone cards each player must play.\n\nDefault: 3")]
-    public int CardsToPlay = 3;
-    [Tooltip("The number of tone cards the opponent has in its deck.\n\nDefault: 16")]
-    public int OppDeckSize = 16;
-    [SerializeField, Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
-    private float decayPerSecond = 5;
-    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1")]
-    private float oppDuration = 1;
-    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1.5")]
-    private float computeDuration = 1.5f;
     [Tooltip("The amount Willingness is changed by on a successful, matching response.\n\nDefault: 5")]
     public float WillingnessPerMatch = 5;
     [Tooltip("The amount Willingness is changed by on a unsuccessful, nonmatching response.\n\nDefault: -5")]
     public float WillingnessPerFail = -5;
+    [SerializeField, Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
+    private float decayPerSecond = 5;
+
+    [Header("Cards")]
+    [Tooltip("The number of tone cards each player must play.\n\nDefault: 3")]
+    public int CardsToPlay = 3;
+    [Tooltip("The number of tone cards the opponent has in its deck.\n\nDefault: 16")]
+    public int OppDeckSize = 16;
+    
+    [Header("State Machine")]
+    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1")]
+    private float oppDuration = 1;
+    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1.5")]
+    private float computeDuration = 1.5f;
     [SerializeField, Tooltip("Whether or not we should print debug messages.")]
     private bool debugMode = false;
 
     [Header("Object References")]
-    [SerializeField, Tooltip("The tone responses the opposing NPC prefers.")]
+    [Tooltip("The tone responses the opposing NPC prefers.")]
     public BarterResponseMatrix BarterResponses;
     [SerializeField, Tooltip("The BarterNeutralBehavior scriptable object that defines what "
                            + "happens when a neutral match is encountered.")]

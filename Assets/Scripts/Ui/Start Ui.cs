@@ -1,70 +1,150 @@
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.SceneManagement;
 
 public class StartUi : MonoBehaviour {
     // Parameters =================================================================================
 
-    public Canvas TitleScreenCanvas;
-    public Canvas CreditsCanvas;
+    [Header("Dependencies")]
+    public Canvas TitleScreen;
+    public Canvas Credits;
+    public Canvas Options;
+    public Canvas AccessibilityCheck;
+    public Canvas Controls;
 
-    private Canvas _currentCanvas;
-    private enum CanvasState {
-        TitleScreen,
-        Credits
+    public enum UiState {
+        Title = 0,
+        Credits = 1,
+        Options = 2,
+        NewGame = 3,
+        ContinueGame = 4,
+        Quit = 5,
+        AccessibilityCheck = 6,
+        Controls = 7
     }
-    private CanvasState _currentCanvasState;
+
+    private UiState _currentCanvasState;
 
     // Initializers and Update ================================================================
     void Start() 
     {
-        if (TitleScreenCanvas == null) {
-            Debug.LogError("Start UI not setup!");
+        if (TitleScreen == null) {
+            Debug.LogError("TitleScreen dependency not set.");
         }
 
-        _currentCanvasState = CanvasState.TitleScreen;
-        _currentCanvas = TitleScreenCanvas;
+        // Swap with Accessibility Check
+        MoveTo(UiState.Title);
     }
 
     // Public Utility Methods ====================================================================
 
-    public void SwitchToTitleScreen() 
-    {
-        SwitchCanvas(TitleScreenCanvas);
-        _currentCanvasState = CanvasState.TitleScreen;
+    /// <summary>
+    /// Transition Start Ui to a new state.
+    /// </summary>
+    /// <param name="newState"> State to move to. </param>
+    public void MoveTo(UiState newState) {
+
+        StopState(_currentCanvasState);
+        StartState(newState);
     }
 
-    public void SwitchToCreditsScreen() 
-    {
-        SwitchCanvas(CreditsCanvas);
-        _currentCanvasState = CanvasState.Credits;
-    }
+    // Used for button OnClick calls as they don't let enums to be passed through :|
+    public void MoveToTitle() => MoveTo(UiState.Title);
+    public void MoveToCredits() => MoveTo(UiState.Credits);
+    public void MoveToOptions() => MoveTo(UiState.Options);
+    public void MoveToAccessibilityCheck() => MoveTo(UiState.AccessibilityCheck);
+    public void MoveToNewGame() => MoveTo(UiState.NewGame);
+    public void MoveToContinueGame() => MoveTo(UiState.ContinueGame);
+    public void MoveToQuit() => MoveTo(UiState.Quit);
+    public void MoveToControls() => MoveTo(UiState.Controls);
+
 
     // Private Helper Methods ====================================================================
 
-    /// <summary>
-    /// Switch from current canvas to a new canvas.
-    /// </summary>
-    /// <param name="canvas">New canvas to show.</param>
-    void SwitchCanvas(Canvas canvas) 
-    {
-        if (canvas == null) return;
 
-        if (_currentCanvas != null) {
-            _currentCanvas.gameObject.SetActive(false);
+    /// <summary>
+    /// Stop a currently running Ui state.
+    /// </summary>
+    /// <param name="stateToStop"> State that will stop. </param>
+    void StopState(UiState stateToStop) {
+
+        // Can't stop transition states
+        // (NewGame, ContinueGame, Quit)
+
+        switch (stateToStop) {
+            case UiState.Title:
+                // Insert animation!
+                TitleScreen.gameObject.SetActive(false);
+                break;
+            case UiState.Credits:
+                // Insert animation!
+                Credits.gameObject.SetActive(false);
+                break;
+            case UiState.Options:
+                // Insert animation!
+                Options.gameObject.SetActive(false);
+                break;
+            case UiState.AccessibilityCheck:
+                // Insert animation!
+                AccessibilityCheck.gameObject.SetActive(false);
+                break;
+            case UiState.Controls:
+                // Insert animation!
+                Controls.gameObject.SetActive(false);
+                break;
         }
 
-        canvas.gameObject.SetActive(true);
-        _currentCanvas = canvas;
     }
 
-    // Update is called once per frame
-    void Update() 
-    {
-        if (GameManager.UiInput == null) return;
+    /// <summary>
+    /// Start a new state.
+    /// </summary>
+    /// <param name="stateToStart">State that will start.</param>
+    void StartState(UiState stateToStart) {
 
-        if (_currentCanvasState != CanvasState.TitleScreen) {
-            if (GameManager.UiInput.GetSettingsDown()) {
-                SwitchToTitleScreen();
-            }
+        // Set our new state
+        _currentCanvasState = stateToStart;
+
+        switch (stateToStart) {
+            case UiState.Title:
+                // Insert animation!
+                TitleScreen.gameObject.SetActive(true);
+                break;
+            case UiState.Credits:
+                // Insert animation!
+                Credits.gameObject.SetActive(true);
+                break;
+            case UiState.Options:
+                // Insert animation!
+                Options.gameObject.SetActive(true);
+                break;
+            case UiState.NewGame:
+                // Start new game
+                // -- TEMP --
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                // -- TEMP --
+                break;
+            case UiState.ContinueGame:
+                // Continue game
+                // -- TEMP --
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                // -- TEMP --
+                break;
+            case UiState.Quit:
+                // Save then quit
+                // -- TEMP -- 
+                Application.Quit();
+                // -- TEMP --
+                break;
+            case UiState.AccessibilityCheck:
+                // Insert animation!
+                AccessibilityCheck.gameObject.SetActive(true);
+                break;
+            case UiState.Controls:
+                // Insert animation!
+                Controls.gameObject.SetActive(true);
+                break;
         }
+
     }
 }

@@ -10,16 +10,12 @@ public class JournalNavCore : MonoBehaviour {
 
     // Dialogue
     [Header("Dependencies")]
-    public Canvas NPCA;
-    public Canvas NPCB;
-    public Canvas NPCC;
+    public Canvas NPC;
     public Canvas InfoCards;
     public Canvas Items;
 
     public enum UiStates {
-        NPCA,
-        NPCB,
-        NPCC,
+        NPC,
         InfoCards,
         Items
     }
@@ -28,12 +24,13 @@ public class JournalNavCore : MonoBehaviour {
 
     // Initializers and Update ================================================================
     void Start() {
-        if (NPCA == null) {
+        if (NPC == null) 
+        {
             Debug.LogError("NPC A Canvas dependency not set.");
         }
 
         // Swap with Accessibility Check
-        MoveTo(UiStates.NPCA);
+        MoveTo(UiStates.NPC);
     }
 
     // Public Utility Methods ====================================================================
@@ -42,19 +39,20 @@ public class JournalNavCore : MonoBehaviour {
     /// Transition Start Ui to a new state.
     /// </summary>
     /// <param name="newState"> State to move to. </param>
-    public void MoveTo(UiStates newState) {
+    public void MoveTo(UiStates newState) 
+    {
 
         StopState(_currentCanvasState);
         StartState(newState);
     }
-    public void OnEnable() {
-        MoveToNPCA();
+
+    public void OnEnable() 
+    {
+        MoveToNPC();
     }
 
     // Used for button OnClick calls as they don't let enums to be passed through :|
-    public void MoveToNPCA() => MoveTo(UiStates.NPCA);
-    public void MoveToNPCB() => MoveTo(UiStates.NPCB);
-    public void MoveToNPCC() => MoveTo(UiStates.NPCC);
+    public void MoveToNPC() => MoveTo(UiStates.NPC);
     public void MoveToInfoCards() => MoveTo(UiStates.InfoCards);
     public void MoveToItems() => MoveTo(UiStates.Items);
 
@@ -70,14 +68,8 @@ public class JournalNavCore : MonoBehaviour {
         // (MoveToTitle)
 
         switch (stateToStop) {
-            case UiStates.NPCA:
-                NPCA.gameObject.SetActive(false);
-                break;
-            case UiStates.NPCB:
-                NPCB.gameObject.SetActive(false);
-                break;
-            case UiStates.NPCC:
-                NPCC.gameObject.SetActive(false);
+            case UiStates.NPC:
+                NPC.gameObject.SetActive(false);
                 break;
             case UiStates.InfoCards:
                 InfoCards.gameObject.SetActive(false);
@@ -99,14 +91,8 @@ public class JournalNavCore : MonoBehaviour {
         _currentCanvasState = stateToStart;
 
         switch (stateToStart) {
-            case UiStates.NPCA:
-                NPCA.gameObject.SetActive(true);
-                break;
-            case UiStates.NPCB:
-                NPCB.gameObject.SetActive(true);
-                break;
-            case UiStates.NPCC:
-                NPCC.gameObject.SetActive(true);
+            case UiStates.NPC:
+                NPC.gameObject.SetActive(true);
                 break;
             case UiStates.InfoCards:
                 InfoCards.gameObject.SetActive(true);

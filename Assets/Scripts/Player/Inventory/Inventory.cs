@@ -17,6 +17,8 @@ public class Inventory : MonoBehaviour
     
     public event Action OnInventoryUpdated;
 
+    [HideInInspector] public float inventoryLastUpdateTime;
+
     // Enums for Sorting
     public enum SortParameters { 
         NAME, 
@@ -101,6 +103,7 @@ public class Inventory : MonoBehaviour
 
         Cards.Add(newCard);
         OnInventoryUpdated?.Invoke();
+        inventoryLastUpdateTime = Time.time;
     }
 
     public void RemoveCard(InventoryCardData card)
@@ -116,6 +119,7 @@ public class Inventory : MonoBehaviour
         cardToRemove.CurrentlyOwn = false;
 
         OnInventoryUpdated?.Invoke();
+        inventoryLastUpdateTime = Time.time;
     }
 
     /// <summary>
@@ -245,6 +249,7 @@ public class Inventory : MonoBehaviour
 
         Cards.Sort(comparison);
         OnInventoryUpdated?.Invoke();
+        inventoryLastUpdateTime = Time.time;
     }
 
     /// <summary>

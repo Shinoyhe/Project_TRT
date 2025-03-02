@@ -27,8 +27,8 @@ public class NeutralBehavior_Repeat : BarterNeutralBehavior
     /// <returns>PlayingCard - the card to play in that slot.</returns>
     public override PlayingCard GetCard(BarterDirector dir, CardUser cardUser, int matchIndex)
     {
-        // The final MatchHistory is the most recent one.
-        BarterDirector.MatchHistory history = dir.MatchHistories[^1];
+        // The first MatchHistory is the most recent one.
+        BarterDirector.MatchHistory history = dir.MatchHistories[0];
         PlayingCard cardToPlay = repeatTarget switch {
             RepeatTarget.OPPONENT => history.OppCards[matchIndex],
             RepeatTarget.PLAYER => history.PlayerCards[matchIndex],

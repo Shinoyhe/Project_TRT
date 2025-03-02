@@ -11,14 +11,19 @@ public class InventoryGridController : MonoBehaviour
 {
     #region ======== [ PUBLIC PROPERTIES ] ========
 
+    [Header("Settings")]
     public GameEnums.CardTypes TypeToDisplay;
     public int InventorySize = 10;
+    public bool SetDefaultSelectionOnEnable = false;
+
+    [Header("Click Action")]
     public InventoryAction OnInventoryItemClick = null;
 
     #endregion
 
     #region ======== [ OBJECT REFERENCES ] ========
 
+    [Header("Dependencies")]
     public GridLayoutGroup Grid;
     public GameObject InventoryCardPrefab;
     public AutoScrollGrid InventoryUiAutoScroller;
@@ -44,6 +49,11 @@ public class InventoryGridController : MonoBehaviour
         if (_createdInventory && IsUpdateNeeded()) {
             PopulateGrid();
         }
+
+        // Set default selection
+        if(SetDefaultSelectionOnEnable && _inventoryInstances.Count > 0) {
+            _inventoryInstances[0].GetComponent<Button>().Select();
+        }
     }
 
     private void OnDisable() {
@@ -63,6 +73,11 @@ public class InventoryGridController : MonoBehaviour
         GameManager.Inventory.OnInventoryUpdated += PopulateGrid;
         _createdInventory = true;
         CreateInventory();
+
+        // Set default selection
+        if (SetDefaultSelectionOnEnable && _inventoryInstances.Count > 0) {
+            _inventoryInstances[0].GetComponent<Button>().Select();
+        }
     }
 
     /// <summary>

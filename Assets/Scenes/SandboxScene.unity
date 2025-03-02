@@ -400,8 +400,10 @@ MonoBehaviour:
   IconLocalPosition: {x: 0, y: 3, z: 0}
   dialogueBubbleOffset: {x: -2.02, y: 4.17, z: 0}
   npcConversation: {fileID: 4900000, guid: 78fae791d8e25a445ac2b2e5cfc5205f, type: 3}
-  BarterResponseMatrix: {fileID: 0}
-  BarterNeutralBehaviour: {fileID: 0}
+  BarterResponseMatrix: {fileID: 11400000, guid: 4df41baae4ac8884d9b9ab903aa274e5,
+    type: 2}
+  BarterNeutralBehaviour: {fileID: 11400000, guid: d5da7a0cc6260ac499f7b5f8e6536442,
+    type: 2}
   PrizeCard: {fileID: 0}
   DecayPerSecond: 5
   WillingnessPerMatch: 5

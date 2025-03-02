@@ -587,8 +587,16 @@ MonoBehaviour:
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 3, z: 0}
   dialogueBubbleOffset: {x: -2.02, y: 4.17, z: 0}
-  cardToGiveOnWin: {fileID: 11400000, guid: 37d76c22448d8cb4ab619e7e711477ec, type: 2}
   npcConversation: {fileID: 4900000, guid: 78fae791d8e25a445ac2b2e5cfc5205f, type: 3}
+  BarterResponseMatrix: {fileID: 11400000, guid: 4df41baae4ac8884d9b9ab903aa274e5,
+    type: 2}
+  BarterNeutralBehaviour: {fileID: 11400000, guid: d5da7a0cc6260ac499f7b5f8e6536442,
+    type: 2}
+  PrizeCard: {fileID: 0}
+  DecayPerSecond: 5
+  WillingnessPerMatch: 5
+  WillingnessPerFail: -5
+  StartingWillingness: 50
 --- !u!136 &586339378
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1630,6 +1638,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7171928165715084208, guid: 73a929ca284549147ba072c21c0fe640,
+        type: 3}
+      propertyPath: loopMinutes
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8369108087881288927, guid: 73a929ca284549147ba072c21c0fe640,
         type: 3}

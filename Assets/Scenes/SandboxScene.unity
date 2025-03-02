@@ -171,24 +171,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4140329725698159297, guid: 142379524301d744ca9ed258108220b9,
+    - target: {fileID: 626230690350669443, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
-      propertyPath: m_Vertical
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4140329725698159297, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_MovementType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4896490407448013236, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_Vertical
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4896490407448013236, guid: 142379524301d744ca9ed258108220b9,
-        type: 3}
-      propertyPath: m_MovementType
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5761779680460996703, guid: 142379524301d744ca9ed258108220b9,
@@ -196,6 +181,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGameCanvasMaster
       objectReference: {fileID: 0}
+    - target: {fileID: 8138535766413354664, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: OnInventoryItemClick
+      value: 
+      objectReference: {fileID: 1196365725}
     - target: {fileID: 9106350191481724383, guid: 142379524301d744ca9ed258108220b9,
         type: 3}
       propertyPath: m_Pivot.x
@@ -297,7 +287,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 626230690350669443, guid: 142379524301d744ca9ed258108220b9, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 142379524301d744ca9ed258108220b9, type: 3}
@@ -1048,6 +1039,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 113523554}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196365725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 883467096802516337, guid: 142379524301d744ca9ed258108220b9,
+    type: 3}
+  m_PrefabInstance: {fileID: 151932038}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b40efb0762e90418ae6fded46d30aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1250298453
 PrefabInstance:
   m_ObjectHideFlags: 0

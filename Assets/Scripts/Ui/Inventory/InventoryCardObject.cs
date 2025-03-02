@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     #region ======== [ OBJECT REFERENCES ] ========
+
     [Header("Data")]
     [SerializeField] private InventoryCardData _card;
 
@@ -37,13 +38,10 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     [HideInInspector] public string CardDescription;
     [HideInInspector] public string CardID;
 
-    [HideInInspector] public InventoryUiCore Parent;
+    private int _index;
+    private AutoScrollGrid _scroller;
+    private InventoryAction _onSelectAction = null;
 
-    private bool inspected = false;
-    private int index;
-    private AutoScrollGrid scroller;
-    private Navigation None;
-    private Navigation All;
 
     #endregion
 
@@ -52,13 +50,6 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     // Start is called before the first frame update
     void Start() {
 
-        // Create Navigation instances
-        None = new Navigation();
-        None.mode = Navigation.Mode.None;
-
-        All = new Navigation();
-        All.mode = Navigation.Mode.Automatic;
-
         if (_card != null) {
             SetData(_card);
         } else {
@@ -66,9 +57,20 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
         }
     }
 
-    private void OnDisable() {
-        gameObject.GetComponent<Button>().navigation = All;
-        inspected = false;
+    /// <summary>
+    /// Creates an empty inventory card for a InventoryGridController
+    /// </summary>
+    public void InitalizeToGrid(int indexInGrid, AutoScrollGrid gridAutoScroller, InventoryAction onSelectAction) {
+        _index = indexInGrid;
+        _scroller = gridAutoScroller;
+        _onSelectAction = onSelectAction;
+
+        itemLayoutObject.SetActive(false);
+        infoLayoutObject.SetActive(false);
+
+        backCardImage.color = Color.gray;
+
+        SetCardToEmpty();
     }
 
     #endregion
@@ -148,14 +150,6 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
         CardName = _card.ID;
     }
 
-    public void SetIndex(int index) {
-        this.index = index;
-    }
-
-    public void SetScroller(AutoScrollGrid scroller) {
-        this.scroller = scroller;
-    }
-
     /// <summary>
     /// Sets card to empty!
     /// </summary>
@@ -165,35 +159,31 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
 
         backCardImage.color = Color.gray;
     }
+
+    /// <summary>
+    /// When user hovers over this card.
+    /// </summary>
     public void OnSelect(BaseEventData eventData) {
-        if (scroller != null) {
-            scroller.FrameCardInGrid(index);
+        if (_scroller != null) {
+            _scroller.FrameCardInGrid(_index);
         } else {
             Debug.Log("Scroller is found to be null!");
         }
     }
-    public void OnSelected() {
 
-        if (_card == null) return;
+    /// <summary>
+    /// When user chooses this card.
+    /// </summary>
+    public void OnPress() {
 
-        if (inspected == false) {
-
-            // Show card
-            Parent.InspectCard(_card);
-
-            // Disable navigation
-            gameObject.GetComponent<Button>().navigation = None;
-            inspected = true;
-
-        } else {
-            
-            // Hide card
-            Parent.StopInspecting();
-
-            // Enable navigation
-            gameObject.GetComponent<Button>().navigation = All;
-            inspected = false;
+        if (_onSelectAction == null) {
+            Debug.LogError("Card has no OnSelectAction set!");
+            return;
         }
+
+        InventoryAction.ActionContext ctx = new InventoryAction.ActionContext();
+        ctx.cardData = _card;
+        _onSelectAction.ActionOnClick(ctx);
 
     }
 

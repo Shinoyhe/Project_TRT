@@ -51,8 +51,9 @@ public class NaiveBarterHistoryUI : MonoBehaviour
 
     private void Update()
     {
+        // If the history hasn't changed, return.
         if (director.MatchHistories.Count <= indexToMonitor) return;
-
+        // If the history has changed, change our display.
         BarterDirector.MatchHistory history = director.MatchHistories[indexToMonitor];
         if (lastHistory != history) {
             for (int i = 0; i < 3; i++) {

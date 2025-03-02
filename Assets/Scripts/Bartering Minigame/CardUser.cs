@@ -10,6 +10,7 @@ public class CardUser : MonoBehaviour
     [Header("Stats")]
     [SerializeField, Tooltip("The number of cards we draw each turn by default.\n\nDefault: 3")]
     private int baseDrawSize = 3;
+    public int BaseDrawSize => baseDrawSize;
 
     [Header("Card Piles")]
     [SerializeField, Tooltip("A list of PlayingCard we have in our deck. Populates our DrawPile.")]
@@ -110,6 +111,7 @@ public class CardUser : MonoBehaviour
             // Clone cards from our startingDeck into our drawpile.
             PlayingCard dataInstance = Instantiate(data);
             dataInstance.name = data.name;
+            dataInstance.PlayerSubmitted = false;
 
             _drawPile.Add(dataInstance);
         }
@@ -180,6 +182,19 @@ public class CardUser : MonoBehaviour
     {
         for (int i = _hand.Count-1; i >= 0; i--) {
             RemoveAtFromPushTo(i, CardPile.Hand, CardPile.DiscardPile);
+        }
+    }
+
+    /// <summary>
+    /// Discards all cards in your hand that have been marked as PlayerSubmitted.
+    /// </summary>
+    public void DiscardSubmitted()
+    {
+        // Iterate backwards to avoid disrupting other cards.
+        for (int i = _hand.Count-1; i >= 0; i--) {
+            if (_hand[i].PlayerSubmitted) {
+                RemoveAtFromPushTo(i, CardPile.Hand, CardPile.DiscardPile);
+            }
         }
     }
 

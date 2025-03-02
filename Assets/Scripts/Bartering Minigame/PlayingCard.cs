@@ -22,4 +22,13 @@ public class PlayingCard : ScriptableObject
     {
         return Id == other.Id;
     }
+
+    /// <summary>
+    /// Override for the default ToString function.
+    /// </summary>
+    /// <returns>string - the ID of this PlayingCard.</returns>
+    public override string ToString()
+    {
+        return Id;
+    }
 }

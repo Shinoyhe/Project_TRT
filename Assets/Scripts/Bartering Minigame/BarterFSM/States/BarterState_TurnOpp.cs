@@ -45,7 +45,7 @@ public class BarterState_TurnOpp : BarterBaseState
         var handList = _machine.OppCardUser.HandList;
         
         // The opponent must have enough cards in its hand to play. If we don't, exit.
-        if (cardsToPlay > handList.Count ) {
+        if (cardsToPlay > handList.Count) {
             Debug.LogError("BarterState_TurnOpp Error: Enter failed. The BarterDirector wants the "
                         + $"opponent CardUser to play more cards ({cardsToPlay}) than it has in "
                         + $"its hand ({handList.Count})");
@@ -56,10 +56,20 @@ public class BarterState_TurnOpp : BarterBaseState
         if (_playedCards == null || _playedCards.Length != cardsToPlay) {
             _playedCards = new PlayingCard[cardsToPlay];   
         }
-        // Enemy picks cards randomly and stores them in an array!
+        
+        // Play cards.
+        bool[] lastRoundNeutrals = _machine.Dir.GetLastRoundNeutrals();
+        
         for (int i = 0; i < cardsToPlay; i++) {
-            int handIndex = Random.Range(0, handList.Count);
-            _playedCards[i] = handList[handIndex];
+            if (lastRoundNeutrals != null && lastRoundNeutrals[i]) {
+                // If this slot had a neutral match last round, apply our NeutralBehavior effect.
+                _playedCards[i] = _machine.Dir.NeutralBehavior.GetCard(_machine.Dir, 
+                                                                       _machine.OppCardUser, i);
+            } else {
+                // Otherwise, enemy picks cards randomly and stores them in an array!
+                int handIndex = Random.Range(0, handList.Count);
+                _playedCards[i] = handList[handIndex];
+            }
         }
 
         // Send the complete array of cards to the director.

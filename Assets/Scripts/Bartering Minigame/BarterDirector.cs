@@ -148,7 +148,7 @@ public class BarterDirector : MonoBehaviour
     /// </summary>
     public void DecayWillingness()
     {
-        willingness -= decayPerSecond * Time.deltaTime;
+        willingness -= DecayPerSecond * Time.deltaTime;
     }
 
     /// <summary>

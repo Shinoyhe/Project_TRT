@@ -141,7 +141,13 @@
 				</Sound>
 				<Sound Name="AMB_Waterfall_Base" ID="{3FA62479-B607-480D-90FE-E5987AE006B6}" ShortID="691332079">
 					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-12</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">
@@ -170,6 +176,9 @@
 							</MediaIDList>
 						</AudioFileSource>
 					</ChildrenList>
+					<PositioningInfo>
+						<Panner Name="" ID="{B01A2A55-DF4C-4414-8E46-6C9F9256DDF4}"/>
+					</PositioningInfo>
 					<ActiveSourceList>
 						<ActiveSource Name="AMB_Waterfall_Base" ID="{8E8BAAA0-F701-466F-95A1-6AA406F10E38}" Platform="Linked"/>
 					</ActiveSourceList>

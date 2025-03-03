@@ -11,6 +11,7 @@ public class PresentItem : MonoBehaviour
     public InventoryCardData AcceptedCard;
 
     [SerializeField] private TMP_Text submissionText;
+    [SerializeField] private InventoryCardObject submissionCard;
 
     public System.Action OnAccepted;
     public System.Action OnClosed;
@@ -31,13 +32,13 @@ public class PresentItem : MonoBehaviour
 
     public void Submit()
     {
-        if (GameManager.Inventory.HasCard(AcceptedCard))
+        if (submissionCard.Card == AcceptedCard)
         {
             OnAccepted.Invoke();
             return;
         }
 
-        submissionText.text = "You don't have what I need.";
+        submissionText.text = "That's not what I need.";
     }
 
     public void Back()

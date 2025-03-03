@@ -104,18 +104,22 @@ public class BarterState_Compute : BarterBaseState
         // Log the match in our history!
         _machine.Dir.LogMatchHistory();
 
+        // Re-initialize both CardUsers before the next opp's turn!
+        CardUser player = _machine.PlayerCardUser;
+        CardUser opp = _machine.OppCardUser;
+
+        player.DiscardSubmitted();
+        player.ShuffleDiscardIntoDrawpile();
+        player.Draw(player.BaseDrawSize-player.HandList.Count);
+
+        opp.DiscardHand();
+        opp.ShuffleDiscardIntoDrawpile();
+        opp.DrawHand();
+
         // Clear the submitted OppCards / PlayerCards.
         // This has the side-effect of updating our UI, animating a discard.
         _machine.Dir.SetOppCards(null);
         _machine.Dir.ClearPlayerCards();
-
-        // Re-initialize both CardUsers before the next opp's turn!
-        _machine.PlayerCardUser.DiscardHand();
-        _machine.OppCardUser.DiscardHand();
-        _machine.PlayerCardUser.ShuffleDiscardIntoDrawpile();
-        _machine.OppCardUser.ShuffleDiscardIntoDrawpile();
-        _machine.PlayerCardUser.DrawHand();
-        _machine.OppCardUser.DrawHand();
     }
 
     // Private methods ============================================================================

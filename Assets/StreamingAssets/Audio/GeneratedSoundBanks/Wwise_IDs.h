@@ -22,6 +22,7 @@ namespace AK
         static const AkUniqueID RESUMEENVIRONMENTMUSIC = 3562268364U;
         static const AkUniqueID STARTENVIRONMENTMUSIC = 1918643091U;
         static const AkUniqueID STOPENVIRONMENTMUSIC = 2557824689U;
+        static const AkUniqueID TESTAMBIENCESTART = 664772623U;
     } // namespace EVENTS
 
     namespace STATES
@@ -58,6 +59,7 @@ namespace AK
     namespace BANKS
     {
         static const AkUniqueID INIT = 1355168291U;
+        static const AkUniqueID AMBIENCE = 85412153U;
         static const AkUniqueID MUSIC = 3991942870U;
         static const AkUniqueID SFX = 393239870U;
     } // namespace BANKS

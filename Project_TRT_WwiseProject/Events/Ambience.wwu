@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{820C2978-AC29-4858-84ED-86C3BABA619D}" SchemaVersion="123">
+	<Events>
+		<WorkUnit Name="Ambience" ID="{820C2978-AC29-4858-84ED-86C3BABA619D}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="TestAmbienceStart" ID="{E4076E7D-47F0-4B40-97F8-E4AFB7CF1D45}">
+					<ChildrenList>
+						<Action Name="" ID="{983456CD-3FFA-414B-A27B-2B6ECAA88065}" ShortID="836265004">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AMB_Waterfall_Base" ID="{3FA62479-B607-480D-90FE-E5987AE006B6}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

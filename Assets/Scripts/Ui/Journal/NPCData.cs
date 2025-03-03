@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
+[CreateAssetMenu(fileName = "New NPCData", menuName = "ScriptableObjects/NPCData")]
 public class NPCData : ScriptableObject
 {
-    public class Preference
+    public class CardPreference
     {
         public PlayingCard Positive;
         public PlayingCard Negative;
     }
 
-    public Sprite Icon { get; }
-    public string Bio { get; }
+    public string Name;
+    public Sprite Icon;
+    [TextArea] public string Bio;
+
+    // I'm thinking that the BarterResponseMatrix could be referenced and called from here instead. Maybe this script could combine with it?
     public BarterResponseMatrix Matrix { get; }
 
-    [ReadOnly] [SerializeField] private Dictionary<PlayingCard, Preference> journalPreferences = new Dictionary<PlayingCard, Preference>();
+    [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalPreferences = new Dictionary<PlayingCard, CardPreference>();
 
 
     /// <summary>
@@ -26,7 +30,7 @@ public class NPCData : ScriptableObject
     /// <param name="state">Whether the player believes the player card is POSITIVE or NEGATIVE</param>
     public void ChangeJournalPreference(PlayingCard opponentCard, PlayingCard playerCard, BarterResponseMatrix.State state)
     {
-        journalPreferences.TryAdd(opponentCard, new Preference());
+        journalPreferences.TryAdd(opponentCard, new CardPreference());
         
         switch (state)
         {
@@ -45,7 +49,7 @@ public class NPCData : ScriptableObject
     /// </summary>
     /// <param name="opponentCard">The opponent card</param>
     /// <returns>Prefence class includes the PlayingCards marked as positive and negative.</returns>
-    public Preference GetPreference(PlayingCard opponentCard)
+    public CardPreference GetPreference(PlayingCard opponentCard)
     {
         return journalPreferences[opponentCard];
     }
@@ -56,6 +60,6 @@ public class NPCData : ScriptableObject
     /// </summary>
     public void ResetJournalPreferences()
     {
-        journalPreferences = new Dictionary<PlayingCard, Preference>();
+        journalPreferences = new Dictionary<PlayingCard, CardPreference>();
     }
 }

@@ -10,6 +10,18 @@ public class NPCData : ScriptableObject
     {
         public PlayingCard Positive;
         public PlayingCard Negative;
+
+        public CardPreference()
+        {
+            Positive = null;
+            Negative = null;
+        }
+
+        public CardPreference(PlayingCard positive, PlayingCard negative)
+        {
+            Positive = positive;
+            Negative = negative;
+        }
     }
 
     public string Name;
@@ -19,7 +31,7 @@ public class NPCData : ScriptableObject
     // I'm thinking that the BarterResponseMatrix could be referenced and called from here instead. Maybe this script could combine with it?
     public BarterResponseMatrix Matrix { get; }
 
-    [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalPreferences = new Dictionary<PlayingCard, CardPreference>();
+    [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalPreferences;
 
 
     /// <summary>
@@ -56,10 +68,38 @@ public class NPCData : ScriptableObject
 
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>Dictionary of the PlayingCard</returns>
+    public Dictionary<PlayingCard, CardPreference> GetPreferences()
+    {
+        if (journalPreferences == null)
+        {
+            InitalizePreferences();
+        }
+
+        return journalPreferences;
+    }
+
+
+    /// <summary>
     /// Resets the Journal Preferences
     /// </summary>
     public void ResetJournalPreferences()
     {
         journalPreferences = new Dictionary<PlayingCard, CardPreference>();
+    }
+
+
+    /// <summary>
+    /// Builds a default preference dictionary
+    /// </summary>
+    private void InitalizePreferences()
+    {
+        journalPreferences = new Dictionary<PlayingCard, CardPreference>();
+        foreach (var card in Matrix.OppCards)
+        {
+            journalPreferences.Add(card, new CardPreference());
+        }
     }
 }

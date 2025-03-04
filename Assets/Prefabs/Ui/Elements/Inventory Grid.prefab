@@ -269,8 +269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09a6cce913baa9545b8de52ae4a58070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TypeToDisplay: 1
+  TypeToDisplay: 0
   InventorySize: 10
+  SetDefaultSelectionOnEnable: 0
   OnInventoryItemClick: {fileID: 0}
   Grid: {fileID: 5027741742113402635}
   InventoryCardPrefab: {fileID: 5258588618994369088, guid: edeba08a92654ae48a137acfe58edec9,

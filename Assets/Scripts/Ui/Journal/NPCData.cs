@@ -29,7 +29,7 @@ public class NPCData : ScriptableObject
     [TextArea] public string Bio;
 
     // I'm thinking that the BarterResponseMatrix could be referenced and called from here instead. Maybe this script could combine with it?
-    public BarterResponseMatrix Matrix { get; }
+    public BarterResponseMatrix Matrix;
 
     [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalPreferences;
 
@@ -63,6 +63,11 @@ public class NPCData : ScriptableObject
     /// <returns>Prefence class includes the PlayingCards marked as positive and negative.</returns>
     public CardPreference GetPreference(PlayingCard opponentCard)
     {
+        if (journalPreferences == null)
+        {
+            InitalizePreferences();
+        }
+
         return journalPreferences[opponentCard];
     }
 
@@ -90,6 +95,10 @@ public class NPCData : ScriptableObject
         journalPreferences = new Dictionary<PlayingCard, CardPreference>();
     }
 
+    /// <summary>
+    /// Returns the possible Cards that the NPC may play
+    /// </summary>
+    public PlayingCard[] Cards => Matrix.OppCards;
 
     /// <summary>
     /// Builds a default preference dictionary

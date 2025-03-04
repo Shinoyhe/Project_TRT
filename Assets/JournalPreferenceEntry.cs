@@ -10,15 +10,13 @@ public class JournalPreferenceEntry : MonoBehaviour
     [SerializeField] private Image opponentCardDisplay;
     [SerializeField] private Image negativeCardDisplay;
     [SerializeField] private Image positiveCardDisplay;
-
+    [SerializeField] private PlayingCard nullCard;
 
     private PlayingCard[] _playingCards;
     private PlayingCard _oppCard;
     private int _posCardIndex;
     private int _negCardIndex;
     private NPCData _npcData;
-
-    [SerializeField] private NPCData debugNPCData;
 
     public void CycleNegativeToneCard()
     {
@@ -41,11 +39,37 @@ public class JournalPreferenceEntry : MonoBehaviour
     public void Load(NPCData NPC, PlayingCard oppCard)
     {
         // Need to add null to possible cards
-        var possibleCards = NPC.Matrix.OppCards.ToList<PlayingCard>();
-        possibleCards.Add(null);
+        var possibleCards = NPC.Cards.ToList();
+        possibleCards.Add(nullCard);
         _playingCards = possibleCards.ToArray();
 
         _npcData = NPC;
+        _oppCard = oppCard;
         var preferences = NPC.GetPreference(oppCard);
+
+        preferences.Negative = preferences.Negative ?? nullCard;
+        preferences.Positive = preferences.Positive ?? nullCard;
+
+        // Set Index
+        for (int i = 0; i < _playingCards.Length; i++)
+        {
+            var card = _playingCards[i];
+
+            if (card == preferences.Negative)
+            {
+                _negCardIndex = i;
+            }
+
+            if (card == preferences.Positive)
+            {
+                _posCardIndex = i;
+            }
+        }
+
+
+        // Set Sprites
+        opponentCardDisplay.sprite = oppCard.MainSprite;
+        negativeCardDisplay.sprite = preferences.Negative.MainSprite;
+        positiveCardDisplay.sprite = preferences.Positive.MainSprite;
     }
 }

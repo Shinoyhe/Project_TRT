@@ -10,6 +10,8 @@ public class JournalNPC : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameDisplay;
     [SerializeField] private Image iconDisplay;
     [SerializeField] private TextMeshProUGUI bioDisplay;
+    [SerializeField] private Transform preferenceTable;
+    [SerializeField] private GameObject journalEntryPrefab;
 
     private List<NPCData> knownNPCs = new List<NPCData>();
 
@@ -32,5 +34,19 @@ public class JournalNPC : MonoBehaviour
         nameDisplay.text = npc.Name;
         iconDisplay.sprite = npc.Icon;
         bioDisplay.text = npc.Bio;
+
+        foreach (Transform row in preferenceTable)
+        {
+            if (row.TryGetComponent<JournalPreferenceEntry>(out var _))
+            {
+                Destroy(row.gameObject);
+            }
+        }
+
+        foreach (var card in npc.Cards)
+        {
+            var journalEntry = Instantiate(journalEntryPrefab, preferenceTable);
+            journalEntry.GetComponent<JournalPreferenceEntry>().Load(npc, card);
+        }
     }
 }

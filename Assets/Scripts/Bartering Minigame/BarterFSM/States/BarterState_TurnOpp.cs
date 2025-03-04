@@ -28,9 +28,8 @@ public class BarterState_TurnOpp : BarterBaseState
 
     public override void Enter(BarterBaseState previousState)
     {
-        // Clear the submitted match array- important if we're entering from the Compute state.
-        if (previousState == _machine.ComputeState) {
-            _machine.Dir.SetMatchArray(null);
+        // No need to lock if we're coming from the init state.
+        if (previousState != _machine.InitState) {
             if (_machine.Dir.PlayerHandController != null && 
                 _machine.Dir.PlayerHandController.isActiveAndEnabled) {
                 _machine.Dir.PlayerHandController.Lock();

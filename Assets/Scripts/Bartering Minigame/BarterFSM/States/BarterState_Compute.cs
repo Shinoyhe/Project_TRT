@@ -116,20 +116,26 @@ public class BarterState_Compute : BarterBaseState
         opp.ShuffleDiscardIntoDrawpile();
         opp.DrawHand();
 
-        // Clear the submitted OppCards / PlayerCards.
+        // Clear the submitted OppCards / PlayerCards / match array.
         // This has the side-effect of updating our UI, animating a discard.
         _machine.Dir.SetOppCards(null);
         _machine.Dir.ClearPlayerCards();
+        _machine.Dir.SetMatchArray(null);
     }
 
     // Private methods ============================================================================
 
     private void DoneComputing()
     {
+        _machine.Dir.RoundEnded();
+
         // Once we're done computing, prepare to take us out of the state.
         if (_machine.Dir.GetWillingness() >= 100) {
             // If we have reached 100 Willingness we win!
             _machine.CurrentState = _machine.EndWinState;
+        } else if (_machine.Dir.InfoRoundsCountdown <= 0) {
+            // If InfoRoundsCountdown is fully counted down, enter the info state!
+            _machine.CurrentState = _machine.CheckInfoState;
         } else {
             // Otherwise, we have not yet won and must transition to the opp's turn.
             _awaitingOppTurn = true;

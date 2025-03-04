@@ -49,8 +49,7 @@ public class BarterStateMachine
     public BarterState_Compute ComputeState;
     public BarterState_EndWin EndWinState;
     public BarterState_EndLoss EndLossState;
-    // Not implemented... but someday soon!
-    // public BarterState_CheckInfo CheckInfoState;
+    public BarterState_CheckInfo CheckInfoState;
     
 
     // Misc Internal Variables ====================================================================
@@ -87,8 +86,7 @@ public class BarterStateMachine
         TurnOppState = new("Opponent Turn", this, oppTurnDuration);
         TurnPlayerState = new("Player Turn", this);
         ComputeState = new("Compute", this, computeDuration);
-        // TODO: Implement the Check Info state!
-        // CheckInfoState = new("Check Info", this);
+        CheckInfoState = new("Check Info", this);
         EndWinState = new("Win", this);
         EndLossState = new("Loss", this);
     }

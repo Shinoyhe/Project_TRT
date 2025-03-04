@@ -31,6 +31,25 @@ public class BarterDirector : MonoBehaviour
     [SerializeField, Tooltip("Whether or not we should print debug messages.")]
     private bool debugMode = false;
 
+
+    [Header("Info Checking")]
+    [SerializeField, ReadOnly, Tooltip("The number of rounds played Incremented in RoundEnded().")]
+    private int roundsPlayed = 0;
+    // Readonly property
+    public int RoundsPlayed => roundsPlayed;
+    [SerializeField, Tooltip("The initial number of turns before we can present an info card.\n\n"
+                           + "Default: 10")]
+    private int infoRoundsBase = 10;
+    [SerializeField, Tooltip("The amount, in number of turns, infoRoundsBase increases by each "
+                           + "time we present an info card.\n\nDefault: 10")]
+    private int infoRoundsIncrease = 10;
+    [SerializeField, ReadOnly, Tooltip("The number of rounds until we play an info card. "
+                                     + "Decremented in RoundEnded().")]
+    private int infoRoundsCountdown = 0;
+    // Readonly property
+    public int InfoRoundsCountdown => infoRoundsCountdown;
+
+
     [Header("Object References")]
     [Tooltip("The tone responses the opposing NPC prefers.")]
     public BarterResponseMatrix BarterResponses;
@@ -44,11 +63,13 @@ public class BarterDirector : MonoBehaviour
     [Tooltip("The HandController used by the player.")]
     public HandController PlayerHandController;
 
-    [Header("Miscellaneous")]
+    [Header("History")]
     [ReadOnly, Tooltip("The queue of the last N matches that have been played.")]
     public List<MatchHistory> MatchHistories = new();
     [SerializeField, Tooltip("The maximum N matches that we display to the player.")]
     private int maxHistories = 3;
+
+    // Misc ===========================
 
     // Actions for when arrays are updated.
     public System.Action<PlayingCard[]> OnOppCardsSet;
@@ -62,6 +83,10 @@ public class BarterDirector : MonoBehaviour
 
     // Misc Internal Variables ====================================================================
 
+    // Whether or not Willingness can currently change.
+    private bool _willingnessFrozen = false;
+    // The current value for the number of rounds needed to present another info card.
+    private int _infoRoundsCurrent;
     // Arrays storing the current submissions for both sets of cards and whether each pair matches.
     private PlayingCard[] _oppCards = null;
     private PlayingCard[] _playerCards = null;
@@ -92,6 +117,10 @@ public class BarterDirector : MonoBehaviour
 
     private void Start()
     {
+        // Initialize our countdown.
+        _infoRoundsCurrent = infoRoundsBase;
+        infoRoundsCountdown = _infoRoundsCurrent;
+
         // Initialize our _playerCards array to empty (not to null).
         // Because opponent cards are submitted as a set and player cards are submitted one-by-one,
         // the player cards array must be pre-initialized.
@@ -148,6 +177,8 @@ public class BarterDirector : MonoBehaviour
     /// </summary>
     public void DecayWillingness()
     {
+        if (_willingnessFrozen) return;
+
         willingness -= DecayPerSecond * Time.deltaTime;
     }
 
@@ -157,7 +188,17 @@ public class BarterDirector : MonoBehaviour
     /// <param name="amount">float - the value we change Willingness by.</param>
     public void NudgeWillingness(float amount)
     {
+        if (_willingnessFrozen) return;
+
         willingness = Mathf.Clamp(willingness+amount, 0, 100);
+    }
+
+    /// <summary>
+    /// Sets whether or not Willingness can change.
+    /// </summary>
+    public void SetWillingnessFrozen(bool frozen)
+    {
+        _willingnessFrozen = frozen;
     }
 
     // Array manipulators =========================================================================
@@ -294,6 +335,26 @@ public class BarterDirector : MonoBehaviour
         if (MatchHistories.Count > maxHistories) {
             MatchHistories.RemoveRange(maxHistories, MatchHistories.Count-maxHistories);
         }
+    }
+
+    // Misc manipulators ===================================================================
+
+    /// <summary>
+    /// Increases the number of rounds played by 1 and counts down to the info state.
+    /// </summary>
+    public void RoundEnded()
+    {
+        roundsPlayed++;
+        infoRoundsCountdown--;
+    }
+
+    /// <summary>
+    /// Increases the number of rounds played by 1.
+    /// </summary>
+    public void AfterCheckInfoState()
+    {
+        _infoRoundsCurrent += infoRoundsIncrease;
+        infoRoundsCountdown = _infoRoundsCurrent;
     }
 
     // Endgame methods ============================================================================

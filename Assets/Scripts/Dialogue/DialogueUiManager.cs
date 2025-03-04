@@ -273,7 +273,7 @@ public class DialogueUiManager : MonoBehaviour {
         }
 
         Vector2 canvasResolution = RenderCanvas.GetComponent<CanvasScaler>().referenceResolution;
-        Vector2 canvasPos = new Vector2(viewportPos.x * canvasResolution.x, viewportPos.y * canvasResolution.y);
+        Vector2 canvasPos = new Vector2(viewportPos.x * canvasResolution.x / 2, viewportPos.y * canvasResolution.y / 2);
 
         if (SpeechBubblePrefab == null) {
             Debug.LogError("No Speech Bubble Prefab in DialogueUiManager.");

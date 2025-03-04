@@ -7,9 +7,11 @@ public class BarterStarter : MonoBehaviour
 {
     // Parameters =================================================================================
     [SerializeField] private GameObject barterContainerPrefab;
+    [SerializeField] private GameObject presentItemPrefab;
 
     [BoxGroup("Barter Settings"), ReadOnly] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings"), ReadOnly] public BarterNeutralBehavior BarterNeutralBehaviour;
+    [BoxGroup("Barter Settings"), ReadOnly] public InventoryCardData AcceptedCard;
     [BoxGroup("Barter Settings"), ReadOnly] public InventoryCardData PrizeCard;
     [BoxGroup("Barter Settings"), ReadOnly] public float DecayPerSecond = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerMatch = 5;
@@ -18,6 +20,7 @@ public class BarterStarter : MonoBehaviour
 
     // Misc Internal Variables ====================================================================
     private GameObject _barterInstance;
+    private GameObject _itemPresentInstance;
 
     // Public Functions ===========================================================================
 
@@ -102,5 +105,37 @@ public class BarterStarter : MonoBehaviour
     {
         Destroy(_barterInstance);
         GameManager.PlayerInput.IsActive = true;
+    }
+
+    // PresentItem Methods =========================================================================
+
+    public void PresentItem()
+    {
+        _itemPresentInstance = Instantiate(presentItemPrefab, GameManager.MasterCanvas.transform);
+        RectTransform rectTransform = _itemPresentInstance.GetComponent<RectTransform>();
+
+        PresentItem presentItem = _itemPresentInstance.GetComponent<PresentItem>();
+        presentItem.AcceptedCard = AcceptedCard;
+        presentItem.OnAccepted += AcceptTrade;
+        presentItem.OnClosed += CloseTrade;
+
+        GameManager.PlayerInput.IsActive = false;
+    }
+
+    void AcceptTrade()
+    {
+        CleanupPresentationCanvas(false);
+        StartBarter();
+    }
+
+    void CloseTrade()
+    {
+        CleanupPresentationCanvas(true);
+    }
+
+    void CleanupPresentationCanvas(bool enablePlayerInput)
+    {
+        Destroy(_itemPresentInstance);
+        GameManager.PlayerInput.IsActive = enablePlayerInput;
     }
 }

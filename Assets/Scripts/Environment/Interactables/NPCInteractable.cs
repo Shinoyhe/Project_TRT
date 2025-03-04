@@ -6,9 +6,11 @@ public class NpcInteractable : Interactable
     [SerializeField] private Vector3 dialogueBubbleOffset;
     [SerializeField] private TextAsset npcConversation;
 
+    [BoxGroup("Trade Settings")] public InventoryCardData AcceptedCard;
+    [BoxGroup("Trade Settings")] public InventoryCardData PrizeCard;
+
     [BoxGroup("Barter Settings")] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings")] public BarterNeutralBehavior BarterNeutralBehaviour;
-    [BoxGroup("Barter Settings")] public InventoryCardData PrizeCard;
     [BoxGroup("Barter Settings"), Range(0, 25)] public float DecayPerSecond = 5;
     [BoxGroup("Barter Settings"), Range(0, 50)] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), Range(0, -50)] public float WillingnessPerFail = -5;
@@ -56,7 +58,24 @@ public class NpcInteractable : Interactable
             Debug.LogError("NPCInteractable: Could not find BarterNeutralBehaviour");
         }
 
-        barterStarter.PrizeCard = PrizeCard;
+        if (AcceptedCard != null)
+        {
+            barterStarter.AcceptedCard = AcceptedCard;
+        }
+        else
+        {
+            Debug.LogError("NPCInteractable: Could not find AcceptedCard");
+        }
+
+        if (PrizeCard != null)
+        {
+            barterStarter.PrizeCard = PrizeCard;
+        }
+        else
+        {
+            Debug.LogError("NPCInteractable: Could not find PrizeCard");
+        }
+
         barterStarter.DecayPerSecond = DecayPerSecond;
         barterStarter.WillingnessPerMatch = WillingnessPerMatch;
         barterStarter.WillingnessPerFail = WillingnessPerFail;

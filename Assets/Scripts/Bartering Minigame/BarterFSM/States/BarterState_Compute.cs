@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class BarterState_Compute : BarterBaseState
@@ -41,39 +39,40 @@ public class BarterState_Compute : BarterBaseState
             return;
         }
 
+        // Reset our neutrals.
+        _machine.Dir.ResetNeutrals();
+
         // Calculate the number of correct matches.
-        int numCorrect = 0;
-        bool[] matchArray = new bool[oppCards.Length];
+        float score = 0;
+        var matchArray = new BarterResponseMatrix.State[oppCards.Length];
         
         if (playerCards != null) {
-            OppBarterResponses responses = _machine.Dir.BarterResponses;        
+            BarterResponseMatrix responses = _machine.Dir.BarterResponses;        
 
             for (int i = 0; i < oppCards.Length; i++) {
                 // Match up the player cards to the NPC's preferences.
-                PlayingCard desiredResponse = responses.GetResponse(oppCards[i]);
+                matchArray[i] = responses.GetMatch(oppCards[i], playerCards[i]);
 
-                // Store the correct matchups in the match array.
-                if (desiredResponse.Matches(playerCards[i])) {
-                    numCorrect++;
-                    matchArray[i] = true;
-                } else {
-                    matchArray[i] = false;
+                if (matchArray[i] == BarterResponseMatrix.State.NEUTRAL) {
+                    _machine.Dir.SetNeutral(i);
                 }
+
+                score += matchArray[i] switch {
+                    BarterResponseMatrix.State.POSITIVE => _machine.Dir.WillingnessPerMatch,
+                    BarterResponseMatrix.State.NEGATIVE => _machine.Dir.WillingnessPerFail,
+                    _ => 0
+                };
             }
         } else {
             for (int i = 0; i < oppCards.Length; i++) {
-                matchArray[i] = false;
+                matchArray[i] = BarterResponseMatrix.State.NEGATIVE;
             }
         }
 
         // Set the match array before nudging willingness.
         _machine.Dir.SetMatchArray(matchArray);
 
-        // Change willingness based on the result.
-        float correctAmount = numCorrect*_machine.Dir.WillingnessPerMatch;
-        float incorrectAmount = (oppCards.Length-numCorrect)*_machine.Dir.WillingnessPerFail;
-
-        _machine.Dir.NudgeWillingness(correctAmount+incorrectAmount);
+        _machine.Dir.NudgeWillingness(score);
 
         DoneComputing();
     }
@@ -102,18 +101,25 @@ public class BarterState_Compute : BarterBaseState
 
     public override void Exit() 
     {
+        // Log the match in our history!
+        _machine.Dir.LogMatchHistory();
+
+        // Re-initialize both CardUsers before the next opp's turn!
+        CardUser player = _machine.PlayerCardUser;
+        CardUser opp = _machine.OppCardUser;
+
+        player.DiscardSubmitted();
+        player.ShuffleDiscardIntoDrawpile();
+        player.Draw(player.BaseDrawSize-player.HandList.Count);
+
+        opp.DiscardHand();
+        opp.ShuffleDiscardIntoDrawpile();
+        opp.DrawHand();
+
         // Clear the submitted OppCards / PlayerCards.
         // This has the side-effect of updating our UI, animating a discard.
         _machine.Dir.SetOppCards(null);
         _machine.Dir.ClearPlayerCards();
-
-        // Re-initialize both CardUsers before the next opp's turn!
-        _machine.PlayerCardUser.DiscardHand();
-        _machine.OppCardUser.DiscardHand();
-        _machine.PlayerCardUser.ShuffleDiscardIntoDrawpile();
-        _machine.OppCardUser.ShuffleDiscardIntoDrawpile();
-        _machine.PlayerCardUser.DrawHand();
-        _machine.OppCardUser.DrawHand();
     }
 
     // Private methods ============================================================================

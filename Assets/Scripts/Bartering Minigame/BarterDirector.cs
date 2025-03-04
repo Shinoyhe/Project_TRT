@@ -1,31 +1,42 @@
+using System.Collections.Generic;
+using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class BarterDirector : MonoBehaviour
 {
     // Parameters =================================================================================
 
+    [Header("Willingness")]
     [SerializeField, Range(0, 100), Tooltip("The current willingness percentage, from 0-100.")]
     private float willingness = 50;
-
-    [Header("Parameters")]
-    [Tooltip("The number of tone cards each player must play.\n\nDefault: 3")]
-    public int CardsToPlay = 3;
-    [SerializeField, Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
-    private float decayPerSecond = 5;
-    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1")]
-    private float oppDuration = 1;
-    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1.5")]
-    private float computeDuration = 1.5f;
     [Tooltip("The amount Willingness is changed by on a successful, matching response.\n\nDefault: 5")]
     public float WillingnessPerMatch = 5;
     [Tooltip("The amount Willingness is changed by on a unsuccessful, nonmatching response.\n\nDefault: -5")]
     public float WillingnessPerFail = -5;
+    [Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
+    public float DecayPerSecond = 5;
+
+    [Header("Cards")]
+    [Tooltip("The number of tone cards each player must play.\n\nDefault: 3")]
+    public int CardsToPlay = 3;
+    [Tooltip("The number of tone cards the opponent has in its deck.\n\nDefault: 16")]
+    public int OppDeckSize = 16;
+    
+    [Header("State Machine")]
+    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1")]
+    private float oppDuration = 1;
+    [SerializeField, Tooltip("How long, in seconds, the opponent's turn lasts.\n\nDefault: 1.5")]
+    private float computeDuration = 1.5f;
     [SerializeField, Tooltip("Whether or not we should print debug messages.")]
     private bool debugMode = false;
 
     [Header("Object References")]
-    [SerializeField, Tooltip("The tone responses the opposing NPC prefers.")]
-    public OppBarterResponses BarterResponses;
+    [Tooltip("The tone responses the opposing NPC prefers.")]
+    public BarterResponseMatrix BarterResponses;
+    [SerializeField, Tooltip("The BarterNeutralBehavior scriptable object that defines what "
+                           + "happens when a neutral match is encountered.")]
+    public BarterNeutralBehavior NeutralBehavior;
     [SerializeField, Tooltip("The card user used by the opposing NPC.")]
     private CardUser oppCardUser;
     [SerializeField, Tooltip("The card user used by the player.")]
@@ -33,10 +44,16 @@ public class BarterDirector : MonoBehaviour
     [Tooltip("The HandController used by the player.")]
     public HandController PlayerHandController;
 
+    [Header("Miscellaneous")]
+    [ReadOnly, Tooltip("The queue of the last N matches that have been played.")]
+    public List<MatchHistory> MatchHistories = new();
+    [SerializeField, Tooltip("The maximum N matches that we display to the player.")]
+    private int maxHistories = 3;
+
     // Actions for when arrays are updated.
     public System.Action<PlayingCard[]> OnOppCardsSet;
     public System.Action<PlayingCard[]> OnPlayerCardsSet;
-    public System.Action<bool[]> OnMatchArraySet;
+    public System.Action<BarterResponseMatrix.State[]> OnMatchArraySet;
     // Action for when the full non-null set of player cards is submitted.
     public System.Action OnPlayerAllCardsSet;
     // Action for win and loss
@@ -48,9 +65,28 @@ public class BarterDirector : MonoBehaviour
     // Arrays storing the current submissions for both sets of cards and whether each pair matches.
     private PlayingCard[] _oppCards = null;
     private PlayingCard[] _playerCards = null;
-    private bool[] _matchArray = null;
+    private BarterResponseMatrix.State[] _matchArray = null;
+    private bool[] _lastRoundNeutrals = null;
     // The BarterStateMachine that manages our turns!
     private BarterStateMachine _machine = null;
+
+    // Helper classes =============================================================================
+
+    [System.Serializable]
+    public class MatchHistory
+    {
+        public PlayingCard[] OppCards;
+        public PlayingCard[] PlayerCards;
+        public BarterResponseMatrix.State[] Matches;
+
+        public MatchHistory(PlayingCard[] oppCards, PlayingCard[] playerCards, 
+                            BarterResponseMatrix.State[] matches)
+        {
+            OppCards = oppCards.ToArray();
+            PlayerCards = playerCards.ToArray();
+            Matches = matches;
+        }
+    }
 
     // Initializers ===============================================================================
 
@@ -83,7 +119,9 @@ public class BarterDirector : MonoBehaviour
 
     public PlayingCard[] GetPlayerCards() { return _playerCards; }
 
-    public bool[] GetMatchArray() { return _matchArray; }
+    public BarterResponseMatrix.State[] GetMatchArray() { return _matchArray; }
+
+    public bool[] GetLastRoundNeutrals() { return _lastRoundNeutrals; }
 
     public string GetCurrentStateName() { return _machine.CurrentState.StateName; }
 
@@ -110,7 +148,7 @@ public class BarterDirector : MonoBehaviour
     /// </summary>
     public void DecayWillingness()
     {
-        willingness -= decayPerSecond * Time.deltaTime;
+        willingness -= DecayPerSecond * Time.deltaTime;
     }
 
     /// <summary>
@@ -164,8 +202,16 @@ public class BarterDirector : MonoBehaviour
                          + $"{_playerCards.Length})");
         }
 
-        _playerCards[indexInArray] = playerCard;
+        if (playerCard != null) {
+            // If the new submission is nonnull, note that it's submitted.
+            playerCard.PlayerSubmitted = true;
+        } else {
+            // If the new submission is null, note that the old one is unsubmitted.
+            _playerCards[indexInArray].PlayerSubmitted = false;
+        }
 
+        _playerCards[indexInArray] = playerCard;
+        
         // Check if all slots are non-null.
         foreach (PlayingCard card in _playerCards) {
             // If we encounter any null card, we shouldn't submit.
@@ -179,15 +225,18 @@ public class BarterDirector : MonoBehaviour
     /// Clear all submitted player cards.
     /// </summary>
     public void ClearPlayerCards() 
-    { 
-        System.Array.Clear(_playerCards, 0, _playerCards.Length);
+    {
+        for (int i = 0; i < _playerCards.Length; i++) {
+            _playerCards[i].PlayerSubmitted = false;
+            _playerCards[i] = null;
+        }
     }
 
     /// <summary>
     /// Used to submit an full array of matches between cards.
     /// </summary>
-    /// <param name="matchArray">bool[] - the full array of bool matches to submit.</param>
-    public void SetMatchArray(bool[] matchArray)
+    /// <param name="matchArray">BarterResponseMatrix.State[] - the full array of bool matches to submit.</param>
+    public void SetMatchArray(BarterResponseMatrix.State[] matchArray)
     {
         // Validate the array. We accept two states:
         //  * A null array, signifying 'no matches to show'.
@@ -201,11 +250,61 @@ public class BarterDirector : MonoBehaviour
         OnMatchArraySet?.Invoke(matchArray);
     }
 
-    public void TriggerWin() {
+    /// <summary>
+    /// Set all logged neutrals to false, in preparation for a new batch.
+    /// </summary>
+    public void ResetNeutrals()
+    {
+        // If our _lastRoundNeutrals array is null, set it to an empty array of the right size.
+        _lastRoundNeutrals ??= new bool[CardsToPlay];
+
+        for (int i = 0; i < CardsToPlay; i++) {
+            _lastRoundNeutrals[i] = false;
+        }
+    }
+
+    /// <summary>
+    /// Set a neutral to true.
+    /// </summary>
+    /// <param name="indexInArray">int - the index of the match to log as a neutral.</param>
+    public void SetNeutral(int indexInArray)
+    {
+        if (_lastRoundNeutrals == null) {
+            Debug.LogError($"BarterDirector Error: SetNeutral failed. _lastRoundNeutrals "
+                         + $"was null. Call ResetNeutrals() first to initialize.");
+        } 
+        
+        if (indexInArray < 0 || indexInArray >= _lastRoundNeutrals.Length) {
+            Debug.LogError($"BarterDirector Error: SetNeutral failed. indexInArray "
+                         + $"({indexInArray}) was beyond the bounds of the array (length "
+                         + $"{_lastRoundNeutrals.Length})");
+        }
+
+        _lastRoundNeutrals[indexInArray] = true;
+    }
+
+    /// <summary>
+    /// Logs the current state of our oppCards and playerCards to our MatchHistories list.
+    /// </summary>
+    public void LogMatchHistory()
+    {
+        MatchHistory currentMatchHistory = new(_oppCards, _playerCards, _matchArray);
+        MatchHistories.Insert(0, currentMatchHistory);
+        // Trim the excess.
+        if (MatchHistories.Count > maxHistories) {
+            MatchHistories.RemoveRange(maxHistories, MatchHistories.Count-maxHistories);
+        }
+    }
+
+    // Endgame methods ============================================================================
+
+    public void TriggerWin() 
+    {
         OnWin?.Invoke();
     }
 
-    public void TriggerLose() {
+    public void TriggerLose() 
+    {
         OnLose?.Invoke();
     }
 }

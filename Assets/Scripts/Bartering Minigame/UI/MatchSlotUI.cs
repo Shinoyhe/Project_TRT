@@ -6,11 +6,13 @@ public class MatchSlotUI : MonoBehaviour
     // Parameters and Publics =====================================================================
 
     // Lightweight enum defining multiple states that a match can be.
-    public enum MatchType { Null, Right, Wrong }
+    public enum MatchType { Null, Right, Neutral, Wrong }
     [SerializeField, Tooltip("The sprite we show when the match array is null.")]
     private Sprite emptySprite;
     [SerializeField, Tooltip("The sprite we show on a match.")]
     private Sprite rightSprite;
+    [SerializeField, Tooltip("The sprite we show on a neutral match.")]
+    private Sprite neutralSprite;
     [SerializeField, Tooltip("The sprite we show on a nonmatch.")]
     private Sprite wrongSprite;
 
@@ -39,9 +41,15 @@ public class MatchSlotUI : MonoBehaviour
         switch (type) {
             case MatchType.Right:
                 _icon.sprite = rightSprite;
+                _icon.color = Color.white;
+                break;
+            case MatchType.Neutral:
+                _icon.sprite = neutralSprite;
+                _icon.color = Color.white;
                 break;
             case MatchType.Wrong:
                 _icon.sprite = wrongSprite;
+                _icon.color = Color.white;
                 break;
             default:
                 _icon.sprite = emptySprite;

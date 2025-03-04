@@ -11,12 +11,8 @@ public class DialogueManager : MonoBehaviour
     // Parameters =================================================================================
 
     [Header("Dependencies")]
-    [SerializeField, Tooltip("The Canvas we spawn UI prefabs under.")]
-    private Canvas masterCanvas;
     [SerializeField, Tooltip("The prefab for dialogue UI.")]
     private GameObject dialogueUiPrefab;
-    [SerializeField, Tooltip("The prefab for the bartering minigame.")]
-    private GameObject barterContainerPrefab;
 
     public struct ProcessedTags {
 
@@ -36,8 +32,6 @@ public class DialogueManager : MonoBehaviour
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
-    private InventoryCardData _prizeCard;
-    private GameObject _barterInstance;
 
     // Initializers and Update ================================================================
 
@@ -45,10 +39,6 @@ public class DialogueManager : MonoBehaviour
     {
         _inConversation = false;
         _onDelay = false;
-
-        if (masterCanvas == null) {
-            Debug.LogError("DialogueManager Error: masterCanvas was null.");
-        }
     }
 
     private void Update()
@@ -82,7 +72,7 @@ public class DialogueManager : MonoBehaviour
         if (_onDelay) return false;
 
         _inConversation = true;
-        GameManager.TimeLoopManager.SetLoopPaused(true);
+        TimeLoopManager.SetLoopPaused(true);
 
         // Create UI instance
         _dialogueUiManager = SetupUi(npcBubblePos, GameManager.Player.Transform.position);
@@ -108,11 +98,6 @@ public class DialogueManager : MonoBehaviour
         _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
     }
 
-    public void SetPrizeCard(InventoryCardData prizeCard)
-    {
-        _prizeCard = prizeCard;
-    }
-
     // Private Helper Methods ====================================================================
 
     /// <summary>
@@ -129,7 +114,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         _dialogueUiInstance = Instantiate(dialogueUiPrefab, Vector3.zero, Quaternion.identity, 
-                                          masterCanvas.transform);
+                                          GameManager.MasterCanvas.transform);
 
         if (_dialogueUiInstance == null) {
             ThrowNullError("SetupUi()", "DialogueUiInstance");
@@ -208,7 +193,7 @@ public class DialogueManager : MonoBehaviour
 
         // If choice was Action, skip the line.
         if (foundTags.IsBarterTrigger) {
-            StartBarter();
+            GameManager.BarterStarter.StartBarter();
             EndStory(false);
             return;
         }
@@ -258,48 +243,6 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates a barter game instance and hooks up callbacks.
-    /// </summary>
-    void StartBarter()
-    {
-        Debug.Log("Barter Starting!");
-        _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity, 
-                                      masterCanvas.transform);
-        BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
-        barterDirectorOfInstance.OnWin += WinBarter;
-        barterDirectorOfInstance.OnLose += LoseBarter;
-        GameManager.PlayerInput.IsActive = false;
-    }
-
-    /// <summary>
-    /// Call on Barter Win, give player card.
-    /// </summary>
-    void WinBarter()
-    {
-        if (_prizeCard != null) {
-            GameManager.Inventory.AddCard(_prizeCard);
-        }
-        CleanupBarter();
-    }
-
-    /// <summary>
-    /// Call on Barter lose, just cleans up.
-    /// </summary>
-    void LoseBarter()
-    {
-        CleanupBarter();
-    }
-
-    /// <summary>
-    /// Handles cleanup of barter minigame.
-    /// </summary>
-    void CleanupBarter()
-    {
-        Destroy(_barterInstance);
-        GameManager.PlayerInput.IsActive = true;
-    }
-
-    /// <summary>
     /// Called to kill UI and prep for next dialogue.
     /// </summary>
     /// <param name="enablePlayerInput"> True if we want to enable player input after ending story. </param>
@@ -309,7 +252,7 @@ public class DialogueManager : MonoBehaviour
         _currentStory = null;
         _dialogueUiManager = null;
 
-        GameManager.TimeLoopManager.SetLoopPaused(false);
+        TimeLoopManager.SetLoopPaused(false);
 
         Destroy(_dialogueUiInstance);
         GameManager.PlayerInput.IsActive = enablePlayerInput;

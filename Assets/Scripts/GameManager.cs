@@ -9,8 +9,9 @@ public class GameManager : Singleton<GameManager>
     public static PlayerInputHandler PlayerInput { get { return Instance.playerInput; } }
     public static UiInputHandler UiInput { get { return Instance.uiInput; } }
     public static Inventory Inventory { get { return Instance.inventory; } }
-    public static TimeLoopManager TimeLoopManager { get { return Instance.timeLoopManager; } }
-    public static Player Player { get { return Instance.player; } }
+    public static Player Player { get { return Instance._player; } }
+    public static Canvas MasterCanvas { get { return Instance._masterCanvas; } }
+    public static BarterStarter BarterStarter { get { return Instance.barterStarter; } }
 
     // Backing fields =============================================================================
 
@@ -18,18 +19,37 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private PlayerInputHandler playerInput;
     [SerializeField] private UiInputHandler uiInput;
     [SerializeField] private Inventory inventory;
-    [SerializeField] private TimeLoopManager timeLoopManager;
     [SerializeField, Tag] private string playerTag;
-    [SerializeField] private Player player;
+    [SerializeField, ReadOnly] private Player _player;
+    [SerializeField, Tag] private string masterCanvasTag;
+    [SerializeField, ReadOnly] private Canvas _masterCanvas;
+    [SerializeField] private BarterStarter barterStarter;
 
     // Initializers ===============================================================================
 
     public void FindPlayer()
     {
-        GameObject playerParent = GameObject.FindWithTag(playerTag).transform.root.gameObject;
+        print("FindPlayer() called");
 
-        if (playerParent != null) {
-            player = playerParent.GetComponentInChildren<Player>();
+        GameObject playerObj = GameObject.FindWithTag(playerTag);
+
+        if (playerObj != null) {
+            GameObject playerParent = playerObj.transform.root.gameObject;
+
+            if (playerParent != null) {
+                _player = playerParent.GetComponentInChildren<Player>();
+            }
+        }
+    }
+
+    public void FindMasterCanvas()
+    {
+        print("FindMasterCanvas() called");
+
+        GameObject masterCanvasObj = GameObject.FindWithTag(masterCanvasTag);
+
+        if (masterCanvasObj != null) {
+            _masterCanvas = masterCanvasObj.GetComponentInChildren<Canvas>();
         }
     }
 }

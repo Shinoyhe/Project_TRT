@@ -9,6 +9,10 @@ public class PlayingCard : ScriptableObject
     public string Id;
     [Tooltip("The sprite applied to a DisplayCard with this PlayingCard as data.")]
     public Sprite MainSprite;
+    [HideInInspector]
+    // Whether or not this card has been submitted by the player CardUser.
+    // Kinda hacky, but it works!
+    public bool PlayerSubmitted = false;
 
     // Public methods =============================================================================
 
@@ -21,5 +25,14 @@ public class PlayingCard : ScriptableObject
     public bool Matches(PlayingCard other)
     {
         return Id == other.Id;
+    }
+
+    /// <summary>
+    /// Override for the default ToString function.
+    /// </summary>
+    /// <returns>string - the ID of this PlayingCard.</returns>
+    public override string ToString()
+    {
+        return Id;
     }
 }

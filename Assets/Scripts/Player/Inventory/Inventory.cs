@@ -17,6 +17,8 @@ public class Inventory : MonoBehaviour
     
     public event Action OnInventoryUpdated;
 
+    [HideInInspector] public float inventoryLastUpdateTime;
+
     // Enums for Sorting
     public enum SortParameters { 
         NAME, 
@@ -101,6 +103,7 @@ public class Inventory : MonoBehaviour
 
         Cards.Add(newCard);
         OnInventoryUpdated?.Invoke();
+        inventoryLastUpdateTime = Time.time;
     }
 
     public void RemoveCard(InventoryCardData card)
@@ -116,6 +119,7 @@ public class Inventory : MonoBehaviour
         cardToRemove.CurrentlyOwn = false;
 
         OnInventoryUpdated?.Invoke();
+        inventoryLastUpdateTime = Time.time;
     }
 
     /// <summary>
@@ -245,6 +249,20 @@ public class Inventory : MonoBehaviour
 
         Cards.Sort(comparison);
         OnInventoryUpdated?.Invoke();
+        inventoryLastUpdateTime = Time.time;
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <returns>The InventoryCard associated with the cardData ScriptableObject in AllCards</returns>
+    public InventoryCard GetCardFromData(InventoryCardData cardData)
+    {
+        foreach (InventoryCard card in AllCards)
+        {
+            if (card.Data == cardData) { return card; }
+        }
+        Debug.LogError("Inventory: GetCardFromData: Could not find card.");
+        return null;
     }
 
     #endregion
@@ -262,16 +280,6 @@ public class Inventory : MonoBehaviour
         }
         
         return false;
-    }
-
-    private InventoryCard GetCardFromData(InventoryCardData cardData)
-    {
-        foreach (InventoryCard card in AllCards)
-        {
-            if (card.Data == cardData) { return card; }
-        }
-        Debug.LogError("Could not find card.");
-        return null;
     }
 
     #endregion

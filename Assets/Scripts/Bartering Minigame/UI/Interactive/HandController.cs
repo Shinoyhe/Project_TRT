@@ -37,6 +37,12 @@ public class HandController : MonoBehaviour
     [SerializeField, Tooltip("The amount of time, in seconds, a card takes to snap to a submit slot.\n\nDefault: 0.15")]
     private float snapTime = 0.15f;
 
+    [Header("SFX")]
+    [SerializeField]
+    private AudioEvent cardPlaceSFX;
+    [SerializeField]
+    private AudioEvent cardShuffleSFX;
+
     // Misc Internal Variables ====================================================================
 
     // A list of all DisplayCards in our hand.
@@ -57,12 +63,17 @@ public class HandController : MonoBehaviour
 
         cardUser.OnHandUpdated += UpdateDisplayCards;
         // TODO: cardUser.OnDraw += play draw SFX;
-        // TODO: cardUser.OnShuffle += play shuffle sfx;
+        // cardUser.OnShuffle += PlayShuffleSFX;
 
         _hand = new();
     }
 
     // Repainting Methods =========================================================================
+
+    public void PlayShuffleSFX()
+    {
+        cardShuffleSFX.Play(gameObject);
+    }
 
     /// <summary>
     /// Deletes or adds DisplayCards in our HandController, based on the contents of handDelta.
@@ -254,7 +265,10 @@ public class HandController : MonoBehaviour
 
             // After we've checked everything, if we have a target slot...
             if (targetSlot != null) {
-                // TODO: Play a submit SFX
+                // Play all submitting card SFX
+                
+                // GARRETT: Commented following line out because it was causing errors
+                // cardPlaceSFX.Play(this.gameObject);
 
                 // Find the position of the slot in OUR localspace.
                 Vector3 localSlotPosition = card.transform.parent.InverseTransformPoint(targetSlot.transform.position);

@@ -4,21 +4,24 @@ using UnityEngine.SceneManagement;
 
 public class TimeLoopManager : MonoBehaviour
 {
+    // Works as a modified, lightweight singleton.
+    public static TimeLoopManager Instance { get; private set; }
+
     // Parameters and publics =====================================================================
 
     [SerializeField, Tooltip("The amount of time, in minutes, it takes for the loop to end.")] 
     private float loopMinutes = 8;
     // Public accessor, for other scripts
-    public float SecondsLeft => _secondsLeft;
+    public static float SecondsLeft => Instance._secondsLeft;
     // Read-only display, for the inspector
     [SerializeField, ReadOnly] 
     private string DEBUG_timeLeft;
 
     // Public accessor, for other scripts
-    public bool LoopPaused  => _loopPaused;
+    public static bool LoopPaused  => Instance._loopPaused;
 
     // Called when the loop time is fully elapsed. Awaits a callback.
-    public System.Action<System.Action> LoopElapsed;
+    public static System.Action<System.Action> LoopElapsed;
 
     // Misc Internal Variables ====================================================================
 
@@ -28,9 +31,26 @@ public class TimeLoopManager : MonoBehaviour
 
     // Intializers ================================================================================
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        if (isActiveAndEnabled) {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+    }
+
     private void Start()
     {
-        InitializeTimer();
+        if (isActiveAndEnabled) {    
+            InitializeTimer();
+        }
     }
 
     public void InitializeTimer()
@@ -45,8 +65,6 @@ public class TimeLoopManager : MonoBehaviour
 
     public void CallbackDone() 
     {
-        // TODO: Take us to the stasis scene.
-
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -58,6 +76,7 @@ public class TimeLoopManager : MonoBehaviour
         GameManager.UiInput.IsActive = true;
 
         GameManager.Instance.FindPlayer();
+        GameManager.Instance.FindMasterCanvas();
         InitializeTimer();
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -67,6 +86,8 @@ public class TimeLoopManager : MonoBehaviour
 
     void Update()
     {
+        // Adding a test comment.
+        
         if (_loopDone || _loopPaused) return;
 
         DEBUG_timeLeft = $"{Mathf.Floor(_secondsLeft/60f):00}:{Mathf.Floor(_secondsLeft%60):00}";
@@ -89,12 +110,12 @@ public class TimeLoopManager : MonoBehaviour
 
     // Misc manipulators ==========================================================================
 
-    public void SetLoopPaused(bool value)
+    public static void SetLoopPaused(bool value)
     {
-        _loopPaused = value;
+        Instance._loopPaused = value;
     }
     
-    public void ResetLoop(){
-        _secondsLeft = 0;
+    public static void ResetLoop(){
+        Instance._secondsLeft = 0;
     }
 }

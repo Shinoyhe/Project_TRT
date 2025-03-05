@@ -11,6 +11,11 @@ public class SetDefaultSelection : MonoBehaviour
 
         if (DefaultButton != null) {
             DefaultButton.Select();
+
+            var buttonHandler = DefaultButton.gameObject.GetComponent<BoldTextOnHover>();
+            if (buttonHandler) {
+                buttonHandler.TriggerBold();
+            }
         }
     }
 }

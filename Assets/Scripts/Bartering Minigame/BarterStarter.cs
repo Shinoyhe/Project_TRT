@@ -129,6 +129,11 @@ public class BarterStarter : MonoBehaviour
         presentItem.OnClosed += CloseTrade;
 
         GameManager.PlayerInput.IsActive = false;
+
+        if (TimeLoopManager.Instance != null)
+        {
+            TimeLoopManager.SetLoopPaused(true);
+        }
     }
 
     void AcceptTrade()
@@ -146,5 +151,10 @@ public class BarterStarter : MonoBehaviour
     {
         Destroy(_itemPresentInstance);
         GameManager.PlayerInput.IsActive = enablePlayerInput;
+
+        if (TimeLoopManager.Instance != null)
+        {
+            TimeLoopManager.SetLoopPaused(false);
+        }
     }
 }

@@ -34,6 +34,10 @@ public class BarterState_TurnPlayer : BarterBaseState
             _machine.Dir.PlayerHandController.isActiveAndEnabled) {
             _machine.Dir.PlayerHandController.Unlock();
         }
+
+        // If the info menu is available, unlock it.
+        _machine.Dir.InfoMenuUnlocked = _machine.Dir.InfoRoundsCountdown <= 0;
+        // Debug.Log($"InfoMenuLocked: {_machine.Dir.InfoMenuUnlocked}");
     }
 
     public override void UpdateState()
@@ -56,6 +60,8 @@ public class BarterState_TurnPlayer : BarterBaseState
             _machine.Dir.PlayerHandController.isActiveAndEnabled) {
             _machine.Dir.PlayerHandController.Lock();
         }
+
+        _machine.Dir.InfoMenuUnlocked = false;
     }
 
     // Callback Methods ===========================================================================

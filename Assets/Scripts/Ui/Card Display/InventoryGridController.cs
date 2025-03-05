@@ -57,7 +57,9 @@ public class InventoryGridController : MonoBehaviour
     }
 
     private void OnDisable() {
-        GameManager.Inventory.OnInventoryUpdated -= PopulateGrid;
+        if (GameManager.Instance && GameManager.Inventory) {
+            GameManager.Inventory.OnInventoryUpdated -= PopulateGrid;
+        }
     }
 
     #endregion
@@ -70,7 +72,10 @@ public class InventoryGridController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator DelayInit() {
         yield return new WaitForSeconds(0.01f);
-        GameManager.Inventory.OnInventoryUpdated += PopulateGrid;
+        if (GameManager.Instance && GameManager.Inventory) {
+            GameManager.Inventory.OnInventoryUpdated += PopulateGrid;
+        }
+        
         _createdInventory = true;
         CreateInventory();
 
@@ -85,6 +90,8 @@ public class InventoryGridController : MonoBehaviour
     /// </summary>
     /// <returns>True if inventory needs an update.</returns>
     private bool IsUpdateNeeded() {
+        // If the inventory doesn't exist, no need to update.
+        if (GameManager.Instance && GameManager.Inventory) return false;
 
         float updateTimeDelta = Mathf.Abs(_lastUpdateTime - GameManager.Inventory.inventoryLastUpdateTime);
 
@@ -134,22 +141,22 @@ public class InventoryGridController : MonoBehaviour
         int indexTracker = 0;
 
         // Get Data
-        List<InventoryCardData> dataForAllCards = GameManager.Inventory.GetDatas();
+        if (GameManager.Instance && GameManager.Inventory) {
+            List<InventoryCardData> dataForAllCards = GameManager.Inventory.GetDatas();
+            foreach (InventoryCardData card in dataForAllCards) {
 
-        foreach (InventoryCardData card in dataForAllCards) {
+                if (card.Type != TypeToDisplay) continue;
 
-            if (card.Type != TypeToDisplay) continue;
+                InventoryCardObject currentInventoryItem = _inventoryInstances[indexTracker];
 
-            InventoryCardObject currentInventoryItem = _inventoryInstances[indexTracker];
+                currentInventoryItem.SetData(card);
 
-            currentInventoryItem.SetData(card);
+                indexTracker += 1;
+            }
 
-            indexTracker += 1;
-
+            // Mark update time
+            _lastUpdateTime = GameManager.Inventory.inventoryLastUpdateTime;
         }
-
-        // Mark update time
-        _lastUpdateTime = GameManager.Inventory.inventoryLastUpdateTime;
     }
 
     #endregion

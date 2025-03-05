@@ -133,9 +133,6 @@ public class BarterState_Compute : BarterBaseState
         if (_machine.Dir.GetWillingness() >= 100) {
             // If we have reached 100 Willingness we win!
             _machine.CurrentState = _machine.EndWinState;
-        } else if (_machine.Dir.InfoRoundsCountdown <= 0) {
-            // If InfoRoundsCountdown is fully counted down, enter the info state!
-            _machine.CurrentState = _machine.CheckInfoState;
         } else {
             // Otherwise, we have not yet won and must transition to the opp's turn.
             _awaitingOppTurn = true;

@@ -48,6 +48,18 @@ public class BarterDirector : MonoBehaviour
     private int infoRoundsCountdown = 0;
     // Readonly property
     public int InfoRoundsCountdown => infoRoundsCountdown;
+    // Bool determining if our information menu is locked or not.
+    // When it is set, it also side-effects and adjusts the interactivity of UI.
+    public bool InfoMenuUnlocked {
+        get { return _infoMenuUnlocked; }
+        set { 
+            // Only side-effect if there was actually a change.
+            if (_infoMenuUnlocked != value) {
+                _infoMenuUnlocked = value;
+                BarterInfoController.SetUnlocked(value);
+            }
+        }
+    }
 
 
     [Header("Object References")]
@@ -62,6 +74,8 @@ public class BarterDirector : MonoBehaviour
     private CardUser playerCardUser;
     [Tooltip("The HandController used by the player.")]
     public HandController PlayerHandController;
+    [Tooltip("The BarterInfoController used by the player.")]
+    public BarterInfoController BarterInfoController;
 
     [Header("History")]
     [ReadOnly, Tooltip("The queue of the last N matches that have been played.")]
@@ -87,6 +101,8 @@ public class BarterDirector : MonoBehaviour
     private bool _willingnessFrozen = false;
     // The current value for the number of rounds needed to present another info card.
     private int _infoRoundsCurrent;
+    // Whether or not the check info menu is currently locked.
+    private bool _infoMenuUnlocked;
     // Arrays storing the current submissions for both sets of cards and whether each pair matches.
     private PlayingCard[] _oppCards = null;
     private PlayingCard[] _playerCards = null;
@@ -118,8 +134,7 @@ public class BarterDirector : MonoBehaviour
     private void Start()
     {
         // Initialize our countdown.
-        _infoRoundsCurrent = infoRoundsBase;
-        infoRoundsCountdown = _infoRoundsCurrent;
+        InitializeRoundCount();
 
         // Initialize our _playerCards array to empty (not to null).
         // Because opponent cards are submitted as a set and player cards are submitted one-by-one,
@@ -340,12 +355,25 @@ public class BarterDirector : MonoBehaviour
     // Misc manipulators ===================================================================
 
     /// <summary>
+    /// Resets all counters related to counting the number of rounds.
+    /// </summary>
+    public void InitializeRoundCount()
+    {
+        _infoRoundsCurrent = infoRoundsBase;
+        infoRoundsCountdown = _infoRoundsCurrent;
+
+        BarterInfoController.SetUIRounds(Mathf.Max(infoRoundsCountdown, 0));
+    }
+
+    /// <summary>
     /// Increases the number of rounds played by 1 and counts down to the info state.
     /// </summary>
     public void RoundEnded()
     {
         roundsPlayed++;
         infoRoundsCountdown--;
+
+        BarterInfoController.SetUIRounds(Mathf.Max(infoRoundsCountdown, 0));
     }
 
     /// <summary>
@@ -355,6 +383,8 @@ public class BarterDirector : MonoBehaviour
     {
         _infoRoundsCurrent += infoRoundsIncrease;
         infoRoundsCountdown = _infoRoundsCurrent;
+
+        BarterInfoController.SetUIRounds(Mathf.Max(infoRoundsCountdown, 0));
     }
 
     // Endgame methods ============================================================================

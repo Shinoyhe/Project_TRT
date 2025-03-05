@@ -166,6 +166,11 @@ PrefabInstance:
       propertyPath: director
       value: 
       objectReference: {fileID: 3656702185619247461}
+    - target: {fileID: 1093326353107680866, guid: 29610d6cbfcfcfb4a9b1a1db32e70762,
+        type: 3}
+      propertyPath: roundsLabel
+      value: 
+      objectReference: {fileID: 6490563295170878801}
     - target: {fileID: 2003919574303826397, guid: 29610d6cbfcfcfb4a9b1a1db32e70762,
         type: 3}
       propertyPath: Director
@@ -237,6 +242,30 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3967334697034608854}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4044948683880009396 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1093326353107680866, guid: 29610d6cbfcfcfb4a9b1a1db32e70762,
+    type: 3}
+  m_PrefabInstance: {fileID: 3967334697034608854}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbea2d22f50daa341a0a2c4c5bfaa703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6490563295170878801 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7862670385354714503, guid: 29610d6cbfcfcfb4a9b1a1db32e70762,
+    type: 3}
+  m_PrefabInstance: {fileID: 3967334697034608854}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8915838987607396613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -298,6 +327,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2,
         type: 2}
+    - target: {fileID: 5261430396298461280, guid: 06a464e672ee89e4babe927846d62054,
+        type: 3}
+      propertyPath: BarterInfoController
+      value: 
+      objectReference: {fileID: 4044948683880009396}
     - target: {fileID: 5261430396298461280, guid: 06a464e672ee89e4babe927846d62054,
         type: 3}
       propertyPath: PlayerHandController

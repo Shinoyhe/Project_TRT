@@ -4,16 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class JournalNPC : MonoBehaviour
+public class JournalNPC : InventoryAction
 {
-    [Header("Object References")]
+    [Header("NPC Info")]
     [SerializeField] private TextMeshProUGUI nameDisplay;
     [SerializeField] private Image iconDisplay;
     [SerializeField] private TextMeshProUGUI bioDisplay;
+
+    [Header("Preference Table")]
     [SerializeField] private Transform preferenceTable;
     [SerializeField] private GameObject journalEntryPrefab;
 
-    private List<NPCData> knownNPCs = new List<NPCData>();
+    [Header("Known Trades")]
+    [SerializeField] private Image playerItem;
+    [SerializeField] private Image oppItem;
+
+    private List<NPCData> _knownNPCs = new List<NPCData>();
+    private NPCData _npcData;
 
     /// <summary>
     /// Adds this NPCData to the known NPCs for the NPC
@@ -21,7 +28,7 @@ public class JournalNPC : MonoBehaviour
     /// <param name="npcData"></param>
     public void AddNPC(NPCData npcData)
     {
-        knownNPCs.Add(npcData);
+        _knownNPCs.Add(npcData);
     }
 
 
@@ -31,10 +38,20 @@ public class JournalNPC : MonoBehaviour
     /// <param name="npc"></param>
     public void LoadNPC(NPCData npc)
     {
+        _npcData = npc;
+
         nameDisplay.text = npc.Name;
         iconDisplay.sprite = npc.Icon;
         bioDisplay.text = npc.Bio;
 
+        LoadPreferenceTable();
+        
+    }
+
+
+    private void LoadPreferenceTable()
+    {
+        // Create the Preference
         foreach (Transform row in preferenceTable)
         {
             if (row.TryGetComponent<JournalPreferenceEntry>(out var _))
@@ -43,10 +60,20 @@ public class JournalNPC : MonoBehaviour
             }
         }
 
-        foreach (var card in npc.Cards)
+        foreach (var card in _npcData.Cards)
         {
             var journalEntry = Instantiate(journalEntryPrefab, preferenceTable);
-            journalEntry.GetComponent<JournalPreferenceEntry>().Load(npc, card);
+            journalEntry.GetComponent<JournalPreferenceEntry>().Load(_npcData, card);
         }
+    }
+
+
+    public override void ActionOnClick(ActionContext context)
+    {
+        InventoryCardData cardData = context.cardData;
+
+        playerItem.sprite = cardData ? cardData.Sprite : null;
+        oppItem.sprite = _npcData.GetKnownTrade(cardData) ? 
+            _npcData.GetKnownTrade(cardData).Sprite : null;
     }
 }

@@ -24,7 +24,7 @@ public class JournalPreferenceEntry : MonoBehaviour
 
         var card = _playingCards[_negCardIndex];
         negativeCardDisplay.sprite = card.MainSprite;
-        _npcData.ChangeJournalPreference(_oppCard, card, BarterResponseMatrix.State.NEGATIVE);
+        _npcData.ChangeJournalTonePreference(_oppCard, card, BarterResponseMatrix.State.NEGATIVE);
     }
 
     public void CyclePositiveToneCard()
@@ -33,7 +33,7 @@ public class JournalPreferenceEntry : MonoBehaviour
 
         var card = _playingCards[_posCardIndex];
         positiveCardDisplay.sprite = card.MainSprite;
-        _npcData.ChangeJournalPreference(_oppCard, card, BarterResponseMatrix.State.POSITIVE);
+        _npcData.ChangeJournalTonePreference(_oppCard, card, BarterResponseMatrix.State.POSITIVE);
     }
 
     public void Load(NPCData NPC, PlayingCard oppCard)

@@ -33,6 +33,8 @@ public class JournalNavCore : MonoBehaviour
 
     [Header("DEBUG")]
     [SerializeField] private List<NPCData> npcDataQueue = new List<NPCData>();
+    [SerializeField] private List<InventoryCardData> tradeQueue = new List<InventoryCardData>();
+    private NPCData _lastDebugAddedNPC;
 
     #endregion
 
@@ -176,7 +178,32 @@ public class JournalNavCore : MonoBehaviour
         }
 
         AddNPC(npcDataQueue[0]);
+        _lastDebugAddedNPC = npcDataQueue[0];
         npcDataQueue.RemoveAt(0);
+    }
+
+    [Button("Add Known Trade")]
+    private void DebugAddNPCTrade()
+    {
+        if (!Application.isPlaying)
+        {
+            Debug.LogWarning("\"Add NPC Button\" is only meant to run during Play Mode.");
+            return;
+        }
+
+        if (npcDataQueue.Count == 0)
+        {
+            Debug.LogWarning("Out of NPCDatas in the Queue");
+            return;
+        }
+        if (EditorSceneManager.IsPreviewScene(gameObject.scene))
+        {
+            Debug.LogWarning("\"Add NPC Button\" is not meant to run in the prefab preview.");
+            return;
+        }
+
+        _lastDebugAddedNPC.AddJournalKnownTrade(tradeQueue[0], tradeQueue[0]);
+        tradeQueue.RemoveAt(0);
     }
 
     #endregion

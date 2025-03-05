@@ -31,7 +31,8 @@ public class NPCData : ScriptableObject
     // I'm thinking that the BarterResponseMatrix could be referenced and called from here instead. Maybe this script could combine with it?
     public BarterResponseMatrix Matrix;
 
-    [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalPreferences;
+    [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalTonePreferences;
+    [ReadOnly] [SerializeField] private Dictionary<InventoryCardData, InventoryCardData> journalKnownTrades;
 
 
     /// <summary>
@@ -40,19 +41,35 @@ public class NPCData : ScriptableObject
     /// <param name="opponentCard">The opponent card that the player is logging about.</param>
     /// <param name="playerCard">The card the player thinks is either positive or negative.</param>
     /// <param name="state">Whether the player believes the player card is POSITIVE or NEGATIVE</param>
-    public void ChangeJournalPreference(PlayingCard opponentCard, PlayingCard playerCard, BarterResponseMatrix.State state)
+    public void ChangeJournalTonePreference(PlayingCard opponentCard, PlayingCard playerCard, BarterResponseMatrix.State state)
     {
-        journalPreferences.TryAdd(opponentCard, new CardPreference());
+        journalTonePreferences.TryAdd(opponentCard, new CardPreference());
         
         switch (state)
         {
             case BarterResponseMatrix.State.POSITIVE:
-                journalPreferences[opponentCard].Positive = playerCard;
+                journalTonePreferences[opponentCard].Positive = playerCard;
                 break;
             case BarterResponseMatrix.State.NEGATIVE:
-                journalPreferences[opponentCard].Negative = playerCard;
+                journalTonePreferences[opponentCard].Negative = playerCard;
                 break;
         }
+    }
+
+
+    /// <summary>
+    /// Adds known trade to the journal
+    /// </summary>
+    /// <param name="playerCard">Inventory Card that the player provides the NPC</param>
+    /// <param name="oppCard">Inventory Card that the NPC trades for the playerCard</param>
+    public void AddJournalKnownTrade(InventoryCardData playerCard, InventoryCardData oppCard)
+    {
+        if (journalKnownTrades == null)
+        {
+            journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
+        }
+
+        journalKnownTrades.TryAdd(playerCard, oppCard);
     }
 
 
@@ -63,27 +80,28 @@ public class NPCData : ScriptableObject
     /// <returns>Prefence class includes the PlayingCards marked as positive and negative.</returns>
     public CardPreference GetPreference(PlayingCard opponentCard)
     {
-        if (journalPreferences == null)
+        if (journalTonePreferences == null)
         {
             InitalizePreferences();
         }
 
-        return journalPreferences[opponentCard];
+        return journalTonePreferences[opponentCard];
     }
 
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns>Dictionary of the PlayingCard</returns>
-    public Dictionary<PlayingCard, CardPreference> GetPreferences()
+    /// <param name="playerCard">Card the player trades in</param>
+    /// <returns>Card the NPC is know to give in exchange for playerCard</returns>
+    public InventoryCardData GetKnownTrade(InventoryCardData playerCard)
     {
-        if (journalPreferences == null)
+        if (journalKnownTrades == null)
         {
-            InitalizePreferences();
+            journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
         }
 
-        return journalPreferences;
+        if (playerCard == null || !journalKnownTrades.ContainsKey(playerCard)) 
+            return null;
+
+        return journalKnownTrades[playerCard];
     }
 
 
@@ -92,7 +110,7 @@ public class NPCData : ScriptableObject
     /// </summary>
     public void ResetJournalPreferences()
     {
-        journalPreferences = new Dictionary<PlayingCard, CardPreference>();
+        journalTonePreferences = new Dictionary<PlayingCard, CardPreference>();
     }
 
     /// <summary>
@@ -105,10 +123,10 @@ public class NPCData : ScriptableObject
     /// </summary>
     private void InitalizePreferences()
     {
-        journalPreferences = new Dictionary<PlayingCard, CardPreference>();
+        journalTonePreferences = new Dictionary<PlayingCard, CardPreference>();
         foreach (var card in Matrix.OppCards)
         {
-            journalPreferences.Add(card, new CardPreference());
+            journalTonePreferences.Add(card, new CardPreference());
         }
     }
 }

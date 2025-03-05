@@ -86,6 +86,12 @@ public class BarterStarter : MonoBehaviour
         if (CurrentTrade != null)
         {
             GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
+
+            if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM)
+            {
+                GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
+            }
+
         } else
         {
             Debug.LogError("Failed to reward card after win, CurrentTrade was not set");

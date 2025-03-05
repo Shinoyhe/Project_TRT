@@ -8,7 +8,7 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     #region ======== [ OBJECT REFERENCES ] ========
 
     [Header("Data")]
-    [SerializeField] private InventoryCardData _card;
+    [SerializeField] public InventoryCardData Card;
 
     [Header("Global Dependencies")]
     [SerializeField] private Image backCardImage;
@@ -50,8 +50,8 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     // Start is called before the first frame update
     void Start() {
 
-        if (_card != null) {
-            SetData(_card);
+        if (Card != null) {
+            SetData(Card);
         } else {
             SetCardToEmpty();
         }
@@ -86,30 +86,30 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     {
         if (newCard == null) return;
         
-        _card = newCard;
+        Card = newCard;
         backCardImage.color = Color.white;
 
-        if (_card.Type == GameEnums.CardTypes.ITEM) {
+        if (Card.Type == GameEnums.CardTypes.ITEM) {
             // Disable the info layout and enable the item
             itemLayoutObject.SetActive(true);
             infoLayoutObject.SetActive(false);
 
-            itemNameText.text = _card.CardName;
-            itemSpriteImage.sprite = _card.Sprite;
-            itemDescriptionText.text = _card.Description;
-        } else if (_card.Type == GameEnums.CardTypes.INFO) {
-            InventoryCard cardWrapper = GameManager.Inventory.GetCardFromData(_card);
+            itemNameText.text = Card.CardName;
+            itemSpriteImage.sprite = Card.Sprite;
+            itemDescriptionText.text = Card.Description;
+        } else if (Card.Type == GameEnums.CardTypes.INFO) {
+            InventoryCard cardWrapper = GameManager.Inventory.GetCardFromData(Card);
 
             // disable the item layout and enable the info
             infoLayoutObject.SetActive(true);
             itemLayoutObject.SetActive(false);
 
-            infoNameText.text = _card.CardName;
-            infoDescriptionText.text = _card.Description;
+            infoNameText.text = Card.CardName;
+            infoDescriptionText.text = Card.Description;
 
             // Ensure all of the contexts are set
             if (cardWrapper.ContextData.Count != System.Enum.GetValues(typeof(GameEnums.ContextOrigins)).Length) {
-                Debug.LogError($"InventoryCardObject: SetData: Not all contexts are set in card: {_card.CardName}");
+                Debug.LogError($"InventoryCardObject: SetData: Not all contexts are set in card: {Card.CardName}");
                 return;
             }
 
@@ -145,9 +145,9 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
             }
         }
 
-        CardName = _card.CardName;
-        CardDescription = _card.Description;
-        CardName = _card.ID;
+        CardName = Card.CardName;
+        CardDescription = Card.Description;
+        CardName = Card.ID;
     }
 
     /// <summary>
@@ -182,7 +182,7 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
         }
 
         InventoryAction.ActionContext ctx = new InventoryAction.ActionContext();
-        ctx.cardData = _card;
+        ctx.cardData = Card;
         _onSelectAction.ActionOnClick(ctx);
 
     }

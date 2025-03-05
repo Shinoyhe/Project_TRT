@@ -6,8 +6,7 @@ public class NpcInteractable : Interactable
     [SerializeField] private Vector3 dialogueBubbleOffset;
     [SerializeField] private TextAsset npcConversation;
 
-    [BoxGroup("Trade Settings")] public InventoryCardData AcceptedCard;
-    [BoxGroup("Trade Settings")] public InventoryCardData PrizeCard;
+    [BoxGroup("Trade Settings")] public Trades PossibleTrades;
 
     [BoxGroup("Barter Settings")] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings")] public BarterNeutralBehavior BarterNeutralBehaviour;
@@ -46,7 +45,7 @@ public class NpcInteractable : Interactable
         }
         else
         {
-            Debug.LogError("NPCInteractable: Could not find BarterResponseMatrix");
+            Debug.LogError("NPCInteractable: BarterResponseMatrix is not set");
         }
 
         if (BarterNeutralBehaviour != null)
@@ -55,25 +54,16 @@ public class NpcInteractable : Interactable
         }
         else
         {
-            Debug.LogError("NPCInteractable: Could not find BarterNeutralBehaviour");
+            Debug.LogError("NPCInteractable: BarterNeutralBehaviour is not set");
         }
 
-        if (AcceptedCard != null)
+        if (PossibleTrades != null)
         {
-            barterStarter.AcceptedCard = AcceptedCard;
+            barterStarter.PossibleTrades = PossibleTrades;
         }
         else
         {
-            Debug.LogError("NPCInteractable: Could not find AcceptedCard");
-        }
-
-        if (PrizeCard != null)
-        {
-            barterStarter.PrizeCard = PrizeCard;
-        }
-        else
-        {
-            Debug.LogError("NPCInteractable: Could not find PrizeCard");
+            Debug.LogError("NPCInteractable: PossibleTrades are not set");
         }
 
         barterStarter.DecayPerSecond = DecayPerSecond;

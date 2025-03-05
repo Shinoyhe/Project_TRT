@@ -1843,6 +1843,62 @@ PrefabInstance:
       propertyPath: WillingnessPerMatch
       value: 38.8
       objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a35804eb59b84c4a8de3434821d7ddc,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[2].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[2].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a35804eb59b84c4a8de3434821d7ddc,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].TradeIsPossible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].TradeIsPossible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[2].TradeIsPossible
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

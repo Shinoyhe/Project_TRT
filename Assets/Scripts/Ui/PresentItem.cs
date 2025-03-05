@@ -8,7 +8,7 @@ public class PresentItem : MonoBehaviour
 {
     // Parameters =================================================================================
     [ReadOnly, Tooltip("The card that the NPC will accept for a barter, set by BarterStarter")]
-    public InventoryCardData AcceptedCard;
+    public Trades PossibleTrades;
 
     [SerializeField] private TMP_Text submissionText;
     [SerializeField] private InventoryCardObject submissionCard;
@@ -32,8 +32,13 @@ public class PresentItem : MonoBehaviour
 
     public void Submit()
     {
-        if (submissionCard.Card == AcceptedCard)
+        if (PossibleTrades.TradeIsPossible(submissionCard.Card))
         {
+            if (GameManager.BarterStarter)
+            {
+                GameManager.BarterStarter.CurrentTrade = PossibleTrades.GetTradeFromCard(submissionCard.Card);
+            }
+
             OnAccepted.Invoke();
             return;
         }

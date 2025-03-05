@@ -11,8 +11,8 @@ public class BarterStarter : MonoBehaviour
 
     [BoxGroup("Barter Settings"), ReadOnly] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings"), ReadOnly] public BarterNeutralBehavior BarterNeutralBehaviour;
-    [BoxGroup("Barter Settings"), ReadOnly] public InventoryCardData AcceptedCard;
-    [BoxGroup("Barter Settings"), ReadOnly] public InventoryCardData PrizeCard;
+    [BoxGroup("Barter Settings"), ReadOnly] public Trades PossibleTrades;
+    [BoxGroup("Barter Settings"), ReadOnly] public Trade CurrentTrade;
     [BoxGroup("Barter Settings"), ReadOnly] public float DecayPerSecond = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerFail = -5;
@@ -83,9 +83,12 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     void WinBarter()
     {
-        if (PrizeCard != null)
+        if (CurrentTrade != null)
         {
-            GameManager.Inventory.AddCard(PrizeCard);
+            GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
+        } else
+        {
+            Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }
         CleanupBarter();
     }
@@ -115,7 +118,7 @@ public class BarterStarter : MonoBehaviour
         RectTransform rectTransform = _itemPresentInstance.GetComponent<RectTransform>();
 
         PresentItem presentItem = _itemPresentInstance.GetComponent<PresentItem>();
-        presentItem.AcceptedCard = AcceptedCard;
+        presentItem.PossibleTrades = PossibleTrades;
         presentItem.OnAccepted += AcceptTrade;
         presentItem.OnClosed += CloseTrade;
 

@@ -1101,7 +1101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5130a42615b2b4f8592cf6842d2d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AcceptedCard: {fileID: 0}
+  PossibleTrades:
+    trades: []
   submissionText: {fileID: 4930282583453858670}
   submissionCard: {fileID: 4257515247889833510}
 --- !u!1 &6433551257314452920

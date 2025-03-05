@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 7658481814795331594}
   - component: {fileID: 8020327356807996344}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Control Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2062,7 +2062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -550, y: 0}
+  m_AnchoredPosition: {x: -525, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3692796932763676870
@@ -3225,7 +3225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &934911086468394471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3507,7 +3507,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 550, y: 0}
+  m_AnchoredPosition: {x: 525, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6481036759811380297
@@ -4075,12 +4075,12 @@ PrefabInstance:
     - target: {fileID: 5053505660391296257, guid: f9f19f7f999bc1643823930aec2f390d,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 5053505660391296257, guid: f9f19f7f999bc1643823930aec2f390d,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 5053505660391296257, guid: f9f19f7f999bc1643823930aec2f390d,
         type: 3}
@@ -4120,7 +4120,7 @@ PrefabInstance:
     - target: {fileID: 5053505660391296257, guid: f9f19f7f999bc1643823930aec2f390d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5053505660391296257, guid: f9f19f7f999bc1643823930aec2f390d,
         type: 3}
@@ -4145,7 +4145,7 @@ PrefabInstance:
     - target: {fileID: 8684896079958374411, guid: f9f19f7f999bc1643823930aec2f390d,
         type: 3}
       propertyPath: m_Name
-      value: Inventory Grid
+      value: Inventory Grid (Info)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

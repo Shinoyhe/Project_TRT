@@ -32,6 +32,7 @@ public class DialogueManager : MonoBehaviour
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
+    private string barterValue = "";
 
     // Initializers and Update ================================================================
 
@@ -79,6 +80,26 @@ public class DialogueManager : MonoBehaviour
 
         // Parse Ink File
         _currentStory = new Story(inkJson.text);
+
+        // Show First Line
+        ShowNextLine();
+        return true;
+    }
+    
+    public bool StartConversation(TextAsset inkJson, Vector3 npcBubblePos, string knot)
+    {
+        if (_inConversation) return false;
+        if (_onDelay) return false;
+
+        _inConversation = true;
+        TimeLoopManager.SetLoopPaused(true);
+
+        // Create UI instance
+        _dialogueUiManager = SetupUi(npcBubblePos, GameManager.Player.Transform.position);
+
+        // Parse Ink File
+        _currentStory = new Story(inkJson.text);
+        _currentStory.ChoosePathString(knot);
 
         // Show First Line
         ShowNextLine();
@@ -193,7 +214,8 @@ public class DialogueManager : MonoBehaviour
 
         // If choice was Action, skip the line.
         if (foundTags.IsBarterTrigger) {
-            GameManager.BarterStarter.PresentItem();
+            if (barterValue == "") GameManager.BarterStarter.PresentItem();
+            else GameManager.BarterStarter2.PresentItem();
             EndStory(false);
             return;
         }
@@ -235,6 +257,7 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "barter":
                     foundTags.IsBarterTrigger = true;
+                    barterValue = value;
                     break;
             }
         }

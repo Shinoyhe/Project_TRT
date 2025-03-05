@@ -15,6 +15,7 @@ public class NpcInteractable : Interactable
     [BoxGroup("Barter Settings"), Range(0, 50)] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), Range(0, -50)] public float WillingnessPerFail = -5;
     [BoxGroup("Barter Settings"), Range(0, 100)] public float StartingWillingness = 50;
+    [BoxGroup("Barter Settings")] public bool barter5 = false;
 
     public override void Highlight()
     {
@@ -38,7 +39,7 @@ public class NpcInteractable : Interactable
         GameManager.PlayerInput.IsActive = false;
 
         // Set up the settings for the BarterStarter
-        BarterStarter barterStarter = GameManager.BarterStarter;
+        BarterStarter barterStarter = barter5 ? GameManager.BarterStarter2 : GameManager.BarterStarter;
 
         if (BarterResponseMatrix != null)
         {
@@ -64,6 +65,7 @@ public class NpcInteractable : Interactable
         }
         else
         {
+            barterStarter.AcceptedCard = AcceptedCard;
             Debug.LogError("NPCInteractable: Could not find AcceptedCard");
         }
 
@@ -80,6 +82,11 @@ public class NpcInteractable : Interactable
         barterStarter.WillingnessPerMatch = WillingnessPerMatch;
         barterStarter.WillingnessPerFail = WillingnessPerFail;
         barterStarter.StartingWillingness = StartingWillingness;
+
+        barterStarter.OnWin = () => GameManager.DialogueManager.StartConversation(npcConversation, 
+                                                                          transform.position+dialogueBubbleOffset, "BarterWin");
+        barterStarter.OnLose = () => GameManager.DialogueManager.StartConversation(npcConversation, 
+                                                                          transform.position+dialogueBubbleOffset, "BarterLose");
     }
 
     private void OnDrawGizmos() {

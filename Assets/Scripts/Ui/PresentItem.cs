@@ -32,7 +32,7 @@ public class PresentItem : MonoBehaviour
 
     public void Submit()
     {
-        if (submissionCard.Card == AcceptedCard)
+        if (AcceptedCard == null || submissionCard.Card == AcceptedCard)
         {
             OnAccepted.Invoke();
             return;

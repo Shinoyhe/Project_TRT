@@ -69,6 +69,17 @@ public partial class @UiControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""55c34e64-2464-4d71-9a87-dde214028a07"",
+                    ""path"": ""<Keyboard>/rightBracket"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ProgressDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""9a959cc6-02a0-4991-828f-dafb07df71b0"",
                     ""path"": ""<Keyboard>/f1"",
                     ""interactions"": """",

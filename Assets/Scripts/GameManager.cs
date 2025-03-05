@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     public static Player Player { get { return Instance._player; } }
     public static Canvas MasterCanvas { get { return Instance._masterCanvas; } }
     public static BarterStarter BarterStarter { get { return Instance.barterStarter; } }
+    public static BarterStarter BarterStarter2 { get { return Instance.barterStarter2; } }
 
     // Backing fields =============================================================================
 
@@ -24,6 +25,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField, Tag] private string masterCanvasTag;
     [SerializeField, ReadOnly] private Canvas _masterCanvas;
     [SerializeField] private BarterStarter barterStarter;
+    [SerializeField] private BarterStarter barterStarter2;
 
     // Initializers ===============================================================================
 

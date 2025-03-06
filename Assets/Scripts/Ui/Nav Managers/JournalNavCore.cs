@@ -186,25 +186,25 @@ public class JournalNavCore : MonoBehaviour
     [Button("Add Known Trade")]
     private void DebugAddNPCTrade()
     {
-        if (!Application.isPlaying)
-        {
+        if (!Application.isPlaying) {
             Debug.LogWarning("\"Add NPC Button\" is only meant to run during Play Mode.");
             return;
         }
 
-        if (tradeQueue.Count == 0)
-        {
+        if (tradeQueue.Count == 0) {
             Debug.LogWarning("Out of InventoryCardData in the Queue");
             return;
         }
-        if (EditorSceneManager.IsPreviewScene(gameObject.scene))
-        {
+
+        if (EditorSceneManager.IsPreviewScene(gameObject.scene)) {
             Debug.LogWarning("\"Add NPC Button\" is not meant to run in the prefab preview.");
             return;
         }
-
-        _lastDebugAddedNPC.AddJournalKnownTrade(tradeQueue[0], tradeQueue[0]);
-        tradeQueue.RemoveAt(0);
+        
+        if (_lastDebugAddedNPC != null) {
+            _lastDebugAddedNPC.AddJournalKnownTrade(tradeQueue[0], tradeQueue[0]);
+            tradeQueue.RemoveAt(0);
+        }
     }
 
     #endregion

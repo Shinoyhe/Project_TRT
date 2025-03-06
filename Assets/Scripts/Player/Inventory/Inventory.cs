@@ -14,6 +14,7 @@ public class Inventory : MonoBehaviour
     [Header("Inventory")]
     public List<InventoryCardData> StartingCards;
     [SerializeField, ReadOnly] private List<InventoryCard> Cards;
+    [SerializeField, ReadOnly] private HashSet<InventoryCard> KnownCards;
     
     public event Action OnInventoryUpdated;
 
@@ -41,6 +42,7 @@ public class Inventory : MonoBehaviour
     {
         AllCards = new List<InventoryCard>();
         Cards = new List<InventoryCard>();
+        KnownCards = new HashSet<InventoryCard>();
         
         // Fill the AllCards list using AllCardDatas
         foreach (InventoryCardData cardData in AllCardDatas)
@@ -76,6 +78,17 @@ public class Inventory : MonoBehaviour
         return returnList;
     }
 
+    public List<InventoryCardData> GetKnownDatas()
+    {
+        List<InventoryCardData> returnList = new List<InventoryCardData>();
+        if (Cards == null) return returnList;
+
+        foreach (InventoryCard card in KnownCards) {
+            returnList.Add(card.Data);
+        }
+        return returnList;
+    }
+
     public void AddCard(InventoryCardData card)
     {
         if (card == null) return;
@@ -102,6 +115,7 @@ public class Inventory : MonoBehaviour
         newCard.HaveOwned = true;
 
         Cards.Add(newCard);
+        KnownCards.Add(newCard);
         OnInventoryUpdated?.Invoke();
         inventoryLastUpdateTime = Time.time;
     }

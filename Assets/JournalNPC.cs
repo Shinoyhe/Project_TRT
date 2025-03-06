@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +5,8 @@ using TMPro;
 
 public class JournalNPC : InventoryAction
 {
+    #region ======== [ VARIABLES ] ========
+
     [Header("NPC Info")]
     [SerializeField] private TextMeshProUGUI nameDisplay;
     [SerializeField] private Image iconDisplay;
@@ -21,6 +22,10 @@ public class JournalNPC : InventoryAction
 
     private List<NPCData> _knownNPCs = new List<NPCData>();
     private NPCData _npcData;
+
+    #endregion
+
+    #region ======== [ PUBLIC METHODS ] ========
 
     /// <summary>
     /// Adds this NPCData to the known NPCs for the NPC
@@ -49,6 +54,19 @@ public class JournalNPC : InventoryAction
     }
 
 
+    public override void ActionOnClick(ActionContext context)
+    {
+        InventoryCardData cardData = context.cardData;
+
+        playerItem.sprite = cardData ? cardData.Sprite : null;
+        oppItem.sprite = _npcData.GetKnownTrade(cardData) ? 
+            _npcData.GetKnownTrade(cardData).Sprite : null;
+    }
+
+    #endregion
+
+    #region ======== [ PRIVATE METHODS ] ========
+    
     private void LoadPreferenceTable()
     {
         // Create the Preference
@@ -67,13 +85,5 @@ public class JournalNPC : InventoryAction
         }
     }
 
-
-    public override void ActionOnClick(ActionContext context)
-    {
-        InventoryCardData cardData = context.cardData;
-
-        playerItem.sprite = cardData ? cardData.Sprite : null;
-        oppItem.sprite = _npcData.GetKnownTrade(cardData) ? 
-            _npcData.GetKnownTrade(cardData).Sprite : null;
-    }
+    #endregion
 }

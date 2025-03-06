@@ -1,17 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 using NaughtyAttributes;
 using UnityEditor.SceneManagement;
-using static UnityEditorInternal.ReorderableList;
 
 public class JournalNavCore : MonoBehaviour 
 {
-    #region ======== Variables ========
+    #region ======== [ VARIABLES ] ========
 
     [Header("Dependencies")]
     public JournalNPC NPC;
@@ -38,7 +34,7 @@ public class JournalNavCore : MonoBehaviour
 
     #endregion
 
-    #region ======== Public Methods ========
+    #region ======== [ PUBLIC METHODS ] ========
 
     /// <summary>
     /// Transition Start Ui to a new state.
@@ -51,7 +47,12 @@ public class JournalNavCore : MonoBehaviour
         StartState(newState);
     }
 
-    public void AddNPC(NPCData newNPCData)
+
+    /// <summary>
+    /// Add an NPC to the journal
+    /// </summary>
+    /// <param name="npcData">NPCData of the npc that will be added.</param>
+    public void AddNPC(NPCData npcData)
     {
         // Error Catching
         if (npcButtonPrefab == null)
@@ -74,14 +75,14 @@ public class JournalNavCore : MonoBehaviour
 
         // Create Button and Move it Above the Misc Title
         GameObject npcButtonObject = Instantiate(npcButtonPrefab, miscTitle.parent);
-        npcButtonObject.GetComponentInChildren<TextMeshProUGUI>().text = newNPCData.Name;
+        npcButtonObject.GetComponentInChildren<TextMeshProUGUI>().text = npcData.Name;
         npcButtonObject.transform.SetSiblingIndex(miscTitle.GetSiblingIndex());
 
         // Connect the button to MoveToNPC and JournalNPC.LoadNPC
         Button npcButton = npcButtonObject.GetComponent<Button>();
         npcButton.onClick.AddListener(() => this.MoveToNPC());
-        NPC.AddNPC(newNPCData);
-        npcButton.onClick.AddListener(() => NPC.LoadNPC(newNPCData));
+        NPC.AddNPC(npcData);
+        npcButton.onClick.AddListener(() => NPC.LoadNPC(npcData));
     }
 
     // Used for button OnClick calls as they don't let enums to be passed through :|
@@ -91,7 +92,7 @@ public class JournalNavCore : MonoBehaviour
 
     #endregion
 
-    #region ======== Built-in Unity Methods ========
+    #region ======== [ BUILT-IN UNITY METHODS ] ========
     void Start()
     {
         if (NPC == null)
@@ -111,7 +112,7 @@ public class JournalNavCore : MonoBehaviour
 
     #endregion
 
-    #region ======== Private Methods ========
+    #region ======== [ PRIVATE METHODS ] ========
 
     /// <summary>
     /// Stop a currently running Ui state.
@@ -155,7 +156,7 @@ public class JournalNavCore : MonoBehaviour
 
     #endregion
 
-    #region ======== Debug Methods ========
+    #region ======== [ DEBUG METHODS ] ========
 
     [Button("Add NPCData Button")]
     private void DebugAddNPCData()
@@ -191,9 +192,9 @@ public class JournalNavCore : MonoBehaviour
             return;
         }
 
-        if (npcDataQueue.Count == 0)
+        if (tradeQueue.Count == 0)
         {
-            Debug.LogWarning("Out of NPCDatas in the Queue");
+            Debug.LogWarning("Out of InventoryCardData in the Queue");
             return;
         }
         if (EditorSceneManager.IsPreviewScene(gameObject.scene))

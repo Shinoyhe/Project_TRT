@@ -13,6 +13,7 @@ public class InventoryGridController : MonoBehaviour
 
     [Header("Settings")]
     public GameEnums.CardTypes TypeToDisplay;
+    public bool UseSmallSize;
     public int InventorySize = 10;
     public bool SetDefaultSelectionOnEnable = false;
 
@@ -52,7 +53,7 @@ public class InventoryGridController : MonoBehaviour
 
         // Set default selection
         if(SetDefaultSelectionOnEnable && _inventoryInstances.Count > 0) {
-            _inventoryInstances[0].GetComponent<Button>().Select();
+            _inventoryInstances[0].CurrentActiveButton.Select();
         }
     }
 
@@ -76,7 +77,7 @@ public class InventoryGridController : MonoBehaviour
 
         // Set default selection
         if (SetDefaultSelectionOnEnable && _inventoryInstances.Count > 0) {
-            _inventoryInstances[0].GetComponent<Button>().Select();
+            _inventoryInstances[0].CurrentActiveButton.Select();
         }
     }
 
@@ -102,7 +103,7 @@ public class InventoryGridController : MonoBehaviour
             InventoryCardObject newInventoryItem = NewInventoryItem();
 
             // Init data
-            newInventoryItem.InitalizeToGrid(i, InventoryUiAutoScroller, OnInventoryItemClick);
+            newInventoryItem.InitalizeToGrid(i, InventoryUiAutoScroller, OnInventoryItemClick, UseSmallSize);
 
             // Add to instance list
             _inventoryInstances.Add(newInventoryItem);
@@ -128,7 +129,7 @@ public class InventoryGridController : MonoBehaviour
 
         // Clear current data
         foreach (InventoryCardObject x in _inventoryInstances) {
-            x.SetCardToEmpty();
+            x.SetCardToEmpty(UseSmallSize);
         }
 
         int indexTracker = 0;

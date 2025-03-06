@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BarterPreferenceUI : MonoBehaviour 
 {
+    // Parameters and Publics =====================================================================
+
     [Tooltip("Whether or not our UI is open.")]
     public bool Open = false;
     [SerializeField, Tooltip("The BarterDirector we read NPCData from.")]
@@ -11,7 +13,11 @@ public class BarterPreferenceUI : MonoBehaviour
     [SerializeField, Tooltip("The GameObject rooting our UI for the folded, hidden menu.")]
     private GameObject closedParent;
 
+    // Misc Internal Variables ====================================================================
+
     private JournalPreferenceEntry[] _entries;
+
+    // Initializers ===============================================================================
 
     private void Awake()
     {
@@ -22,17 +28,6 @@ public class BarterPreferenceUI : MonoBehaviour
     {
         if (director.NpcData != null) {
             Initialize(director.NpcData);
-        }
-    }
-
-    private void Update()
-    {
-        bool menu1 = GameManager.PlayerInput.GetMenu1();
-
-        if (menu1 != Open) {
-            Open = menu1;
-            openParent.SetActive(Open);
-            closedParent.SetActive(!Open);
         }
     }
 
@@ -55,6 +50,19 @@ public class BarterPreferenceUI : MonoBehaviour
 
         for (int i = 0; i < data.Cards.Length; i++) {
             _entries[i].Load(data, data.Cards[i]);
+        }
+    }
+
+    // Update methods =============================================================================
+
+    private void Update()
+    {
+        bool menu1 = GameManager.PlayerInput.GetMenu1();
+
+        if (menu1 != Open) {
+            Open = menu1;
+            openParent.SetActive(Open);
+            closedParent.SetActive(!Open);
         }
     }
 }

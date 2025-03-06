@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TutorialNPC : MonoBehaviour
 {
+    [SerializeField] private FadeToBlack fadeToBlack;
     [SerializeField] private NpcInteractable npcInteractable;
     [SerializeField] private List<InventoryCardData> postTutorialCards;
 
@@ -13,8 +14,8 @@ public class TutorialNPC : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.BarterStarter.OnWin += TransitionToGame;
-            GameManager.BarterStarter.OnLose += TransitionToGame;
+            GameManager.BarterStarter.OnWin += () => StartCoroutine(TransitionToGame());
+            GameManager.BarterStarter.OnLose += () => StartCoroutine(TransitionToGame());
         }
 
         if (npcInteractable == null) { return; }
@@ -27,7 +28,7 @@ public class TutorialNPC : MonoBehaviour
         
     }
 
-    private void TransitionToGame()
+    private IEnumerator TransitionToGame()
     {
         foreach (InventoryCardData inventoryCardData in postTutorialCards)
         {
@@ -36,6 +37,8 @@ public class TutorialNPC : MonoBehaviour
                 GameManager.Inventory.AddCard(inventoryCardData);
             }
         }
+
+        yield return fadeToBlack.StartFadeIn();
 
         SceneManager.LoadScene("EnvInteractables");
     }

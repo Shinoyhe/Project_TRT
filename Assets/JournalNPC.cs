@@ -54,6 +54,10 @@ public class JournalNPC : InventoryAction
     }
 
 
+    /// <summary>
+    /// Displays the trade for the selected item
+    /// </summary>
+    /// <param name="context"></param>
     public override void ActionOnClick(ActionContext context)
     {
         InventoryCardData cardData = context.cardData;

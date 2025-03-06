@@ -1,18 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
 
-public class JournalItem : MonoBehaviour
+public class JournalItem : InventoryAction
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void ActionOnClick(ActionContext context)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Nothing??
     }
 }

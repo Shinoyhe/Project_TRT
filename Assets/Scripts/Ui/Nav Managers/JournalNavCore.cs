@@ -107,7 +107,7 @@ public class JournalNavCore : MonoBehaviour
 
     void OnEnable()
     {
-        // MoveToInfoCards();
+        MoveToInfoCards();
     }
 
     #endregion

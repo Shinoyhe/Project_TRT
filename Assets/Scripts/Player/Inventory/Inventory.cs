@@ -50,6 +50,8 @@ public class Inventory : MonoBehaviour
         }
 
         foreach (InventoryCardData card in StartingCards) {
+            if (HasCard(card)) { continue; }
+
             AddCard(card);
         }
     }

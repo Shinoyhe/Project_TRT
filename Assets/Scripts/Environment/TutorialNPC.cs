@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TutorialNPC : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class TutorialNPC : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-
+            GameManager.BarterStarter.OnWin += TransitionToGame;
+            GameManager.BarterStarter.OnLose += TransitionToGame;
         }
 
         if (npcInteractable == null) { return; }
@@ -22,5 +24,10 @@ public class TutorialNPC : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void TransitionToGame()
+    {
+        SceneManager.LoadScene("EnvInteractables");
     }
 }

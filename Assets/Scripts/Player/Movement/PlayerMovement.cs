@@ -22,12 +22,21 @@ public class PlayerMovement : MonoBehaviour
 
 	private const float _gravity = 9.81f;
 	private float _downwardForce = 0;
+	private bool _canMove = true;
 
-	#endregion
+    #endregion
 
-	#region ======== [ PRIVATE METHODS ] ========
+    #region ======== [ PUBLIC METHODS ] ========
 
-	void Start()
+	public void TogglePlayerMovement(bool canMove) {
+		_canMove = canMove;
+	}
+
+    #endregion
+
+    #region ======== [ PRIVATE METHODS ] ========
+
+    void Start()
 	{
 		_characterController = GetComponent<CharacterController>();
 	}
@@ -42,6 +51,10 @@ public class PlayerMovement : MonoBehaviour
 	{
 		// Get Input
 		Vector3 input = GameManager.PlayerInput.GetControlInput();
+
+		if (_canMove == false) {
+			input = Vector3.zero;
+		}
 
 		// Relative to Target
 		float y = forwardTransform.rotation.eulerAngles.y;

@@ -13,8 +13,6 @@ public class DialogueManager : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField, Tooltip("The prefab for dialogue UI.")]
     private GameObject dialogueUiPrefab;
-    [SerializeField, Tooltip("The prefab for the bartering minigame.")]
-    private GameObject barterContainerPrefab;
 
     public struct ProcessedTags {
 
@@ -34,8 +32,6 @@ public class DialogueManager : MonoBehaviour
     private Story _currentStory;
     private DialogueUiManager _dialogueUiManager;
     private GameObject _dialogueUiInstance;
-    private InventoryCardData _prizeCard;
-    private GameObject _barterInstance;
 
     // Initializers and Update ================================================================
 
@@ -100,11 +96,6 @@ public class DialogueManager : MonoBehaviour
         }
 
         _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
-    }
-
-    public void SetPrizeCard(InventoryCardData prizeCard)
-    {
-        _prizeCard = prizeCard;
     }
 
     // Private Helper Methods ====================================================================
@@ -202,8 +193,8 @@ public class DialogueManager : MonoBehaviour
 
         // If choice was Action, skip the line.
         if (foundTags.IsBarterTrigger) {
-            StartBarter();
             EndStory(false);
+            GameManager.BarterStarter.PresentItem();
             return;
         }
 
@@ -249,48 +240,6 @@ public class DialogueManager : MonoBehaviour
         }
 
         return foundTags;
-    }
-
-    /// <summary>
-    /// Creates a barter game instance and hooks up callbacks.
-    /// </summary>
-    void StartBarter()
-    {
-        Debug.Log("Barter Starting!");
-        _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity, 
-                                      GameManager.MasterCanvas.transform);
-        BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
-        barterDirectorOfInstance.OnWin += WinBarter;
-        barterDirectorOfInstance.OnLose += LoseBarter;
-        GameManager.PlayerInput.IsActive = false;
-    }
-
-    /// <summary>
-    /// Call on Barter Win, give player card.
-    /// </summary>
-    void WinBarter()
-    {
-        if (_prizeCard != null) {
-            GameManager.Inventory.AddCard(_prizeCard);
-        }
-        CleanupBarter();
-    }
-
-    /// <summary>
-    /// Call on Barter lose, just cleans up.
-    /// </summary>
-    void LoseBarter()
-    {
-        CleanupBarter();
-    }
-
-    /// <summary>
-    /// Handles cleanup of barter minigame.
-    /// </summary>
-    void CleanupBarter()
-    {
-        Destroy(_barterInstance);
-        GameManager.PlayerInput.IsActive = true;
     }
 
     /// <summary>

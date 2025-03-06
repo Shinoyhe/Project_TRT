@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 public class CardUser : MonoBehaviour
 {
@@ -9,10 +10,11 @@ public class CardUser : MonoBehaviour
     [Header("Stats")]
     [SerializeField, Tooltip("The number of cards we draw each turn by default.\n\nDefault: 3")]
     private int baseDrawSize = 3;
+    public int BaseDrawSize => baseDrawSize;
 
     [Header("Card Piles")]
     [SerializeField, Tooltip("A list of PlayingCard we have in our deck. Populates our DrawPile.")]
-    private PlayingCard[] debugStartingDeck;
+    private PlayingCard[] startingDeck;
     // The draw pile as a read-only list.
     public ReadOnlyCollection<PlayingCard> DrawPileList { get { return _drawPile.AsReadOnly(); }}
     // The hand as a read-only list.
@@ -57,16 +59,59 @@ public class CardUser : MonoBehaviour
 
     /// <summary>
     /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
+    /// Sets the deck to be deckSize cards big, containing only cards in matrix.OppCards.
+    /// </summary>
+    /// <param name="matrix">BarterResponseMatrix - the matrix from which we use OppCards.</param>
+    /// <param name="deckSize">int - the size of our deck.</param>
+    public void Initialize(BarterResponseMatrix matrix, int deckSize)
+    {
+        Initialize(matrix.OppCards.ToList(), deckSize);
+    }
+
+    /// <summary>
+    /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
+    /// Sets the deck to be deckSize cards big, containing only cards in source.
+    /// </summary>
+    /// <param name="matrix">BarterResponseMatrix - the matrix from which we use OppCards.</param>
+    /// <param name="deckSize">int - the size of our deck.</param>
+    public void Initialize(List<PlayingCard> source, int deckSize)
+    {
+        source = source.ToHashSet().ToList();
+        
+        int numEach = deckSize / source.Count;
+        int remainder = deckSize % source.Count;
+
+        List<PlayingCard> tempDeck = new();
+
+        // Equally distribute the cards between different types.
+        for (int i = 0; i < source.Count; i++) {
+            for (int j = 0; j < numEach; j++) {
+                tempDeck.Add(source[i]);
+            }
+
+            if (i < remainder) {
+                tempDeck.Add(source[i]);   
+            }
+        }
+
+        startingDeck = tempDeck.ToArray();
+
+        Initialize();
+    }
+
+    /// <summary>
+    /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
     /// </summary>
     public void Initialize()
     {
         // Initialize _drawPile and _pileToList.
         // ================
 
-        foreach (PlayingCard data in debugStartingDeck) {
+        foreach (PlayingCard data in startingDeck) {
             // Clone cards from our startingDeck into our drawpile.
             PlayingCard dataInstance = Instantiate(data);
             dataInstance.name = data.name;
+            dataInstance.PlayerSubmitted = false;
 
             _drawPile.Add(dataInstance);
         }
@@ -141,6 +186,19 @@ public class CardUser : MonoBehaviour
     }
 
     /// <summary>
+    /// Discards all cards in your hand that have been marked as PlayerSubmitted.
+    /// </summary>
+    public void DiscardSubmitted()
+    {
+        // Iterate backwards to avoid disrupting other cards.
+        for (int i = _hand.Count-1; i >= 0; i--) {
+            if (_hand[i].PlayerSubmitted) {
+                RemoveAtFromPushTo(i, CardPile.Hand, CardPile.DiscardPile);
+            }
+        }
+    }
+
+    /// <summary>
     /// Shuffles-in-place the list tied to a CardPile, using the Fisher-Yates algorithm.
     /// </summary>
     /// <param name="pile">CardPile - the pile to shuffle.</param>
@@ -163,6 +221,35 @@ public class CardUser : MonoBehaviour
             // Elsewhere, if you need, identify a delta with empty Added and Removed lists as
             // representing a shuffle.
         }
+    }
+
+    /// <summary>
+    /// Searches the pile for a card that matches the supplied card, and returns its index.
+    /// </summary>
+    /// <param name="pile">CardPile - the pile to search.</param>
+    /// <param name="match">PlayingCard - the card we're comparing our cards against.</param>
+    /// <returns>Returns the index the match is at in the list, if found, and -1 if not.</returns>
+    public int SearchFor(CardPile pile, PlayingCard match)
+    {
+        var pileList = _pileToList[pile];
+        for (int i = 0; i < pileList.Count; i++) {
+            if (pileList[i] != null && pileList[i].Matches(match)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /// <summary>
+    /// Moves a card from a pile to the hand.
+    /// </summary>
+    /// <param name="pile">CardPile - the pile that the card to move is in.</param>
+    /// <param name="sourceIndex">int - the index in the original pile of the card to move.</param>
+    /// <returns>int - the index in the hand of the moved card.</returns>
+    public int MoveToHand(CardPile pile, int sourceIndex)
+    {
+        return RemoveAtFromPushTo(sourceIndex, pile, CardPile.Hand);
     }
 
     // Pile-editing methods =======================================================================
@@ -229,7 +316,7 @@ public class CardUser : MonoBehaviour
         }
     }
 
-    private void RemoveAtFromPushTo(int indexInFromPile, CardPile fromPile, CardPile toPile, bool addToBack=false)
+    private int RemoveAtFromPushTo(int indexInFromPile, CardPile fromPile, CardPile toPile, bool addToBack=false)
     {
         // Attempts to remove the card at indexInFromPile from fromPile and
         // pushes it to the start of toPile. Raises an error if index is too
@@ -242,7 +329,7 @@ public class CardUser : MonoBehaviour
         if (indexInFromPile < 0 || indexInFromPile >= fromList.Count) {
             Debug.LogError($"CardUser Error. RemoveAtPushTo failed. indexInFromPile "
                          + $"{indexInFromPile} was outside the bounds of the list.", this);
-            return;
+            return -1;
         }
 
         // Moving the card ================
@@ -250,7 +337,8 @@ public class CardUser : MonoBehaviour
         PlayingCard card = fromList[indexInFromPile];
         fromList.RemoveAt(indexInFromPile);
         // If adding to the back, insert at the final index, otherwise use the first.
-        toList.Insert(addToBack ? toList.Count : 0, card);
+        int insertIndex = addToBack ? toList.Count : 0;
+        toList.Insert(insertIndex, card);
 
         // HandDelta stuff ================
 
@@ -277,6 +365,9 @@ public class CardUser : MonoBehaviour
 
             OnHandUpdated?.Invoke(delta);
         }
+
+        // Return! ========================
+        return insertIndex;
     }
 
     // Helper classes =============================================================================

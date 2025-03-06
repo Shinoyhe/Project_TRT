@@ -3,149 +3,19 @@
 	<AudioObjects>
 		<WorkUnit Name="Ambience" ID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}" PersistMode="Standalone">
 			<ChildrenList>
-				<Sound Name="TestAmbience" ID="{3BAB6E14-FD28-44AD-918C-F25057E5755E}" ShortID="611655229">
+				<RandomSequenceContainer Name="Waterfall_Base_LoopContainer" ID="{11294004-03E5-4C04-8109-C235D0C57479}" ShortID="914084268">
 					<PropertyList>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-						<Property Name="OutputBusVolume" Type="Real64">
-							<ValueList>
-								<Value>12</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Attenuation">
-							<Custom>
-								<Attenuation Name="Attenuation (Custom)" ID="{DE716A57-BBCA-40AA-87C2-EEC45D038BEB}" ShortID="909619491">
-									<PropertyList>
-										<Property Name="RadiusMax" Type="Real64" Value="50"/>
-									</PropertyList>
-									<CurveUsageInfoList>
-										<VolumeDryUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
-												<Curve Name="VolumeDry" ID="{474DCF88-3D96-4CB5-84DB-16401EDB053B}">
-													<PropertyList>
-														<Property Name="Flags" Type="int32" Value="3"/>
-													</PropertyList>
-													<PointList>
-														<Point>
-															<XPos>0</XPos>
-															<YPos>0</YPos>
-															<Flags>5</Flags>
-															<SegmentShape>Exp3</SegmentShape>
-														</Point>
-														<Point>
-															<XPos>50</XPos>
-															<YPos>-200</YPos>
-															<Flags>37</Flags>
-														</Point>
-													</PointList>
-												</Curve>
-											</CurveUsageInfo>
-										</VolumeDryUsage>
-										<VolumeWetGameUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseVolumeDry"/>
-										</VolumeWetGameUsage>
-										<VolumeWetUserUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseVolumeDry"/>
-										</VolumeWetUserUsage>
-										<LowPassFilterUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
-										</LowPassFilterUsage>
-										<HighPassFilterUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
-												<Curve Name="HighPassFilter" ID="{2DF1449A-5428-4B57-BB3A-C17D55D129AD}">
-													<PropertyList>
-														<Property Name="Flags" Type="int32" Value="65537"/>
-													</PropertyList>
-													<PointList>
-														<Point>
-															<XPos>0</XPos>
-															<YPos>0</YPos>
-															<Flags>5</Flags>
-															<SegmentShape>Exp1</SegmentShape>
-														</Point>
-														<Point>
-															<XPos>50</XPos>
-															<YPos>100</YPos>
-															<Flags>37</Flags>
-														</Point>
-													</PointList>
-												</Curve>
-											</CurveUsageInfo>
-										</HighPassFilterUsage>
-										<SpreadUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
-										</SpreadUsage>
-										<FocusUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
-										</FocusUsage>
-										<ObstructionVolumeUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</ObstructionVolumeUsage>
-										<ObstructionLPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</ObstructionLPFUsage>
-										<ObstructionHPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</ObstructionHPFUsage>
-										<OcclusionVolumeUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</OcclusionVolumeUsage>
-										<OcclusionLPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</OcclusionLPFUsage>
-										<OcclusionHPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</OcclusionHPFUsage>
-										<DiffractionVolumeUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</DiffractionVolumeUsage>
-										<DiffractionLPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</DiffractionLPFUsage>
-										<DiffractionHPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</DiffractionHPFUsage>
-										<TransmissionVolumeUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</TransmissionVolumeUsage>
-										<TransmissionLPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</TransmissionLPFUsage>
-										<TransmissionHPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</TransmissionHPFUsage>
-									</CurveUsageInfoList>
-								</Attenuation>
-							</Custom>
-						</Reference>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="AMB SUBURB Solo Bird Call, Early Morning, Distant Traffic Passbys, Montreal, Canada, LOOP" ID="{50EC2AC7-9FA0-4A06-8F96-BA833BC7A942}">
-							<Language>SFX</Language>
-							<AudioFile>AMB SUBURB Solo Bird Call, Early Morning, Distant Traffic Passbys, Montreal, Canada, LOOP.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="711580548"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ActiveSourceList>
-						<ActiveSource Name="AMB SUBURB Solo Bird Call, Early Morning, Distant Traffic Passbys, Montreal, Canada, LOOP" ID="{50EC2AC7-9FA0-4A06-8F96-BA833BC7A942}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<RandomSequenceContainer Name="Waterfall_Base" ID="{11294004-03E5-4C04-8109-C235D0C57479}" ShortID="914084268">
-					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
 						<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
 						<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="2"/>
 						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
 						<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">
@@ -236,157 +106,24 @@
 						</Sound>
 					</ChildrenList>
 				</RandomSequenceContainer>
-				<RandomSequenceContainer Name="Waterfall_CloseSparkle" ID="{A3780EEB-D81D-4C45-8455-3CFCA15FEC28}" ShortID="156762919">
+				<RandomSequenceContainer Name="Waterfall_CloseSparkle_LoopContainer" ID="{A3780EEB-D81D-4C45-8455-3CFCA15FEC28}" ShortID="156762919">
 					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="AttenuationDistanceScaling" Type="Real32" Value="0.5"/>
 						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
 						<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
 						<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="2"/>
 						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
 						<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">
-							<Custom CreatedFrom="{BEF66290-124F-49EA-8525-505F51A0EC97}">
-								<Attenuation Name="WaterfallAttenuation (Custom)" ID="{2A87CFEC-8DA4-425F-A7AB-C2A3594823A7}" ShortID="104678120">
-									<PropertyList>
-										<Property Name="RadiusMax" Type="Real64" Value="25"/>
-									</PropertyList>
-									<CurveUsageInfoList>
-										<VolumeDryUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
-												<Curve Name="VolumeDry" ID="{30D710FF-46B4-4570-909A-CEC980177114}">
-													<PropertyList>
-														<Property Name="Flags" Type="int32" Value="3"/>
-													</PropertyList>
-													<PointList>
-														<Point>
-															<XPos>0</XPos>
-															<YPos>0</YPos>
-															<Flags>5</Flags>
-															<SegmentShape>Exp2</SegmentShape>
-														</Point>
-														<Point>
-															<XPos>25</XPos>
-															<YPos>-200</YPos>
-															<Flags>37</Flags>
-														</Point>
-													</PointList>
-												</Curve>
-											</CurveUsageInfo>
-										</VolumeDryUsage>
-										<VolumeWetGameUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseVolumeDry"/>
-										</VolumeWetGameUsage>
-										<VolumeWetUserUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseVolumeDry"/>
-										</VolumeWetUserUsage>
-										<LowPassFilterUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
-												<Curve Name="LowPassFilter" ID="{09CAC003-E0B9-471A-BEAB-31A58A52B629}">
-													<PropertyList>
-														<Property Name="Flags" Type="int32" Value="65537"/>
-													</PropertyList>
-													<PointList>
-														<Point>
-															<XPos>0</XPos>
-															<YPos>0</YPos>
-															<Flags>5</Flags>
-															<SegmentShape>Exp1</SegmentShape>
-														</Point>
-														<Point>
-															<XPos>25</XPos>
-															<YPos>74</YPos>
-															<Flags>37</Flags>
-														</Point>
-													</PointList>
-												</Curve>
-											</CurveUsageInfo>
-										</LowPassFilterUsage>
-										<HighPassFilterUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
-												<Curve Name="HighPassFilter" ID="{8E299A71-5EAF-4272-863C-7E3DC951D9FC}">
-													<PropertyList>
-														<Property Name="Flags" Type="int32" Value="65537"/>
-													</PropertyList>
-													<PointList>
-														<Point>
-															<XPos>0</XPos>
-															<YPos>0</YPos>
-															<Flags>5</Flags>
-															<SegmentShape>Log2</SegmentShape>
-														</Point>
-														<Point>
-															<XPos>25</XPos>
-															<YPos>50</YPos>
-															<Flags>37</Flags>
-														</Point>
-													</PointList>
-												</Curve>
-											</CurveUsageInfo>
-										</HighPassFilterUsage>
-										<SpreadUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
-												<Curve Name="Spread" ID="{1C0FD07A-785D-4744-8D3B-C5DD63576EED}">
-													<PropertyList>
-														<Property Name="Flags" Type="int32" Value="1"/>
-													</PropertyList>
-													<PointList>
-														<Point>
-															<XPos>0</XPos>
-															<YPos>100</YPos>
-															<Flags>5</Flags>
-														</Point>
-														<Point>
-															<XPos>25</XPos>
-															<YPos>0</YPos>
-															<Flags>37</Flags>
-														</Point>
-													</PointList>
-												</Curve>
-											</CurveUsageInfo>
-										</SpreadUsage>
-										<FocusUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
-										</FocusUsage>
-										<ObstructionVolumeUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</ObstructionVolumeUsage>
-										<ObstructionLPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</ObstructionLPFUsage>
-										<ObstructionHPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</ObstructionHPFUsage>
-										<OcclusionVolumeUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</OcclusionVolumeUsage>
-										<OcclusionLPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</OcclusionLPFUsage>
-										<OcclusionHPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</OcclusionHPFUsage>
-										<DiffractionVolumeUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</DiffractionVolumeUsage>
-										<DiffractionLPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</DiffractionLPFUsage>
-										<DiffractionHPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</DiffractionHPFUsage>
-										<TransmissionVolumeUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</TransmissionVolumeUsage>
-										<TransmissionLPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</TransmissionLPFUsage>
-										<TransmissionHPFUsage>
-											<CurveUsageInfo Platform="Linked" CurveToUse="UseProject"/>
-										</TransmissionHPFUsage>
-									</CurveUsageInfoList>
-								</Attenuation>
-							</Custom>
+							<ObjectRef Name="WaterfallAttenuation" ID="{BEF66290-124F-49EA-8525-505F51A0EC97}" WorkUnitID="{A41C15FD-E1E3-457F-ACD8-54CD043C4ADF}"/>
 						</Reference>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
@@ -413,9 +150,244 @@
 										<MediaID ID="677398068"/>
 									</MediaIDList>
 								</AudioFileSource>
+								<AudioFileSource Name="AMB_Waterfall_CloseSparkle_01" ID="{160958C5-442D-47AF-B51F-015392FCBB93}">
+									<Language>SFX</Language>
+									<AudioFile>AMB_Waterfall_CloseSparkle.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="677398068"/>
+									</MediaIDList>
+								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="AMB_Waterfall_CloseSparkle" ID="{05BE2987-A7AA-492E-BAF0-14C43CE6A57B}" Platform="Linked"/>
+								<ActiveSource Name="AMB_Waterfall_CloseSparkle_01" ID="{160958C5-442D-47AF-B51F-015392FCBB93}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<RandomSequenceContainer Name="SynthBirds_RandomContainer" ID="{9E473AF7-9486-40AB-9724-AEE6AFDA7116}" ShortID="439131624">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="GlobalOrPerObject" Type="int16" Value="0"/>
+						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismSpecialTransitionsType" Type="int16" Value="1"/>
+						<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="5">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{3E42BC06-D027-413E-A6A8-8117C968C11D}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="10"/>
+											<Property Name="Min" Type="Real64" Value="-3"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
+						<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>20</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="WaterfallAttenuation" ID="{BEF66290-124F-49EA-8525-505F51A0EC97}" WorkUnitID="{A41C15FD-E1E3-457F-ACD8-54CD043C4ADF}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Ambience Bus" ID="{286C8CB9-7D4C-44E7-9139-C8391E920F9C}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="AMB_Nature_Birds1" ID="{B3813DB4-6F38-43D5-B49D-4D4E50E197A9}" ShortID="223431936">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="AMB_Nature_Birds1" ID="{EA97929E-BE10-463D-8C2E-49664D444DA4}">
+									<PropertyList>
+										<Property Name="LoopEnd" Type="Real64" Value="51.5108910891089"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>AMB_Nature_Birds1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="429838942"/>
+									</MediaIDList>
+								</AudioFileSource>
+								<AudioFileSource Name="AMB_Nature_Birds1_01" ID="{D74E1C7E-EE61-42F6-860F-B1DB0044B5B4}">
+									<Language>SFX</Language>
+									<AudioFile>AMB_Nature_Birds1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="429838942"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="AMB_Nature_Birds1_01" ID="{D74E1C7E-EE61-42F6-860F-B1DB0044B5B4}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="AMB_Nature_Birds2" ID="{737EFAC9-CAC8-485D-B0BA-D65EA8F13DB2}" ShortID="989587909">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="AMB_Nature_Birds2" ID="{DCF38764-4E38-4D5C-A36B-F505C3D06E2F}">
+									<PropertyList>
+										<Property Name="LoopBegin" Type="Real64" Value="3.17277227722772"/>
+										<Property Name="LoopEnd" Type="Real64" Value="6.53217821782178"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>AMB_Nature_Birds2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="1041211660"/>
+									</MediaIDList>
+								</AudioFileSource>
+								<AudioFileSource Name="AMB_Nature_Birds2_01" ID="{52B985F7-5DA0-4A4C-85E0-A37B5F86E7C0}">
+									<Language>SFX</Language>
+									<AudioFile>AMB_Nature_Birds2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="1041211660"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="AMB_Nature_Birds2_01" ID="{52B985F7-5DA0-4A4C-85E0-A37B5F86E7C0}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="AMB_Nature_Birds3" ID="{6E04BDC4-8E19-4DBC-AF49-70CECEFA71C2}" ShortID="1009871251">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="AMB_Nature_Birds3" ID="{55CF0B4C-5D77-48A1-BD2B-16652B2F8637}">
+									<Language>SFX</Language>
+									<AudioFile>AMB_Nature_Birds3.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="417504426"/>
+									</MediaIDList>
+								</AudioFileSource>
+								<AudioFileSource Name="AMB_Nature_Birds3_01" ID="{3A944DD2-FC93-4D78-9A83-C40B8A2A844C}">
+									<Language>SFX</Language>
+									<AudioFile>AMB_Nature_Birds3.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="417504426"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="AMB_Nature_Birds3_01" ID="{3A944DD2-FC93-4D78-9A83-C40B8A2A844C}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<RandomSequenceContainer Name="MachineHum1_LoopContainer" ID="{A1086679-5F65-4305-8E29-581975315AC5}" ShortID="755062127">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="2"/>
+						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
+						<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="WaterfallAttenuation" ID="{BEF66290-124F-49EA-8525-505F51A0EC97}" WorkUnitID="{A41C15FD-E1E3-457F-ACD8-54CD043C4ADF}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Ambience Bus" ID="{286C8CB9-7D4C-44E7-9139-C8391E920F9C}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="AMB_Machine_Hum1" ID="{45D068F4-0FF0-4ABA-AE55-8A073CA00D05}" ShortID="648722536">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="AMB_Machine_Hum1" ID="{C5468698-03FD-46C0-8D7E-96F20A9B286C}">
+									<Language>SFX</Language>
+									<AudioFile>AMB_Machine_Hum1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="934940429"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="AMB_Machine_Hum1" ID="{C5468698-03FD-46C0-8D7E-96F20A9B286C}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<RandomSequenceContainer Name="MachineHum2_LoopContainer" ID="{8A7EC6BD-A2F2-43A2-AED7-331438DE63AF}" ShortID="334130441">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="2"/>
+						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
+						<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="WaterfallAttenuation" ID="{BEF66290-124F-49EA-8525-505F51A0EC97}" WorkUnitID="{A41C15FD-E1E3-457F-ACD8-54CD043C4ADF}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Ambience Bus" ID="{286C8CB9-7D4C-44E7-9139-C8391E920F9C}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="AMB_Machine_Hum2" ID="{76B08357-8346-41C0-BA9C-82F7D973EF3F}" ShortID="695755723">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="AMB_Machine_Hum2" ID="{7BDC08EB-B21F-4B5A-B89D-52665CA8CAB8}">
+									<Language>SFX</Language>
+									<AudioFile>AMB_Machine_Hum2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="360502257"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="AMB_Machine_Hum2" ID="{7BDC08EB-B21F-4B5A-B89D-52665CA8CAB8}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>

@@ -18,6 +18,10 @@ public class BarterStarter : MonoBehaviour
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerFail = -5;
     [BoxGroup("Barter Settings"), ReadOnly] public float StartingWillingness = 50;
 
+    // Win/Lose Actions
+    public System.Action OnWin;
+    public System.Action OnLose;
+
     // Misc Internal Variables ====================================================================
     private GameObject _barterInstance;
     private GameObject _itemPresentInstance;
@@ -97,6 +101,7 @@ public class BarterStarter : MonoBehaviour
             Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }
         CleanupBarter();
+        OnWin?.Invoke();
     }
 
     /// <summary>
@@ -105,6 +110,7 @@ public class BarterStarter : MonoBehaviour
     void LoseBarter()
     {
         CleanupBarter();
+        OnLose?.Invoke();
     }
 
     /// <summary>

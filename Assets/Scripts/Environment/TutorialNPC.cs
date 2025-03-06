@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class TutorialNPC : MonoBehaviour
 {
     [SerializeField] private NpcInteractable npcInteractable;
+    [SerializeField] private List<InventoryCardData> postTutorialCards;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,14 @@ public class TutorialNPC : MonoBehaviour
 
     private void TransitionToGame()
     {
+        foreach (InventoryCardData inventoryCardData in postTutorialCards)
+        {
+            if (inventoryCardData != null)
+            {
+                GameManager.Inventory.AddCard(inventoryCardData);
+            }
+        }
+
         SceneManager.LoadScene("EnvInteractables");
     }
 }

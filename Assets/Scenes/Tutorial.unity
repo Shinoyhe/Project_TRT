@@ -65654,13 +65654,13 @@ PrefabInstance:
         type: 3}
       propertyPath: PossibleTrades.trades.Array.data[0].RewardCard
       value: 
-      objectReference: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a,
+      objectReference: {fileID: 11400000, guid: ad8e6a92f388f7b499a3c6f6cb32d9bf,
         type: 2}
     - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
         type: 3}
       propertyPath: PossibleTrades.trades.Array.data[0].AcceptedCard
       value: 
-      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
+      objectReference: {fileID: 11400000, guid: 3dd2a051f01547a42b80909c641b96cd,
         type: 2}
     - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
         type: 3}
@@ -65733,6 +65733,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcInteractable: {fileID: 1661111567}
+  postTutorialCards:
+  - {fileID: 11400000, guid: 7c965fd18e37c4f43b7fe8a49c38b93f, type: 2}
+  - {fileID: 11400000, guid: 5562485a150e16d449a78897a85cc098, type: 2}
+  - {fileID: 11400000, guid: d0e47fadd857c1c47b5fb396462252ca, type: 2}
 --- !u!4 &1672939789 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 769533e1ac334af419ced69423170e1f,
@@ -91633,17 +91637,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: StartingCards.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739117665189127466, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
-        type: 3}
-      propertyPath: StartingCards.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd,
-        type: 2}
     - target: {fileID: 8480042010274908795, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
         type: 3}
       propertyPath: m_LocalPosition.x

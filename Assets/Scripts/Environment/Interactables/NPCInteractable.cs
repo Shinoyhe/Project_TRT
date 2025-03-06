@@ -10,7 +10,8 @@ public class NpcInteractable : Interactable
 
     [BoxGroup("Barter Settings")] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings")] public BarterNeutralBehavior BarterNeutralBehaviour;
-    [BoxGroup("Barter Settings"), Range(0, 25)] public float DecayPerSecond = 5;
+    [BoxGroup("Barter Settings"), Range(0, 25)] public float BaseDecay = 1;
+    [BoxGroup("Barter Settings"), Range(0, 1)] public float DecayAcceleration = 0.025f;
     [BoxGroup("Barter Settings"), Range(0, 50)] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), Range(0, -50)] public float WillingnessPerFail = -5;
     [BoxGroup("Barter Settings"), Range(0, 100)] public float StartingWillingness = 50;
@@ -39,40 +40,33 @@ public class NpcInteractable : Interactable
         // Set up the settings for the BarterStarter
         BarterStarter barterStarter = GameManager.BarterStarter;
 
-        if (BarterResponseMatrix != null)
-        {
+        if (BarterResponseMatrix != null) {
             barterStarter.BarterResponseMatrix = BarterResponseMatrix;
-        }
-        else
-        {
+        } else {
             Debug.LogError("NPCInteractable: BarterResponseMatrix is not set");
         }
 
-        if (BarterNeutralBehaviour != null)
-        {
+        if (BarterNeutralBehaviour != null) {
             barterStarter.BarterNeutralBehaviour = BarterNeutralBehaviour;
-        }
-        else
-        {
+        } else {
             Debug.LogError("NPCInteractable: BarterNeutralBehaviour is not set");
         }
 
-        if (PossibleTrades != null)
-        {
+        if (PossibleTrades != null) {
             barterStarter.PossibleTrades = PossibleTrades;
-        }
-        else
-        {
+        } else {
             Debug.LogError("NPCInteractable: PossibleTrades are not set");
         }
 
-        barterStarter.BaseDecay = DecayPerSecond;
+        barterStarter.BaseDecay = BaseDecay;
+        barterStarter.DecayAcceleration = DecayAcceleration;
         barterStarter.WillingnessPerMatch = WillingnessPerMatch;
         barterStarter.WillingnessPerFail = WillingnessPerFail;
         barterStarter.StartingWillingness = StartingWillingness;
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos() 
+    {
         Gizmos.DrawWireSphere(transform.position + dialogueBubbleOffset, 0.25f);
     }
 }

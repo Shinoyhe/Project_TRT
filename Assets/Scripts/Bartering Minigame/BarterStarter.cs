@@ -30,7 +30,7 @@ public class BarterStarter : MonoBehaviour
     /// <summary>
     /// Starts the Barter
     /// </summary>
-    /// <returns>The created barter instance GameObject, containing</returns>
+    /// <returns>GameObject - an initialized BarterContainer.</returns>
     public GameObject StartBarter()
     {
         _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity,
@@ -45,17 +45,13 @@ public class BarterStarter : MonoBehaviour
 
         if (BarterResponseMatrix != null) { 
             _barterDirector.BarterResponses = BarterResponseMatrix;
-        } else
-        {
+        } else {
             Debug.LogError("BarterStarter: Could not find BarterResponseMatrix");
         }
 
-        if (BarterNeutralBehaviour != null)
-        {
+        if (BarterNeutralBehaviour != null) {
             _barterDirector.NeutralBehavior = BarterNeutralBehaviour;
-        }
-        else
-        {
+        } else {
             Debug.LogError("BarterStarter: Could not find BarterNeutralBehaviour");
         }
 
@@ -72,34 +68,21 @@ public class BarterStarter : MonoBehaviour
 
     // Private Methods ============================================================================
 
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Call on Barter Win, give player card.
     /// </summary>
     void WinBarter()
     {
-        if (CurrentTrade != null)
-        {
+        if (CurrentTrade != null) {
             GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
 
-            if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM)
-            {
+            if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM) {
                 GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
             }
-
-        } else
-        {
+        } else {
             Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }
+
         CleanupBarter();
         OnWin?.Invoke();
     }
@@ -136,8 +119,7 @@ public class BarterStarter : MonoBehaviour
 
         GameManager.PlayerInput.IsActive = false;
 
-        if (TimeLoopManager.Instance != null)
-        {
+        if (TimeLoopManager.Instance != null) {
             TimeLoopManager.SetLoopPaused(true);
         }
     }
@@ -158,8 +140,7 @@ public class BarterStarter : MonoBehaviour
         Destroy(_itemPresentInstance);
         GameManager.PlayerInput.IsActive = enablePlayerInput;
 
-        if (TimeLoopManager.Instance != null)
-        {
+        if (TimeLoopManager.Instance != null) {
             TimeLoopManager.SetLoopPaused(false);
         }
     }

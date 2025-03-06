@@ -39,9 +39,11 @@ public class BarterDirector : MonoBehaviour
     private bool debugMode = false;
 
     [Header("Object References")]
+    [Tooltip("The NPCData asset used for this barter.")]
+    public NPCData NpcData;
     [Tooltip("The tone responses the opposing NPC prefers.")]
     public BarterResponseMatrix BarterResponses;
-    [SerializeField, Tooltip("The BarterNeutralBehavior scriptable object that defines what "
+    [Tooltip("The BarterNeutralBehavior scriptable object that defines what "
                            + "happens when a neutral match is encountered.")]
     public BarterNeutralBehavior NeutralBehavior;
     [SerializeField, Tooltip("The card user used by the opposing NPC.")]

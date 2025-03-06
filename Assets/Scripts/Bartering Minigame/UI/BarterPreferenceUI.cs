@@ -2,18 +2,19 @@ using UnityEngine;
 
 public class BarterPreferenceUI : MonoBehaviour 
 {
-    [SerializeField, Tooltip("The NPC data that we're a")]
-    private NPCData npcData;
+    [SerializeField, Tooltip("The BarterDirector we read NPCData from.")]
+    private BarterDirector director;
     private JournalPreferenceEntry[] _entries;
 
     private void Awake()
     {
         _entries = GetComponentsInChildren<JournalPreferenceEntry>(true);
+    }
 
-        // If npcData was preset in the inspector, display immediately.
-        // Otherwise, wait for the explicit initialization.
-        if (npcData != null) {
-            Initialize(npcData);
+    private void Start()
+    {
+        if (director.NpcData != null) {
+            Initialize(director.NpcData);
         }
     }
 
@@ -37,7 +38,5 @@ public class BarterPreferenceUI : MonoBehaviour
         for (int i = 0; i < data.Cards.Length; i++) {
             _entries[i].Load(data, data.Cards[i]);
         }
-
-        npcData = data;
     }
 }

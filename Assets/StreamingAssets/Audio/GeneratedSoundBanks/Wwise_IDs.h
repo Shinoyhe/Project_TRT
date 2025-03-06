@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID BART_CARD_PLACE = 3630843069U;
         static const AkUniqueID BART_CARD_SHUFFLE = 362751767U;
+        static const AkUniqueID BIRDSTART = 3943065624U;
         static const AkUniqueID MUSICSTATEACTIVE = 1623677187U;
         static const AkUniqueID MUSICSTATECALM = 821441420U;
         static const AkUniqueID MUSICSTATEPLAYERSPAWAN = 1764214806U;
@@ -69,8 +70,15 @@ namespace AK
         static const AkUniqueID AMBIENCE_BUS = 4202237879U;
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
         static const AkUniqueID MUSIC_BUS = 3127962312U;
+        static const AkUniqueID REVERBS = 3545700988U;
         static const AkUniqueID SFX_BUS = 1502772432U;
     } // namespace BUSSES
+
+    namespace AUX_BUSSES
+    {
+        static const AkUniqueID CHURCH = 2568407992U;
+        static const AkUniqueID OUTDOORS = 2730119150U;
+    } // namespace AUX_BUSSES
 
     namespace AUDIO_DEVICES
     {

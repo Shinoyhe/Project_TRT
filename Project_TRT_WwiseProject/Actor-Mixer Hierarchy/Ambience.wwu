@@ -186,6 +186,7 @@
 						</Property>
 						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
 						<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
+						<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>20</Value>
@@ -200,7 +201,7 @@
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="Ambience Bus" ID="{286C8CB9-7D4C-44E7-9139-C8391E920F9C}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+							<ObjectRef Name="Reverbs" ID="{60D09061-AD4A-43D1-9B49-6042A98C2796}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>

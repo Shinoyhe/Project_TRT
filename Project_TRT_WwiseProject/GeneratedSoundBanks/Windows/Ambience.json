@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{52F8B286-BABD-4F9B-A5A8-00A04824FFE7}",
     "Language": "SFX",
-    "Hash": "{397C301D-7760-7ED1-2FC6-D1113B986C25}",
+    "Hash": "{91EA7100-6A1D-86B3-6AD3-28E66A7EC8C6}",
     "ObjectPath": "\\SoundBanks\\Ambience\\Ambience",
     "ShortName": "Ambience",
     "Path": "Ambience.bnk",
@@ -25,6 +25,30 @@
       "CachePath": "0D/{0DFC706F-029F-DA67-858D-63F23E7FCBFE}.wem"
      },
      {
+      "Id": "360502257",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Machine_Hum2.wav",
+      "CachePath": "04/{04CD1EF7-2BE8-DF7E-01A2-3E092601434C}.wem"
+     },
+     {
+      "Id": "417504426",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Nature_Birds3.wav",
+      "CachePath": "29/{296FB0B4-1E81-21F2-BB2C-3E07D35CD303}.wem"
+     },
+     {
+      "Id": "429838942",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Nature_Birds1.wav",
+      "CachePath": "D8/{D8D8564F-7506-9D17-4465-03F5BA3E287F}.wem"
+     },
+     {
       "Id": "677398068",
       "Language": "SFX",
       "Streaming": "false",
@@ -33,15 +57,42 @@
       "CachePath": "24/{245FA8FE-6839-E888-8230-494140CC1925}.wem"
      },
      {
-      "Id": "711580548",
+      "Id": "934940429",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
-      "ShortName": "AMB SUBURB Solo Bird Call, Early Morning, Distant Traffic Passbys, Montreal, Canada, LOOP.wav",
-      "CachePath": "72/{722E5C46-36DE-EBFC-BCD3-A07B3ADAB826}.wem"
+      "ShortName": "AMB_Machine_Hum1.wav",
+      "CachePath": "49/{49DFCAF6-8D7B-AC0F-38B9-6BDA449CD2A6}.wem"
+     },
+     {
+      "Id": "1041211660",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Nature_Birds2.wav",
+      "CachePath": "1D/{1D62BD7C-BB3A-4B9B-84D7-D65B0435DE7C}.wem"
      }
     ],
     "Events": [
+     {
+      "Id": "3943065624",
+      "Name": "BirdStart",
+      "ObjectPath": "\\Events\\Ambience\\BirdStart",
+      "GUID": "{AB632C93-8EF0-48A4-9F51-F773BA1E5C74}",
+      "MaxAttenuation": "50",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "417504426"
+       },
+       {
+        "Id": "429838942"
+       },
+       {
+        "Id": "1041211660"
+       }
+      ]
+     },
      {
       "Id": "664772623",
       "Name": "TestAmbienceStart",
@@ -61,6 +112,6 @@
     ]
    }
   ],
-  "FileHash": "{36F1D210-7622-A2AD-17FE-A2D00EEE1850}"
+  "FileHash": "{30E24729-59C4-2CEB-EA48-A9989E8E64E5}"
  }
 }

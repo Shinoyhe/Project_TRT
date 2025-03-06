@@ -21,6 +21,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="BirdStart" ID="{AB632C93-8EF0-48A4-9F51-F773BA1E5C74}">
+					<ChildrenList>
+						<Action Name="" ID="{E0928625-A054-42B2-9FDC-9F7A9BCC4883}" ShortID="81533663">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SynthBirds_RandomContainer" ID="{9E473AF7-9486-40AB-9724-AEE6AFDA7116}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

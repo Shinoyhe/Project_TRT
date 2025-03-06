@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 587ca0226052be4e9b8540a22c4f2092
     GuidInternal: 
-    m_lastTime: -8584605745179095470
+    m_lastTime: -8584603048584035632
     List:
     - name: Ambience Bus
       guid: b98c6c284c7de7449139c8391e920f9c
@@ -57,6 +57,26 @@ MonoBehaviour:
         ObjectType: 2
         guid: b98c6c284c7de7449139c8391e920f9c
       Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Ambience Bus
+    - name: Church
+      guid: c1301a558c6b664b97abf2b3572a46c0
+      id: 2568407992
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 587ca0226052be4e9b8540a22c4f2092
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Reverbs
+        ObjectType: 2
+        guid: 6190d0604aadd1439b496042a98c2796
+      - ElementName: Church
+        ObjectType: 1
+        guid: c1301a558c6b664b97abf2b3572a46c0
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Reverbs\Church
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
       id: 3803692087
@@ -88,6 +108,43 @@ MonoBehaviour:
         ObjectType: 2
         guid: 883656adb723a945b273cd51079ae47a
       Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music Bus
+    - name: Outdoors
+      guid: 9f6bbd6747fc7945a4b59fbb558c8815
+      id: 2730119150
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 587ca0226052be4e9b8540a22c4f2092
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Reverbs
+        ObjectType: 2
+        guid: 6190d0604aadd1439b496042a98c2796
+      - ElementName: Outdoors
+        ObjectType: 1
+        guid: 9f6bbd6747fc7945a4b59fbb558c8815
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Reverbs\Outdoors
+    - name: Reverbs
+      guid: 6190d0604aadd1439b496042a98c2796
+      id: 3545700988
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 587ca0226052be4e9b8540a22c4f2092
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Reverbs
+        ObjectType: 2
+        guid: 6190d0604aadd1439b496042a98c2796
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Reverbs
     - name: SFX Bus
       guid: 6f814b3bff92544dbea1c89250720378
       id: 1502772432
@@ -117,7 +174,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Ambience
     guid: 0104f6680c27bf408fd7c64816ee8c87
     GuidInternal: 
-    m_lastTime: -8584603121673481307
+    m_lastTime: -8584603044967784716
     List:
     - name: Ambience
       guid: 86b2f852bdba9b4fa5a800a04824ffe7
@@ -212,8 +269,25 @@ MonoBehaviour:
     ParentPath: Events\Ambience
     guid: 78290c8229ac584884ed86c3baba619d
     GuidInternal: 
-    m_lastTime: -8584603120717735546
+    m_lastTime: -8584603045965734444
     List:
+    - name: BirdStart
+      guid: 932c63abf08ea4489f51f773ba1e5c74
+      id: 3943065624
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Ambience
+        ObjectType: 12
+        guid: 78290c8229ac584884ed86c3baba619d
+      - ElementName: BirdStart
+        ObjectType: 3
+        guid: 932c63abf08ea4489f51f773ba1e5c74
+      Path: Events\Ambience\BirdStart
+      maxAttenuation: 50
+      maxDuration: 0
+      minDuration: 0
     - name: TestAmbienceStart
       guid: 7d6e07e4f047404b97f8e4afb7cf1d45
       id: 664772623
@@ -747,7 +821,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 01000000050000000600000007000000090000000a0000000c0000000e00000010000000110000001200000014000000150000001600000017000000180000001e0000001f000000200000002100000022000000240000002e00000037000000
+  ExpandedWaapiItemIds: 01000000020000000300000004000000050000000600000007000000090000000a0000000c0000000e00000010000000110000001200000014000000150000001600000017000000180000001e0000001f000000200000002100000022000000240000002e00000037000000b3000000b4000000b5000000aa070000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

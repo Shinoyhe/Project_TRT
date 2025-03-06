@@ -8,7 +8,14 @@
 						<Action Name="" ID="{983456CD-3FFA-414B-A27B-2B6ECAA88065}" ShortID="836265004">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="AMB_Waterfall_Base" ID="{3FA62479-B607-480D-90FE-E5987AE006B6}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
+									<ObjectRef Name="Waterfall_Base" ID="{11294004-03E5-4C04-8109-C235D0C57479}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{E45D4FEC-C764-43B2-9060-0C4BB1B96A97}" ShortID="822254946">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Waterfall_CloseSparkle" ID="{A3780EEB-D81D-4C45-8455-3CFCA15FEC28}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

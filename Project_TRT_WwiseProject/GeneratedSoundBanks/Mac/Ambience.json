@@ -10,18 +10,27 @@
     "Type": "User",
     "GUID": "{52F8B286-BABD-4F9B-A5A8-00A04824FFE7}",
     "Language": "SFX",
-    "Hash": "{C04B455E-8FAB-48A8-68C9-3105270E677A}",
+    "Hash": "{9808A7BB-6DDC-63F1-05F1-9CC1A5737300}",
     "ObjectPath": "\\SoundBanks\\Ambience\\Ambience",
     "ShortName": "Ambience",
     "Path": "Ambience.bnk",
     "Media": [
      {
-      "Id": "639555141",
+      "Id": "31547046",
+      "Language": "SFX",
+      "Streaming": "true",
+      "Location": "Loose",
+      "ShortName": "AMB_Waterfall_Base.wav",
+      "Path": "Media/31547046.wem",
+      "CachePath": "0D/{0DFC706F-029F-DA67-858D-63F23E7FCBFE}.wem"
+     },
+     {
+      "Id": "677398068",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
-      "ShortName": "AMB_Waterfall_Base.wav",
-      "CachePath": "2E/{2E306FB1-A111-34BB-9023-9FB8C59A4460}.wem"
+      "ShortName": "AMB_Waterfall_CloseSparkle.wav",
+      "CachePath": "04/{04F22FAE-2EBC-7E1E-05CB-0CFF83B68684}.wem"
      },
      {
       "Id": "711580548",
@@ -42,13 +51,16 @@
       "DurationType": "Infinite",
       "MediaRefs": [
        {
-        "Id": "639555141"
+        "Id": "31547046"
+       },
+       {
+        "Id": "677398068"
        }
       ]
      }
     ]
    }
   ],
-  "FileHash": "{046BACAA-AB97-6BE9-57D6-5DF928C89B10}"
+  "FileHash": "{1635BA2C-EE30-488D-10D5-06AD096DDBB8}"
  }
 }

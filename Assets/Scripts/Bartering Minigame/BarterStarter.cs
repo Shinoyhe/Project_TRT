@@ -11,7 +11,8 @@ public class BarterStarter : MonoBehaviour
     [BoxGroup("Barter Settings"), ReadOnly] public BarterNeutralBehavior BarterNeutralBehaviour;
     [BoxGroup("Barter Settings"), ReadOnly] public Trades PossibleTrades;
     [BoxGroup("Barter Settings"), ReadOnly] public Trade CurrentTrade;
-    [BoxGroup("Barter Settings"), ReadOnly] public float DecayPerSecond = 5;
+    [BoxGroup("Barter Settings"), ReadOnly] public float BaseDecay = 1;
+    [BoxGroup("Barter Settings"), ReadOnly] public float DecayAcceleration = 0.025f;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerFail = -5;
     [BoxGroup("Barter Settings"), ReadOnly] public float StartingWillingness = 50;
@@ -58,7 +59,8 @@ public class BarterStarter : MonoBehaviour
             Debug.LogError("BarterStarter: Could not find BarterNeutralBehaviour");
         }
 
-        _barterDirector.DecayPerSecond = DecayPerSecond;
+        _barterDirector.BaseDecay = BaseDecay;
+        _barterDirector.DecayAcceleration = DecayAcceleration;
         _barterDirector.WillingnessPerMatch = WillingnessPerMatch;
         _barterDirector.WillingnessPerFail = WillingnessPerFail;
 

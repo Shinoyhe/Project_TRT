@@ -66,7 +66,7 @@ public class NpcInteractable : Interactable
             Debug.LogError("NPCInteractable: PossibleTrades are not set");
         }
 
-        barterStarter.DecayPerSecond = DecayPerSecond;
+        barterStarter.BaseDecay = DecayPerSecond;
         barterStarter.WillingnessPerMatch = WillingnessPerMatch;
         barterStarter.WillingnessPerFail = WillingnessPerFail;
         barterStarter.StartingWillingness = StartingWillingness;

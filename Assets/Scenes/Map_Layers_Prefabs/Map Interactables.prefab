@@ -237,6 +237,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8130318769274667414}
     m_Modifications:
+    - target: {fileID: 2710463135279531178, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: RequiredCard
+      value: 
+      objectReference: {fileID: 11400000, guid: a942cf1638829df488725379b2d4fab7,
+        type: 2}
     - target: {fileID: 4181256490260368416, guid: bc60a82d631c6a842a636cda46f232ca,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -421,6 +427,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mailbot
       objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: ab323581bf49a9741951338cb42823af,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: a072bbab54e22d14f9258db69fc354d6,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: ad8e6a92f388f7b499a3c6f6cb32d9bf,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: 081c2b4ca1f4c724e9f3ae2ecedc03c3,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].TradeIsPossible
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -495,6 +535,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shady Shopkeep
       objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b5349cb0746d7c46b8b4b37dafc297e,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: a942cf1638829df488725379b2d4fab7,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -523,7 +580,8 @@ PrefabInstance:
         type: 3}
       propertyPath: requiredCard
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: a072bbab54e22d14f9258db69fc354d6,
+        type: 2}
     - target: {fileID: 3630262091862132011, guid: 2a2e453ba175cbc4c9579c670db15878,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -800,6 +858,28 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fruit Preistess
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: a942cf1638829df488725379b2d4fab7,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: ad8e6a92f388f7b499a3c6f6cb32d9bf,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].TradeIsPossible
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

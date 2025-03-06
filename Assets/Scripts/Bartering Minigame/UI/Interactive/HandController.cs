@@ -41,6 +41,8 @@ public class HandController : MonoBehaviour
     [SerializeField]
     private AudioEvent cardSelectSFX;
     [SerializeField]
+    private AudioEvent cardHoverSFX;
+    [SerializeField]
     private AudioEvent cardPlaceSFX;
     [SerializeField]
     private AudioEvent cardShuffleSFX;
@@ -220,7 +222,7 @@ public class HandController : MonoBehaviour
         // While under a Canvas, this makes this DisplayCard render on top of its siblings.
         card.transform.SetAsLastSibling();
 
-        // TODO: Play hover SFX
+        //cardHoverSFX.Play(gameObject);
     }
 
     private void OnCardDragStart(DisplayCard card)

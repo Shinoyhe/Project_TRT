@@ -13,17 +13,16 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID BART_0_CORRECT = 3855663406U;
-        static const AkUniqueID BART_1_CORRECT = 1852144075U;
-        static const AkUniqueID BART_2_CORRECT = 1309566264U;
-        static const AkUniqueID BART_3_CORRECT = 3315406357U;
+        static const AkUniqueID BART_CARD_HIGHLIGHT = 2034897212U;
         static const AkUniqueID BART_CARD_PLACE = 3630843069U;
         static const AkUniqueID BART_CARD_SELECT = 349408092U;
         static const AkUniqueID BART_CARD_SHUFFLE = 362751767U;
         static const AkUniqueID ENV_INTERACTION_ARROW_HIDE = 3804709036U;
         static const AkUniqueID ENV_INTERACTION_ARROW_SHOW = 1995159183U;
         static const AkUniqueID ITEMPICKUP = 1851462748U;
+        static const AkUniqueID LIGHTAMBIENCE = 2186217851U;
         static const AkUniqueID MUSICSTATEACTIVE = 1623677187U;
+        static const AkUniqueID MUSICSTATEBARTER = 4269622689U;
         static const AkUniqueID MUSICSTATEBARTERING = 237747687U;
         static const AkUniqueID MUSICSTATECALM = 821441420U;
         static const AkUniqueID MUSICSTATEPLAYERSPAWN = 1031159975U;
@@ -43,6 +42,7 @@ namespace AK
             namespace STATE
             {
                 static const AkUniqueID ACTIVE = 58138747U;
+                static const AkUniqueID BARTER = 644073513U;
                 static const AkUniqueID CALM = 3753286132U;
                 static const AkUniqueID MAILBOTBARTER = 1029337087U;
                 static const AkUniqueID NONE = 748895195U;

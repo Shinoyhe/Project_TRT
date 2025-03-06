@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A unique music management tool that triggers the music manager to a new state upon the player entering its trigger colldier
+/// A unique music management game object that triggers the music manager to a new state upon the player entering its trigger colldier
 /// </summary>
 public class MusicTransitionTrigger : MonoBehaviour
 {

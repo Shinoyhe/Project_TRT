@@ -5,6 +5,17 @@
 			<ChildrenList>
 				<RandomSequenceContainer Name="ENV_Player_Footstep_Wood" ID="{9CFE7BAE-E125-433B-A540-75575CBD6778}" ShortID="499648444">
 					<PropertyList>
+						<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+						<Property Name="MaxSoundPerInstance" Type="int16">
+							<ValueList>
+								<Value>2</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseMaxSoundPerInstance" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>-8</Value>

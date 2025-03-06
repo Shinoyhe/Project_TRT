@@ -7,12 +7,14 @@ Event	ID	Name			Wwise Object Path	Notes
 	1917263390	StopMusic			\Music\MusicEvents\StopMusic	
 	2170724709	ResumeMusic			\Music\MusicEvents\ResumeMusic	
 	3827058668	StartMusic			\Music\MusicEvents\StartMusic	
+	4269622689	MusicStateBarter			\Music\MusicEvents\MusicStateBarter	
 
 State Group	ID	Name			Wwise Object Path	Notes
 	1021618141	MusicState			\Default Work Unit\MusicState	
 
 State	ID	Name	State Group			Notes
 	58138747	Active	MusicState			
+	644073513	Barter	MusicState			
 	748895195	None	MusicState			
 	1029337087	MailbotBarter	MusicState			
 	2064283983	PlayerSpawn	MusicState			

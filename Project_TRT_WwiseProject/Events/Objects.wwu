@@ -14,6 +14,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="LightAmbience" ID="{CC3667E0-DF10-4CAC-BB2A-090285B6DE58}">
+					<ChildrenList>
+						<Action Name="" ID="{0A4B57B5-2DD5-488C-A67A-A749784F6C66}" ShortID="381138266">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Dummy_Fluorescent_Light" ID="{7111DF1D-D54F-42BC-BB9B-F74806589335}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

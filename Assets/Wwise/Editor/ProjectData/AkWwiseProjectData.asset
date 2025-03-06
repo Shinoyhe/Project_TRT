@@ -106,7 +106,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\SFX
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
-    m_lastTime: -8584611495881881132
+    m_lastTime: -8584604687189568584
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -137,11 +137,11 @@ MonoBehaviour:
     ParentPath: Events\UI\BarteringUI
     guid: 40c947321f41084491c4b5b163ca6270
     GuidInternal: 
-    m_lastTime: -8584612490384138139
+    m_lastTime: -8584604687189653225
     List:
-    - name: BART_0_Correct
-      guid: df9024692129844587e66e327a8b7c78
-      id: 3855663406
+    - name: BART_Card_Highlight
+      guid: 1f67dee5ae9fef46af0060bf6c4b6c39
+      id: 2034897212
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -152,85 +152,13 @@ MonoBehaviour:
       - ElementName: BarteringUI
         ObjectType: 12
         guid: 40c947321f41084491c4b5b163ca6270
-      - ElementName: BART_Scored_Hands
-        ObjectType: 4
-        guid: a7d842d121ce554bafc673b2b4509b5c
-      - ElementName: BART_0_Correct
+      - ElementName: BART_Card_Highlight
         ObjectType: 3
-        guid: df9024692129844587e66e327a8b7c78
-      Path: Events\UI\BarteringUI\BART_Scored_Hands\BART_0_Correct
+        guid: 1f67dee5ae9fef46af0060bf6c4b6c39
+      Path: Events\UI\BarteringUI\BART_Card_Highlight
       maxAttenuation: 0
-      maxDuration: 1.05
-      minDuration: 1.05
-    - name: BART_1_Correct
-      guid: bcc9a9ec503aeb4a9c75d9e517675d7e
-      id: 1852144075
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: UI
-        ObjectType: 12
-        guid: 75f867dc1a9906498df4975d819bec40
-      - ElementName: BarteringUI
-        ObjectType: 12
-        guid: 40c947321f41084491c4b5b163ca6270
-      - ElementName: BART_Scored_Hands
-        ObjectType: 4
-        guid: a7d842d121ce554bafc673b2b4509b5c
-      - ElementName: BART_1_Correct
-        ObjectType: 3
-        guid: bcc9a9ec503aeb4a9c75d9e517675d7e
-      Path: Events\UI\BarteringUI\BART_Scored_Hands\BART_1_Correct
-      maxAttenuation: 0
-      maxDuration: 0.73
-      minDuration: 0.73
-    - name: BART_2_Correct
-      guid: 48f39463e442ce4f9b3f612376665e35
-      id: 1309566264
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: UI
-        ObjectType: 12
-        guid: 75f867dc1a9906498df4975d819bec40
-      - ElementName: BarteringUI
-        ObjectType: 12
-        guid: 40c947321f41084491c4b5b163ca6270
-      - ElementName: BART_Scored_Hands
-        ObjectType: 4
-        guid: a7d842d121ce554bafc673b2b4509b5c
-      - ElementName: BART_2_Correct
-        ObjectType: 3
-        guid: 48f39463e442ce4f9b3f612376665e35
-      Path: Events\UI\BarteringUI\BART_Scored_Hands\BART_2_Correct
-      maxAttenuation: 0
-      maxDuration: 1.09
-      minDuration: 1.09
-    - name: BART_3_Correct
-      guid: cbefe0984b821246bf9f035718d4f8ec
-      id: 3315406357
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: UI
-        ObjectType: 12
-        guid: 75f867dc1a9906498df4975d819bec40
-      - ElementName: BarteringUI
-        ObjectType: 12
-        guid: 40c947321f41084491c4b5b163ca6270
-      - ElementName: BART_Scored_Hands
-        ObjectType: 4
-        guid: a7d842d121ce554bafc673b2b4509b5c
-      - ElementName: BART_3_Correct
-        ObjectType: 3
-        guid: cbefe0984b821246bf9f035718d4f8ec
-      Path: Events\UI\BarteringUI\BART_Scored_Hands\BART_3_Correct
-      maxAttenuation: 0
-      maxDuration: 0.78
-      minDuration: 0.78
+      maxDuration: 1.4641732
+      minDuration: 1.3044299
     - name: BART_Card_Place
       guid: 70703cae49201248868554261706e95e
       id: 3630843069
@@ -291,26 +219,6 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 1.0679057
       minDuration: 1.0506803
-    - name: BART_Scored_Hands
-      guid: a7d842d121ce554bafc673b2b4509b5c
-      id: 3018713218
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: UI
-        ObjectType: 12
-        guid: 75f867dc1a9906498df4975d819bec40
-      - ElementName: BarteringUI
-        ObjectType: 12
-        guid: 40c947321f41084491c4b5b163ca6270
-      - ElementName: BART_Scored_Hands
-        ObjectType: 4
-        guid: a7d842d121ce554bafc673b2b4509b5c
-      Path: Events\UI\BarteringUI\BART_Scored_Hands
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
   - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Events
@@ -404,7 +312,7 @@ MonoBehaviour:
     ParentPath: Events\Music
     guid: 1baa49cfe5a4fe438cbe031c55500853
     GuidInternal: 
-    m_lastTime: -8584615901118819950
+    m_lastTime: -8584610641831790774
     List:
     - name: MusicEvents
       guid: bb98cb8f8639c644980fd12d17cb9504
@@ -440,6 +348,26 @@ MonoBehaviour:
         ObjectType: 3
         guid: b5e755e895d52648ad8a374f605fcf53
       Path: Events\Music\MusicEvents\MusicStateActive
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: MusicStateBarter
+      guid: 90fc9d181ef01244bd9d62d38c8e0814
+      id: 4269622689
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStateBarter
+        ObjectType: 3
+        guid: 90fc9d181ef01244bd9d62d38c8e0814
+      Path: Events\Music\MusicEvents\MusicStateBarter
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -597,7 +525,7 @@ MonoBehaviour:
     ParentPath: Events\Environment\Objects
     guid: f53d68a94c6e354d9f4eeee3b0dcd364
     GuidInternal: 
-    m_lastTime: -8584611518402013613
+    m_lastTime: -8584611427090236385
     List:
     - name: ItemPickup
       guid: a49014c5961d434a9e487d2d5ea73295
@@ -617,8 +545,28 @@ MonoBehaviour:
         guid: a49014c5961d434a9e487d2d5ea73295
       Path: Events\Environment\Objects\ItemPickup
       maxAttenuation: 0
-      maxDuration: 2.634626
-      minDuration: 2.634626
+      maxDuration: 3.0508883
+      minDuration: 3.0508883
+    - name: LightAmbience
+      guid: e06736cc10dfac4cbb2a090285b6de58
+      id: 2186217851
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Objects
+        ObjectType: 12
+        guid: f53d68a94c6e354d9f4eeee3b0dcd364
+      - ElementName: LightAmbience
+        ObjectType: 3
+        guid: e06736cc10dfac4cbb2a090285b6de58
+      Path: Events\Environment\Objects\LightAmbience
+      maxAttenuation: 20
+      maxDuration: 0
+      minDuration: 0
   - PhysicalPath: Events\Player.wwu
     PathAndIcons:
     - ElementName: Events
@@ -694,7 +642,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: e6b79552b8b0634f8a967d61276f57fa
     GuidInternal: 
-    m_lastTime: -8584617606561080649
+    m_lastTime: -8584610641831879784
     List:
     - name: MusicState
       guid: 5df940ae313415468d9b77fe40be0b6c
@@ -727,6 +675,22 @@ MonoBehaviour:
         - ElementName: Active
           ObjectType: 8
           guid: b58baea42db1fe49889416968c8d3d71
+      - name: Barter
+        guid: f5e3f74baa3c3145b914d1278d66757c
+        id: 644073513
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e6b79552b8b0634f8a967d61276f57fa
+        - ElementName: MusicState
+          ObjectType: 9
+          guid: 5df940ae313415468d9b77fe40be0b6c
+        - ElementName: Barter
+          ObjectType: 8
+          guid: f5e3f74baa3c3145b914d1278d66757c
       - name: Calm
         guid: 2c6f914aa7fe72419c63fc5255a5ba9d
         id: 3753286132
@@ -837,7 +801,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000a0000000b0000000c0000000e000000100000001200000017000000
+  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000a0000000c0000000d0000000e000000100000001200000017000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

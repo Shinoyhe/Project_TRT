@@ -116,6 +116,20 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="MusicStateBarter" ID="{189DFC90-F01E-4412-BD9D-62D38C8E0814}">
+							<ChildrenList>
+								<Action Name="" ID="{66DBBFF9-5F98-4BBD-995F-207FBBC92839}" ShortID="432984702">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Barter" ID="{4BF7E3F5-3CAA-4531-B914-D1278D66757C}" WorkUnitID="{5295B7E6-B0B8-4F63-8A96-7D61276F57FA}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

@@ -24,7 +24,7 @@ public static class MusicActionsManager
     }
 
     /// <summary>
-    /// Public function for music transition triggers to revert to a previous.
+    /// Public function for other scripts to revert to the previously used state.
     /// </summary>
     public static void ChangeToPreviousMusicState()
     {

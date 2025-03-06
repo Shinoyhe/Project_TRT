@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{2CAF7C27-18E4-40A7-871C-C075A9250659}",
     "Language": "SFX",
-    "Hash": "{6DCC04F6-1A4A-DB98-D084-ABBF5C3C4F43}",
+    "Hash": "{FFA124A7-E5A4-D501-A73B-832441075462}",
     "ObjectPath": "\\SoundBanks\\Music\\Music",
     "ShortName": "Music",
     "Path": "Music.bnk",
@@ -65,6 +65,25 @@
         "Name": "Active",
         "ObjectPath": "\\States\\Default Work Unit\\MusicState\\Active",
         "GUID": "{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}"
+       }
+      ]
+     },
+     {
+      "Id": "4269622689",
+      "Name": "MusicStateBarter",
+      "ObjectPath": "\\Events\\Music\\MusicEvents\\MusicStateBarter",
+      "GUID": "{189DFC90-F01E-4412-BD9D-62D38C8E0814}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "ActionSetState": [
+       {
+        "GroupId": "1021618141",
+        "Id": "644073513",
+        "Name": "Barter",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicState\\Barter",
+        "GUID": "{4BF7E3F5-3CAA-4531-B914-D1278D66757C}"
        }
       ]
      },
@@ -393,6 +412,12 @@
         "GUID": "{A4AE8BB5-B12D-49FE-8894-16968C8D3D71}"
        },
        {
+        "Id": "644073513",
+        "Name": "Barter",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicState\\Barter",
+        "GUID": "{4BF7E3F5-3CAA-4531-B914-D1278D66757C}"
+       },
+       {
         "Id": "748895195",
         "Name": "None",
         "ObjectPath": "\\States\\Default Work Unit\\MusicState\\None",
@@ -421,6 +446,6 @@
     ]
    }
   ],
-  "FileHash": "{5E251033-84DE-4287-7BEE-4222B6DFA272}"
+  "FileHash": "{E8407B58-A06F-C10E-36A5-523DEF632C5E}"
  }
 }

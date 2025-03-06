@@ -37,6 +37,11 @@ public class NpcInteractable : Interactable
 
         GameManager.PlayerInput.IsActive = false;
 
+        InitBarterStarter();
+    }
+
+    private void InitBarterStarter()
+    {
         // Set up the settings for the BarterStarter
         BarterStarter barterStarter = GameManager.BarterStarter;
 

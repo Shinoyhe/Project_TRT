@@ -8,6 +8,7 @@ public class NpcInteractable : Interactable
 
     [BoxGroup("Trade Settings")] public Trades PossibleTrades;
 
+    [BoxGroup("Barter Settings")] public NPCData NpcData;
     [BoxGroup("Barter Settings")] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings")] public BarterNeutralBehavior BarterNeutralBehaviour;
     [BoxGroup("Barter Settings"), Range(0, 25)] public float BaseDecay = 1;
@@ -44,6 +45,12 @@ public class NpcInteractable : Interactable
     {
         // Set up the settings for the BarterStarter
         BarterStarter barterStarter = GameManager.BarterStarter;
+
+        if (NpcData != null) { 
+            barterStarter.NpcData = NpcData;
+        } else {
+            Debug.LogError("BarterStarter: Could not find NpcData");
+        }
 
         if (BarterResponseMatrix != null) {
             barterStarter.BarterResponseMatrix = BarterResponseMatrix;

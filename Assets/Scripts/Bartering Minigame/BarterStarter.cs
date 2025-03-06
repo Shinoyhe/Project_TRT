@@ -7,6 +7,7 @@ public class BarterStarter : MonoBehaviour
     [SerializeField] private GameObject barterContainerPrefab;
     [SerializeField] private GameObject presentItemPrefab;
 
+    [BoxGroup("Barter Settings"), ReadOnly] public NPCData NpcData;
     [BoxGroup("Barter Settings"), ReadOnly] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings"), ReadOnly] public BarterNeutralBehavior BarterNeutralBehaviour;
     [BoxGroup("Barter Settings"), ReadOnly] public Trades PossibleTrades;
@@ -42,6 +43,12 @@ public class BarterStarter : MonoBehaviour
 
         // Set up the BarterDirector settings
         _barterDirector.InitializeWillingness(StartingWillingness);
+
+        if (NpcData != null) { 
+            _barterDirector.NpcData = NpcData;
+        } else {
+            Debug.LogError("BarterStarter: Could not find NpcData");
+        }
 
         if (BarterResponseMatrix != null) { 
             _barterDirector.BarterResponses = BarterResponseMatrix;

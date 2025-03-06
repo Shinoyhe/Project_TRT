@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf5943d399a0e540a80a0341cd79c25, type: 3}
+  m_Name: GoalCard_0
+  m_EditorClassIdentifier: 
+  CardName: Goal Card 0
+  Type: 1
+  ID: goal_card_0
+  Description: Your first successful trade!
+  Sprite: {fileID: 21300000, guid: 8ac044cdb15666648ab5c65a83f2027c, type: 3}
+  StartingLocation: Your Mom's House's House
+  ContextData:
+  - origin: 0
+    contextInfo:
+      relevant: 1
+      context: Hi :)
+  - origin: 1
+    contextInfo:
+      relevant: 1
+      context: Yeah I know about this one
+  - origin: 2
+    contextInfo:
+      relevant: 1
+      context: hell eyah

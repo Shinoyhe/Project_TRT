@@ -7,17 +7,24 @@ public class BarterStarter : MonoBehaviour
 {
     // Parameters =================================================================================
     [SerializeField] private GameObject barterContainerPrefab;
+    [SerializeField] private GameObject presentItemPrefab;
 
     [BoxGroup("Barter Settings"), ReadOnly] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings"), ReadOnly] public BarterNeutralBehavior BarterNeutralBehaviour;
-    [BoxGroup("Barter Settings"), ReadOnly] public InventoryCardData PrizeCard;
+    [BoxGroup("Barter Settings"), ReadOnly] public Trades PossibleTrades;
+    [BoxGroup("Barter Settings"), ReadOnly] public Trade CurrentTrade;
     [BoxGroup("Barter Settings"), ReadOnly] public float DecayPerSecond = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerFail = -5;
     [BoxGroup("Barter Settings"), ReadOnly] public float StartingWillingness = 50;
 
+    // Win/Lose Actions
+    public System.Action OnWin;
+    public System.Action OnLose;
+
     // Misc Internal Variables ====================================================================
     private GameObject _barterInstance;
+    private GameObject _itemPresentInstance;
 
     // Public Functions ===========================================================================
 
@@ -80,11 +87,21 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     void WinBarter()
     {
-        if (PrizeCard != null)
+        if (CurrentTrade != null)
         {
-            GameManager.Inventory.AddCard(PrizeCard);
+            GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
+
+            if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM)
+            {
+                GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
+            }
+
+        } else
+        {
+            Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }
         CleanupBarter();
+        OnWin?.Invoke();
     }
 
     /// <summary>
@@ -93,6 +110,7 @@ public class BarterStarter : MonoBehaviour
     void LoseBarter()
     {
         CleanupBarter();
+        OnLose?.Invoke();
     }
 
     /// <summary>
@@ -102,5 +120,47 @@ public class BarterStarter : MonoBehaviour
     {
         Destroy(_barterInstance);
         GameManager.PlayerInput.IsActive = true;
+    }
+
+    // PresentItem Methods =========================================================================
+
+    public void PresentItem()
+    {
+        _itemPresentInstance = Instantiate(presentItemPrefab, GameManager.MasterCanvas.transform);
+        RectTransform rectTransform = _itemPresentInstance.GetComponent<RectTransform>();
+
+        PresentItem presentItem = _itemPresentInstance.GetComponent<PresentItem>();
+        presentItem.PossibleTrades = PossibleTrades;
+        presentItem.OnAccepted += AcceptTrade;
+        presentItem.OnClosed += CloseTrade;
+
+        GameManager.PlayerInput.IsActive = false;
+
+        if (TimeLoopManager.Instance != null)
+        {
+            TimeLoopManager.SetLoopPaused(true);
+        }
+    }
+
+    void AcceptTrade()
+    {
+        CleanupPresentationCanvas(false);
+        StartBarter();
+    }
+
+    void CloseTrade()
+    {
+        CleanupPresentationCanvas(true);
+    }
+
+    void CleanupPresentationCanvas(bool enablePlayerInput)
+    {
+        Destroy(_itemPresentInstance);
+        GameManager.PlayerInput.IsActive = enablePlayerInput;
+
+        if (TimeLoopManager.Instance != null)
+        {
+            TimeLoopManager.SetLoopPaused(false);
+        }
     }
 }

@@ -17,11 +17,14 @@ public class DialogueUiManager : MonoBehaviour {
     public List<Button> UiButtons;
     public List<TMP_Text> UiButtonsText;
     public Canvas RenderCanvas;
-    public GameObject SpeechBubblePrefab;
+    public GameObject SpeechBubbleLeftPrefab;
+    public GameObject SpeechBubbleRightPrefab;
+
     public Vector2 CreateNewBubblePoint;
 
     [Header("Speaking Settings")]
     public float TextSpeed = 0.05f;
+    public float LinePadding = 20f;
 
     [HideInInspector]
     public delegate void CallAfterLineFinished();
@@ -33,6 +36,7 @@ public class DialogueUiManager : MonoBehaviour {
     private List<SpeechBubbleCore> _bubbles = new List<SpeechBubbleCore>();
 
     private class LineInformation {
+        public string Text = "";
         public int TotalCharacters = 0;
         public bool FinishedTyping = false;
         public CallAfterLineFinished Callback = null;
@@ -68,29 +72,33 @@ public class DialogueUiManager : MonoBehaviour {
 
         foreach(SpeechBubbleCore x in _bubbles) {
             float lastHeight = _bubbles[_bubbles.Count - 1].gameObject.GetComponent<RectTransform>().sizeDelta.y;
-            x.gameObject.transform.position += new Vector3(0, lastHeight,0);
+            x.gameObject.transform.position += new Vector3(0, lastHeight + LinePadding,0);
         }
 
+        GameObject prefabToCreate;
+
         // Create new speech bubble
-        GameObject bubble = Instantiate(SpeechBubblePrefab, new Vector2(1920/2,1080/2), Quaternion.identity, RenderCanvas.gameObject.transform);
+        if (foundTags.IsNpcTalking) {
+            prefabToCreate = SpeechBubbleRightPrefab;
+        } else {
+            prefabToCreate = SpeechBubbleLeftPrefab;
+        }
+
+        GameObject bubble = Instantiate(prefabToCreate, new Vector2(1920/2,1080/2), Quaternion.identity, RenderCanvas.gameObject.transform);
         SpeechBubbleCore currentBubble = bubble.GetComponent<SpeechBubbleCore>();
         _bubbles.Add(currentBubble);
 
         if (foundTags.IsNpcTalking) {
-            currentBubble.Init(true);
-            bubble.transform.position += new Vector3(100, 0, 0);
+            bubble.transform.position += new Vector3(350, 0, 0);
         } else {
-            currentBubble.Init(false);
-            bubble.transform.position -= new Vector3(100, 0, 0);
+            bubble.transform.position -= new Vector3(350, 0, 0);
         }
 
         _currentTextBox = currentBubble.Text;
 
-        _currentTextBox.maxVisibleCharacters = 0;
-        _currentTextBox.text = text;
-
         _currentLineData = new LineInformation();
         _currentLineData.TotalCharacters = text.Length;
+        _currentLineData.Text = text;
         _currentLineData.Callback = callAfterLineFinished;
 
         // Start Printing
@@ -102,7 +110,8 @@ public class DialogueUiManager : MonoBehaviour {
     /// </summary>
     public void SkipLineAnimation() {
         StopCoroutine(NextCharacter());
-        _currentTextBox.maxVisibleCharacters = _currentLineData.TotalCharacters;
+        _currentTextBox.text = _currentLineData.Text;
+        _currentTextBox.maxVisibleCharacters = _currentLineData.Text.Length-1;
         EndLineOfText();
     }
 
@@ -178,9 +187,9 @@ public class DialogueUiManager : MonoBehaviour {
             Debug.LogError("Called next character when no textBox is set.");
         }
 
-        int index = Mathf.Clamp(_currentTextBox.maxVisibleCharacters, 0, _currentTextBox.text.Length - 1);
+        int index = Mathf.Clamp(_currentTextBox.text.Length, 0, _currentLineData.Text.Length - 1);
 
-        char currentCharacter = _currentTextBox.text[index];
+        char currentCharacter = _currentLineData.Text[index];
 
         float actualTextSpeed = TextSpeed;
 
@@ -196,9 +205,9 @@ public class DialogueUiManager : MonoBehaviour {
         }
 
         // Show next character
-        _currentTextBox.maxVisibleCharacters += 1;
+        _currentTextBox.text += currentCharacter;
 
-        bool textFinished = _currentTextBox.maxVisibleCharacters >= _currentLineData.TotalCharacters;
+        bool textFinished = _currentTextBox.text.Length >= _currentLineData.TotalCharacters;
         if (textFinished) {
             EndLineOfText();
         } else {

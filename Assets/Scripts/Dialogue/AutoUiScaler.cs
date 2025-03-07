@@ -1,3 +1,4 @@
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -8,9 +9,11 @@ public class AutoUiScaler : MonoBehaviour {
     public float LineLength = 700;
 
     private bool _readyToRescale = false;
+    private TMP_TextInfo _info;
 
     // Start is called before the first frame update
     void Start() {
+        _info = TextForScale.textInfo;
         TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ScaleToText);
     }
 
@@ -28,20 +31,21 @@ public class AutoUiScaler : MonoBehaviour {
 
         if (_readyToRescale == false) return;
 
-
-        float textWidth = TextForScale.renderedWidth;
+        if (_info.lineCount == 0) return;
+        float textWidth = _info.lineInfo[_info.lineCount - 1].width;
+        float textActualWidth = TextForScale.renderedWidth;
         float textHeight = TextForScale.renderedHeight;
 
-        if(textWidth >= 1) {
-            Debug.Log(LineLength);
+        if (textWidth >= 1) {
+            // Debug.Log(textWidth);
             if (textWidth > LineLength) {
-                RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, textHeight + Padding);
+                RectTransform.sizeDelta = new Vector2(textActualWidth + Padding, textHeight + Padding);
             } else {
-                RectTransform.sizeDelta = new Vector2(textWidth + Padding, RectTransform.sizeDelta.y);
+                RectTransform.sizeDelta = new Vector2(textActualWidth + Padding, RectTransform.sizeDelta.y);
             }
         }
-        if (textHeight >= 1) {
-           // RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, textHeight + Padding);
-        }
+       /* if (textHeight >= 1) {
+            // RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, textHeight + Padding);
+        }*/
     }
 }

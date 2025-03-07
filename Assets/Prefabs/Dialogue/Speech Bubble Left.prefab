@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 439309820371903888}
   - component: {fileID: -3004283410562188248}
   m_Layer: 0
-  m_Name: Speech Bubble
+  m_Name: Speech Bubble Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,11 +35,11 @@ RectTransform:
   - {fileID: 2267521994576648806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 460, y: 665}
-  m_SizeDelta: {x: 700, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 40, y: -284}
+  m_SizeDelta: {x: 50, y: 100}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &794701876304840855
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
   TextForScale: {fileID: 27500488730552972}
   RectTransform: {fileID: 3487943576332031153}
   Padding: 50
-  LineLength: 700
+  LineLength: 670
 --- !u!114 &-3004283410562188248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,11 +142,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3487943576332031153}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 8, y: 0}
-  m_SizeDelta: {x: 0, y: -16}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 15, y: 0}
+  m_SizeDelta: {x: 670, y: 84}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &7258374531854510783
 CanvasRenderer:
   m_ObjectHideFlags: 0

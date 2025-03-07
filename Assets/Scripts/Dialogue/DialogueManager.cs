@@ -12,7 +12,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dependencies")]
     [SerializeField, Tooltip("The prefab for dialogue UI.")]
-    private GameObject dialogueUiPrefab;
+    private DialogueUiManager DialogueUiManager;
 
     public struct ProcessedTags {
 
@@ -30,8 +30,6 @@ public class DialogueManager : MonoBehaviour
     private bool _inConversation;
     private bool _onDelay;
     private Story _currentStory;
-    private DialogueUiManager _dialogueUiManager;
-    private GameObject _dialogueUiInstance;
 
     // Initializers and Update ================================================================
 
@@ -49,10 +47,10 @@ public class DialogueManager : MonoBehaviour
         // Check for Player Input
         if (GameManager.UiInput.GetProgressDialogueDown()) {
 
-            if (_dialogueUiManager.IsLineFinished()) {
+            if (DialogueUiManager.IsLineFinished()) {
                 ShowNextLine();
             } else {
-                _dialogueUiManager.SkipLineAnimation();
+                DialogueUiManager.SkipLineAnimation();
             }
 
         }
@@ -75,7 +73,7 @@ public class DialogueManager : MonoBehaviour
         TimeLoopManager.SetLoopPaused(true);
 
         // Create UI instance
-        _dialogueUiManager = SetupUi(npcBubblePos, GameManager.Player.Transform.position);
+        SetupUi(npcBubblePos, GameManager.Player.Transform.position);
 
         // Parse Ink File
         _currentStory = new Story(inkJson.text);
@@ -91,59 +89,47 @@ public class DialogueManager : MonoBehaviour
     public void ShowChoicesCallBack()
     {
 
-        if (_dialogueUiManager == null) {
+        if (DialogueUiManager == null) {
             ThrowNullError("ShowChoicesCallBack()", "DialogueUiManager");
         }
 
-        _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
+        DialogueUiManager.ShowChoices(_currentStory.currentChoices);
     }
 
     // Private Helper Methods ====================================================================
 
     /// <summary>
-    /// Instantiate dialogue UI in scene.
+    /// Set up the dialogue UI in scene.
     /// </summary>
     /// <param name="npcBubblePos"> World pos of NPC Speech bubble. </param>
     /// <param name="playerBubblePos"> World pos of Player Speech bubble. </param>
-    /// <returns> The Dialogue UI's manager script. </returns>
-    DialogueUiManager SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos)
+    void SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos)
     {
 
-        if (dialogueUiPrefab == null) {
-            ThrowNullError("SetupUi()", "DialogueUiPrefab");
+        if (DialogueUiManager == null) {
+            ThrowNullError("SetupUi()", "instancedDialogueUiCanvas");
         }
 
-        _dialogueUiInstance = Instantiate(dialogueUiPrefab, Vector3.zero, Quaternion.identity, 
-                                          GameManager.MasterCanvas.transform);
-
-        if (_dialogueUiInstance == null) {
-            ThrowNullError("SetupUi()", "DialogueUiInstance");
-        }
-
-        DialogueUiManager dialogueUiManager = _dialogueUiInstance.GetComponent<DialogueUiManager>();
-
-        dialogueUiManager.PairChoices(ProcessDialogueChoice);
-        dialogueUiManager.SetupUi(npcBubblePos, playerBubblePos);
-
-        return dialogueUiManager;
+        DialogueUiManager.gameObject.SetActive(true);
+        DialogueUiManager.SetupUi();
     }
 
     /// <summary>
     /// Processes player input and displays the next line.
     /// </summary>
     /// <param name="choiceIndex"></param>
-    void ProcessDialogueChoice(int choiceIndex)
+    public void ProcessDialogueChoice(int choiceIndex)
     {
 
-        if (_dialogueUiManager == null) {
+        if (DialogueUiManager == null) {
             ThrowNullError("ProcessDialogueChoice()", "dialougeUiManager");
         }
         if (_currentStory == null) {
             ThrowNullError("ProcessDialogueChoice()", "story instance");
         }
-
+       
         _currentStory.ChooseChoiceIndex(choiceIndex);
-        _dialogueUiManager.HideChoices();
+        DialogueUiManager.HideChoices();
         ShowNextLine();
     }
 
@@ -201,9 +187,9 @@ public class DialogueManager : MonoBehaviour
         // Queue next line
         bool lineHasChoices = _currentStory.currentChoices.Count > 0;
         if (lineHasChoices) {
-            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags, ShowChoicesCallBack);
+            DialogueUiManager.DisplayLineOfText(nextLine, foundTags, ShowChoicesCallBack);
         } else {
-            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags);
+            DialogueUiManager.DisplayLineOfText(nextLine, foundTags);
         }
     }
 
@@ -250,11 +236,11 @@ public class DialogueManager : MonoBehaviour
     {
         _inConversation = false;
         _currentStory = null;
-        _dialogueUiManager = null;
 
         TimeLoopManager.SetLoopPaused(false);
 
-        Destroy(_dialogueUiInstance);
+        DialogueUiManager.Reset();
+        DialogueUiManager.gameObject.SetActive(false);
         GameManager.PlayerInput.IsActive = enablePlayerInput;
         _onDelay = true;
         StartCoroutine(ConversationDelay());

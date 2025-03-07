@@ -18,6 +18,7 @@ public class DialogueUiManager : MonoBehaviour {
     public List<TMP_Text> UiButtonsText;
     public Canvas RenderCanvas;
     public GameObject SpeechBubblePrefab;
+    public Vector2 CreateNewBubblePoint;
 
     [Header("Speaking Settings")]
     public float TextSpeed = 0.05f;
@@ -29,20 +30,7 @@ public class DialogueUiManager : MonoBehaviour {
     // Misc Internal Variables ====================================================================
     private TMP_Text _currentTextBox;
 
-    private SpeechBubble _npcBubble;
-    private SpeechBubble _playerBubble;
-
-    private class SpeechBubble {
-        public GameObject GameObject;
-        public TMP_Text Text;
-
-        public void Hide() {
-            GameObject.SetActive(false);
-        }
-        public void Show() {
-            GameObject.SetActive(true);
-        }
-    }
+    private List<SpeechBubbleCore> _bubbles = new List<SpeechBubbleCore>();
 
     private class LineInformation {
         public int TotalCharacters = 0;
@@ -53,24 +41,20 @@ public class DialogueUiManager : MonoBehaviour {
 
     // Public Utility Methods ====================================================================
 
-    /// <summary>
-    /// Setup UI with two speakers.
-    /// </summary>
-    /// <param name="speakerA"></param>
-    /// <param name="speakerB"></param>
-    public void SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos) {
+    public void Reset() {
 
-        _npcBubble = new SpeechBubble();
-        _playerBubble = new SpeechBubble();
+        foreach (SpeechBubbleCore x in _bubbles) {
+            Destroy(x.gameObject);
+        }
+        for (int i = 0; i < UiButtons.Count; i++) {
+            UiButtons[i].onClick.RemoveAllListeners();
+        }
 
-        // Setup NPC bubble
-        _npcBubble.GameObject = CreateSpeechBubble(npcBubblePos);
-        _npcBubble.Text = _npcBubble.GameObject.GetComponentInChildren<TMP_Text>();
 
-        // Setup Player bubble
-        _playerBubble.GameObject = CreateSpeechBubble(playerBubblePos);
-        _playerBubble.Text = _playerBubble.GameObject.GetComponentInChildren<TMP_Text>();
+        _bubbles.Clear();
+    }
 
+    public void SetupUi() {
         HideChoices();
     }
 
@@ -82,16 +66,17 @@ public class DialogueUiManager : MonoBehaviour {
     /// <param name="callAfterLineFinished"> Callback after line of text is fully displayed.</param>
     public void DisplayLineOfText(string text, DialogueManager.ProcessedTags foundTags, CallAfterLineFinished callAfterLineFinished = null) {
 
-        _npcBubble.Hide();
-        _playerBubble.Hide();
-
-        if (foundTags.IsNpcTalking) {
-            _npcBubble.Show();
-            _currentTextBox = _npcBubble.Text;
-        } else {
-            _playerBubble.Show();
-            _currentTextBox = _playerBubble.Text;
+        foreach(SpeechBubbleCore x in _bubbles) {
+            x.gameObject.transform.position += new Vector3(0,100,0);
         }
+
+        // Create new speech bubble
+        GameObject bubble = Instantiate(SpeechBubblePrefab, new Vector2(1920/2,1080/2), Quaternion.identity, RenderCanvas.gameObject.transform);
+        SpeechBubbleCore currentBubble = bubble.GetComponent<SpeechBubbleCore>();
+        _bubbles.Add(currentBubble);
+        currentBubble.Init(foundTags.IsNpcTalking);
+
+        _currentTextBox = currentBubble.Text;
 
         _currentTextBox.maxVisibleCharacters = 0;
         _currentTextBox.text = text;
@@ -114,10 +99,10 @@ public class DialogueUiManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Create Dialogue Choices from array
+    /// Show Ink Dialogue Choices from array
     /// </summary>
-    /// <param name="choices"> The choices to create buttons for. </param>
-    public void SetupChoices(List<Choice> choices) {
+    /// <param name="choices"> Choices in Ink format to display. </param>
+    public void ShowChoices(List<Choice> choices) {
 
         if (choices == null) {
             Debug.LogError("Tried to setup choices with null List reference.");
@@ -149,22 +134,6 @@ public class DialogueUiManager : MonoBehaviour {
             currentButton.gameObject.SetActive(true);
             UiButtonsText[i].text = choices[i].text;
         }
-
-        // Format positions
-        if (numberOfOptions == 1) {
-            UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
-        }
-
-        if (numberOfOptions == 2) {
-            UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-200, 0, 0);
-            UiButtons[1].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(200, 0, 0);
-        }
-
-        if (numberOfOptions == 3) {
-            UiButtons[0].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-400, 0, 0);
-            UiButtons[1].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
-            UiButtons[2].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(400, 0, 0);
-        }
     }
 
     /// <summary>
@@ -177,22 +146,9 @@ public class DialogueUiManager : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Connect UI dialogue buttons to this manager.
-    /// </summary>
-    /// <param name="call"> Callback for Button Clicks. </param>
-    public void PairChoices(CallAfterButtonPress call) {
-
-        if (UiButtons == null || UiButtons.Count == 0) {
-            Debug.LogError("Called PairChoices() with no Ui Buttons added to DialogueUiManager!");
-        }
-
-        for (int i = 0; i < UiButtons.Count; i++) {
-            Button currentButton = UiButtons[i];
-            int currentIndex = i;
-            currentButton.onClick.AddListener(delegate { call(currentIndex); });
-        }
-    }
+    public void ChooseChoiceOne() => GameManager.DialogueManager.ProcessDialogueChoice(0);
+    public void ChooseChoiceTwo() => GameManager.DialogueManager.ProcessDialogueChoice(1);
+    public void ChooseChoiceThree() => GameManager.DialogueManager.ProcessDialogueChoice(2);
 
     public bool IsLineFinished() {
 
@@ -256,29 +212,5 @@ public class DialogueUiManager : MonoBehaviour {
         _currentLineData.FinishedTyping = true;
 
         _currentLineData.Callback?.Invoke();
-    }
-
-    /// <summary>
-    /// Create a Speech Bubble at set position.
-    /// </summary>
-    /// <param name="worldPos"> Position to create bubble. </param>
-    /// <param name="verticalOffset"> How far above worldPos to create bubble. </param>
-    /// <returns></returns>
-    GameObject CreateSpeechBubble(Vector3 worldPos) {
-
-        Vector3 viewportPos = Camera.main.WorldToViewportPoint(worldPos);
-
-        if (RenderCanvas == null) {
-            Debug.LogError("Render Canvas not set in DialogueUiManager.");
-        }
-
-        Vector2 canvasResolution = RenderCanvas.GetComponent<CanvasScaler>().referenceResolution;
-        Vector2 canvasPos = new Vector2(viewportPos.x * canvasResolution.x, viewportPos.y * canvasResolution.y);
-
-        if (SpeechBubblePrefab == null) {
-            Debug.LogError("No Speech Bubble Prefab in DialogueUiManager.");
-        }
-
-        return Instantiate(SpeechBubblePrefab, canvasPos, Quaternion.identity, RenderCanvas.transform);
     }
 }

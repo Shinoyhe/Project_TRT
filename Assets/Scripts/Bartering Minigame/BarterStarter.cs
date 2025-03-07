@@ -184,7 +184,7 @@ public class BarterStarter : MonoBehaviour
     /// <param name="closeCallback">System.Action - invoked when the Journal is closed.</param>
     private void OpenJournal(System.Action closeCallback)
     {
-        _inGameUi.MoveToJournal();
+        _inGameUi.MoveToJournal(NpcData);
 
         _inGameUi.CanvasStateChanged += (oldState, newState) => {
             if (newState == InGameUi.UiStates.Default){

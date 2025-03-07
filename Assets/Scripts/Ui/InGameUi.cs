@@ -105,8 +105,6 @@ public class InGameUi : MonoBehaviour
     public void MoveToTitle() => MoveTo(UiStates.MoveToTitle);
     public void MoveToControls() => MoveTo(UiStates.Controls);
     public void MoveToJournal() => MoveTo(UiStates.Journal);
-    public void MoveToInventory() => MoveTo(UiStates.Inventory);
-    public void MoveToBartering() => MoveTo(UiStates.Bartering);
 
     /// <summary>
     /// Will open the Journal and automatically open the NPC tab to the NPC Data. Will add the NPC if not already known.
@@ -114,11 +112,17 @@ public class InGameUi : MonoBehaviour
     /// <param name="npc">NPCData to be loaded</param>
     public void MoveToJournal(NPCData npc)
     {
-        MoveToJournal();
         Journal.AddNPC(npc);
-        Journal.MoveToNPC();
         Journal.NPC.LoadNPC(npc);
+        Journal.MoveToNPC();
+
+        MoveToJournal();
     }
+
+    public void MoveToInventory() => MoveTo(UiStates.Inventory);
+    public void MoveToBartering() => MoveTo(UiStates.Bartering);
+
+    
 
     // Private Helper Methods ====================================================================
 

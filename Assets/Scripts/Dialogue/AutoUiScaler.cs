@@ -4,7 +4,8 @@ using UnityEngine;
 public class AutoUiScaler : MonoBehaviour {
     public TMP_Text TextForScale;
     public RectTransform RectTransform;
-    public float Padding = 100;
+    public float Padding = 50;
+    public float LineLength = 700;
 
     private bool _readyToRescale = false;
 
@@ -27,10 +28,20 @@ public class AutoUiScaler : MonoBehaviour {
 
         if (_readyToRescale == false) return;
 
+
+        float textWidth = TextForScale.renderedWidth;
         float textHeight = TextForScale.renderedHeight;
 
-        if (textHeight < 1) return;
-
-        RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, textHeight + Padding); 
+        if(textWidth >= 1) {
+            Debug.Log(LineLength);
+            if (textWidth > LineLength) {
+                RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, textHeight + Padding);
+            } else {
+                RectTransform.sizeDelta = new Vector2(textWidth + Padding, RectTransform.sizeDelta.y);
+            }
+        }
+        if (textHeight >= 1) {
+           // RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, textHeight + Padding);
+        }
     }
 }

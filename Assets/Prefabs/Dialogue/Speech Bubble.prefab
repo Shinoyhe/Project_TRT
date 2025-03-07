@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 460, y: 665}
-  m_SizeDelta: {x: 500, y: 100}
+  m_SizeDelta: {x: 700, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &794701876304840855
 CanvasRenderer:
@@ -92,7 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TextForScale: {fileID: 27500488730552972}
   RectTransform: {fileID: 3487943576332031153}
-  Padding: 100
+  Padding: 50
+  LineLength: 700
 --- !u!114 &-3004283410562188248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,7 +175,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Test test test test
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: beb36ce8bcc05f04aa6bed92bc7daf68, type: 2}
   m_sharedMaterial: {fileID: 8441819403635419531, guid: beb36ce8bcc05f04aa6bed92bc7daf68,

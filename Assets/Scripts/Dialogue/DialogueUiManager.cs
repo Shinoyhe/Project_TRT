@@ -67,14 +67,22 @@ public class DialogueUiManager : MonoBehaviour {
     public void DisplayLineOfText(string text, DialogueManager.ProcessedTags foundTags, CallAfterLineFinished callAfterLineFinished = null) {
 
         foreach(SpeechBubbleCore x in _bubbles) {
-            x.gameObject.transform.position += new Vector3(0,100,0);
+            float lastHeight = _bubbles[_bubbles.Count - 1].gameObject.GetComponent<RectTransform>().sizeDelta.y;
+            x.gameObject.transform.position += new Vector3(0, lastHeight,0);
         }
 
         // Create new speech bubble
         GameObject bubble = Instantiate(SpeechBubblePrefab, new Vector2(1920/2,1080/2), Quaternion.identity, RenderCanvas.gameObject.transform);
         SpeechBubbleCore currentBubble = bubble.GetComponent<SpeechBubbleCore>();
         _bubbles.Add(currentBubble);
-        currentBubble.Init(foundTags.IsNpcTalking);
+
+        if (foundTags.IsNpcTalking) {
+            currentBubble.Init(true);
+            bubble.transform.position += new Vector3(100, 0, 0);
+        } else {
+            currentBubble.Init(false);
+            bubble.transform.position -= new Vector3(100, 0, 0);
+        }
 
         _currentTextBox = currentBubble.Text;
 

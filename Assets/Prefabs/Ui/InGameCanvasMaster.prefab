@@ -437,9 +437,10 @@ MonoBehaviour:
   Pause: {fileID: 1592114298821702300}
   Options: {fileID: 1199019207164875209}
   Controls: {fileID: 5705037634653384409}
-  Journal: {fileID: 1285947388402613067}
+  Journal: {fileID: 127065213659051951}
   Inventory: {fileID: 3009812438561937234}
   Bartering: {fileID: 5771083917161067956}
+  _currentCanvasState: 0
 --- !u!223 &837961958174819109
 Canvas:
   m_ObjectHideFlags: 0
@@ -2543,15 +2544,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b6988473f6e9464d81d74cd0c88a8c0, type: 3}
---- !u!224 &512437206933971966 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5728803906371012190, guid: 9b6988473f6e9464d81d74cd0c88a8c0,
+--- !u!114 &127065213659051951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5286991779987952143, guid: 9b6988473f6e9464d81d74cd0c88a8c0,
     type: 3}
   m_PrefabInstance: {fileID: 5232133971892200864}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &1285947388402613067 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 6432508569277914859, guid: 9b6988473f6e9464d81d74cd0c88a8c0,
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c76eaf7e798d084d997b3f530346329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &512437206933971966 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5728803906371012190, guid: 9b6988473f6e9464d81d74cd0c88a8c0,
     type: 3}
   m_PrefabInstance: {fileID: 5232133971892200864}
   m_PrefabAsset: {fileID: 0}

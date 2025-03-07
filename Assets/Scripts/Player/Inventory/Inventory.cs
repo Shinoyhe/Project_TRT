@@ -14,7 +14,13 @@ public class Inventory : MonoBehaviour
     [Header("Inventory")]
     public List<InventoryCardData> StartingCards;
     [SerializeField, ReadOnly] private List<InventoryCard> Cards;
+
     [SerializeField, ReadOnly] private HashSet<InventoryCard> KnownCards;
+
+    [Header("Tone Cards")]
+    [Tooltip("The list of tone cards that the player uses in Bartering. Because tone card "
+           + "implementation is not final, neither is the implementation of this list.")]
+    public List<PlayingCard> ToneCardInventory;
     
     public event Action OnInventoryUpdated;
 

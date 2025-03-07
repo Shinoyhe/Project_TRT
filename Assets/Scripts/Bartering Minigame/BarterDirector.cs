@@ -14,8 +14,15 @@ public class BarterDirector : MonoBehaviour
     public float WillingnessPerMatch = 5;
     [Tooltip("The amount Willingness is changed by on a unsuccessful, nonmatching response.\n\nDefault: -5")]
     public float WillingnessPerFail = -5;
-    [Tooltip("The percentage willingness, from 0-100, lost per second.\n\nDefault: 5")]
-    public float DecayPerSecond = 5;
+    [Tooltip("The base rate at which we lose Willingness, in percentage from "
+                              + "0-100 per second.\n\nDefault: 1")]
+    public float BaseDecay = 1;
+    [Tooltip("The amount Willingness decay speeds up by, in percentage from "
+                              + "0-100 per second per second.\n\nDefault: 0.025")]
+    public float DecayAcceleration = 0.025f;
+    [SerializeField, ReadOnly, Tooltip("The amount that Willingness is currently decaying by, in "
+                                     + "percentage from 0-100 per second.")]
+    private float currentDecay;
 
     [Header("Cards")]
     [Tooltip("The number of tone cards each player must play.\n\nDefault: 3")]
@@ -32,9 +39,11 @@ public class BarterDirector : MonoBehaviour
     private bool debugMode = false;
 
     [Header("Object References")]
+    [Tooltip("The NPCData asset used for this barter.")]
+    public NPCData NpcData;
     [Tooltip("The tone responses the opposing NPC prefers.")]
     public BarterResponseMatrix BarterResponses;
-    [SerializeField, Tooltip("The BarterNeutralBehavior scriptable object that defines what "
+    [Tooltip("The BarterNeutralBehavior scriptable object that defines what "
                            + "happens when a neutral match is encountered.")]
     public BarterNeutralBehavior NeutralBehavior;
     [SerializeField, Tooltip("The card user used by the opposing NPC.")]
@@ -92,6 +101,8 @@ public class BarterDirector : MonoBehaviour
 
     private void Start()
     {
+        currentDecay = BaseDecay;
+
         // Initialize our _playerCards array to empty (not to null).
         // Because opponent cards are submitted as a set and player cards are submitted one-by-one,
         // the player cards array must be pre-initialized.
@@ -148,7 +159,8 @@ public class BarterDirector : MonoBehaviour
     /// </summary>
     public void DecayWillingness()
     {
-        willingness -= DecayPerSecond * Time.deltaTime;
+        currentDecay += DecayAcceleration * Time.deltaTime;
+        willingness -= currentDecay * Time.deltaTime;
     }
 
     /// <summary>

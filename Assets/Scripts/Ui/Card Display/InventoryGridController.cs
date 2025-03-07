@@ -16,6 +16,7 @@ public class InventoryGridController : MonoBehaviour
     public bool UseSmallSize;
     public int InventorySize = 10;
     public bool SetDefaultSelectionOnEnable = false;
+    public bool AllKnownCards = false;
 
     [Header("Click Action")]
     public InventoryAction OnInventoryItemClick = null;

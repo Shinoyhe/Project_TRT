@@ -15,7 +15,7 @@ public class InGameUi : MonoBehaviour
     public Canvas Pause;
     public Canvas Options;
     public Canvas Controls;
-    public Canvas Journal;
+    public JournalNavCore Journal;
     public Canvas Inventory;
     public Canvas Bartering;
 
@@ -43,7 +43,6 @@ public class InGameUi : MonoBehaviour
             _currentCanvasState = value;
         }
     }
-
 
     // Initializers and Update ================================================================
     void Start() {
@@ -108,6 +107,18 @@ public class InGameUi : MonoBehaviour
     public void MoveToJournal() => MoveTo(UiStates.Journal);
     public void MoveToInventory() => MoveTo(UiStates.Inventory);
     public void MoveToBartering() => MoveTo(UiStates.Bartering);
+
+    /// <summary>
+    /// Will open the Journal and automatically open the NPC tab to the NPC Data. Will add the NPC if not already known.
+    /// </summary>
+    /// <param name="npc">NPCData to be loaded</param>
+    public void MoveToJournal(NPCData npc)
+    {
+        MoveToJournal();
+        Journal.AddNPC(npc);
+        Journal.MoveToNPC();
+        Journal.NPC.LoadNPC(npc);
+    }
 
     // Private Helper Methods ====================================================================
 

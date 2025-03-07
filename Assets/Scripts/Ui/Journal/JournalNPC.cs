@@ -20,7 +20,7 @@ public class JournalNPC : InventoryAction
     [SerializeField] private Image playerItem;
     [SerializeField] private Image oppItem;
 
-    private List<NPCData> _knownNPCs = new List<NPCData>();
+    private HashSet<NPCData> _knownNPCs = new HashSet<NPCData>();
     private NPCData _npcData;
 
     #endregion
@@ -28,12 +28,18 @@ public class JournalNPC : InventoryAction
     #region ======== [ PUBLIC METHODS ] ========
 
     /// <summary>
-    /// Adds this NPCData to the known NPCs for the NPC
+    /// Adds this NPCData to the known NPCs for the NPC. Will do nothing if the NPC is already known.
     /// </summary>
     /// <param name="npcData"></param>
     public void AddNPC(NPCData npcData)
     {
         _knownNPCs.Add(npcData);
+    }
+
+
+    public bool IsKnown(NPCData npcData)
+    {
+        return _knownNPCs.Contains(npcData);
     }
 
 
@@ -50,7 +56,6 @@ public class JournalNPC : InventoryAction
         bioDisplay.text = npc.Bio;
 
         LoadPreferenceTable();
-        
     }
 
 

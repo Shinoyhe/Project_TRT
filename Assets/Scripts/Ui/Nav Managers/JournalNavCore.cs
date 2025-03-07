@@ -49,7 +49,7 @@ public class JournalNavCore : MonoBehaviour
 
 
     /// <summary>
-    /// Add an NPC to the journal
+    /// Add an NPC to the journal. If already added, will be ignored.
     /// </summary>
     /// <param name="npcData">NPCData of the npc that will be added.</param>
     public void AddNPC(NPCData npcData)
@@ -71,6 +71,12 @@ public class JournalNavCore : MonoBehaviour
             return;
         }
 
+        // Returns if NPC is already added.
+        if (NPC.IsKnown(npcData))
+        {
+            return;
+        }
+
         npcTitle.gameObject.SetActive(true);
 
         // Create Button and Move it Above the Misc Title
@@ -84,6 +90,7 @@ public class JournalNavCore : MonoBehaviour
         NPC.AddNPC(npcData);
         npcButton.onClick.AddListener(() => NPC.LoadNPC(npcData));
     }
+
 
     // Used for button OnClick calls as they don't let enums to be passed through :|
     public void MoveToNPC() => MoveTo(UiStates.NPC);
@@ -107,7 +114,7 @@ public class JournalNavCore : MonoBehaviour
 
     void OnEnable()
     {
-        MoveToInfoCards();
+        // MoveToInfoCards();
     }
 
     #endregion

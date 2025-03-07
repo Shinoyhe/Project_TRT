@@ -64,7 +64,7 @@ public class DialogueManager : MonoBehaviour
     /// <returns> True if conversation started successfully. </returns>
     /// <param name="inkJson"> Ink file conversation will use. </param>
     /// <param name="npcBubblePos"> Where we want a NPC speech bubble.</param>
-    public bool StartConversation(TextAsset inkJson, Vector3 npcBubblePos)
+    public bool StartConversation(TextAsset inkJson, string NPCName, Sprite NPCProfilePic)
     {
         if (_inConversation) return false;
         if (_onDelay) return false;
@@ -73,7 +73,7 @@ public class DialogueManager : MonoBehaviour
         TimeLoopManager.SetLoopPaused(true);
 
         // Create UI instance
-        SetupUi(npcBubblePos, GameManager.Player.Transform.position);
+        SetupUi(NPCName,NPCProfilePic);
 
         // Parse Ink File
         _currentStory = new Story(inkJson.text);
@@ -101,9 +101,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Set up the dialogue UI in scene.
     /// </summary>
-    /// <param name="npcBubblePos"> World pos of NPC Speech bubble. </param>
-    /// <param name="playerBubblePos"> World pos of Player Speech bubble. </param>
-    void SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos)
+    void SetupUi(string npcName, Sprite image)
     {
 
         if (DialogueUiManager == null) {
@@ -111,7 +109,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         DialogueUiManager.gameObject.SetActive(true);
-        DialogueUiManager.SetupUi();
+        DialogueUiManager.SetupUi(npcName,image);
     }
 
     /// <summary>

@@ -5,6 +5,8 @@ public class NpcInteractable : Interactable
 {
     [SerializeField] private Vector3 dialogueBubbleOffset;
     [SerializeField] private TextAsset npcConversation;
+    [SerializeField] private string npcName;
+    [SerializeField] private Sprite npcProfilePic;
 
     [BoxGroup("Trade Settings")] public InventoryCardData AcceptedCard;
     [BoxGroup("Trade Settings")] public InventoryCardData PrizeCard;
@@ -28,8 +30,7 @@ public class NpcInteractable : Interactable
 
     public override void Interaction()
     {
-        bool convoStarted = GameManager.DialogueManager.StartConversation(npcConversation, 
-                                                                          transform.position+dialogueBubbleOffset);
+        bool convoStarted = GameManager.DialogueManager.StartConversation(npcConversation, npcName, npcProfilePic);
 
         if (!convoStarted) {
             return;

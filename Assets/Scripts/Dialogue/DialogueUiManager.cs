@@ -17,6 +17,8 @@ public class DialogueUiManager : MonoBehaviour {
     public List<Button> UiButtons;
     public List<TMP_Text> UiButtonsText;
     public Canvas RenderCanvas;
+    public TMP_Text NpcNameText;
+    public Image NpcProfilePicture;
     public GameObject SpeechBubbleLeftPrefab;
     public GameObject SpeechBubbleRightPrefab;
 
@@ -58,7 +60,11 @@ public class DialogueUiManager : MonoBehaviour {
         _bubbles.Clear();
     }
 
-    public void SetupUi() {
+    public void SetupUi(string npcName, Sprite image) {
+
+        NpcNameText.text = npcName;
+        NpcProfilePicture.sprite = image;
+
         HideChoices();
     }
 

@@ -52,6 +52,8 @@ public class BarterDirector : MonoBehaviour
     private CardUser playerCardUser;
     [Tooltip("The HandController used by the player.")]
     public HandController PlayerHandController;
+    [Tooltip("GameObject responsible for displaying NPC data.")]
+    public BarterNpcDisplayUi barterNpcDisplay;
 
     [Header("Miscellaneous")]
     [ReadOnly, Tooltip("The queue of the last N matches that have been played.")]

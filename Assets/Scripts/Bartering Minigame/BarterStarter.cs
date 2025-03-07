@@ -34,7 +34,9 @@ public class BarterStarter : MonoBehaviour
 
     private void Start()
     {
-        _inGameUi = GameManager.MasterCanvas.GetComponentInChildren<InGameUi>();
+        if (GameManager.MasterCanvas != null) {
+            _inGameUi = GameManager.MasterCanvas.GetComponentInChildren<InGameUi>();
+        }
 
         // TODO: Replace this with non-debug functionality.
         OnWin += () => Debug.Log("BarterStarter: OnWin called!");
@@ -104,6 +106,7 @@ public class BarterStarter : MonoBehaviour
 
         if (NpcData != null) { 
             _barterDirector.NpcData = NpcData;
+            _barterDirector.barterNpcDisplay.UpdateData(NpcData);
         } else {
             Debug.LogError("BarterStarter: Could not find NpcData");
         }

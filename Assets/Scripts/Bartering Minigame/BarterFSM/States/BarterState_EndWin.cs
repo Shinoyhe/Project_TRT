@@ -21,9 +21,7 @@ public class BarterState_EndWin : BarterBaseState
 
     public override void Enter(BarterBaseState previousState)
     {
-        Debug.Log("Player wins!");
         _machine.Dir.TriggerWin();
-        //_machine.Dir.StartCoroutine(DEBUG_Reload());
     }
 
     public override void UpdateState() {}

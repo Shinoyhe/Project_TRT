@@ -39,6 +39,11 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
             _controls.MainControls.SetCallbacks(this);
         }
 
+        // Initialize the _get dict from the _getDown dict
+        foreach (string key in _getDown.Keys) {
+            _get[key] = false;
+        }
+
         _controls.MainControls.Enable();
         IsActive = true;
     }

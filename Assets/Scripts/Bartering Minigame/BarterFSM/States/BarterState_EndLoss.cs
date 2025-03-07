@@ -21,9 +21,7 @@ public class BarterState_EndLoss : BarterBaseState
 
     public override void Enter(BarterBaseState previousState)
     {
-        Debug.Log("Player loses!");
         _machine.Dir.TriggerLose();
-        //_machine.Dir.StartCoroutine(DEBUG_Reload());
     }
 
     public override void UpdateState() {}

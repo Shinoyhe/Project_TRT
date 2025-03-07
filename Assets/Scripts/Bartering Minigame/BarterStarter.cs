@@ -23,19 +23,75 @@ public class BarterStarter : MonoBehaviour
     public System.Action OnLose;
 
     // Misc Internal Variables ====================================================================
+
+    private InGameUi _inGameUi;
     private GameObject _barterInstance;
     private GameObject _itemPresentInstance;
 
-    // Public Functions ===========================================================================
+    // Initializers ===============================================================================
+
+    private void Start()
+    {
+        _inGameUi = GameManager.MasterCanvas.GetComponentInChildren<InGameUi>();
+
+        // TODO: Replace this with non-debug functionality.
+        OnWin += () => Debug.Log("BarterStarter: OnWin called!");
+        OnLose += () => Debug.Log("BarterStarter: OnLose called!");
+    }  
+    
+    // Pre-Barter Methods =========================================================================
+
+    public void PresentItem()
+    {
+        _itemPresentInstance = Instantiate(presentItemPrefab, GameManager.MasterCanvas.transform);
+        RectTransform rectTransform = _itemPresentInstance.GetComponent<RectTransform>();
+
+        PresentItem presentItem = _itemPresentInstance.GetComponent<PresentItem>();
+        presentItem.PossibleTrades = PossibleTrades;
+        presentItem.OnAccepted += AcceptTrade;
+        presentItem.OnClosed += CloseTrade;
+
+        GameManager.PlayerInput.IsActive = false;
+
+        if (TimeLoopManager.Instance != null) {
+            TimeLoopManager.SetLoopPaused(true);
+        }
+    }
+
+    private void AcceptTrade()
+    {
+        CleanupPresentationCanvas(false);
+        StartBarter();
+    }
+
+    private void CloseTrade()
+    {
+        CleanupPresentationCanvas(true);
+    }
+
+    private void CleanupPresentationCanvas(bool enablePlayerInput)
+    {
+        Destroy(_itemPresentInstance);
+        GameManager.PlayerInput.IsActive = enablePlayerInput;
+
+        if (TimeLoopManager.Instance != null) {
+            TimeLoopManager.SetLoopPaused(false);
+        }
+    }
+
+    // StartBarter() ==============================================================================
 
     /// <summary>
     /// Starts the Barter
     /// </summary>
-    /// <returns>GameObject - an initialized BarterContainer.</returns>
+    /// <returns>GameObject - an initialized and active BarterContainer.</returns>
     public GameObject StartBarter()
     {
+        // Create the BarterContainer.
         _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity,
                                       GameManager.MasterCanvas.transform);
+        // Set the InGameUi state to the BarteringState.
+        _inGameUi.MoveToBartering();
 
         BarterDirector _barterDirector = _barterInstance.GetComponentInChildren<BarterDirector>();
         _barterDirector.OnWin += WinBarter;
@@ -73,12 +129,12 @@ public class BarterStarter : MonoBehaviour
         return _barterInstance;
     }
 
-    // Private Methods ============================================================================
+    // Post-Barter Methods ========================================================================
 
     /// <summary>
-    /// Call on Barter Win, give player card.
+    /// Called via action invocation on Barter win, gives player the prize card.
     /// </summary>
-    void WinBarter()
+    private void WinBarter()
     {
         if (CurrentTrade != null) {
             GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
@@ -90,65 +146,40 @@ public class BarterStarter : MonoBehaviour
             Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }
 
-        CleanupBarter();
-        OnWin?.Invoke();
+        OpenJournal(OnWin);
     }
 
     /// <summary>
-    /// Call on Barter lose, just cleans up.
+    /// Called via action invocation on Barter lose.
     /// </summary>
-    void LoseBarter()
+    private void LoseBarter()
     {
+        OpenJournal(OnLose);
+    }
+
+    /// <summary>
+    /// Shared functionality for WinBarter and LoseBarter which opens the journal, and invokes a
+    /// callback function when the UiStates returns to the Default state.
+    /// </summary>
+    /// <param name="closeCallback">System.Action - invoked when the Journal is closed.</param>
+    private void OpenJournal(System.Action closeCallback)
+    {
+        _inGameUi.MoveToJournal();
         CleanupBarter();
-        OnLose?.Invoke();
+
+        _inGameUi.CanvasStateChanged += (oldState, newState) => {
+            if (newState == InGameUi.UiStates.Default){
+                closeCallback?.Invoke();
+            }
+        };
     }
 
     /// <summary>
     /// Handles cleanup of barter minigame.
     /// </summary>
-    void CleanupBarter()
+    private void CleanupBarter()
     {
         Destroy(_barterInstance);
         GameManager.PlayerInput.IsActive = true;
-    }
-
-    // PresentItem Methods =========================================================================
-
-    public void PresentItem()
-    {
-        _itemPresentInstance = Instantiate(presentItemPrefab, GameManager.MasterCanvas.transform);
-        RectTransform rectTransform = _itemPresentInstance.GetComponent<RectTransform>();
-
-        PresentItem presentItem = _itemPresentInstance.GetComponent<PresentItem>();
-        presentItem.PossibleTrades = PossibleTrades;
-        presentItem.OnAccepted += AcceptTrade;
-        presentItem.OnClosed += CloseTrade;
-
-        GameManager.PlayerInput.IsActive = false;
-
-        if (TimeLoopManager.Instance != null) {
-            TimeLoopManager.SetLoopPaused(true);
-        }
-    }
-
-    void AcceptTrade()
-    {
-        CleanupPresentationCanvas(false);
-        StartBarter();
-    }
-
-    void CloseTrade()
-    {
-        CleanupPresentationCanvas(true);
-    }
-
-    void CleanupPresentationCanvas(bool enablePlayerInput)
-    {
-        Destroy(_itemPresentInstance);
-        GameManager.PlayerInput.IsActive = enablePlayerInput;
-
-        if (TimeLoopManager.Instance != null) {
-            TimeLoopManager.SetLoopPaused(false);
-        }
     }
 }

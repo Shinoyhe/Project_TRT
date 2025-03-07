@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,8 +30,20 @@ public class InGameUi : MonoBehaviour
         Bartering 
     }
 
-    private UiStates _currentCanvasState;
     private NavBarController _navBarController;
+
+    [SerializeField, ReadOnly] private UiStates _currentCanvasState;
+    public System.Action<UiStates, UiStates> CanvasStateChanged;
+    public UiStates CurrentCanvasState {
+        get { 
+            return _currentCanvasState; 
+        }
+        private set { 
+            CanvasStateChanged?.Invoke(_currentCanvasState, value);
+            _currentCanvasState = value;
+        }
+    }
+
 
     // Initializers and Update ================================================================
     void Start() {
@@ -50,7 +63,7 @@ public class InGameUi : MonoBehaviour
     public void Update() {
 
         if(GameManager.PlayerInput.GetMenu1Down()) {
-            if (_currentCanvasState == UiStates.Inventory) {
+            if (CurrentCanvasState == UiStates.Inventory) {
                 MoveToDefault();
             } else {
                 MoveToInventory();
@@ -58,7 +71,7 @@ public class InGameUi : MonoBehaviour
         }
 
         if (GameManager.PlayerInput.GetMenu2Down()) {
-            if (_currentCanvasState == UiStates.Journal) {
+            if (CurrentCanvasState == UiStates.Journal) {
                 MoveToDefault();
             } else {
                 MoveToJournal();
@@ -66,7 +79,7 @@ public class InGameUi : MonoBehaviour
         }
 
         if (GameManager.PlayerInput.GetStartDown()) {
-            if (_currentCanvasState == UiStates.Pause) {
+            if (CurrentCanvasState == UiStates.Pause) {
                 MoveToDefault();
             } else {
                 MoveToPause();
@@ -82,7 +95,7 @@ public class InGameUi : MonoBehaviour
     /// <param name="newState"> State to move to. </param>
     public void MoveTo(UiStates newState) {
 
-        StopState(_currentCanvasState);
+        StopState(CurrentCanvasState);
         StartState(newState);
     }
 
@@ -177,10 +190,10 @@ public class InGameUi : MonoBehaviour
     void StartState(UiStates stateToStart) {
 
         // Set our new state
-        _currentCanvasState = stateToStart;
+        CurrentCanvasState = stateToStart;
 
         // Setup Nav Bar if needed!
-        ToggleNavBar(_currentCanvasState);
+        ToggleNavBar(CurrentCanvasState);
 
         switch (stateToStart) {
             case UiStates.Default:
@@ -213,8 +226,7 @@ public class InGameUi : MonoBehaviour
                 Inventory.gameObject.SetActive(true);
                 break;
             case UiStates.Bartering:
-                // Insert animation!
-                Bartering.gameObject.SetActive(true);
+                // BarterStarter handles spawning the BarterContainer, so don't do anything here.
                 break;
         }
     }

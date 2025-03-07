@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using System.Linq;
 
 public class JournalPreferenceEntry : MonoBehaviour
 {
+    #region ======== [ VARIABLES ] ========
+
     [SerializeField] private Image opponentCardDisplay;
     [SerializeField] private Image negativeCardDisplay;
     [SerializeField] private Image positiveCardDisplay;
@@ -17,6 +16,10 @@ public class JournalPreferenceEntry : MonoBehaviour
     private int _posCardIndex;
     private int _negCardIndex;
     private NPCData _npcData;
+
+    #endregion
+
+    #region ======== [ PUBLIC METHODS ] ========
 
     public void CycleNegativeToneCard()
     {
@@ -72,4 +75,6 @@ public class JournalPreferenceEntry : MonoBehaviour
         negativeCardDisplay.sprite = preferences.Negative.MainSprite;
         positiveCardDisplay.sprite = preferences.Positive.MainSprite;
     }
+
+    #endregion
 }

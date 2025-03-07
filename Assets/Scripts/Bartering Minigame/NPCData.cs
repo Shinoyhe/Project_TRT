@@ -6,6 +6,8 @@ using NaughtyAttributes;
 [CreateAssetMenu(fileName = "New NPCData", menuName = "ScriptableObjects/NPCData")]
 public class NPCData : ScriptableObject
 {
+    #region ======== [ CLASSES ] ========
+
     public class CardPreference
     {
         public PlayingCard Positive;
@@ -24,6 +26,10 @@ public class NPCData : ScriptableObject
         }
     }
 
+    #endregion
+
+    #region ======== [ VARIABLES ] ========
+
     public string Name;
     public Sprite Icon;
     [TextArea] public string Bio;
@@ -34,6 +40,9 @@ public class NPCData : ScriptableObject
     [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalTonePreferences;
     [ReadOnly] [SerializeField] private Dictionary<InventoryCardData, InventoryCardData> journalKnownTrades;
 
+    #endregion
+
+    #region ======== [ PUBLIC METHODS ] ========
 
     /// <summary>
     /// Changes the Player's Assumed Preferences in the journal
@@ -118,6 +127,10 @@ public class NPCData : ScriptableObject
     /// </summary>
     public PlayingCard[] Cards => Matrix.OppCards;
 
+    #endregion
+
+    #region ======== [ PRIVATE METHODS ] ========
+
     /// <summary>
     /// Builds a default preference dictionary
     /// </summary>
@@ -129,4 +142,6 @@ public class NPCData : ScriptableObject
             journalTonePreferences.Add(card, new CardPreference());
         }
     }
+
+    #endregion
 }

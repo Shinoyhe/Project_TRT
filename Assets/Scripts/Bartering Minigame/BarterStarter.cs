@@ -12,6 +12,8 @@ public class BarterStarter : MonoBehaviour
     [BoxGroup("Barter Settings"), ReadOnly] public BarterNeutralBehavior BarterNeutralBehaviour;
     [BoxGroup("Barter Settings"), ReadOnly] public Trades PossibleTrades;
     [BoxGroup("Barter Settings"), ReadOnly] public Trade CurrentTrade;
+    [BoxGroup("Barter Settings"), ReadOnly] public bool JournalOnWin = true;
+    [BoxGroup("Barter Settings"), ReadOnly] public bool JournalOnLose = true;
     [BoxGroup("Barter Settings"), ReadOnly] public float BaseDecay = 1;
     [BoxGroup("Barter Settings"), ReadOnly] public float DecayAcceleration = 0.025f;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerMatch = 5;
@@ -146,7 +148,7 @@ public class BarterStarter : MonoBehaviour
             Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }
 
-        OpenJournal(OnWin);
+        EndBarter(JournalOnWin, OnWin);
     }
 
     /// <summary>
@@ -154,7 +156,25 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void LoseBarter()
     {
-        OpenJournal(OnLose);
+        EndBarter(JournalOnLose, OnLose);
+    }
+
+    /// <summary>
+    /// Handles cleanup of barter minigame.
+    /// </summary>
+    /// <param name="openJournal">bool - whether to open the journal.</param>
+    /// <param name="callback">System.Action - invoked to announce a win/loss.</param>
+    private void EndBarter(bool openJournal, System.Action callback)
+    {
+        Destroy(_barterInstance);
+        GameManager.PlayerInput.IsActive = true;
+
+        if (openJournal) {
+            OpenJournal(callback);
+        } else {
+            _inGameUi.MoveToDefault();
+            callback?.Invoke();
+        }
     }
 
     /// <summary>
@@ -165,21 +185,11 @@ public class BarterStarter : MonoBehaviour
     private void OpenJournal(System.Action closeCallback)
     {
         _inGameUi.MoveToJournal();
-        CleanupBarter();
 
         _inGameUi.CanvasStateChanged += (oldState, newState) => {
             if (newState == InGameUi.UiStates.Default){
                 closeCallback?.Invoke();
             }
         };
-    }
-
-    /// <summary>
-    /// Handles cleanup of barter minigame.
-    /// </summary>
-    private void CleanupBarter()
-    {
-        Destroy(_barterInstance);
-        GameManager.PlayerInput.IsActive = true;
     }
 }

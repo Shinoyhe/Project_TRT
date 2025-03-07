@@ -413,6 +413,8 @@ MonoBehaviour:
     type: 2}
   BarterNeutralBehaviour: {fileID: 11400000, guid: d5da7a0cc6260ac499f7b5f8e6536442,
     type: 2}
+  JournalOnWin: 1
+  JournalOnLose: 1
   BaseDecay: 1
   DecayAcceleration: 0.025
   WillingnessPerMatch: 5
@@ -473,6 +475,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InGameCanvasMaster
+      objectReference: {fileID: 0}
+    - target: {fileID: 6506440991166276602, guid: 142379524301d744ca9ed258108220b9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9106350191481724383, guid: 142379524301d744ca9ed258108220b9,
         type: 3}

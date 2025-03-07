@@ -11,6 +11,8 @@ public class NpcInteractable : Interactable
     [BoxGroup("Barter Settings")] public NPCData NpcData;
     [BoxGroup("Barter Settings")] public BarterResponseMatrix BarterResponseMatrix;
     [BoxGroup("Barter Settings")] public BarterNeutralBehavior BarterNeutralBehaviour;
+    [BoxGroup("Barter Settings")] public bool JournalOnWin = true;
+    [BoxGroup("Barter Settings")] public bool JournalOnLose = true;
     [BoxGroup("Barter Settings"), Range(0, 25)] public float BaseDecay = 1;
     [BoxGroup("Barter Settings"), Range(0, 1)] public float DecayAcceleration = 0.025f;
     [BoxGroup("Barter Settings"), Range(0, 50)] public float WillingnessPerMatch = 5;
@@ -70,6 +72,8 @@ public class NpcInteractable : Interactable
             Debug.LogError("NPCInteractable: PossibleTrades are not set");
         }
 
+        barterStarter.JournalOnWin = JournalOnWin;
+        barterStarter.JournalOnLose = JournalOnLose;
         barterStarter.BaseDecay = BaseDecay;
         barterStarter.DecayAcceleration = DecayAcceleration;
         barterStarter.WillingnessPerMatch = WillingnessPerMatch;

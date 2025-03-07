@@ -159,6 +159,7 @@ public class JournalNavCore : MonoBehaviour
         };
 
         canvas?.SetActive(true);
+
     }
 
     #endregion

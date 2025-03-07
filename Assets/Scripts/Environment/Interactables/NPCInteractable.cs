@@ -5,8 +5,6 @@ public class NpcInteractable : Interactable
 {
     [SerializeField] private Vector3 dialogueBubbleOffset;
     [SerializeField] private TextAsset npcConversation;
-    [SerializeField] private string npcName;
-    [SerializeField] private Sprite npcProfilePic;
 
     [BoxGroup("Trade Settings")] public Trades PossibleTrades;
 
@@ -33,7 +31,7 @@ public class NpcInteractable : Interactable
 
     public override void Interaction()
     {
-        bool convoStarted = GameManager.DialogueManager.StartConversation(npcConversation, npcName, npcProfilePic);
+        bool convoStarted = GameManager.DialogueManager.StartConversation(npcConversation, NpcData.Name, NpcData.Icon);
 
         if (!convoStarted) {
             return;

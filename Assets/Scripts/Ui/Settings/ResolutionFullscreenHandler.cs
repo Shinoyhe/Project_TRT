@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,52 @@ public class ResolutionFullscreenHandler : MonoBehaviour
     // ==============================================================
     // Initializers/finalizers
     // ==============================================================
+
+    public static void InitFromPrefs()
+    {
+        // Set up Fullscreen
+        int fullscreenStorage = 1;
+        if (PlayerPrefs.HasKey("IsFullscreenPref"))
+        {
+            fullscreenStorage = PlayerPrefs.GetInt("IsFullscreenPref");
+        }
+        else
+        { // Default value.
+            fullscreenStorage = 1; // True
+        }
+        Screen.fullScreen = fullscreenStorage == 1;
+
+        // Set up Resolution
+        HashSet<Vector2Int> resolutionSet = new();
+        foreach (Resolution r in Screen.resolutions)
+        {
+            resolutionSet.Add(new(r.width, r.height));
+        }
+        Vector2Int[] resolutionStorage = resolutionSet.ToArray();
+        int resolutionIndexStorage = 0;
+        // Load the saved preference.
+
+        if (PlayerPrefs.HasKey("ResolutionIndexPref"))
+        {
+            resolutionIndexStorage = PlayerPrefs.GetInt("ResolutionIndexPref");
+
+            // If the cached index is past the bounds of our resolutions array, ditch it.
+            if (resolutionIndexStorage > resolutionStorage.Length)
+            {
+                // Choose the best current resolution, instead.
+                resolutionIndexStorage = resolutionStorage.Length;
+            }
+        }
+        else
+        { // Default value.
+            resolutionIndexStorage = resolutionStorage.Length;
+        }
+
+        if (resolutionIndexStorage < 0 || resolutionIndexStorage >= resolutionStorage.Length) return;
+
+        Vector2Int dim = resolutionStorage[resolutionIndexStorage];
+        Screen.SetResolution(dim.x, dim.y, Screen.fullScreen);
+    }
 
     public void Initialize()
     {

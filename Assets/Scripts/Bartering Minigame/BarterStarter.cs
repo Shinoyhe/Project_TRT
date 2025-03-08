@@ -35,7 +35,7 @@ public class BarterStarter : MonoBehaviour
     private void Start()
     {
         if (GameManager.MasterCanvas != null) {
-            _inGameUi = GameManager.MasterCanvas.GetComponentInChildren<InGameUi>();
+            _inGameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
         }
 
         // TODO: Replace this with non-debug functionality.
@@ -94,6 +94,11 @@ public class BarterStarter : MonoBehaviour
         // Create the BarterContainer.
         _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity,
                                       GameManager.MasterCanvas.transform);
+
+        if (GameManager.MasterCanvas != null) {
+            _inGameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
+        }
+
         // Set the InGameUi state to the BarteringState.
         _inGameUi.MoveToBartering();
 

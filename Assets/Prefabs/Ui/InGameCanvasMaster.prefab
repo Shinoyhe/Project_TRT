@@ -1632,6 +1632,7 @@ MonoBehaviour:
   Journal: {fileID: 127065213659051951}
   Inventory: {fileID: 3009812438561937234}
   Bartering: {fileID: 5771083917161067956}
+  Dialogue: {fileID: 810870351080456582}
   _currentCanvasState: 0
 --- !u!223 &837961958174819109
 Canvas:
@@ -4255,6 +4256,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!223 &810870351080456582 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2627461886618663718, guid: 38357ebbef92df646a1a2c0b375a6dc2,
+    type: 3}
+  m_PrefabInstance: {fileID: 3401999906750364320}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1251442652799131628 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4496932831613232460, guid: 38357ebbef92df646a1a2c0b375a6dc2,

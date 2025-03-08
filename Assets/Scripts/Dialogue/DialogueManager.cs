@@ -2,6 +2,7 @@ using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Processes Ink file and controls conversation flow.
@@ -68,6 +69,12 @@ public class DialogueManager : MonoBehaviour
     {
         if (_inConversation) return false;
         if (_onDelay) return false;
+
+        InGameUi UiController = GameManager.MasterCanvas.gameObject.GetComponent<InGameUi>();
+        if (UiController == null) return false;
+
+        UiController.MoveToDialogue();
+        DialogueUiManager = GameManager.MasterCanvas.gameObject.GetComponentInChildren<DialogueUiManager>();
 
         _inConversation = true;
         TimeLoopManager.SetLoopPaused(true);

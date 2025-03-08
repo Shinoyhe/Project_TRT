@@ -18,6 +18,7 @@ public class InGameUi : MonoBehaviour
     public JournalNavCore Journal;
     public Canvas Inventory;
     public Canvas Bartering;
+    public Canvas Dialogue;
 
     public enum UiStates {
         Default,
@@ -27,7 +28,8 @@ public class InGameUi : MonoBehaviour
         Controls,
         Journal, 
         Inventory,
-        Bartering 
+        Bartering,
+        Dialogue
     }
 
     private NavBarController _navBarController;
@@ -105,6 +107,8 @@ public class InGameUi : MonoBehaviour
     public void MoveToTitle() => MoveTo(UiStates.MoveToTitle);
     public void MoveToControls() => MoveTo(UiStates.Controls);
     public void MoveToJournal() => MoveTo(UiStates.Journal);
+
+    public void MoveToDialogue() => MoveTo(UiStates.Dialogue);
 
     /// <summary>
     /// Will open the Journal and automatically open the NPC tab to the NPC Data. Will add the NPC if not already known.
@@ -194,6 +198,10 @@ public class InGameUi : MonoBehaviour
                 // Insert animation!
                 Bartering.gameObject.SetActive(false);
                 break;
+            case UiStates.Dialogue:
+                // Insert animation!
+                Dialogue.gameObject.SetActive(false);
+                break;
         }
 
     }
@@ -242,6 +250,10 @@ public class InGameUi : MonoBehaviour
                 break;
             case UiStates.Bartering:
                 // BarterStarter handles spawning the BarterContainer, so don't do anything here.
+                break;
+            case UiStates.Dialogue:
+                // Insert animation!
+                Dialogue.gameObject.SetActive(true);
                 break;
         }
     }

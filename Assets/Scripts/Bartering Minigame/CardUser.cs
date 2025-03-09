@@ -101,6 +101,18 @@ public class CardUser : MonoBehaviour
 
     /// <summary>
     /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
+    /// Sets the deck to be a clone of source.
+    /// </summary>
+    /// <param name="source">PlayingCard list - the list of cards we're cloning.</param>
+    public void Initialize(List<PlayingCard> source)
+    {
+        startingDeck = source.ToArray();
+
+        Initialize();
+    }
+
+    /// <summary>
+    /// Initializes the draw pile and the pile lookup table. MUST be called before anything else.
     /// </summary>
     public void Initialize()
     {

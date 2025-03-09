@@ -27,7 +27,7 @@ public class AutoScrollGrid : MonoBehaviour {
     private void Start() {
         _itemsPerRow = gridLayout.constraintCount;
         _cardHeight = gridLayout.cellSize.y;
-        _cardOffset = gridLayout.padding.bottom;
+        _cardOffset = gridLayout.spacing.y;
 
         _contentTransform = gridContentObject.GetComponent<RectTransform>();
     }
@@ -71,7 +71,7 @@ public class AutoScrollGrid : MonoBehaviour {
     /// <param name="yPos"></param>
     private void MoveGrid(float yPos) {
         float x = _contentTransform.anchoredPosition.x;
-        _contentTransform.DOAnchorPos(new Vector2(x, yPos), 1f, false);
+        _contentTransform.DOAnchorPos(new Vector2(x, yPos), 0.5f, false);
 
     }
 

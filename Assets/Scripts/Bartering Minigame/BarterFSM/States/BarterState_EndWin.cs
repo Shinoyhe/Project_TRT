@@ -1,7 +1,3 @@
-using System.Collections;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class BarterState_EndWin : BarterBaseState
 {
     // ============================================================================================
@@ -21,20 +17,10 @@ public class BarterState_EndWin : BarterBaseState
 
     public override void Enter(BarterBaseState previousState)
     {
-        Debug.Log("Player wins!");
         _machine.Dir.TriggerWin();
-        //_machine.Dir.StartCoroutine(DEBUG_Reload());
     }
 
     public override void UpdateState() {}
 
     public override void Exit() {}
-
-    // Debug Methods ==============================================================================
-
-    private IEnumerator DEBUG_Reload()
-    {
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }

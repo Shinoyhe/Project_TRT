@@ -14,6 +14,13 @@ public class Inventory : MonoBehaviour
     [Header("Inventory")]
     public List<InventoryCardData> StartingCards;
     [SerializeField, ReadOnly] private List<InventoryCard> Cards;
+
+    [SerializeField, ReadOnly] private HashSet<InventoryCard> KnownCards;
+
+    [Header("Tone Cards")]
+    [Tooltip("The list of tone cards that the player uses in Bartering. Because tone card "
+           + "implementation is not final, neither is the implementation of this list.")]
+    public List<PlayingCard> ToneCardInventory;
     
     public event Action OnInventoryUpdated;
 
@@ -41,6 +48,7 @@ public class Inventory : MonoBehaviour
     {
         AllCards = new List<InventoryCard>();
         Cards = new List<InventoryCard>();
+        KnownCards = new HashSet<InventoryCard>();
         
         // Fill the AllCards list using AllCardDatas
         foreach (InventoryCardData cardData in AllCardDatas)
@@ -50,6 +58,8 @@ public class Inventory : MonoBehaviour
         }
 
         foreach (InventoryCardData card in StartingCards) {
+            if (HasCard(card)) { continue; }
+
             AddCard(card);
         }
     }
@@ -76,6 +86,17 @@ public class Inventory : MonoBehaviour
         return returnList;
     }
 
+    public List<InventoryCardData> GetKnownDatas()
+    {
+        List<InventoryCardData> returnList = new List<InventoryCardData>();
+        if (Cards == null) return returnList;
+
+        foreach (InventoryCard card in KnownCards) {
+            returnList.Add(card.Data);
+        }
+        return returnList;
+    }
+
     public void AddCard(InventoryCardData card)
     {
         if (card == null) return;
@@ -95,13 +116,14 @@ public class Inventory : MonoBehaviour
             }
         }
         if (newCard == null) {
-            Debug.LogError("Could not find, card does not exist in AllCards");
+            Debug.LogError($"Could not find {card.ID}, card does not exist in AllCards");
             return;
         }
         newCard.CurrentlyOwn = true;
         newCard.HaveOwned = true;
 
         Cards.Add(newCard);
+        KnownCards.Add(newCard);
         OnInventoryUpdated?.Invoke();
         inventoryLastUpdateTime = Time.time;
     }

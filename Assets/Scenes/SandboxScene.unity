@@ -281,6 +281,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 113523554}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &222714528
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7508131334010841425, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_Name
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.509153
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000009536743
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.5047216
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455302711992743565, guid: bc60a82d631c6a842a636cda46f232ca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc60a82d631c6a842a636cda46f232ca, type: 3}
 --- !u!1001 &380038681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -293,6 +361,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Elevator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852952478080575646, guid: 2a2e453ba175cbc4c9579c670db15878,
+        type: 3}
+      propertyPath: UseTransform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518807652300261211, guid: 2a2e453ba175cbc4c9579c670db15878,
         type: 3}
@@ -400,12 +473,23 @@ MonoBehaviour:
   IconLocalPosition: {x: 0, y: 3, z: 0}
   dialogueBubbleOffset: {x: -2.02, y: 4.17, z: 0}
   npcConversation: {fileID: 4900000, guid: 78fae791d8e25a445ac2b2e5cfc5205f, type: 3}
+  PossibleTrades:
+    trades:
+    - AcceptedCard: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a, type: 2}
+      RewardCard: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
+      TradeIsPossible: 1
+    - AcceptedCard: {fileID: 11400000, guid: c87ae2d15ed9dca4c92614cfeecef8dd, type: 2}
+      RewardCard: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a, type: 2}
+      TradeIsPossible: 1
+  NpcData: {fileID: 11400000, guid: b55b06de653d0954492e3852e7595ca2, type: 2}
   BarterResponseMatrix: {fileID: 11400000, guid: 4df41baae4ac8884d9b9ab903aa274e5,
     type: 2}
   BarterNeutralBehaviour: {fileID: 11400000, guid: d5da7a0cc6260ac499f7b5f8e6536442,
     type: 2}
-  PrizeCard: {fileID: 0}
-  DecayPerSecond: 5
+  JournalOnWin: 1
+  JournalOnLose: 1
+  BaseDecay: 1
+  DecayAcceleration: 0.025
   WillingnessPerMatch: 5
   WillingnessPerFail: -5
   StartingWillingness: 50
@@ -1400,6 +1484,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1250298453}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1690435027 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2859430303816999790, guid: 142379524301d744ca9ed258108220b9,
+    type: 3}
+  m_PrefabInstance: {fileID: 670184140}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3562ad8668c624a80319639062505f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1977936494 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8208938610237536702, guid: d7b8be9e5f8f8024691d1d3b751d45b5,
@@ -1711,6 +1807,11 @@ PrefabInstance:
       propertyPath: masterCanvas
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2334186633066417863, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
+        type: 3}
+      propertyPath: DialogueUiManager
+      value: 
+      objectReference: {fileID: 1690435027}
     - target: {fileID: 3546394063840808889, guid: 76f0a3d94b899314aa9ebeb3bfc714a4,
         type: 3}
       propertyPath: player
@@ -1825,3 +1926,4 @@ SceneRoots:
   - {fileID: 4120044077144853147}
   - {fileID: 935982093688392437}
   - {fileID: 670184140}
+  - {fileID: 222714528}

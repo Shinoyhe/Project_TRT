@@ -146,16 +146,6 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void WinBarter()
     {
-        if (CurrentTrade != null) {
-            GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
-
-            if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM) {
-                GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
-            }
-        } else {
-            Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
-        }
-
         EndBarter(JournalOnWin, OnWin);
     }
 
@@ -181,6 +171,7 @@ public class BarterStarter : MonoBehaviour
             OpenJournal(callback);
         } else {
             _inGameUi.MoveToDefault();
+            ExchangeCards();
             callback?.Invoke();
         }
     }
@@ -196,8 +187,25 @@ public class BarterStarter : MonoBehaviour
 
         _inGameUi.CanvasStateChanged += (oldState, newState) => {
             if (newState == InGameUi.UiStates.Default){
+                ExchangeCards();
                 closeCallback?.Invoke();
             }
         };
+    }
+
+    /// <summary>
+    /// Gives the player the prize card promised, and removes the card they gave away.
+    /// </summary>
+    private void ExchangeCards()
+    {
+        if (CurrentTrade != null) {
+            GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
+
+            if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM) {
+                GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
+            }
+        } else {
+            Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
+        }
     }
 }

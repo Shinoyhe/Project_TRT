@@ -77,12 +77,12 @@ public class JournalNavCore : MonoBehaviour
             return;
         }
 
-        npcTitle.gameObject.SetActive(true);
+        //npcTitle.gameObject.SetActive(true);
 
         // Create Button and Move it Above the Misc Title
-        GameObject npcButtonObject = Instantiate(npcButtonPrefab, miscTitle.parent);
+        GameObject npcButtonObject = Instantiate(npcButtonPrefab, npcTitle.parent);
         npcButtonObject.GetComponentInChildren<TextMeshProUGUI>().text = npcData.Name;
-        npcButtonObject.transform.SetSiblingIndex(miscTitle.GetSiblingIndex());
+       // npcButtonObject.transform.SetSiblingIndex(npcTitle.GetSiblingIndex());
 
         // Connect the button to MoveToNPC and JournalNPC.LoadNPC
         Button npcButton = npcButtonObject.GetComponent<Button>();
@@ -109,7 +109,7 @@ public class JournalNavCore : MonoBehaviour
 
         // Swap with Accessibility Check
         MoveToInfoCards();
-        npcTitle.gameObject.SetActive(false);
+        //npcTitle.gameObject.SetActive(false);
     }
 
     void OnEnable()
@@ -159,6 +159,7 @@ public class JournalNavCore : MonoBehaviour
         };
 
         canvas?.SetActive(true);
+
     }
 
     #endregion

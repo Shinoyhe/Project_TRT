@@ -82,5 +82,11 @@ public class BarterWillingnessMeter : MonoBehaviour
 
         // Percentage label
         textObject.text = prefix + willingness.ToString(_formatString) + suffix;
+
+        if(willingness > 83) {
+            textObject.alignment = TextAlignmentOptions.Left;
+        } else {
+            textObject.alignment = TextAlignmentOptions.Right;
+        }
     }
 }

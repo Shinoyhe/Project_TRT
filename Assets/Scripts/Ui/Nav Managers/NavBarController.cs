@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class NavBarController : MonoBehaviour {
     #region ======== [ OBJECT REFERENCES ] ========
 
     [Header("Dependencies")]
-    public List<Image> Nodes;
+    public List<Image> ButtonOutlines;
+    public List<TMP_Text> ButtonTexts;
     public InGameUi InGameUi;
 
     #endregion
@@ -28,11 +30,13 @@ public class NavBarController : MonoBehaviour {
 
     public void InitNavBar(int index) {
         // Wrap index around if needed
-        index = index % Nodes.Count;
-        if (index < 0) index += Nodes.Count;
+        index = index % ButtonOutlines.Count;
+        if (index < 0) index += ButtonOutlines.Count;
 
-        Nodes[_index].color = Color.white;
-        Nodes[index].color = SelectedTint;
+        ButtonOutlines[_index].color = Color.white;
+        ButtonOutlines[index].color = SelectedTint;
+        ButtonTexts[_index].fontStyle = FontStyles.Normal;
+        ButtonTexts[index].fontStyle = FontStyles.UpperCase;
 
         // Set new index
         _index = index;
@@ -44,11 +48,11 @@ public class NavBarController : MonoBehaviour {
 
     private void SetNavBarSelection(int index) {
 
-        if (index < 0 || index >= Nodes.Count) return;
+        if (index < 0 || index >= ButtonOutlines.Count) return;
 
         // Flip selection
-        Nodes[_index].color = Color.white;
-        Nodes[index].color = SelectedTint;
+        ButtonOutlines[_index].color = Color.white;
+        ButtonOutlines[index].color = SelectedTint;
 
         // This is hard coding (Better solutions exist I promise)
         switch (index) {

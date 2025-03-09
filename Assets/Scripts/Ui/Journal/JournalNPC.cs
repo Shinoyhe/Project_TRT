@@ -19,6 +19,7 @@ public class JournalNPC : InventoryAction
     [Header("Known Trades")]
     [SerializeField] private Image playerItem;
     [SerializeField] private Image oppItem;
+    [SerializeField] private Sprite oppItemNoTradeKnown;
 
     private HashSet<NPCData> _knownNPCs = new HashSet<NPCData>();
     private NPCData _npcData;
@@ -69,7 +70,15 @@ public class JournalNPC : InventoryAction
 
         playerItem.sprite = cardData ? cardData.Sprite : null;
         oppItem.sprite = _npcData.GetKnownTrade(cardData) ? 
-            _npcData.GetKnownTrade(cardData).Sprite : null;
+            _npcData.GetKnownTrade(cardData).Sprite : oppItemNoTradeKnown;
+
+        if(playerItem.sprite == null) {
+            playerItem.color = Color.clear;
+            oppItem.color = Color.clear;
+        } else {
+            playerItem.color = Color.white;
+            oppItem.color = Color.white;
+        }
     }
 
     #endregion

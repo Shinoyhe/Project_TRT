@@ -11,9 +11,7 @@ public class CardPickup : Interactable
 
     public override void Interaction() {
         GameManager.Inventory.AddCard(CardToGive);
-        GameManager.MasterCanvas.GetComponent<InGameUi>().Notification
-            .Notify($"Picked up {CardToGive.CardName}");
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     public override void UnHighlight() {

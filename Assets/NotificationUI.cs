@@ -24,6 +24,7 @@ public class NotificationUI : MonoBehaviour
 
     public void Notify(string message)
     {
+        Debug.Log($"Notify: \"{message}\"");
         Show();
         notificationText.text = message;
     }

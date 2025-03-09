@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 587ca0226052be4e9b8540a22c4f2092
     GuidInternal: 
-    m_lastTime: -8584603048584035632
+    m_lastTime: -8584600555243713922
     List:
     - name: Ambience Bus
       guid: b98c6c284c7de7449139c8391e920f9c
@@ -174,7 +174,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Ambience
     guid: 0104f6680c27bf408fd7c64816ee8c87
     GuidInternal: 
-    m_lastTime: -8584603044967784716
+    m_lastTime: -8584600555233984093
     List:
     - name: Ambience
       guid: 86b2f852bdba9b4fa5a800a04824ffe7
@@ -214,7 +214,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Music
     guid: 5f5c2e836df59d41833026f7bc293cab
     GuidInternal: 
-    m_lastTime: -8584605742527381949
+    m_lastTime: -8584603035382853904
     List:
     - name: Music
       guid: 277caf2ce418a740871cc075a9250659
@@ -241,7 +241,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\SFX
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
-    m_lastTime: -8584605742527371937
+    m_lastTime: -8584600549141102576
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -269,7 +269,7 @@ MonoBehaviour:
     ParentPath: Events\Ambience
     guid: 78290c8229ac584884ed86c3baba619d
     GuidInternal: 
-    m_lastTime: -8584603045965734444
+    m_lastTime: -8584600555250581065
     List:
     - name: BirdStart
       guid: 932c63abf08ea4489f51f773ba1e5c74
@@ -319,7 +319,7 @@ MonoBehaviour:
     ParentPath: Events\UI\BarteringUI
     guid: 40c947321f41084491c4b5b163ca6270
     GuidInternal: 
-    m_lastTime: -8584605742532531242
+    m_lastTime: -8584603035388257965
     List:
     - name: BART_Card_Place
       guid: 70703cae49201248868554261706e95e
@@ -372,7 +372,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 33316d7890aa87408e2af719ccc92cfd
     GuidInternal: 
-    m_lastTime: -8584613403163022097
+    m_lastTime: -8584600549876903387
     List: []
   - PhysicalPath: Events\Music.wwu
     PathAndIcons:
@@ -385,7 +385,7 @@ MonoBehaviour:
     ParentPath: Events\Music
     guid: 1baa49cfe5a4fe438cbe031c55500853
     GuidInternal: 
-    m_lastTime: -8584605742532521227
+    m_lastTime: -8584603035388248151
     List:
     - name: MusicEvents
       guid: bb98cb8f8639c644980fd12d17cb9504
@@ -544,6 +544,102 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+  - PhysicalPath: Events\SettingsUI.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: UI
+      ObjectType: 12
+      guid: 75f867dc1a9906498df4975d819bec40
+    - ElementName: SettingsUI
+      ObjectType: 12
+      guid: 1fb0d41104b6e84e81ed9ee770f55b1a
+    ParentPath: Events\UI\SettingsUI
+    guid: 1fb0d41104b6e84e81ed9ee770f55b1a
+    GuidInternal: 
+    m_lastTime: -8584600549876584254
+    List:
+    - name: Play_Menu_ButtonDown
+      guid: 1bffeceb86b8cc499461cd7752dd9198
+      id: 1536324566
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: SettingsUI
+        ObjectType: 12
+        guid: 1fb0d41104b6e84e81ed9ee770f55b1a
+      - ElementName: Play_Menu_ButtonDown
+        ObjectType: 3
+        guid: 1bffeceb86b8cc499461cd7752dd9198
+      Path: Events\UI\SettingsUI\Play_Menu_ButtonDown
+      maxAttenuation: 0
+      maxDuration: 2
+      minDuration: 2
+    - name: Play_Menu_ButtonUp
+      guid: 0cdc270364002e449e37d3097a1ea4fd
+      id: 1033222429
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: SettingsUI
+        ObjectType: 12
+        guid: 1fb0d41104b6e84e81ed9ee770f55b1a
+      - ElementName: Play_Menu_ButtonUp
+        ObjectType: 3
+        guid: 0cdc270364002e449e37d3097a1ea4fd
+      Path: Events\UI\SettingsUI\Play_Menu_ButtonUp
+      maxAttenuation: 0
+      maxDuration: 2
+      minDuration: 2
+    - name: Play_Menu_Close
+      guid: 5c4638984c50504b90914c2b1d764b74
+      id: 1357484874
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: SettingsUI
+        ObjectType: 12
+        guid: 1fb0d41104b6e84e81ed9ee770f55b1a
+      - ElementName: Play_Menu_Close
+        ObjectType: 3
+        guid: 5c4638984c50504b90914c2b1d764b74
+      Path: Events\UI\SettingsUI\Play_Menu_Close
+      maxAttenuation: 0
+      maxDuration: 2
+      minDuration: 2
+    - name: Play_Menu_Open
+      guid: 44f599cbe9e94d44b0d4eead0b28a15f
+      id: 2236734574
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: SettingsUI
+        ObjectType: 12
+        guid: 1fb0d41104b6e84e81ed9ee770f55b1a
+      - ElementName: Play_Menu_Open
+        ObjectType: 3
+        guid: 44f599cbe9e94d44b0d4eead0b28a15f
+      Path: Events\UI\SettingsUI\Play_Menu_Open
+      maxAttenuation: 0
+      maxDuration: 2
+      minDuration: 2
   - PhysicalPath: Events\UI.wwu
     PathAndIcons:
     - ElementName: Events
@@ -555,7 +651,7 @@ MonoBehaviour:
     ParentPath: Events\UI
     guid: 75f867dc1a9906498df4975d819bec40
     GuidInternal: 
-    m_lastTime: -8584605742532511218
+    m_lastTime: -8584600549876733235
     List: []
   RtpcWwu:
   - PhysicalPath: Game Parameters\Ambience.wwu
@@ -678,7 +774,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: e6b79552b8b0634f8a967d61276f57fa
     GuidInternal: 
-    m_lastTime: -8584613403158360358
+    m_lastTime: -8584603035382833876
     List:
     - name: MusicState
       guid: 5df940ae313415468d9b77fe40be0b6c

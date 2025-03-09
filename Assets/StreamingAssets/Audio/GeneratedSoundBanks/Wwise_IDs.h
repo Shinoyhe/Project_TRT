@@ -20,6 +20,10 @@ namespace AK
         static const AkUniqueID MUSICSTATECALM = 821441420U;
         static const AkUniqueID MUSICSTATEPLAYERSPAWAN = 1764214806U;
         static const AkUniqueID PAUSEENVIRONMENTMUSIC = 396180185U;
+        static const AkUniqueID PLAY_MENU_BUTTONDOWN = 1536324566U;
+        static const AkUniqueID PLAY_MENU_BUTTONUP = 1033222429U;
+        static const AkUniqueID PLAY_MENU_CLOSE = 1357484874U;
+        static const AkUniqueID PLAY_MENU_OPEN = 2236734574U;
         static const AkUniqueID RESUMEENVIRONMENTMUSIC = 3562268364U;
         static const AkUniqueID STARTENVIRONMENTMUSIC = 1918643091U;
         static const AkUniqueID STOPENVIRONMENTMUSIC = 2557824689U;

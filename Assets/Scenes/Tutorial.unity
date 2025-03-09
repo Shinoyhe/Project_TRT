@@ -29192,7 +29192,7 @@ PrefabInstance:
     - target: {fileID: 738630665043669698, guid: 41e46a1de2af486478d75ca6f0162369,
         type: 3}
       propertyPath: m_Priority
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 738630665043669698, guid: 41e46a1de2af486478d75ca6f0162369,
         type: 3}
@@ -29212,7 +29212,7 @@ PrefabInstance:
     - target: {fileID: 1846623816388945109, guid: 41e46a1de2af486478d75ca6f0162369,
         type: 3}
       propertyPath: m_Priority
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2245485660342581519, guid: 41e46a1de2af486478d75ca6f0162369,
         type: 3}
@@ -65645,6 +65645,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tutorial Shopkeep
       objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: NpcData
+      value: 
+      objectReference: {fileID: 11400000, guid: b55b06de653d0954492e3852e7595ca2,
+        type: 2}
     - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
         type: 3}
       propertyPath: DecayPerSecond

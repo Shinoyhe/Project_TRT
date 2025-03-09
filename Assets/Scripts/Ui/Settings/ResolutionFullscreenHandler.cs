@@ -56,7 +56,7 @@ public class ResolutionFullscreenHandler : MonoBehaviour
             resolutionSet.Add(new(r.width, r.height));
         }
         Vector2Int[] resolutionStorage = resolutionSet.ToArray();
-        int resolutionIndexStorage = 0;
+        int resolutionIndexStorage;
         // Load the saved preference.
 
         if (PlayerPrefs.HasKey("ResolutionIndexPref"))

@@ -33,6 +33,29 @@ public class AccessibilitySettingsHandler : MonoBehaviour
     // Initializers/finalizers
     // ==============================================================
 
+    public static void InitFromPrefs()
+    {
+        if (PlayerPrefs.HasKey("ScreenshakeAmountPref"))
+        {
+            Settings.ScreenShakeScalar = PlayerPrefs.GetFloat("ScreenshakeAmountPref");
+        }
+        if (PlayerPrefs.HasKey("DisableFlashingPref"))
+        {
+            // If DisableFlashingPref is 1, then disable flashing is true.
+            Settings.FlashingDisabled = PlayerPrefs.GetInt("DisableFlashingPref") == 1;
+        }
+        if (PlayerPrefs.HasKey("SFXCaptionsPref"))
+        {
+            // If SFXCaptionsPref is 1, then SFX Captions is true.
+            Settings.SFXCaptionsEnabled = PlayerPrefs.GetInt("SFXCaptionsPref") == 1;
+        }
+        if (PlayerPrefs.HasKey("OneHandModePref"))
+        {
+            // If OneHandModePref is 1, then One Hand Mode is true.
+            Settings.OneHandMode = PlayerPrefs.GetInt("OneHandModePref") == 1;
+        }
+    }
+
     public void Initialize()
     {
         // Load settings from prefs

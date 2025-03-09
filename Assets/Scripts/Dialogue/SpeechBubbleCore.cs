@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,9 +9,9 @@ public class SpeechBubbleCore : MonoBehaviour
     public Image Image;
 
     public void Hide() {
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
     public void Show() {
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 }

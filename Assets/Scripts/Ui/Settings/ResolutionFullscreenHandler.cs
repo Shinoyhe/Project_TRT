@@ -152,6 +152,23 @@ public class ResolutionFullscreenHandler : MonoBehaviour
         }
 
         SetResolution(resolutionIndex);
+
+        // Find the current resolution in the list of available resolutions
+        Vector2Int currentResolution = new Vector2Int(Screen.width, Screen.height);
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            if (resolutions[i].x == currentResolution.x && resolutions[i].y == currentResolution.y)
+            {
+                resolutionIndex = i;
+                break;
+            }
+        }
+
+        // Set the dropdown value to the index of the current resolution
+        resolutionDropdown.value = resolutionIndex;
+        resolutionDropdown.RefreshShownValue();
+
+        InitializeDisplay();
     }
 
     private void OnEnable()

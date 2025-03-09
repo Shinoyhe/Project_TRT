@@ -26,6 +26,8 @@ public class Inventory : MonoBehaviour
 
     [HideInInspector] public float inventoryLastUpdateTime;
 
+    // Helper Classes =============================================================================
+
     // Enums for Sorting
     public enum SortParameters { 
         NAME, 
@@ -37,6 +39,12 @@ public class Inventory : MonoBehaviour
         ASCENDING, 
         DESCENDING 
     }
+
+    // Misc Internal Variables ====================================================================
+
+    private NotificationUI _notificationUi;
+
+    // Initializers ===============================================================================
 
     private void Awake()
     {
@@ -60,6 +68,9 @@ public class Inventory : MonoBehaviour
         foreach (InventoryCardData card in StartingCards) {
             AddCard(card);
         }
+
+        // Cache refs.
+        _notificationUi = GameManager.MasterCanvas.GetComponent<InGameUi>().Notification;
     }
 
     #region ---------- Public Methods ----------
@@ -124,6 +135,12 @@ public class Inventory : MonoBehaviour
         KnownCards.Add(newCard);
         OnInventoryUpdated?.Invoke();
         inventoryLastUpdateTime = Time.time;
+
+        // Finally, send a ping to our notificationUI.
+
+        if (_notificationUi) {
+            _notificationUi.Notify($"Obtained {card.CardName}");
+        }
     }
 
     public void RemoveCard(InventoryCardData card)
@@ -140,6 +157,12 @@ public class Inventory : MonoBehaviour
 
         OnInventoryUpdated?.Invoke();
         inventoryLastUpdateTime = Time.time;
+
+        // Finally, send a ping to our notificationUI.
+
+        if (_notificationUi) {
+            _notificationUi.Notify($"Lost {card.CardName}");
+        }
     }
 
     /// <summary>

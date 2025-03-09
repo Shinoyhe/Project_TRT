@@ -19,6 +19,7 @@ public class InGameUi : MonoBehaviour
     public Canvas Inventory;
     public Canvas Bartering;
     public Canvas Dialogue;
+    public NotificationUI Notification;
 
     public enum UiStates {
         Default,

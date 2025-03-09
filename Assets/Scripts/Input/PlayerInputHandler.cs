@@ -26,6 +26,8 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         {"_menu1", false},
         {"_menu2", false}
     };
+
+    private Dictionary<string, bool> _get = new() {};
    
     // Initializers and Finalizers ================================================================
 
@@ -35,6 +37,11 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
             // Tell the "gameplay" action map that we want to get told about
             // when actions get triggered.
             _controls.MainControls.SetCallbacks(this);
+        }
+
+        // Initialize the _get dict from the _getDown dict
+        foreach (string key in _getDown.Keys) {
+            _get[key] = false;
         }
 
         _controls.MainControls.Enable();
@@ -73,8 +80,8 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     private void SetDown(InputAction.CallbackContext context, string input)
     {
-        if (context.started) _getDown[input] = true; 
-        if (context.canceled) _getDown[input] = false;
+        if (context.started) _getDown[input] = _get[input] = true; 
+        if (context.canceled) _getDown[input] = _get[input] = false;
     }
 
     public void OnPrimaryTrigger(InputAction.CallbackContext context) { SetDown(context, "_primaryTrigger"); }
@@ -109,5 +116,6 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     public bool GetAffirmDown() { return IsActive && _getDown["_affirm"]; }
     public bool GetRejectDown() { return IsActive && _getDown["_reject"]; }
     public bool GetMenu1Down() { return IsActive && _getDown["_menu1"]; }
+    public bool GetMenu1() { return IsActive && _get["_menu1"]; }
     public bool GetMenu2Down() { return IsActive && _getDown["_menu2"]; }
 }

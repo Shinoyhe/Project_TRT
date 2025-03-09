@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2334186633066417863}
   - component: {fileID: 7739117665189127466}
   - component: {fileID: 7792286873378010446}
+  - component: {fileID: 639220916484171591}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -118,6 +119,16 @@ MonoBehaviour:
   AllCards: []
   StartingCards: []
   Cards: []
+  ToneCardInventory:
+  - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
+  - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
+  - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
+  - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
+  - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
+  - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
+  - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
+  - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
+  inventoryLastUpdateTime: 0
 --- !u!114 &7792286873378010446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,14 +145,34 @@ MonoBehaviour:
     type: 3}
   presentItemPrefab: {fileID: 3944621537521464737, guid: a10b593efd80c074098cf84a99729339,
     type: 3}
+  NpcData: {fileID: 0}
   BarterResponseMatrix: {fileID: 0}
   BarterNeutralBehaviour: {fileID: 0}
-  AcceptedCard: {fileID: 0}
-  PrizeCard: {fileID: 0}
-  DecayPerSecond: 5
+  PossibleTrades:
+    trades: []
+  CurrentTrade:
+    AcceptedCard: {fileID: 0}
+    RewardCard: {fileID: 0}
+    TradeIsPossible: 1
+  JournalOnWin: 1
+  JournalOnLose: 1
+  BaseDecay: 1
+  DecayAcceleration: 0.025
   WillingnessPerMatch: 5
   WillingnessPerFail: -5
   StartingWillingness: 50
+--- !u!114 &639220916484171591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056866332689036431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9b6f3ce9da96b49b39693de4bf1e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8203694426375556501
 GameObject:
   m_ObjectHideFlags: 0

@@ -127,8 +127,23 @@ public class NotificationUI : MonoBehaviour
     private void Hide(GameObject notif)
     {
         _notifToText[notif].DOFade(0, hideDuration).SetEase(hideEase).onComplete = () => {
+            MoveDownAfter(notif);
             _notifPool.Deactivate(notif);
         };
+    }
+
+    /// <summary>
+    /// When a notification disappears, move down all notifications above it.
+    /// Kind of a hacky, but works!
+    /// </summary>
+    /// <param name="notif">GameObject - the notif currently being deactivated.</param>
+    private void MoveDownAfter(GameObject notif)
+    {
+        foreach (GameObject other in _notifToDuration.Keys.ToList()) {
+            if (other.transform.position.y > notif.transform.position.y) {
+                other.transform.localPosition -= new Vector3(0, spaceBetweenNotifs);
+            }
+        }
     }
 
     #endregion

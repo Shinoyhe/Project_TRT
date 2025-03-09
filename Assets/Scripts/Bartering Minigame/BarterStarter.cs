@@ -34,7 +34,9 @@ public class BarterStarter : MonoBehaviour
 
     private void Start()
     {
-        _inGameUi = GameManager.MasterCanvas.GetComponentInChildren<InGameUi>();
+        if (GameManager.MasterCanvas != null) {
+            _inGameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
+        }
 
         // TODO: Replace this with non-debug functionality.
         OnWin += () => Debug.Log("BarterStarter: OnWin called!");
@@ -92,6 +94,11 @@ public class BarterStarter : MonoBehaviour
         // Create the BarterContainer.
         _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity,
                                       GameManager.MasterCanvas.transform);
+
+        if (GameManager.MasterCanvas != null) {
+            _inGameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
+        }
+
         // Set the InGameUi state to the BarteringState.
         _inGameUi.MoveToBartering();
 
@@ -104,6 +111,7 @@ public class BarterStarter : MonoBehaviour
 
         if (NpcData != null) { 
             _barterDirector.NpcData = NpcData;
+            _barterDirector.barterNpcDisplay.UpdateData(NpcData);
         } else {
             Debug.LogError("BarterStarter: Could not find NpcData");
         }

@@ -31,8 +31,7 @@ public class NpcInteractable : Interactable
 
     public override void Interaction()
     {
-        bool convoStarted = GameManager.DialogueManager.StartConversation(npcConversation, 
-                                                                          transform.position+dialogueBubbleOffset);
+        bool convoStarted = GameManager.DialogueManager.StartConversation(npcConversation, NpcData.Name, NpcData.Icon);
 
         if (!convoStarted) {
             return;

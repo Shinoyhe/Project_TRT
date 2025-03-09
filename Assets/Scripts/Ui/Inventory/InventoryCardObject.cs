@@ -4,23 +4,37 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryCardObject : MonoBehaviour, ISelectHandler {
+public class InventoryCardObject : MonoBehaviour {
     #region ======== [ OBJECT REFERENCES ] ========
 
     [Header("Data")]
+    public bool IsPreviewCard = false;
     [SerializeField] public InventoryCardData Card;
 
-    [Header("Global Dependencies")]
-    [SerializeField] private Image backCardImage;
+    [Header("Deactivated Layout")]
+    [SerializeField, BoxGroup("Deactive Layout")] private GameObject deactiveObject;
+    [SerializeField, BoxGroup("Deactive Layout")] private Button deactiveButton;
 
+    [Header("Deactivated Preview")]
+    [SerializeField, BoxGroup("Deactive Layout")] private GameObject deactivePreviewObject;
+    [SerializeField, BoxGroup("Deactive Layout")] private Button deactivePreviewButton;
+    //test
     [Header("Item Layout")]
     [SerializeField, BoxGroup("Item Layout")] private GameObject itemLayoutObject;
+    [SerializeField, BoxGroup("Item Layout")] private Button itemLayoutButton;
     [SerializeField, BoxGroup("Item Layout")] private TMP_Text itemNameText;
     [SerializeField, BoxGroup("Item Layout")] private Image itemSpriteImage;
     [SerializeField, BoxGroup("Item Layout")] private TMP_Text itemDescriptionText;
 
+    [Header("Item Preview Layout")]
+    [SerializeField, BoxGroup("Item Preview Layout")] private GameObject itemPreviewLayoutObject;
+    [SerializeField, BoxGroup("Item Preview Layout")] private Button itemPreviewLayoutButton;
+    [SerializeField, BoxGroup("Item Preview Layout")] private TMP_Text itemPreviewNameText;
+    [SerializeField, BoxGroup("Item Preview Layout")] private Image itemPreviewSpriteImage;
+
     [Header("Info Layout")]
     [SerializeField, BoxGroup("Info Layout")] private GameObject infoLayoutObject;
+    [SerializeField, BoxGroup("Info Layout")] private Button infoLayoutButton;
     [SerializeField, BoxGroup("Info Layout")] private TMP_Text infoNameText;
     [SerializeField, BoxGroup("Info Layout")] private TMP_Text infoDescriptionText;
     [SerializeField, BoxGroup("Info Layout")] private Image infoNPC1Sprite;
@@ -37,11 +51,15 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     [HideInInspector] public string CardName;
     [HideInInspector] public string CardDescription;
     [HideInInspector] public string CardID;
+    [HideInInspector] public Button CurrentActiveButton;
 
     private int _index;
     private AutoScrollGrid _scroller;
     private InventoryAction _onSelectAction = null;
 
+    public enum CurrentState {
+        DEACTIVE, INFO, ITEM, ITEMPREVIEW, DEACTIVEPREVIEW
+    }
 
     #endregion
 
@@ -50,27 +68,20 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     // Start is called before the first frame update
     void Start() {
 
-        if (Card != null) {
+        if (Card != null && IsPreviewCard == false) {
             SetData(Card);
-        } else {
-            SetCardToEmpty();
         }
     }
 
     /// <summary>
     /// Creates an empty inventory card for a InventoryGridController
     /// </summary>
-    public void InitalizeToGrid(int indexInGrid, AutoScrollGrid gridAutoScroller, InventoryAction onSelectAction) {
+    public void InitalizeToGrid(int indexInGrid, AutoScrollGrid gridAutoScroller, InventoryAction onSelectAction, bool usingPreviewSize) {
         _index = indexInGrid;
         _scroller = gridAutoScroller;
         _onSelectAction = onSelectAction;
 
-        itemLayoutObject.SetActive(false);
-        infoLayoutObject.SetActive(false);
-
-        backCardImage.color = Color.gray;
-
-        SetCardToEmpty();
+        SetCardToEmpty(usingPreviewSize);
     }
 
     #endregion
@@ -82,27 +93,32 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     /// </summary>
     /// <param name="newCard">The cardData to fill</param>
     /// <returns></returns>
-    public void SetData(InventoryCardData newCard)
+    public void SetData(InventoryCardData newCard, bool UseLargeItem = false)
     {
         if (newCard == null) return;
         
         Card = newCard;
-        backCardImage.color = Color.white;
 
         if (Card.Type == GameEnums.CardTypes.ITEM) {
             // Disable the info layout and enable the item
-            itemLayoutObject.SetActive(true);
-            infoLayoutObject.SetActive(false);
 
-            itemNameText.text = Card.CardName;
-            itemSpriteImage.sprite = Card.Sprite;
-            itemDescriptionText.text = Card.Description;
+            if (UseLargeItem) {
+                SwapState(CurrentState.ITEM);
+
+                itemNameText.text = Card.CardName;
+                itemSpriteImage.sprite = Card.Sprite;
+                itemDescriptionText.text = Card.Description;
+            } else {
+                SwapState(CurrentState.ITEMPREVIEW);
+
+                itemPreviewNameText.text = Card.CardName;
+                itemPreviewSpriteImage.sprite = Card.Sprite;
+            }
         } else if (Card.Type == GameEnums.CardTypes.INFO) {
             InventoryCard cardWrapper = GameManager.Inventory.GetCardFromData(Card);
 
             // disable the item layout and enable the info
-            infoLayoutObject.SetActive(true);
-            itemLayoutObject.SetActive(false);
+            SwapState(CurrentState.INFO);
 
             infoNameText.text = Card.CardName;
             infoDescriptionText.text = Card.Description;
@@ -153,11 +169,13 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     /// <summary>
     /// Sets card to empty!
     /// </summary>
-    public void SetCardToEmpty() {
-        itemLayoutObject.SetActive(false);
-        infoLayoutObject.SetActive(false);
+    public void SetCardToEmpty(bool usingPreviewSize) {
 
-        backCardImage.color = Color.gray;
+        if (usingPreviewSize) {
+            SwapState(CurrentState.DEACTIVEPREVIEW);
+        } else {
+            SwapState(CurrentState.DEACTIVE);
+        }
     }
 
     /// <summary>
@@ -177,13 +195,67 @@ public class InventoryCardObject : MonoBehaviour, ISelectHandler {
     public void OnPress() {
 
         if (_onSelectAction == null) {
-            Debug.LogError("Card has no OnSelectAction set!");
             return;
         }
 
         InventoryAction.ActionContext ctx = new InventoryAction.ActionContext();
         ctx.cardData = Card;
         _onSelectAction.ActionOnClick(ctx);
+
+    }
+
+    public void SwapState(CurrentState stateToEnter) {
+
+        switch (stateToEnter) {
+            case CurrentState.DEACTIVE:
+                itemLayoutObject.SetActive(false);
+                infoLayoutObject.SetActive(false);
+                itemPreviewLayoutObject.SetActive(false);
+                deactiveObject.SetActive(true);
+                deactivePreviewObject.SetActive(false);
+
+                CurrentActiveButton = deactiveButton;
+                break;
+            case CurrentState.INFO:
+                itemLayoutObject.SetActive(false);
+                infoLayoutObject.SetActive(true);
+                itemPreviewLayoutObject.SetActive(false);
+                deactiveObject.SetActive(false);
+                deactivePreviewObject.SetActive(false);
+
+
+                CurrentActiveButton = infoLayoutButton;
+                break;
+            case CurrentState.ITEM:
+                itemLayoutObject.SetActive(true);
+                infoLayoutObject.SetActive(false);
+                itemPreviewLayoutObject.SetActive(false);
+                deactiveObject.SetActive(false);
+                deactivePreviewObject.SetActive(false);
+
+
+                CurrentActiveButton = itemLayoutButton;
+                break;
+            case CurrentState.ITEMPREVIEW:
+                itemLayoutObject.SetActive(false);
+                infoLayoutObject.SetActive(false);
+                itemPreviewLayoutObject.SetActive(true);
+                deactiveObject.SetActive(false);
+                deactivePreviewObject.SetActive(false);
+
+                CurrentActiveButton = itemPreviewLayoutButton;
+                break;
+            case CurrentState.DEACTIVEPREVIEW:
+                itemLayoutObject.SetActive(false);
+                infoLayoutObject.SetActive(false);
+                itemPreviewLayoutObject.SetActive(false);
+                deactiveObject.SetActive(false);
+                deactivePreviewObject.SetActive(true);
+
+                CurrentActiveButton = deactivePreviewButton;
+                break;
+
+        }
 
     }
 

@@ -10,7 +10,7 @@ public class DoorController : MonoBehaviour
     [SerializeField, BoxGroup("Doors")] private HingeJoint leftDoor;
     [SerializeField, BoxGroup("Doors")] private HingeJoint rightDoor;
 
-
+    [ReadOnly] public bool IsOpen = false;
     #endregion
 
     #region ========== [ PRIVATE PROPERTIES ] ==========
@@ -26,6 +26,14 @@ public class DoorController : MonoBehaviour
     {
         leftDoor.useMotor = true;
         rightDoor.useMotor = true;
+
+        IsOpen = true;
+
+        LockedInteractable lockedInteractable = GetComponent<LockedInteractable>();
+        if (lockedInteractable != null)
+        {
+            lockedInteractable.HideIcon = true;
+        }
     }
 
     #endregion

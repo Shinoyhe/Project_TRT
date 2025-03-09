@@ -1,4 +1,3 @@
-using Ink.Parsed;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,6 +58,12 @@ public class NaiveBarterHistoryUI : MonoBehaviour
                 matchTriplet.OppCards[i].sprite = history.OppCards[i].MainSprite;
                 matchTriplet.PlayerCards[i].sprite = history.PlayerCards[i].MainSprite;
                 matchTriplet.Match[i].sprite = GetMatchSprite(history.Matches[i]);
+
+                if (matchTriplet.Match[i].sprite != null) {
+                    matchTriplet.Match[i].color = Color.black;
+                } else {
+                    matchTriplet.Match[i].color = Color.clear;
+                }
             }
 
             lastHistory = history;

@@ -19,7 +19,7 @@ public class MatchSlotUI : MonoBehaviour
     // Misc Internal Variables ====================================================================
 
     private Image _icon;
-    private static Color _nullColor = new(1,1,1,0.5f);
+    private static Color _nullColor = new(1,1,1,0f);
 
     // Initializers ===============================================================================
 

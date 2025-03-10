@@ -37,7 +37,7 @@ public class InGameUi : MonoBehaviour
     private NavBarController _navBarController;
 
     [SerializeField, ReadOnly] private UiStates _currentCanvasState;
-    [SerializeField, ReadOnly] private UiStates _lastNonMenuState;
+    [SerializeField, ReadOnly] private UiStates _lastNonNavbarState;
     public System.Action<UiStates, UiStates> CanvasStateChanged;
     public UiStates CurrentCanvasState {
         get { 
@@ -48,7 +48,7 @@ public class InGameUi : MonoBehaviour
             _currentCanvasState = value;
 
             if (!UsesNavbar(value)) {
-                _lastNonMenuState = value;
+                _lastNonNavbarState = value;
             }
         }
     }
@@ -72,14 +72,14 @@ public class InGameUi : MonoBehaviour
 
         if (!GameManager.PlayerInput.AllowNavbar) {
             if (UsesNavbar(CurrentCanvasState)) {
-                MoveTo(_lastNonMenuState);
+                MoveTo(_lastNonNavbarState);
             }
             return;
         }
 
         if(GameManager.PlayerInput.GetMenu1Down()) {
             if (CurrentCanvasState == UiStates.Inventory) {
-                MoveTo(_lastNonMenuState);
+                MoveTo(_lastNonNavbarState);
             } else {
                 MoveToInventory();
             }
@@ -87,7 +87,7 @@ public class InGameUi : MonoBehaviour
 
         if (GameManager.PlayerInput.GetMenu2Down()) {
             if (CurrentCanvasState == UiStates.Journal) {
-                MoveTo(_lastNonMenuState);
+                MoveTo(_lastNonNavbarState);
             } else {
                 MoveToJournal();
             }
@@ -95,7 +95,7 @@ public class InGameUi : MonoBehaviour
 
         if (GameManager.PlayerInput.GetStartDown()) {
             if (CurrentCanvasState == UiStates.Pause) {
-                MoveTo(_lastNonMenuState);
+                MoveTo(_lastNonNavbarState);
             } else {
                 MoveToPause();
             }
@@ -125,7 +125,7 @@ public class InGameUi : MonoBehaviour
     /// <param name="state">UiStates - the state to set _lastNonMenuState to.</param>
     public void SetLastNonMenuState(UiStates state)
     {
-        _lastNonMenuState = state;
+        _lastNonNavbarState = state;
     }
 
     // Used for button OnClick calls as they don't let enums to be passed through :|

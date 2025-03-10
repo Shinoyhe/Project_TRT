@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SetDefaultSelection : MonoBehaviour
-{
+public class SetDefaultSelection : MonoBehaviour {
     public Button DefaultButton;
     public bool TriggerOnClick = false;
     public bool OnlyFirstBoot = false;
@@ -28,5 +28,18 @@ public class SetDefaultSelection : MonoBehaviour
 
             firstBootTracker = true;
         }
+    }
+
+    void Update() {
+
+        Vector3 Input = GameManager.PlayerInput.GetControlInput();
+
+        bool IsMoving = Input.magnitude > 0.02f;
+        bool NothingSelected = EventSystem.current.currentSelectedGameObject == null;
+
+        if (IsMoving && NothingSelected) {
+            EventSystem.current.SetSelectedGameObject(DefaultButton.gameObject);
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -65,6 +66,21 @@ public class InventoryGridController : MonoBehaviour
     #endregion
 
     #region ======== [ PRIVATE METHODS ] ========
+
+    /// <summary>
+    /// Auto Select Button if none selected
+    /// </summary>
+    private void Update() {
+
+        Vector3 Input = GameManager.PlayerInput.GetControlInput();
+
+        bool IsMoving = Input.magnitude > 0.02f;
+        bool NothingSelected = EventSystem.current.currentSelectedGameObject == null;
+
+        if (IsMoving && NothingSelected) {
+            EventSystem.current.SetSelectedGameObject(_inventoryInstances[0].CurrentActiveButton.gameObject);
+        }
+    }
 
     /// <summary>
     /// Init delayed so GameManager can Initalize

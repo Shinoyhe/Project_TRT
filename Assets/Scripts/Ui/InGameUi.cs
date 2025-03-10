@@ -259,7 +259,6 @@ public class InGameUi : MonoBehaviour
                 GameManager.Player.InteractionHandler.SetCanInteract(true);
                 GameManager.PlayerInput.AllowNavbar = true;
                 Default.gameObject.SetActive(true);
-                Debug.Log("Back to default");
                 break;
             case UiStates.Pause:
                 // Insert animation!

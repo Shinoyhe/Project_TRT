@@ -146,7 +146,7 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void WinBarter()
     {
-        EndBarter(JournalOnWin, OnWin);
+        EndBarter(JournalOnWin, OnWin, true);
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void LoseBarter()
     {
-        EndBarter(JournalOnLose, OnLose);
+        EndBarter(JournalOnLose, OnLose, false);
     }
 
     /// <summary>
@@ -162,16 +162,18 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     /// <param name="openJournal">bool - whether to open the journal.</param>
     /// <param name="callback">System.Action - invoked to announce a win/loss.</param>
-    private void EndBarter(bool openJournal, System.Action callback)
+    private void EndBarter(bool openJournal, System.Action callback, bool won)
     {
         Destroy(_barterInstance);
         GameManager.PlayerInput.IsActive = true;
 
         if (openJournal) {
-            OpenJournal(callback);
+            OpenJournal(callback, won);
         } else {
+            ExchangeCards(won);
+
+            // TODO: Take us back to the conversation. In the meantime...
             _inGameUi.MoveToDefault();
-            ExchangeCards();
             callback?.Invoke();
         }
     }
@@ -181,13 +183,13 @@ public class BarterStarter : MonoBehaviour
     /// callback function when the UiStates returns to the Default state.
     /// </summary>
     /// <param name="closeCallback">System.Action - invoked when the Journal is closed.</param>
-    private void OpenJournal(System.Action closeCallback)
+    private void OpenJournal(System.Action closeCallback, bool won)
     {
         _inGameUi.MoveToJournal(NpcData);
 
         _inGameUi.CanvasStateChanged += (oldState, newState) => {
-            if (newState == InGameUi.UiStates.Default){
-                ExchangeCards();
+            if (newState == InGameUi.UiStates.Default || newState == InGameUi.UiStates.Dialogue) {
+                ExchangeCards(won);
                 closeCallback?.Invoke();
             }
         };
@@ -196,8 +198,12 @@ public class BarterStarter : MonoBehaviour
     /// <summary>
     /// Gives the player the prize card promised, and removes the card they gave away.
     /// </summary>
-    private void ExchangeCards()
+    private void ExchangeCards(bool won)
     {
+        if (!won) {
+            return;
+        }
+        
         if (CurrentTrade != null) {
             GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
 

@@ -174,6 +174,9 @@ public class InGameUi : MonoBehaviour
                 // Insert animation!
                 GameManager.Player.Movement.TogglePlayerMovement(false);
                 Default.gameObject.SetActive(false);
+                if (TimeLoopManager.Instance != null) {
+                    TimeLoopManager.SetLoopPaused(true);
+                }
                 break;
             case UiStates.Pause:
                 // Insert animation!
@@ -224,6 +227,9 @@ public class InGameUi : MonoBehaviour
                 // Insert animation!
                 GameManager.Player.Movement.TogglePlayerMovement(true);
                 Default.gameObject.SetActive(true);
+                if (TimeLoopManager.Instance != null) {
+                    TimeLoopManager.SetLoopPaused(false);
+                }
                 break;
             case UiStates.Pause:
                 // Insert animation!

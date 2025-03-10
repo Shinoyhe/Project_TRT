@@ -326,4 +326,30 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
+
+    #region ---------- Save and Load ----------
+
+    public void Save(ref InventorySaveData data)
+    {
+        data.AllCards = AllCards;
+        data.Cards = Cards;
+        data.KnownCards = KnownCards;
+    }
+
+    public void Load(InventorySaveData data)
+    {
+        AllCards = data.AllCards;
+        Cards = data.Cards;
+        KnownCards = data.KnownCards;
+    }
+
+    #endregion
+}
+
+[System.Serializable]
+public struct InventorySaveData
+{
+    public List<InventoryCard> AllCards;
+    public List<InventoryCard> Cards;
+    public HashSet<InventoryCard> KnownCards;
 }

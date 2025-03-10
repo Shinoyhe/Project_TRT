@@ -45,14 +45,12 @@ public class DialogueManager : MonoBehaviour
         if (_inConversation == false) return;
 
         // Check for Player Input
-        if (GameManager.UiInput.GetProgressDialogueDown()) {
-
+        if (GameManager.PlayerInput.GetAffirmDown()) {
             if (DialogueUiManager.IsLineFinished()) {
                 ShowNextLine();
             } else {
                 DialogueUiManager.SkipLineAnimation();
             }
-
         }
     }
 

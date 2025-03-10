@@ -73,7 +73,6 @@ public class TimeLoopManager : MonoBehaviour
     private void OnSceneLoaded(Scene _, LoadSceneMode __)
     {
         GameManager.PlayerInput.IsActive = true;
-        GameManager.UiInput.IsActive = true;
 
         GameManager.Instance.FindPlayer();
         GameManager.Instance.FindMasterCanvas();
@@ -97,7 +96,6 @@ public class TimeLoopManager : MonoBehaviour
             _loopDone = true;
 
             GameManager.PlayerInput.IsActive = false;
-            GameManager.UiInput.IsActive = false;
 
             // LoopElapsed is null with 0 subscribers, and non-null otherwise.
             if (LoopElapsed != null) {

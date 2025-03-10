@@ -278,6 +278,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Debug",
+            "id": "0c2f11ea-dfea-4b3a-9af7-9142c9d672db",
+            "actions": [
+                {
+                    "name": "Debug0",
+                    "type": "Button",
+                    "id": "eb475a5a-a25b-493a-ae25-5a745d8b37b0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Debug1",
+                    "type": "Button",
+                    "id": "590c01e1-6648-4f01-b8c0-8eb0c9011555",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Debug2",
+                    "type": "Button",
+                    "id": "5d1e6575-83bf-4bf4-b538-1feb2a697c3d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "061cfe0c-9406-47e2-8d41-63a8378eb860",
+                    "path": "<Keyboard>/f1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;KeyboardMouse",
+                    "action": "Debug0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d743e1b-e388-4f04-b7ba-677353d1eb74",
+                    "path": "<Keyboard>/f9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;KeyboardMouse",
+                    "action": "Debug1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "556829e5-102c-4e22-ab30-6d1adab8ed03",
+                    "path": "<Keyboard>/f5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;KeyboardMouse",
+                    "action": "Debug2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

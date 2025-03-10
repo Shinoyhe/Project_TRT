@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// Class which manages inputs from the new input system, via PlayerControls.
 /// Modded from the input handler from the Unity FPS Microgame.
 /// </summary>
-public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsActions 
+public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsActions, PlayerControls.IDebugActions
 {
     // Misc Internal Variables ====================================================================
 
@@ -24,7 +24,10 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         {"_affirm", false},
         {"_reject", false},
         {"_menu1", false},
-        {"_menu2", false}
+        {"_menu2", false},
+        {"_debug0", false},
+        {"_debug1", false},
+        {"_debug2", false}
     };
 
     private Dictionary<string, bool> _get = new() {};
@@ -34,9 +37,11 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     private void OnEnable() {
         if (_controls == null) {
             _controls = new PlayerControls();
-            // Tell the "gameplay" action map that we want to get told about
+            // Tell the "MainControls" action map that we want to get told about
             // when actions get triggered.
             _controls.MainControls.SetCallbacks(this);
+            // Likewise for the "Debug" action map.
+            _controls.Debug.SetCallbacks(this);
         }
 
         // Initialize the _get dict from the _getDown dict
@@ -45,6 +50,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         }
 
         _controls.MainControls.Enable();
+        _controls.Debug.Enable();
         IsActive = true;
     }
 
@@ -82,6 +88,10 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     {
         if (context.started) _getDown[input] = _get[input] = true; 
         if (context.canceled) _getDown[input] = _get[input] = false;
+
+        if (context.started) {
+            Debug.Log($"Input: {input} was just pressed down.");
+        }
     }
 
     public void OnPrimaryTrigger(InputAction.CallbackContext context) { SetDown(context, "_primaryTrigger"); }
@@ -91,6 +101,9 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     public void OnRejectButton(InputAction.CallbackContext context) { SetDown(context, "_reject"); }
     public void OnMenuButton1(InputAction.CallbackContext context) { SetDown(context, "_menu1"); }
     public void OnMenuButton2(InputAction.CallbackContext context) { SetDown(context, "_menu2"); }
+    public void OnDebug0(InputAction.CallbackContext context) { SetDown(context, "_debug0"); }
+    public void OnDebug1(InputAction.CallbackContext context) { SetDown(context, "_debug1"); }
+    public void OnDebug2(InputAction.CallbackContext context) { SetDown(context, "_debug2"); }
 
     // Public Accessor Methods ====================================================================
 
@@ -118,4 +131,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     public bool GetMenu1Down() { return IsActive && _getDown["_menu1"]; }
     public bool GetMenu1() { return IsActive && _get["_menu1"]; }
     public bool GetMenu2Down() { return IsActive && _getDown["_menu2"]; }
+    public bool GetDebug0Down() { return IsActive && _getDown["_debug0"]; }
+    public bool GetDebug1Down() { return IsActive && _getDown["_debug1"]; }
+    public bool GetDebug2Down() { return IsActive && _getDown["_debug2"]; }
 }

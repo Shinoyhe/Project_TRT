@@ -300,6 +300,74 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""0c2f11ea-dfea-4b3a-9af7-9142c9d672db"",
+            ""actions"": [
+                {
+                    ""name"": ""Debug0"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb475a5a-a25b-493a-ae25-5a745d8b37b0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Debug1"",
+                    ""type"": ""Button"",
+                    ""id"": ""590c01e1-6648-4f01-b8c0-8eb0c9011555"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Debug2"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d1e6575-83bf-4bf4-b538-1feb2a697c3d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""061cfe0c-9406-47e2-8d41-63a8378eb860"",
+                    ""path"": ""<Keyboard>/f1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;KeyboardMouse"",
+                    ""action"": ""Debug0"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d743e1b-e388-4f04-b7ba-677353d1eb74"",
+                    ""path"": ""<Keyboard>/f9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;KeyboardMouse"",
+                    ""action"": ""Debug1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""556829e5-102c-4e22-ab30-6d1adab8ed03"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;KeyboardMouse"",
+                    ""action"": ""Debug2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -342,11 +410,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_MainControls_RejectButton = m_MainControls.FindAction("RejectButton", throwIfNotFound: true);
         m_MainControls_MenuButton1 = m_MainControls.FindAction("MenuButton1", throwIfNotFound: true);
         m_MainControls_MenuButton2 = m_MainControls.FindAction("MenuButton2", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_Debug0 = m_Debug.FindAction("Debug0", throwIfNotFound: true);
+        m_Debug_Debug1 = m_Debug.FindAction("Debug1", throwIfNotFound: true);
+        m_Debug_Debug2 = m_Debug.FindAction("Debug2", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
     {
         UnityEngine.Debug.Assert(!m_MainControls.enabled, "This will cause a leak and performance issues, PlayerControls.MainControls.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Debug.enabled, "This will cause a leak and performance issues, PlayerControls.Debug.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -506,6 +580,68 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public MainControlsActions @MainControls => new MainControlsActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
+    private readonly InputAction m_Debug_Debug0;
+    private readonly InputAction m_Debug_Debug1;
+    private readonly InputAction m_Debug_Debug2;
+    public struct DebugActions
+    {
+        private @PlayerControls m_Wrapper;
+        public DebugActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Debug0 => m_Wrapper.m_Debug_Debug0;
+        public InputAction @Debug1 => m_Wrapper.m_Debug_Debug1;
+        public InputAction @Debug2 => m_Wrapper.m_Debug_Debug2;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
+            @Debug0.started += instance.OnDebug0;
+            @Debug0.performed += instance.OnDebug0;
+            @Debug0.canceled += instance.OnDebug0;
+            @Debug1.started += instance.OnDebug1;
+            @Debug1.performed += instance.OnDebug1;
+            @Debug1.canceled += instance.OnDebug1;
+            @Debug2.started += instance.OnDebug2;
+            @Debug2.performed += instance.OnDebug2;
+            @Debug2.canceled += instance.OnDebug2;
+        }
+
+        private void UnregisterCallbacks(IDebugActions instance)
+        {
+            @Debug0.started -= instance.OnDebug0;
+            @Debug0.performed -= instance.OnDebug0;
+            @Debug0.canceled -= instance.OnDebug0;
+            @Debug1.started -= instance.OnDebug1;
+            @Debug1.performed -= instance.OnDebug1;
+            @Debug1.canceled -= instance.OnDebug1;
+            @Debug2.started -= instance.OnDebug2;
+            @Debug2.performed -= instance.OnDebug2;
+            @Debug2.canceled -= instance.OnDebug2;
+        }
+
+        public void RemoveCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -534,5 +670,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRejectButton(InputAction.CallbackContext context);
         void OnMenuButton1(InputAction.CallbackContext context);
         void OnMenuButton2(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnDebug0(InputAction.CallbackContext context);
+        void OnDebug1(InputAction.CallbackContext context);
+        void OnDebug2(InputAction.CallbackContext context);
     }
 }

@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class CardPickup : Interactable 
 {
-    [SerializeField] private InventoryCardData CardToGive;
+    [SerializeField] [Required] private InventoryCardData CardToGive;
 
     public override void Highlight() {
         // ADD SHADER FOR HIGHLIGHT?
@@ -12,7 +11,7 @@ public class CardPickup : Interactable
 
     public override void Interaction() {
         GameManager.Inventory.AddCard(CardToGive);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     public override void UnHighlight() {

@@ -81,6 +81,14 @@ public class SaveSystem
         {
             GameManager.Inventory.Load(_saveData.inventoryData);
         }
+
+        // REWORK ClearExceptType in inventory. Cannot delete items and loop
+
+        // Journal Access: Gamemanager -> MasterCanvas.getcomponent -> InGameUI -> JournalNavCore -> NPC
+        // KnownNPCs is in JournalNPC
+        // Tone Card Preferences is in NPCData
+        // Known Trades is in NPCData
+        // not saving data for NPC's you don't know, because its in KnownNPCs
     }
 
     #endregion

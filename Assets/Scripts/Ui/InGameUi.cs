@@ -30,12 +30,14 @@ public class InGameUi : MonoBehaviour
         Journal, 
         Inventory,
         Bartering,
-        Dialogue
+        Dialogue,
+        PresentItem,
     }
 
     private NavBarController _navBarController;
 
     [SerializeField, ReadOnly] private UiStates _currentCanvasState;
+    [SerializeField, ReadOnly] private UiStates _lastNonMenuState;
     public System.Action<UiStates, UiStates> CanvasStateChanged;
     public UiStates CurrentCanvasState {
         get { 
@@ -44,6 +46,10 @@ public class InGameUi : MonoBehaviour
         private set { 
             CanvasStateChanged?.Invoke(_currentCanvasState, value);
             _currentCanvasState = value;
+
+            if (!UsesNavbar(value)) {
+                _lastNonMenuState = value;
+            }
         }
     }
 
@@ -56,7 +62,7 @@ public class InGameUi : MonoBehaviour
         _navBarController = NavBar.gameObject.GetComponent<NavBarController>();
 
         // Swap with Accessibility Check
-        MoveTo(UiStates.Default);
+        MoveToDefault();
     }
     
     /// <summary>
@@ -64,9 +70,16 @@ public class InGameUi : MonoBehaviour
     /// </summary>
     public void Update() {
 
+        if (!GameManager.PlayerInput.AllowNavbar) {
+            if (UsesNavbar(CurrentCanvasState)) {
+                MoveTo(_lastNonMenuState);
+            }
+            return;
+        }
+
         if(GameManager.PlayerInput.GetMenu1Down()) {
             if (CurrentCanvasState == UiStates.Inventory) {
-                MoveToDefault();
+                MoveTo(_lastNonMenuState);
             } else {
                 MoveToInventory();
             }
@@ -74,7 +87,7 @@ public class InGameUi : MonoBehaviour
 
         if (GameManager.PlayerInput.GetMenu2Down()) {
             if (CurrentCanvasState == UiStates.Journal) {
-                MoveToDefault();
+                MoveTo(_lastNonMenuState);
             } else {
                 MoveToJournal();
             }
@@ -82,7 +95,7 @@ public class InGameUi : MonoBehaviour
 
         if (GameManager.PlayerInput.GetStartDown()) {
             if (CurrentCanvasState == UiStates.Pause) {
-                MoveToDefault();
+                MoveTo(_lastNonMenuState);
             } else {
                 MoveToPause();
             }
@@ -97,8 +110,22 @@ public class InGameUi : MonoBehaviour
     /// <param name="newState"> State to move to. </param>
     public void MoveTo(UiStates newState) {
 
+        // If we are ever told explicitly to go to a menu state, then force menus to be allowed.
+        if (UsesNavbar(newState)) {
+            GameManager.PlayerInput.AllowNavbar = true;
+        }
+
         StopState(CurrentCanvasState);
         StartState(newState);
+    }
+
+    /// <summary>
+    /// Force updates the internal _lastNonMenuState field.
+    /// </summary>
+    /// <param name="state">UiStates - the state to set _lastNonMenuState to.</param>
+    public void SetLastNonMenuState(UiStates state)
+    {
+        _lastNonMenuState = state;
     }
 
     // Used for button OnClick calls as they don't let enums to be passed through :|
@@ -108,9 +135,6 @@ public class InGameUi : MonoBehaviour
     public void MoveToTitle() => MoveTo(UiStates.MoveToTitle);
     public void MoveToControls() => MoveTo(UiStates.Controls);
     public void MoveToJournal() => MoveTo(UiStates.Journal);
-
-    public void MoveToDialogue() => MoveTo(UiStates.Dialogue);
-
     /// <summary>
     /// Will open the Journal and automatically open the NPC tab to the NPC Data. Will add the NPC if not already known.
     /// </summary>
@@ -123,30 +147,36 @@ public class InGameUi : MonoBehaviour
 
         MoveToJournal();
     }
-
+    public void MoveToDialogue() => MoveTo(UiStates.Dialogue);
     public void MoveToInventory() => MoveTo(UiStates.Inventory);
+    public void MoveToPresentItem() => MoveTo(UiStates.PresentItem);
     public void MoveToBartering() => MoveTo(UiStates.Bartering);
 
     
 
     // Private Helper Methods ====================================================================
 
+    private static bool UsesNavbar(UiStates currentState)
+    {
+        return currentState == UiStates.Pause || currentState == UiStates.Journal 
+            || currentState == UiStates.Inventory;
+    }
+
     /// <summary>
     /// Show or hide the Nav Bar based on the state.
     /// </summary>
     /// <param name="currentState"></param>
-    void ToggleNavBar(UiStates currentState) {
+    void ToggleNavBar(UiStates currentState)
+    {
 
         bool usingNavBar = false;
-
-        if(currentState == UiStates.Pause || currentState == UiStates.Journal || currentState == UiStates.Inventory) {
-            usingNavBar = true;
-        }
+        usingNavBar = UsesNavbar(currentState);
 
         // Add Animation here!
         NavBar.gameObject.SetActive(usingNavBar);
 
-        switch (currentState) {
+        switch (currentState)
+        {
             case UiStates.Pause:
                 _navBarController.InitNavBar(2);
                 break;
@@ -172,7 +202,7 @@ public class InGameUi : MonoBehaviour
         switch (stateToStop) {
             case UiStates.Default:
                 // Insert animation!
-                GameManager.Player.Movement.TogglePlayerMovement(false);
+                GameManager.Player.Movement.SetCanMove(false);
                 Default.gameObject.SetActive(false);
                 break;
             case UiStates.Pause:
@@ -203,6 +233,9 @@ public class InGameUi : MonoBehaviour
                 // Insert animation!
                 Dialogue.gameObject.SetActive(false);
                 break;
+            case UiStates.PresentItem:
+                // Insert animation!
+                break;
         }
 
     }
@@ -222,11 +255,16 @@ public class InGameUi : MonoBehaviour
         switch (stateToStart) {
             case UiStates.Default:
                 // Insert animation!
-                GameManager.Player.Movement.TogglePlayerMovement(true);
+                GameManager.Player.Movement.SetCanMove(true);
+                GameManager.Player.InteractionHandler.SetCanInteract(true);
+                GameManager.PlayerInput.AllowNavbar = true;
                 Default.gameObject.SetActive(true);
+                Debug.Log("Back to default");
                 break;
             case UiStates.Pause:
                 // Insert animation!
+                GameManager.Player.Movement.SetCanMove(false);
+                GameManager.Player.InteractionHandler.SetCanInteract(false);
                 Pause.gameObject.SetActive(true);
                 break;
             case UiStates.Options:
@@ -243,18 +281,32 @@ public class InGameUi : MonoBehaviour
                 break;
             case UiStates.Journal:
                 // Insert animation!
+                GameManager.Player.Movement.SetCanMove(false);
+                GameManager.Player.InteractionHandler.SetCanInteract(false);
                 Journal.gameObject.SetActive(true);
                 break;
             case UiStates.Inventory:
                 // Insert animation!
+                GameManager.Player.Movement.SetCanMove(false);
+                GameManager.Player.InteractionHandler.SetCanInteract(false);
                 Inventory.gameObject.SetActive(true);
                 break;
             case UiStates.Bartering:
-                // BarterStarter handles spawning the BarterContainer, so don't do anything here.
+                GameManager.Player.Movement.SetCanMove(false);
+                GameManager.Player.InteractionHandler.SetCanInteract(false);
+                GameManager.PlayerInput.AllowNavbar = false;
                 break;
             case UiStates.Dialogue:
                 // Insert animation!
+                GameManager.Player.Movement.SetCanMove(false);
+                GameManager.Player.InteractionHandler.SetCanInteract(false);
+                GameManager.PlayerInput.AllowNavbar = true;
                 Dialogue.gameObject.SetActive(true);
+                break;
+            case UiStates.PresentItem:
+                GameManager.Player.Movement.SetCanMove(false);
+                GameManager.Player.InteractionHandler.SetCanInteract(false);
+                GameManager.PlayerInput.AllowNavbar = false;
                 break;
         }
     }

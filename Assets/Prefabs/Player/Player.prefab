@@ -214,6 +214,7 @@ MonoBehaviour:
   forwardTransform: {fileID: 5083528762976515683}
   animator: {fileID: 3590953238995180109}
   speed: 5
+  _canMove: 1
 --- !u!143 &6074142200603486058
 CharacterController:
   m_ObjectHideFlags: 0
@@ -254,6 +255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionIcon: {fileID: 5387680805659258484}
   highlightedInteractable: {fileID: 0}
+  _accessibleInteractables: []
+  _canInteract: 1
 --- !u!1 &3870256125407273809
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Movement: {fileID: 8583860041712276947}
+  InteractionHandler: {fileID: 9135874550164538560}
   Object: {fileID: 2770568053980062067}
   Transform: {fileID: 1767942433717707359}
   Camera: {fileID: 51520251301293892}
@@ -426,6 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 0
+  AllowMenus: 0
 --- !u!1 &8208938610237536702
 GameObject:
   m_ObjectHideFlags: 0

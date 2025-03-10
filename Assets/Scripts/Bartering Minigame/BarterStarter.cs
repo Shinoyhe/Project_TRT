@@ -55,8 +55,6 @@ public class BarterStarter : MonoBehaviour
         presentItem.OnAccepted += AcceptTrade;
         presentItem.OnClosed += CloseTrade;
 
-        GameManager.PlayerInput.IsActive = false;
-
         if (TimeLoopManager.Instance != null) {
             TimeLoopManager.SetLoopPaused(true);
         }
@@ -73,10 +71,13 @@ public class BarterStarter : MonoBehaviour
         CleanupPresentationCanvas(true);
     }
 
-    private void CleanupPresentationCanvas(bool enablePlayerInput)
+    private void CleanupPresentationCanvas(bool backToDefault)
     {
         Destroy(_itemPresentInstance);
-        GameManager.PlayerInput.IsActive = enablePlayerInput;
+        
+        if (backToDefault) {
+            _inGameUi.MoveToDefault();
+        }
 
         if (TimeLoopManager.Instance != null) {
             TimeLoopManager.SetLoopPaused(false);
@@ -133,7 +134,6 @@ public class BarterStarter : MonoBehaviour
         _barterDirector.WillingnessPerMatch = WillingnessPerMatch;
         _barterDirector.WillingnessPerFail = WillingnessPerFail;
 
-        GameManager.PlayerInput.IsActive = false;
         //MusicManager.play
 
         return _barterInstance;
@@ -165,7 +165,6 @@ public class BarterStarter : MonoBehaviour
     private void EndBarter(bool openJournal, System.Action callback, bool won)
     {
         Destroy(_barterInstance);
-        GameManager.PlayerInput.IsActive = true;
 
         if (openJournal) {
             OpenJournal(callback, won);
@@ -185,14 +184,24 @@ public class BarterStarter : MonoBehaviour
     /// <param name="closeCallback">System.Action - invoked when the Journal is closed.</param>
     private void OpenJournal(System.Action closeCallback, bool won)
     {
+        _inGameUi.SetLastNonMenuState(InGameUi.UiStates.Default);
         _inGameUi.MoveToJournal(NpcData);
 
-        _inGameUi.CanvasStateChanged += (oldState, newState) => {
-            if (newState == InGameUi.UiStates.Default || newState == InGameUi.UiStates.Dialogue) {
+        _inGameUi.CanvasStateChanged += OnJournalClose;
+
+        void OnJournalClose(InGameUi.UiStates oldState, InGameUi.UiStates newState)
+        {
+            // A named delegate function for CanvasStateChanged. 
+            // Named and not anonymous so that we can unsubscribe ourselves.
+            // ================
+            
+            if (newState == InGameUi.UiStates.Default || newState == InGameUi.UiStates.Dialogue)
+            {
                 ExchangeCards(won);
                 closeCallback?.Invoke();
+                _inGameUi.CanvasStateChanged -= OnJournalClose;
             }
-        };
+        }
     }
 
     /// <summary>

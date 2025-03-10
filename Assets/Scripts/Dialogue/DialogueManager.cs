@@ -30,6 +30,7 @@ public class DialogueManager : MonoBehaviour
     private bool _inConversation;
     private bool _onDelay;
     private Story _currentStory;
+    private InGameUi _uiController;
 
     // Initializers and Update ================================================================
 
@@ -67,10 +68,16 @@ public class DialogueManager : MonoBehaviour
         if (_inConversation) return false;
         if (_onDelay) return false;
 
-        InGameUi UiController = GameManager.MasterCanvas.gameObject.GetComponent<InGameUi>();
-        if (UiController == null) return false;
+        // Lazy initialization.
+        if (_uiController == null) {
+            _uiController = GameManager.MasterCanvas.gameObject.GetComponent<InGameUi>();
+            // If it's still null, it couldn't be found.
+            if (_uiController == null) {
+                return false;
+            }
+        }
 
-        UiController.MoveToDialogue();
+        _uiController.MoveToDialogue();
         DialogueUiManager = GameManager.MasterCanvas.gameObject.GetComponentInChildren<DialogueUiManager>();
 
         _inConversation = true;
@@ -182,6 +189,7 @@ public class DialogueManager : MonoBehaviour
         // If choice was Action, skip the line.
         if (foundTags.IsBarterTrigger) {
             EndStory(false);
+            _uiController.MoveToPresentItem();
             GameManager.BarterStarter.PresentItem();
             return;
         }
@@ -233,8 +241,8 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Called to kill UI and prep for next dialogue.
     /// </summary>
-    /// <param name="enablePlayerInput"> True if we want to enable player input after ending story. </param>
-    void EndStory(bool enablePlayerInput)
+    /// <param name="backToDefault"> True if we want to enable player input after ending story. </param>
+    void EndStory(bool backToDefault)
     {
         _inConversation = false;
         _currentStory = null;
@@ -243,7 +251,11 @@ public class DialogueManager : MonoBehaviour
 
         DialogueUiManager.Reset();
         DialogueUiManager.gameObject.SetActive(false);
-        GameManager.PlayerInput.IsActive = enablePlayerInput;
+
+        if (backToDefault) {
+            _uiController.MoveToDefault();
+        }
+        
         _onDelay = true;
         StartCoroutine(ConversationDelay());
     }

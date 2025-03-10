@@ -20,6 +20,11 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// </summary>
     [ReadOnly] [SerializeField] private List<Interactable> _accessibleInteractables;
 
+    /// <summary>
+    /// Whether or not the player can currently interact with Interactables.
+    /// </summary>
+    [ReadOnly] [SerializeField] private bool _canInteract = true;
+
     void Start()
     {
         //UnityEngine.Debug.Assert(GetComponent<CharacterController>() != null,
@@ -38,14 +43,23 @@ public class PlayerInteractionHandler : MonoBehaviour {
     }
 
     /// <summary>
+    /// Public setter for _canInteract.
+    /// </summary>
+    /// <param name="canInteract">bool - whether or not the player can use Interactables.</param>
+    public void SetCanInteract(bool canInteract)
+    {
+        _canInteract = canInteract;
+    }
+
+    /// <summary>
     /// calls the interact function on the currently highlighted Interactable
     /// </summary>
     public void Interact() 
     {
-        if (highlightedInteractable == null) 
-        {
+        if (!_canInteract || highlightedInteractable == null) {
             return;
         }
+
         highlightedInteractable.GetComponent<Interactable>().Interaction();
     }
 

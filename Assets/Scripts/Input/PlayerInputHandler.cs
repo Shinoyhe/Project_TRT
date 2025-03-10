@@ -13,7 +13,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     // Object references
     PlayerControls _controls;
-    public bool IsActive;
+    public bool AllowNavbar;
 
     // Input states: set by InputAction callbacks, read by accessors
     private Vector2 _controlAxisVector;
@@ -51,14 +51,11 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
         _controls.MainControls.Enable();
         _controls.Debug.Enable();
-        IsActive = true;
+        AllowNavbar = true;
     }
 
     private void OnDisable() {
-        if (_controls != null) {
-            _controls.MainControls.Disable();
-            IsActive = false;
-        }
+        _controls?.MainControls.Disable();
     }
 
     // InputAction Callbacks and Methods ==========================================================
@@ -113,25 +110,21 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     /// <returns>Vector3 - last known move input.</returns>
     public Vector3 GetControlInput() 
     {
-        if (!IsActive) {
-            return Vector3.zero;
-        }
-
         Vector3 move = new(_controlAxisVector.x, 0f, _controlAxisVector.y);
 
         // 'Normalize' move vector but allow for sub-one values.
         return Vector3.ClampMagnitude(move, 1);
     }
 
-    public bool GetPrimaryTriggerDown() { return IsActive && _getDown["_primaryTrigger"]; }
-    public bool GetSecondaryTriggerDown() { return IsActive && _getDown["_secondaryTrigger"]; }
-    public bool GetStartDown() { return IsActive && _getDown["_start"]; }
-    public bool GetAffirmDown() { return IsActive && _getDown["_affirm"]; }
-    public bool GetRejectDown() { return IsActive && _getDown["_reject"]; }
-    public bool GetMenu1Down() { return IsActive && _getDown["_menu1"]; }
-    public bool GetMenu1() { return IsActive && _get["_menu1"]; }
-    public bool GetMenu2Down() { return IsActive && _getDown["_menu2"]; }
-    public bool GetDebug0Down() { return IsActive && _getDown["_debug0"]; }
-    public bool GetDebug1Down() { return IsActive && _getDown["_debug1"]; }
-    public bool GetDebug2Down() { return IsActive && _getDown["_debug2"]; }
+    public bool GetPrimaryTriggerDown() { return _getDown["_primaryTrigger"]; }
+    public bool GetSecondaryTriggerDown() { return _getDown["_secondaryTrigger"]; }
+    public bool GetStartDown() { return _getDown["_start"]; }
+    public bool GetAffirmDown() { return _getDown["_affirm"]; }
+    public bool GetRejectDown() { return _getDown["_reject"]; }
+    public bool GetMenu1Down() { return _getDown["_menu1"]; }
+    public bool GetMenu1() { return _get["_menu1"]; }
+    public bool GetMenu2Down() { return _getDown["_menu2"]; }
+    public bool GetDebug0Down() { return _getDown["_debug0"]; }
+    public bool GetDebug1Down() { return _getDown["_debug1"]; }
+    public bool GetDebug2Down() { return _getDown["_debug2"]; }
 }

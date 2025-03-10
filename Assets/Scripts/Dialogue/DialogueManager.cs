@@ -245,7 +245,7 @@ public class DialogueManager : MonoBehaviour
 
         DialogueUiManager.Reset();
         DialogueUiManager.gameObject.SetActive(false);
-        GameManager.PlayerInput.IsActive = enablePlayerInput;
+        GameManager.Player.Movement.TogglePlayerMovement(enablePlayerInput);
         _onDelay = true;
         StartCoroutine(ConversationDelay());
     }

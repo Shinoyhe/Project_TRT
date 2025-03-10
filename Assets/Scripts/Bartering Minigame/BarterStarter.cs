@@ -55,7 +55,7 @@ public class BarterStarter : MonoBehaviour
         presentItem.OnAccepted += AcceptTrade;
         presentItem.OnClosed += CloseTrade;
 
-        GameManager.PlayerInput.IsActive = false;
+        GameManager.Player.Movement.TogglePlayerMovement(false);
 
         if (TimeLoopManager.Instance != null) {
             TimeLoopManager.SetLoopPaused(true);
@@ -76,7 +76,7 @@ public class BarterStarter : MonoBehaviour
     private void CleanupPresentationCanvas(bool enablePlayerInput)
     {
         Destroy(_itemPresentInstance);
-        GameManager.PlayerInput.IsActive = enablePlayerInput;
+        GameManager.Player.Movement.TogglePlayerMovement(enablePlayerInput);
 
         if (TimeLoopManager.Instance != null) {
             TimeLoopManager.SetLoopPaused(false);
@@ -133,7 +133,7 @@ public class BarterStarter : MonoBehaviour
         _barterDirector.WillingnessPerMatch = WillingnessPerMatch;
         _barterDirector.WillingnessPerFail = WillingnessPerFail;
 
-        GameManager.PlayerInput.IsActive = false;
+        GameManager.Player.Movement.TogglePlayerMovement(false);
         //MusicManager.play
 
         return _barterInstance;
@@ -165,7 +165,7 @@ public class BarterStarter : MonoBehaviour
     private void EndBarter(bool openJournal, System.Action callback)
     {
         Destroy(_barterInstance);
-        GameManager.PlayerInput.IsActive = true;
+        GameManager.Player.Movement.TogglePlayerMovement(true);
 
         if (openJournal) {
             OpenJournal(callback);

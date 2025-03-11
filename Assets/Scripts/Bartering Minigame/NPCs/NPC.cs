@@ -85,9 +85,6 @@ public class NPC
     public NPC(NPCData data)
     {
         Data = data;
-
-        journalTonePreferences = new Dictionary<PlayingCard, CardPreference>();
-        journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
     }
 
     /// <summary>

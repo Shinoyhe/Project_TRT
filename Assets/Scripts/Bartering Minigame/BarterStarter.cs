@@ -204,6 +204,8 @@ public class BarterStarter : MonoBehaviour
             if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM) {
                 GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
             }
+
+            GameManager.NPCGlobalList.GetNPCFromData(NpcData).AddJournalKnownTrade(CurrentTrade.AcceptedCard, CurrentTrade.RewardCard);
         } else {
             Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }

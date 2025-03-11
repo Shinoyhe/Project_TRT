@@ -7,7 +7,6 @@ public class Serialize
     {
         if (dictionary == null)
         {
-            Debug.LogError("Serialize: FromDict: dictionary is null");
             return null;
         }
 

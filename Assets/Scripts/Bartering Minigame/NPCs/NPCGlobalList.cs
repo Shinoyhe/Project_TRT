@@ -70,7 +70,7 @@ public class NPCGlobalList : MonoBehaviour
     public void Save(ref KnownNPCsSaveData data)
     {
         data.KnownNPCs = KnownNPCs;
-        Dictionary<NPC, NPCSaveData> tempPerNPCData = new Dictionary<NPC, NPCSaveData>();
+        Dictionary<string, NPCSaveData> tempPerNPCData = new Dictionary<string, NPCSaveData>();
 
         foreach (NPC npcData in KnownNPCs.ToList())
         {
@@ -78,7 +78,7 @@ public class NPCGlobalList : MonoBehaviour
             thisNPCsData.journalKnownTrades = Serialize.FromDict(npcData.journalKnownTrades);
             thisNPCsData.journalTonePrefs = Serialize.FromDict(npcData.journalTonePreferences);
 
-            tempPerNPCData.Add(npcData, thisNPCsData);
+            tempPerNPCData.Add(npcData.Name, thisNPCsData);
         }
 
         data.PerNPCData = Serialize.FromDict(tempPerNPCData);
@@ -86,14 +86,18 @@ public class NPCGlobalList : MonoBehaviour
 
     public void Load(KnownNPCsSaveData data)
     {
-        KnownNPCs = data.KnownNPCs;
-
-        foreach (NPC npcData in KnownNPCs)
+        foreach (NPC npcData in data.KnownNPCs)
         {
-            Dictionary<NPC, NPCSaveData> perNPCDataDict = Serialize.ToDict(data.PerNPCData);
+            Dictionary<string, NPCSaveData> perNPCDataDict = Serialize.ToDict(data.PerNPCData);
 
-            npcData.LoadKnownTrades(Serialize.ToDict(perNPCDataDict[npcData].journalKnownTrades)); // ERROR ON THIS LINE
-            npcData.LoadTonePrefs(Serialize.ToDict(perNPCDataDict[npcData].journalTonePrefs));
+            npcData.LoadKnownTrades(Serialize.ToDict(perNPCDataDict[npcData.Name].journalKnownTrades));
+            npcData.LoadTonePrefs(Serialize.ToDict(perNPCDataDict[npcData.Name].journalTonePrefs));
+
+            InGameUi inGameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
+            if (inGameUi != null)
+            {
+                inGameUi.Journal.AddNPC(npcData.Data);
+            }
         }
     }
 
@@ -104,7 +108,7 @@ public class NPCGlobalList : MonoBehaviour
 public struct KnownNPCsSaveData
 {
     public List<NPC> KnownNPCs;
-    public List<Pair<NPC, NPCSaveData>> PerNPCData;
+    public List<Pair<string, NPCSaveData>> PerNPCData;
 }
 
 [System.Serializable]

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,11 +10,15 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsActions, PlayerControls.IDebugActions
 {
+    [ReadOnly] public InputControlScheme LastUsedScheme;
+    public InputControlScheme KeyboardScheme => _controls.KeyboardMouseScheme;
+    public InputControlScheme GamepadScheme => _controls.GamepadScheme;
+    public bool AllowNavbar;
+
     // Misc Internal Variables ====================================================================
 
     // Object references
     PlayerControls _controls;
-    public bool AllowNavbar;
 
     // Input states: set by InputAction callbacks, read by accessors
     private Vector2 _controlAxisVector;
@@ -35,7 +40,8 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
    
     // Initializers and Finalizers ================================================================
 
-    private void OnEnable() {
+    private void OnEnable() 
+    {
         if (_controls == null) {
             _controls = new PlayerControls();
             // Tell the "MainControls" action map that we want to get told about
@@ -43,6 +49,10 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
             _controls.MainControls.SetCallbacks(this);
             // Likewise for the "Debug" action map.
             _controls.Debug.SetCallbacks(this);
+        }
+
+        foreach (var scheme in _controls.asset.controlSchemes) {
+            Debug.Log(scheme.name);
         }
 
         // Initialize the _get dict from the _getDown dict
@@ -55,13 +65,15 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         AllowNavbar = true;
     }
 
-    private void OnDisable() {
+    private void OnDisable() 
+    {
         _controls?.MainControls.Disable();
     }
 
     // InputAction Callbacks and Methods ==========================================================
 
-    private void LateUpdate() {
+    private void LateUpdate() 
+    {
         // LateUpdate is called at the END of every frame, after all Update() calls.
         
         // ==============================================================================
@@ -80,6 +92,12 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     public void OnControlAxis(InputAction.CallbackContext context) 
     {
         _controlAxisVector = context.ReadValue<Vector2>();
+
+        if (context.started) {
+            if (context.started) {
+                UpdateLastUsedScheme(context);
+            }
+        }
     }
 
     private void SetDown(InputAction.CallbackContext context, string input)
@@ -88,7 +106,17 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         if (context.canceled) _getDown[input] = _get[input] = false;
 
         if (context.started) {
-            Debug.Log($"Input: {input} was just pressed down.");
+            UpdateLastUsedScheme(context);
+        }
+    }
+
+    private void UpdateLastUsedScheme(InputAction.CallbackContext context)
+    {
+        foreach (InputControlScheme scheme in _controls.controlSchemes) {
+            if (scheme.SupportsDevice(context.control.device)) {
+                LastUsedScheme = scheme;
+                return;
+            }
         }
     }
 

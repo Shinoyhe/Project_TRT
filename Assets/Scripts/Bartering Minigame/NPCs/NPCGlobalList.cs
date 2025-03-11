@@ -90,9 +90,6 @@ public class NPCGlobalList : MonoBehaviour
         {
             Dictionary<string, NPCSaveData> perNPCDataDict = Serialize.ToDict(data.PerNPCData);
 
-            npcData.LoadKnownTrades(Serialize.ToDict(perNPCDataDict[npcData.Name].journalKnownTrades));
-            npcData.LoadTonePrefs(Serialize.ToDict(perNPCDataDict[npcData.Name].journalTonePrefs));
-
             InGameUi inGameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
             if (inGameUi != null)
             {

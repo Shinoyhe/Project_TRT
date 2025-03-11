@@ -13,8 +13,11 @@ public class NPC
     [SerializeField, ReadOnly]
     public NPCData Data;
 
-    [ReadOnly][SerializeField] public Dictionary<PlayingCard, CardPreference> journalTonePreferences;
-    [ReadOnly][SerializeField] public Dictionary<InventoryCardData, InventoryCardData> journalKnownTrades;
+    [NonSerialized] public Dictionary<PlayingCard, CardPreference> journalTonePreferences;
+    [NonSerialized] public Dictionary<InventoryCardData, InventoryCardData> journalKnownTrades;
+
+    [ReadOnly] public List<Pair<PlayingCard, CardPreference>> SerializedTonePrefs;
+    [ReadOnly] public List<Pair<InventoryCardData, InventoryCardData>> SerializedKnownTrades;
 
     #endregion
 
@@ -63,6 +66,11 @@ public class NPC
     public NPC(NPCData data)
     {
         Data = data;
+
+        InitalizePreferences();
+        
+        journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
+        UpdatedKnownTrades();
     }
 
     /// <summary>
@@ -84,6 +92,8 @@ public class NPC
                 journalTonePreferences[opponentCard].Negative = playerCard;
                 break;
         }
+
+        UpdatedTonePrefs();
     }
 
 
@@ -94,12 +104,9 @@ public class NPC
     /// <param name="oppCard">Inventory Card that the NPC trades for the playerCard</param>
     public void AddJournalKnownTrade(InventoryCardData playerCard, InventoryCardData oppCard)
     {
-        if (journalKnownTrades == null)
-        {
-            journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
-        }
-
         journalKnownTrades.TryAdd(playerCard, oppCard);
+
+        UpdatedKnownTrades();
     }
 
 
@@ -110,11 +117,6 @@ public class NPC
     /// <returns>Prefence class includes the PlayingCards marked as positive and negative.</returns>
     public CardPreference GetPreference(PlayingCard opponentCard)
     {
-        if (journalTonePreferences == null)
-        {
-            InitalizePreferences();
-        }
-
         return journalTonePreferences[opponentCard];
     }
 
@@ -123,11 +125,6 @@ public class NPC
     /// <returns>Card the NPC is know to give in exchange for playerCard</returns>
     public InventoryCardData GetKnownTrade(InventoryCardData playerCard)
     {
-        if (journalKnownTrades == null)
-        {
-            journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
-        }
-
         if (playerCard == null || !journalKnownTrades.ContainsKey(playerCard))
             return null;
 
@@ -141,22 +138,14 @@ public class NPC
     public void ResetJournalPreferences()
     {
         journalTonePreferences = new Dictionary<PlayingCard, CardPreference>();
+
+        UpdatedTonePrefs();
     }
 
     /// <summary>
     /// Returns the possible Cards that the NPC may play
     /// </summary>
     public PlayingCard[] Cards => Matrix.OppCards;
-
-    public void LoadTonePrefs(Dictionary<PlayingCard, CardPreference> newPrefs)
-    {
-        journalTonePreferences = newPrefs;
-    }
-
-    public void LoadKnownTrades(Dictionary<InventoryCardData, InventoryCardData> newTrades)
-    {
-        journalKnownTrades = newTrades;
-    }
 
     #endregion
 
@@ -174,8 +163,20 @@ public class NPC
         }
     }
 
+    private void UpdatedTonePrefs()
+    {
+        SerializedTonePrefs = Serialize.FromDict(journalTonePreferences);
+    }
+
+    private void UpdatedKnownTrades()
+    {
+        SerializedKnownTrades = Serialize.FromDict(journalKnownTrades);
+    }
+
     #endregion
 }
+
+[Serializable]
 public class CardPreference
 {
     public PlayingCard Positive;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Schema;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     [ReadOnly] public InputControlScheme LastUsedScheme;
     public InputControlScheme KeyboardScheme => _controls.KeyboardMouseScheme;
     public InputControlScheme GamepadScheme => _controls.GamepadScheme;
+    public bool MouseLastUsed => _mouseLastUsed;
     public bool AllowNavbar;
 
     // Misc Internal Variables ====================================================================
@@ -37,6 +39,10 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     };
 
     private Dictionary<string, bool> _get = new() {};
+
+    // Misc
+
+    private bool _mouseLastUsed;
    
     // Initializers and Finalizers ================================================================
 
@@ -112,6 +118,8 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
 
     private void UpdateLastUsedScheme(InputAction.CallbackContext context)
     {
+        _mouseLastUsed = context.control.device is Mouse;
+
         foreach (InputControlScheme scheme in _controls.controlSchemes) {
             if (scheme.SupportsDevice(context.control.device)) {
                 LastUsedScheme = scheme;

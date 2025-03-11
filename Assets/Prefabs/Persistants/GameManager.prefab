@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7739117665189127466}
   - component: {fileID: 7792286873378010446}
   - component: {fileID: 639220916484171591}
+  - component: {fileID: 8496181008868060448}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -55,6 +56,7 @@ MonoBehaviour:
   playerInput: {fileID: 7198147195480083390}
   uiInput: {fileID: 297495919439177883}
   inventory: {fileID: 7739117665189127466}
+  npcGlobalList: {fileID: 8496181008868060448}
   playerTag: Player
   _player: {fileID: 0}
   masterCanvasTag: MasterCanvas
@@ -98,8 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d535c4894ae9647a4e59cf79b2364b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueUiPrefab: {fileID: 8005697584356534663, guid: a43636c37c7551c4a9708853bd50a584,
-    type: 3}
+  DialogueUiManager: {fileID: 0}
 --- !u!114 &7739117665189127466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +174,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9b6f3ce9da96b49b39693de4bf1e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8496181008868060448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056866332689036431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227107f81a2cf8e40b313458bc194b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllNPCDatas: []
+  AllNPCs: []
+  KnownNPCs: []
 --- !u!1 &8203694426375556501
 GameObject:
   m_ObjectHideFlags: 0

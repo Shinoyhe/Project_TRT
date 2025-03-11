@@ -15,7 +15,7 @@ public class JournalPreferenceEntry : MonoBehaviour
     private PlayingCard _oppCard;
     private int _posCardIndex;
     private int _negCardIndex;
-    private NPCData _npcData;
+    private NPC _npcData;
 
     #endregion
 
@@ -39,7 +39,7 @@ public class JournalPreferenceEntry : MonoBehaviour
         _npcData.ChangeJournalTonePreference(_oppCard, card, BarterResponseMatrix.State.POSITIVE);
     }
 
-    public void Load(NPCData NPC, PlayingCard oppCard)
+    public void Load(NPC NPC, PlayingCard oppCard)
     {
         // Need to add null to possible cards
         var possibleCards = NPC.Cards.ToList();

@@ -8,8 +8,8 @@ using UnityEngine;
 public class NPCGlobalList : MonoBehaviour
 {
     [SerializeField] List<NPCData> AllNPCDatas;
-    [SerializeField, NaughtyAttributes.ReadOnly] List<NPC> AllNPCs;
-    [SerializeField, NaughtyAttributes.ReadOnly] List<NPC> KnownNPCs;
+    [SerializeField, NaughtyAttributes.ReadOnly] public List<NPC> AllNPCs;
+    [SerializeField, NaughtyAttributes.ReadOnly] public List<NPC> KnownNPCs;
 
 
     private void Awake()
@@ -44,11 +44,9 @@ public class NPCGlobalList : MonoBehaviour
         return null;
     }
 
-    public void Save(bool clearKnownNPCs)
+    public void AddKnownNPC(NPC npc)
     {
-        if (clearKnownNPCs) { KnownNPCs.Clear(); }
-
-
+        KnownNPCs.Add(npc);
     }
 
     #endregion

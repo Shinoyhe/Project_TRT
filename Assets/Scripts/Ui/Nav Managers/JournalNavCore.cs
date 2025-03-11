@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
+using System.Xml.Linq;
+
 
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
@@ -214,9 +216,16 @@ public class JournalNavCore : MonoBehaviour
             Debug.LogWarning("\"Add NPC Button\" is not meant to run in the prefab preview.");
             return;
         }
+
+        if (GameManager.Instance == null)
+        {
+            Debug.LogWarning("\"Add NPC Button\" is not meant to run without the GameManager.");
+            return;
+        }
         
         if (_lastDebugAddedNPC != null) {
-            _lastDebugAddedNPC.AddJournalKnownTrade(tradeQueue[0], tradeQueue[0]);
+            NPC wrapper = GameManager.NPCGlobalList.GetNPCFromData(_lastDebugAddedNPC);
+            wrapper.AddJournalKnownTrade(tradeQueue[0], tradeQueue[0]);
             tradeQueue.RemoveAt(0);
         }
     }

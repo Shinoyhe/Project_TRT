@@ -70,18 +70,14 @@ public class SaveSystem
             GameManager.Inventory.Save(ref _saveData.inventoryData, clearInventory);
         }
 
-        if (GameManager.MasterCanvas == null)
+        if (GameManager.NPCGlobalList == null)
         {
-            Debug.LogError("Cannot save Journal. Gamemanager.MasterCanvas is null");
+            Debug.LogError("Cannot save Journal. Gamemanager.NPCGlobalList is null");
             return;
         }
         else
         {
-            if (_gameUi == null) {
-                _gameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
-            }
-
-            _gameUi.Journal.NPC.Save(ref _saveData.knownNPCsData);
+            GameManager.NPCGlobalList.Save(ref _saveData.knownNPCsData);
         }
     }
 
@@ -102,19 +98,13 @@ public class SaveSystem
             GameManager.Inventory.Load(_saveData.inventoryData);
         }
 
-        if (GameManager.MasterCanvas == null)
+        if (GameManager.NPCGlobalList == null)
         {
-            Debug.LogError("Cannot load Journal. Gamemanager.MasterCanvas is null");
+            Debug.LogError("Cannot load Journal. Gamemanager.NPCGlobalList is null");
             return;
-        }
-        else
+        } else
         {
-            if (_gameUi == null)
-            {
-                _gameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
-            }
-
-            _gameUi.Journal.NPC.Load(_saveData.knownNPCsData);
+            GameManager.NPCGlobalList.Load(_saveData.knownNPCsData);
         }
     }
 

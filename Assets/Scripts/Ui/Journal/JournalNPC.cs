@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using static GameEnums;
 using System.Linq;
+using System.Xml.Linq;
 
 public class JournalNPC : InventoryAction
 {
@@ -23,8 +24,7 @@ public class JournalNPC : InventoryAction
     [SerializeField] private Image oppItem;
     [SerializeField] private Sprite oppItemNoTradeKnown;
 
-    public HashSet<NPCData> KnownNPCs = new HashSet<NPCData>();
-    private NPCData _npcData;
+    private NPC _npcData;
 
     #endregion
 
@@ -36,13 +36,22 @@ public class JournalNPC : InventoryAction
     /// <param name="npcData"></param>
     public void AddNPC(NPCData npcData)
     {
-        KnownNPCs.Add(npcData);
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("Cannot AddNPC, GameManager.Instance is null");
+            return;
+        }
+
+        GameManager.NPCGlobalList.AddKnownNPC(GameManager.NPCGlobalList.GetNPCFromData(npcData));
+
     }
 
 
     public bool IsKnown(NPCData npcData)
     {
-        return KnownNPCs.Contains(npcData);
+        NPC wrapper = GameManager.NPCGlobalList.GetNPCFromData(npcData);
+
+        return GameManager.NPCGlobalList.KnownNPCs.Contains(wrapper);
     }
 
 
@@ -52,7 +61,7 @@ public class JournalNPC : InventoryAction
     /// <param name="npc"></param>
     public void LoadNPC(NPCData npc)
     {
-        _npcData = npc;
+        _npcData = GameManager.NPCGlobalList.GetNPCFromData(npc);
 
         nameDisplay.text = npc.Name;
         iconDisplay.sprite = npc.Icon;

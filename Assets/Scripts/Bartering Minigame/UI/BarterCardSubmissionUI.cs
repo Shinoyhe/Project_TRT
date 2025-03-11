@@ -35,6 +35,8 @@ public class BarterCardSubmissionUI : MonoBehaviour
     private PlayerCardSlot[] _playerCardSlots = null;
     // The horizontal range of our PlayerCardSlotZone, used to position the AutoPlayerCardSlotUI objects.
     private Vector2 _playerCardSlotBounds;
+    // The slot that's currently 'selected' by the player, when not using mouse.
+    private int _selectedSlotIndex = 0;
 
     // Opp CardSlots =======================
     // Array of AutoPlayerCardSlotUI components, one for each Opp card submitted.
@@ -117,6 +119,27 @@ public class BarterCardSubmissionUI : MonoBehaviour
         // TODO: Replace this with an action-based implementation, that only switches the string
         // when we enter a new state.
         DEBUG_StateDisplay.text = "Current State:\n" + director.GetCurrentStateName();
+
+        // Detect slot index inputs. ============
+
+        bool dirty = false;
+        int newIndex = -1;
+
+        if (GameManager.PlayerInput.GetPrimaryTriggerDown()) {
+            newIndex = (_selectedSlotIndex+1) % _playerCardSlots.Length;
+            dirty = true;
+        } else if (GameManager.PlayerInput.GetSecondaryTriggerDown()) {
+            newIndex = _selectedSlotIndex-1;
+            if (newIndex < 0) newIndex += _playerCardSlots.Length;
+            dirty = true;
+        }
+
+        if (dirty) {
+            _playerCardSlots[_selectedSlotIndex].SetSelected(false);
+            _playerCardSlots[newIndex].SetSelected(true);
+
+            _selectedSlotIndex = newIndex;
+        }
     }
 
     // Public accessors ===========================================================================

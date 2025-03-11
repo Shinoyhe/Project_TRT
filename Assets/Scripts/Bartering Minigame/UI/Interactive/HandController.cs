@@ -186,7 +186,7 @@ public class HandController : MonoBehaviour
         }
     }
 
-    // Misc public manipulators ===================================================================
+    // Misc public methods ========================================================================
 
     /// <summary>
     /// Lock input on our display cards and reset to the view position.

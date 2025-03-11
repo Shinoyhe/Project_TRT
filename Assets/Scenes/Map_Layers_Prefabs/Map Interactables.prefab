@@ -198,6 +198,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  HideIcon: 0
 --- !u!1 &3025666826036403994
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,6 +430,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
         type: 3}
+      propertyPath: npcConversation
+      value: 
+      objectReference: {fileID: 4900000, guid: 5d6c54eba53eb3648a2dadf3a3029ab4, type: 3}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
       propertyPath: PossibleTrades.trades.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -535,6 +541,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shady Shopkeep
       objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: npcConversation
+      value: 
+      objectReference: {fileID: 4900000, guid: 2bec1d3f48f656541a60566243b13e47, type: 3}
     - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
         type: 3}
       propertyPath: PossibleTrades.trades.Array.size
@@ -859,6 +870,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruit Preistess
       objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: npcConversation
+      value: 
+      objectReference: {fileID: 4900000, guid: 20b4a506d2849c143a8fdbd0d7ca6def, type: 3}
     - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
         type: 3}
       propertyPath: PossibleTrades.trades.Array.size

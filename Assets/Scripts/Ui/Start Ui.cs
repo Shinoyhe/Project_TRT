@@ -121,13 +121,13 @@ public class StartUi : MonoBehaviour {
             case UiState.NewGame:
                 // Start new game
                 // -- TEMP --
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene("Tutorial");
                 // -- TEMP --
                 break;
             case UiState.ContinueGame:
                 // Continue game
                 // -- TEMP --
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene(2);
                 // -- TEMP --
                 break;
             case UiState.Quit:

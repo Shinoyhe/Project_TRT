@@ -8,28 +8,6 @@ using static GameEnums;
 [Serializable]
 public class NPC
 {
-    #region ======== [ CLASSES ] ========
-
-    public class CardPreference
-    {
-        public PlayingCard Positive;
-        public PlayingCard Negative;
-
-        public CardPreference()
-        {
-            Positive = null;
-            Negative = null;
-        }
-
-        public CardPreference(PlayingCard positive, PlayingCard negative)
-        {
-            Positive = positive;
-            Negative = negative;
-        }
-    }
-
-    #endregion
-
     #region ======== [ VARIABLES ] ========
 
     [SerializeField, ReadOnly]
@@ -197,4 +175,21 @@ public class NPC
     }
 
     #endregion
+}
+public class CardPreference
+{
+    public PlayingCard Positive;
+    public PlayingCard Negative;
+
+    public CardPreference()
+    {
+        Positive = null;
+        Negative = null;
+    }
+
+    public CardPreference(PlayingCard positive, PlayingCard negative)
+    {
+        Positive = positive;
+        Negative = negative;
+    }
 }

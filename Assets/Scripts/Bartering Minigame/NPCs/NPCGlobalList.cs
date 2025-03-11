@@ -114,6 +114,6 @@ public struct KnownNPCsSaveData
 [System.Serializable]
 public struct NPCSaveData
 {
-    public List<Pair<PlayingCard, NPC.CardPreference>> journalTonePrefs;
+    public List<Pair<PlayingCard, CardPreference>> journalTonePrefs;
     public List<Pair<InventoryCardData, InventoryCardData>> journalKnownTrades;
 }

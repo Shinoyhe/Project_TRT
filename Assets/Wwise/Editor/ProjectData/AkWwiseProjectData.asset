@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 587ca0226052be4e9b8540a22c4f2092
     GuidInternal: 
-    m_lastTime: -8584600555243713922
+    m_lastTime: -8584598831953546725
     List:
     - name: Ambience Bus
       guid: b98c6c284c7de7449139c8391e920f9c
@@ -174,7 +174,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Ambience
     guid: 0104f6680c27bf408fd7c64816ee8c87
     GuidInternal: 
-    m_lastTime: -8584600555233984093
+    m_lastTime: -8584598831935006104
     List:
     - name: Ambience
       guid: 86b2f852bdba9b4fa5a800a04824ffe7
@@ -241,7 +241,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\SFX
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
-    m_lastTime: -8584600549141102576
+    m_lastTime: -8584598831934996104
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -269,7 +269,7 @@ MonoBehaviour:
     ParentPath: Events\Ambience
     guid: 78290c8229ac584884ed86c3baba619d
     GuidInternal: 
-    m_lastTime: -8584600555250581065
+    m_lastTime: -8584598829023879672
     List:
     - name: BirdStart
       guid: 932c63abf08ea4489f51f773ba1e5c74
@@ -285,6 +285,74 @@ MonoBehaviour:
         ObjectType: 3
         guid: 932c63abf08ea4489f51f773ba1e5c74
       Path: Events\Ambience\BirdStart
+      maxAttenuation: 100
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_MachineHum1_LoopContainer
+      guid: fe2c9246192f764b85f3f11b509cb105
+      id: 30480848
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Ambience
+        ObjectType: 12
+        guid: 78290c8229ac584884ed86c3baba619d
+      - ElementName: Play_MachineHum1_LoopContainer
+        ObjectType: 3
+        guid: fe2c9246192f764b85f3f11b509cb105
+      Path: Events\Ambience\Play_MachineHum1_LoopContainer
+      maxAttenuation: 50
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_MachineHum2_LoopContainer
+      guid: de8554713bb1e2439b4dc1c5781fe1ac
+      id: 1929638735
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Ambience
+        ObjectType: 12
+        guid: 78290c8229ac584884ed86c3baba619d
+      - ElementName: Play_MachineHum2_LoopContainer
+        ObjectType: 3
+        guid: de8554713bb1e2439b4dc1c5781fe1ac
+      Path: Events\Ambience\Play_MachineHum2_LoopContainer
+      maxAttenuation: 50
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Waterfall_Base_LoopContainer
+      guid: 60bf2e435b3be640b68858830c63e8b1
+      id: 2874767734
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Ambience
+        ObjectType: 12
+        guid: 78290c8229ac584884ed86c3baba619d
+      - ElementName: Play_Waterfall_Base_LoopContainer
+        ObjectType: 3
+        guid: 60bf2e435b3be640b68858830c63e8b1
+      Path: Events\Ambience\Play_Waterfall_Base_LoopContainer
+      maxAttenuation: 100
+      maxDuration: 0
+      minDuration: 0
+    - name: Play_Waterfall_CloseSparkle_LoopContainer
+      guid: 6e91af3f21c6d945868cce150c154978
+      id: 3296751295
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Ambience
+        ObjectType: 12
+        guid: 78290c8229ac584884ed86c3baba619d
+      - ElementName: Play_Waterfall_CloseSparkle_LoopContainer
+        ObjectType: 3
+        guid: 6e91af3f21c6d945868cce150c154978
+      Path: Events\Ambience\Play_Waterfall_CloseSparkle_LoopContainer
       maxAttenuation: 50
       maxDuration: 0
       minDuration: 0
@@ -302,7 +370,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: 7d6e07e4f047404b97f8e4afb7cf1d45
       Path: Events\Ambience\TestAmbienceStart
-      maxAttenuation: 50
+      maxAttenuation: 100
       maxDuration: 0
       minDuration: 0
   - PhysicalPath: Events\BarteringUI.wwu
@@ -372,7 +440,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 33316d7890aa87408e2af719ccc92cfd
     GuidInternal: 
-    m_lastTime: -8584600549876903387
+    m_lastTime: -8584598829024049829
     List: []
   - PhysicalPath: Events\Music.wwu
     PathAndIcons:
@@ -558,7 +626,7 @@ MonoBehaviour:
     ParentPath: Events\UI\SettingsUI
     guid: 1fb0d41104b6e84e81ed9ee770f55b1a
     GuidInternal: 
-    m_lastTime: -8584600549876584254
+    m_lastTime: -8584598831961994779
     List:
     - name: Play_Menu_ButtonDown
       guid: 1bffeceb86b8cc499461cd7752dd9198
@@ -651,7 +719,7 @@ MonoBehaviour:
     ParentPath: Events\UI
     guid: 75f867dc1a9906498df4975d819bec40
     GuidInternal: 
-    m_lastTime: -8584600549876733235
+    m_lastTime: -8584598831961984775
     List: []
   RtpcWwu:
   - PhysicalPath: Game Parameters\Ambience.wwu
@@ -917,7 +985,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 01000000020000000300000004000000050000000600000007000000090000000a0000000c0000000e00000010000000110000001200000014000000150000001600000017000000180000001e0000001f000000200000002100000022000000240000002e00000037000000b3000000b4000000b5000000aa070000
+  ExpandedWaapiItemIds: 01000000020000000300000004000000050000000600000007000000090000000a0000000c0000000e00000010000000110000001200000014000000150000001600000017000000180000001e0000001f000000200000002100000022000000240000002e00000037000000b3000000b4000000b5000000b8000000b9000000aa070000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

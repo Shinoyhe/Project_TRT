@@ -32,6 +32,50 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_MachineHum1_LoopContainer" ID="{46922CFE-2F19-4B76-85F3-F11B509CB105}">
+					<ChildrenList>
+						<Action Name="" ID="{1F7B1039-9D9A-4593-83C2-939D226F50EA}" ShortID="483725425">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MachineHum1_LoopContainer" ID="{A1086679-5F65-4305-8E29-581975315AC5}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MachineHum2_LoopContainer" ID="{715485DE-B13B-43E2-9B4D-C1C5781FE1AC}">
+					<ChildrenList>
+						<Action Name="" ID="{7F0129E0-B508-4938-8FF3-938C9FA95C43}" ShortID="712565766">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MachineHum2_LoopContainer" ID="{8A7EC6BD-A2F2-43A2-AED7-331438DE63AF}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Waterfall_Base_LoopContainer" ID="{432EBF60-3B5B-40E6-B688-58830C63E8B1}">
+					<ChildrenList>
+						<Action Name="" ID="{EFFBF1DF-27F2-4D20-9862-0A834E9D199A}" ShortID="22787841">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Waterfall_Base_LoopContainer" ID="{11294004-03E5-4C04-8109-C235D0C57479}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Waterfall_CloseSparkle_LoopContainer" ID="{3FAF916E-C621-45D9-868C-CE150C154978}">
+					<ChildrenList>
+						<Action Name="" ID="{435E199A-4673-4BA0-8CE7-8469EA4B9A42}" ShortID="531168494">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Waterfall_CloseSparkle_LoopContainer" ID="{A3780EEB-D81D-4C45-8455-3CFCA15FEC28}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

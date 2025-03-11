@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{52F8B286-BABD-4F9B-A5A8-00A04824FFE7}",
     "Language": "SFX",
-    "Hash": "{212E7458-6A89-AEA0-1DCE-1F128488F092}",
+    "Hash": "{7C2125D9-A6EA-6BFD-23FF-4716472A52D3}",
     "ObjectPath": "\\SoundBanks\\Ambience\\Ambience",
     "ShortName": "Ambience",
     "Path": "Ambience.bnk",
@@ -79,7 +79,7 @@
       "Name": "BirdStart",
       "ObjectPath": "\\Events\\Ambience\\BirdStart",
       "GUID": "{AB632C93-8EF0-48A4-9F51-F773BA1E5C74}",
-      "MaxAttenuation": "50",
+      "MaxAttenuation": "100",
       "DurationType": "Infinite",
       "MediaRefs": [
        {
@@ -94,11 +94,63 @@
       ]
      },
      {
+      "Id": "30480848",
+      "Name": "Play_MachineHum1_LoopContainer",
+      "ObjectPath": "\\Events\\Ambience\\Play_MachineHum1_LoopContainer",
+      "GUID": "{46922CFE-2F19-4B76-85F3-F11B509CB105}",
+      "MaxAttenuation": "50",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "934940429"
+       }
+      ]
+     },
+     {
+      "Id": "1929638735",
+      "Name": "Play_MachineHum2_LoopContainer",
+      "ObjectPath": "\\Events\\Ambience\\Play_MachineHum2_LoopContainer",
+      "GUID": "{715485DE-B13B-43E2-9B4D-C1C5781FE1AC}",
+      "MaxAttenuation": "50",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "360502257"
+       }
+      ]
+     },
+     {
+      "Id": "2874767734",
+      "Name": "Play_Waterfall_Base_LoopContainer",
+      "ObjectPath": "\\Events\\Ambience\\Play_Waterfall_Base_LoopContainer",
+      "GUID": "{432EBF60-3B5B-40E6-B688-58830C63E8B1}",
+      "MaxAttenuation": "100",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "31547046"
+       }
+      ]
+     },
+     {
+      "Id": "3296751295",
+      "Name": "Play_Waterfall_CloseSparkle_LoopContainer",
+      "ObjectPath": "\\Events\\Ambience\\Play_Waterfall_CloseSparkle_LoopContainer",
+      "GUID": "{3FAF916E-C621-45D9-868C-CE150C154978}",
+      "MaxAttenuation": "50",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "677398068"
+       }
+      ]
+     },
+     {
       "Id": "664772623",
       "Name": "TestAmbienceStart",
       "ObjectPath": "\\Events\\Ambience\\TestAmbienceStart",
       "GUID": "{E4076E7D-47F0-4B40-97F8-E4AFB7CF1D45}",
-      "MaxAttenuation": "50",
+      "MaxAttenuation": "100",
       "DurationType": "Infinite",
       "MediaRefs": [
        {
@@ -112,6 +164,6 @@
     ]
    }
   ],
-  "FileHash": "{782A5191-D86C-EE7C-90EC-B505D0BA50AC}"
+  "FileHash": "{A2A0BAEC-A797-FB98-84E6-B653313925D8}"
  }
 }

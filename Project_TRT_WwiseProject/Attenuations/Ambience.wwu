@@ -4,9 +4,6 @@
 		<WorkUnit Name="Ambience" ID="{A41C15FD-E1E3-457F-ACD8-54CD043C4ADF}" PersistMode="Standalone">
 			<ChildrenList>
 				<Attenuation Name="WaterfallAttenuation" ID="{BEF66290-124F-49EA-8525-505F51A0EC97}" ShortID="951670011">
-					<PropertyList>
-						<Property Name="RadiusMax" Type="Real64" Value="50"/>
-					</PropertyList>
 					<CurveUsageInfoList>
 						<VolumeDryUsage>
 							<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
@@ -22,7 +19,7 @@
 											<SegmentShape>Exp2</SegmentShape>
 										</Point>
 										<Point>
-											<XPos>50</XPos>
+											<XPos>100</XPos>
 											<YPos>-200</YPos>
 											<Flags>37</Flags>
 										</Point>
@@ -50,7 +47,7 @@
 											<SegmentShape>Exp1</SegmentShape>
 										</Point>
 										<Point>
-											<XPos>50</XPos>
+											<XPos>100</XPos>
 											<YPos>74</YPos>
 											<Flags>37</Flags>
 										</Point>
@@ -72,7 +69,7 @@
 											<SegmentShape>Log2</SegmentShape>
 										</Point>
 										<Point>
-											<XPos>50</XPos>
+											<XPos>100</XPos>
 											<YPos>50</YPos>
 											<Flags>37</Flags>
 										</Point>
@@ -93,7 +90,7 @@
 											<Flags>5</Flags>
 										</Point>
 										<Point>
-											<XPos>50</XPos>
+											<XPos>100</XPos>
 											<YPos>0</YPos>
 											<Flags>37</Flags>
 										</Point>

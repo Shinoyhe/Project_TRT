@@ -80,8 +80,15 @@ public class NPC
 
     #endregion
 
-
     #region ======== [ PUBLIC METHODS ] ========
+
+    public NPC(NPCData data)
+    {
+        Data = data;
+
+        journalTonePreferences = new Dictionary<PlayingCard, CardPreference>();
+        journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
+    }
 
     /// <summary>
     /// Changes the Player's Assumed Preferences in the journal

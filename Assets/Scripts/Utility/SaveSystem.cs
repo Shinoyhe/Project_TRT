@@ -33,13 +33,42 @@ public class SaveSystem
     }
 
 
-    // LOAD
+    /// <summary>
+    /// Loads the game. Specifically, the Journal data and Inventory Data
+    /// </summary>
     public static void Load()
     {
         string saveContent = File.ReadAllText(SaveFileName());
 
         _saveData = JsonUtility.FromJson<SaveData>(saveContent);
         HandleLoadData();
+    }
+
+
+    /// <summary>
+    /// Checks if there is save data available.
+    /// </summary>
+    /// <returns>True if save data exists, otherwise false.</returns>
+    public static bool HasSaveData()
+    {
+        string saveFile = SaveFileName();
+
+        if (!File.Exists(saveFile))
+        {
+            return false;
+        }
+
+        try
+        {
+            string saveContent = File.ReadAllText(saveFile);
+            JsonUtility.FromJson<SaveData>(saveContent);
+            return true;
+        }
+        catch
+        {
+            // If the file exists but contains invalid data, return false
+            return false;
+        }
     }
 
     #endregion

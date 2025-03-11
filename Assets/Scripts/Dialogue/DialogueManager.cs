@@ -45,12 +45,29 @@ public class DialogueManager : MonoBehaviour
 
         if (_inConversation == false) return;
 
-        // Check for Player Input
-        if (GameManager.PlayerInput.GetAffirmDown()) {
+        // Input ================================
+
+        // Expedite dialogue AND Continue dialogue
+        if (GameManager.PlayerInput.GetAffirmDown() || GameManager.PlayerInput.GetClickDown()) {
+            if (!DialogueUiManager.IsLineFinished()) {
+                DialogueUiManager.SkipLineAnimation();
+            } else {
+                ShowNextLine();
+            }
+            return;
+        }
+
+        // JUST expedite
+        if (GameManager.PlayerInput.GetPrimaryTriggerDown()) {
+            DialogueUiManager.SkipLineAnimation();
+            return;
+        }
+
+        // JUST continue
+        if (GameManager.PlayerInput.GetSecondaryTriggerDown()) {
             if (DialogueUiManager.IsLineFinished()) {
                 ShowNextLine();
-            } else {
-                DialogueUiManager.SkipLineAnimation();
+                return;
             }
         }
     }

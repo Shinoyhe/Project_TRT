@@ -36,8 +36,8 @@ public class PlayerInteractionHandler : MonoBehaviour {
     {
         CheckHighlight();
 
-        if (GameManager.PlayerInput.GetPrimaryTriggerDown() || GameManager.PlayerInput.GetAffirmDown())
-        {
+        if (GameManager.PlayerInput.GetPrimaryTriggerDown() || 
+            GameManager.PlayerInput.GetAffirmDown() || GameManager.PlayerInput.GetClickDown()) {
             Interact();
         }
     }

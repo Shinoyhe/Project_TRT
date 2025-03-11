@@ -405,17 +405,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ee41816c-d9af-40a3-96a4-16657c7704a7"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardMouse"",
-                    ""action"": ""AffirmButton"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""425863d7-7466-414d-af12-e01c1b5a02c8"",
                     ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",

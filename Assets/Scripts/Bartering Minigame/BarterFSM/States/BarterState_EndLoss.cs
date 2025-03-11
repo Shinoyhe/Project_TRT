@@ -1,7 +1,3 @@
-using System.Collections;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class BarterState_EndLoss : BarterBaseState
 {
     // ============================================================================================
@@ -21,7 +17,6 @@ public class BarterState_EndLoss : BarterBaseState
 
     public override void Enter(BarterBaseState previousState)
     {
-        Debug.Log("Player loses!");
         _machine.Dir.TriggerLose();
 
         // Triggers music manager to return to previously playing music
@@ -33,12 +28,4 @@ public class BarterState_EndLoss : BarterBaseState
     public override void UpdateState() {}
 
     public override void Exit() {}
-
-    // Debug Methods ==============================================================================
-
-    private IEnumerator DEBUG_Reload()
-    {
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }

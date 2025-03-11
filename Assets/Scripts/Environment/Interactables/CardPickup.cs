@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class CardPickup : Interactable 
 {
-    [SerializeField] private InventoryCardData CardToGive;
+    [SerializeField] [Required] private InventoryCardData CardToGive;
 
     // Object Pickup SFX
     [SerializeField] public AudioEvent itemPickupSFX;
@@ -16,7 +15,7 @@ public class CardPickup : Interactable
     public override void Interaction() {
         GameManager.Inventory.AddCard(CardToGive);
         itemPickupSFX.Play(this.gameObject);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     public override void UnHighlight() {

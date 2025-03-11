@@ -15,8 +15,14 @@ public class BarterState_Init : BarterBaseState
         _machine.Dir.BarterResponses.Initialize();
 
         // Likewise.
-        _machine.OppCardUser.Initialize();
-        _machine.PlayerCardUser.Initialize();
+        _machine.OppCardUser.Initialize(_machine.Dir.BarterResponses, _machine.Dir.OppDeckSize);
+        // Initialize from the tone card inventory if the Inventory is available...
+        if (GameManager.Instance && GameManager.Inventory) {
+            _machine.PlayerCardUser.Initialize(GameManager.Inventory.ToneCardInventory);
+        } else {
+            // Otherwise, use whatever we've got.
+            _machine.PlayerCardUser.Initialize();
+        }
 
         // Initialize both CardUsers.
         _machine.OppCardUser.Shuffle(CardUser.CardPile.DrawPile);

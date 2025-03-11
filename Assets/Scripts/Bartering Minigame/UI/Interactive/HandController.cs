@@ -67,7 +67,7 @@ public class HandController : MonoBehaviour
 
         cardUser.OnHandUpdated += UpdateDisplayCards;
         // TODO: cardUser.OnDraw += play draw SFX;
-        cardUser.OnShuffle += PlayShuffleSFX;
+        // cardUser.OnShuffle += PlayShuffleSFX;
 
         _hand = new();
     }
@@ -272,8 +272,9 @@ public class HandController : MonoBehaviour
             // After we've checked everything, if we have a target slot...
             if (targetSlot != null) {
                 // Play all submitting card SFX
-                Debug.Log("Is this an object? " + gameObject);
-                cardPlaceSFX.Play(this.gameObject);
+                
+                // GARRETT: Commented following line out because it was causing errors
+                // cardPlaceSFX.Play(this.gameObject);
 
                 // Find the position of the slot in OUR localspace.
                 Vector3 localSlotPosition = card.transform.parent.InverseTransformPoint(targetSlot.transform.position);

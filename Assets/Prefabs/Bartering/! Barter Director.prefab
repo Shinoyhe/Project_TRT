@@ -47,17 +47,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   willingness: 50
-  CardsToPlay: 3
-  decayPerSecond: 5
-  oppDuration: 1
-  computeDuration: 1.5
   WillingnessPerMatch: 10
   WillingnessPerFail: -5
+  BaseDecay: 1
+  DecayAcceleration: 0.025
+  currentDecay: 0
+  CardsToPlay: 3
+  OppDeckSize: 32
+  oppDuration: 1
+  computeDuration: 1.5
   debugMode: 0
-  BarterResponses: {fileID: 11400000, guid: 04c5244b0e9082344b6245b97965364a, type: 2}
+  NpcData: {fileID: 0}
+  BarterResponses: {fileID: 11400000, guid: 4df41baae4ac8884d9b9ab903aa274e5, type: 2}
+  NeutralBehavior: {fileID: 11400000, guid: d5da7a0cc6260ac499f7b5f8e6536442, type: 2}
   oppCardUser: {fileID: 2653959349668452647}
   playerCardUser: {fileID: 4641091018970181357}
   PlayerHandController: {fileID: 0}
+  barterNpcDisplay: {fileID: 0}
+  MatchHistories: []
+  maxHistories: 3
 --- !u!1 &7864941220729989563
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,15 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDrawSize: 5
-  debugStartingDeck:
-  - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
-  - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
-  - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
-  - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
-  - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
-  - {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
-  - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
-  - {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
+  startingDeck: []
 --- !u!1 &8608155576808874978
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDrawSize: 5
-  debugStartingDeck:
+  startingDeck:
   - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
   - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
   - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}

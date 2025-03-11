@@ -11,12 +11,8 @@ public class DialogueManager : MonoBehaviour
     // Parameters =================================================================================
 
     [Header("Dependencies")]
-    [SerializeField, Tooltip("The Canvas we spawn UI prefabs under.")]
-    private Canvas masterCanvas;
     [SerializeField, Tooltip("The prefab for dialogue UI.")]
-    private GameObject dialogueUiPrefab;
-    [SerializeField, Tooltip("The prefab for the bartering minigame.")]
-    private GameObject barterContainerPrefab;
+    private DialogueUiManager DialogueUiManager;
 
     public struct ProcessedTags {
 
@@ -34,10 +30,6 @@ public class DialogueManager : MonoBehaviour
     private bool _inConversation;
     private bool _onDelay;
     private Story _currentStory;
-    private DialogueUiManager _dialogueUiManager;
-    private GameObject _dialogueUiInstance;
-    private InventoryCardData _prizeCard;
-    private GameObject _barterInstance;
 
     // Initializers and Update ================================================================
 
@@ -45,10 +37,6 @@ public class DialogueManager : MonoBehaviour
     {
         _inConversation = false;
         _onDelay = false;
-
-        if (masterCanvas == null) {
-            Debug.LogError("DialogueManager Error: masterCanvas was null.");
-        }
     }
 
     private void Update()
@@ -59,10 +47,10 @@ public class DialogueManager : MonoBehaviour
         // Check for Player Input
         if (GameManager.UiInput.GetProgressDialogueDown()) {
 
-            if (_dialogueUiManager.IsLineFinished()) {
+            if (DialogueUiManager.IsLineFinished()) {
                 ShowNextLine();
             } else {
-                _dialogueUiManager.SkipLineAnimation();
+                DialogueUiManager.SkipLineAnimation();
             }
 
         }
@@ -76,16 +64,22 @@ public class DialogueManager : MonoBehaviour
     /// <returns> True if conversation started successfully. </returns>
     /// <param name="inkJson"> Ink file conversation will use. </param>
     /// <param name="npcBubblePos"> Where we want a NPC speech bubble.</param>
-    public bool StartConversation(TextAsset inkJson, Vector3 npcBubblePos)
+    public bool StartConversation(TextAsset inkJson, string NPCName, Sprite NPCProfilePic)
     {
         if (_inConversation) return false;
         if (_onDelay) return false;
 
+        InGameUi UiController = GameManager.MasterCanvas.gameObject.GetComponent<InGameUi>();
+        if (UiController == null) return false;
+
+        UiController.MoveToDialogue();
+        DialogueUiManager = GameManager.MasterCanvas.gameObject.GetComponentInChildren<DialogueUiManager>();
+
         _inConversation = true;
-        GameManager.TimeLoopManager.SetLoopPaused(true);
+        TimeLoopManager.SetLoopPaused(true);
 
         // Create UI instance
-        _dialogueUiManager = SetupUi(npcBubblePos, GameManager.Player.Transform.position);
+        SetupUi(NPCName,NPCProfilePic);
 
         // Parse Ink File
         _currentStory = new Story(inkJson.text);
@@ -101,64 +95,45 @@ public class DialogueManager : MonoBehaviour
     public void ShowChoicesCallBack()
     {
 
-        if (_dialogueUiManager == null) {
+        if (DialogueUiManager == null) {
             ThrowNullError("ShowChoicesCallBack()", "DialogueUiManager");
         }
 
-        _dialogueUiManager.SetupChoices(_currentStory.currentChoices);
-    }
-
-    public void SetPrizeCard(InventoryCardData prizeCard)
-    {
-        _prizeCard = prizeCard;
+        DialogueUiManager.ShowChoices(_currentStory.currentChoices);
     }
 
     // Private Helper Methods ====================================================================
 
     /// <summary>
-    /// Instantiate dialogue UI in scene.
+    /// Set up the dialogue UI in scene.
     /// </summary>
-    /// <param name="npcBubblePos"> World pos of NPC Speech bubble. </param>
-    /// <param name="playerBubblePos"> World pos of Player Speech bubble. </param>
-    /// <returns> The Dialogue UI's manager script. </returns>
-    DialogueUiManager SetupUi(Vector3 npcBubblePos, Vector3 playerBubblePos)
+    void SetupUi(string npcName, Sprite image)
     {
 
-        if (dialogueUiPrefab == null) {
-            ThrowNullError("SetupUi()", "DialogueUiPrefab");
+        if (DialogueUiManager == null) {
+            ThrowNullError("SetupUi()", "instancedDialogueUiCanvas");
         }
 
-        _dialogueUiInstance = Instantiate(dialogueUiPrefab, Vector3.zero, Quaternion.identity, 
-                                          masterCanvas.transform);
-
-        if (_dialogueUiInstance == null) {
-            ThrowNullError("SetupUi()", "DialogueUiInstance");
-        }
-
-        DialogueUiManager dialogueUiManager = _dialogueUiInstance.GetComponent<DialogueUiManager>();
-
-        dialogueUiManager.PairChoices(ProcessDialogueChoice);
-        dialogueUiManager.SetupUi(npcBubblePos, playerBubblePos);
-
-        return dialogueUiManager;
+        DialogueUiManager.gameObject.SetActive(true);
+        DialogueUiManager.SetupUi(npcName,image);
     }
 
     /// <summary>
     /// Processes player input and displays the next line.
     /// </summary>
     /// <param name="choiceIndex"></param>
-    void ProcessDialogueChoice(int choiceIndex)
+    public void ProcessDialogueChoice(int choiceIndex)
     {
 
-        if (_dialogueUiManager == null) {
+        if (DialogueUiManager == null) {
             ThrowNullError("ProcessDialogueChoice()", "dialougeUiManager");
         }
         if (_currentStory == null) {
             ThrowNullError("ProcessDialogueChoice()", "story instance");
         }
-
+       
         _currentStory.ChooseChoiceIndex(choiceIndex);
-        _dialogueUiManager.HideChoices();
+        DialogueUiManager.HideChoices();
         ShowNextLine();
     }
 
@@ -208,17 +183,17 @@ public class DialogueManager : MonoBehaviour
 
         // If choice was Action, skip the line.
         if (foundTags.IsBarterTrigger) {
-            StartBarter();
             EndStory(false);
+            GameManager.BarterStarter.PresentItem();
             return;
         }
 
         // Queue next line
         bool lineHasChoices = _currentStory.currentChoices.Count > 0;
         if (lineHasChoices) {
-            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags, ShowChoicesCallBack);
+            DialogueUiManager.DisplayLineOfText(nextLine, foundTags, ShowChoicesCallBack);
         } else {
-            _dialogueUiManager.DisplayLineOfText(nextLine, foundTags);
+            DialogueUiManager.DisplayLineOfText(nextLine, foundTags);
         }
     }
 
@@ -258,50 +233,6 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates a barter game instance and hooks up callbacks.
-    /// </summary>
-    void StartBarter()
-    {
-        Debug.Log("Barter Starting!");
-        _barterInstance = Instantiate(barterContainerPrefab, Vector3.zero, Quaternion.identity, 
-                                      masterCanvas.transform);
-        BarterDirector barterDirectorOfInstance = _barterInstance.GetComponentInChildren<BarterDirector>();
-        barterDirectorOfInstance.OnWin += WinBarter;
-        barterDirectorOfInstance.OnLose += LoseBarter;
-        GameManager.PlayerInput.IsActive = false;
-
-        MusicActionsManager.ChangeMusicState("MailbotBarter");
-    }
-
-    /// <summary>
-    /// Call on Barter Win, give player card.
-    /// </summary>
-    void WinBarter()
-    {
-        if (_prizeCard != null) {
-            GameManager.Inventory.AddCard(_prizeCard);
-        }
-        CleanupBarter();
-    }
-
-    /// <summary>
-    /// Call on Barter lose, just cleans up.
-    /// </summary>
-    void LoseBarter()
-    {
-        CleanupBarter();
-    }
-
-    /// <summary>
-    /// Handles cleanup of barter minigame.
-    /// </summary>
-    void CleanupBarter()
-    {
-        Destroy(_barterInstance);
-        GameManager.PlayerInput.IsActive = true;
-    }
-
-    /// <summary>
     /// Called to kill UI and prep for next dialogue.
     /// </summary>
     /// <param name="enablePlayerInput"> True if we want to enable player input after ending story. </param>
@@ -309,11 +240,11 @@ public class DialogueManager : MonoBehaviour
     {
         _inConversation = false;
         _currentStory = null;
-        _dialogueUiManager = null;
 
-        GameManager.TimeLoopManager.SetLoopPaused(false);
+        TimeLoopManager.SetLoopPaused(false);
 
-        Destroy(_dialogueUiInstance);
+        DialogueUiManager.Reset();
+        DialogueUiManager.gameObject.SetActive(false);
         GameManager.PlayerInput.IsActive = enablePlayerInput;
         _onDelay = true;
         StartCoroutine(ConversationDelay());

@@ -176,10 +176,19 @@ public class Inventory : MonoBehaviour
 
     public void ClearExceptType(CardTypes type)
     {
-        foreach (InventoryCard card in Cards) {
-            if (type != card.Type) {
-                RemoveCard(card.Data);
+        List<InventoryCard> cardsToRemove = new List<InventoryCard>();
+
+        foreach (InventoryCard card in Cards)
+        {
+            if (type != card.Type)
+            {
+                cardsToRemove.Add(card);
             }
+        }
+
+        foreach (InventoryCard card in cardsToRemove)
+        {
+            RemoveCard(card.Data);
         }
     }
 
@@ -314,9 +323,11 @@ public class Inventory : MonoBehaviour
 
     #region ---------- Save and Load ----------
 
-    public void Save(ref InventorySaveData data)
+    public void Save(ref InventorySaveData data, bool clearInventory)
     {
-        ClearExceptType(CardTypes.INFO);
+        if (clearInventory) {
+            ClearExceptType(CardTypes.INFO);
+        }
 
         data.AllCards = AllCards;
         data.Cards = Cards;

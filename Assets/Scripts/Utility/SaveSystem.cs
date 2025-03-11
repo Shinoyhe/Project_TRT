@@ -8,19 +8,26 @@ using UnityEngine;
 public class SaveSystem
 {
     private static SaveData _saveData = new SaveData();
+    private static InGameUi _gameUi;
 
     [System.Serializable]
     public struct SaveData
     {
         public InventorySaveData inventoryData;
+        public KnownNPCsSaveData knownNPCsData;
     }
 
     #region ========== [ PUBLIC METHODS ] ===========
-    
+
     // SAVE
-    public static void Save()
+
+    /// <summary>
+    /// Saves the game. Specifically, the Journal data and Inventory Data
+    /// </summary>
+    /// <param name="clearInventory">whether or not to clear everything except INFO in the Inventory</param>
+    public static void Save(bool clearInventory)
     {
-        HandleSaveData();
+        HandleSaveData(clearInventory);
 
         File.WriteAllText(SaveFileName(), JsonUtility.ToJson(_saveData, true));
     }
@@ -46,7 +53,7 @@ public class SaveSystem
     }
 
     // SAVE
-    private static void HandleSaveData()
+    private static void HandleSaveData(bool clearInventory)
     {
         if (GameManager.Instance == null)
         {
@@ -60,9 +67,22 @@ public class SaveSystem
             return;
         } else
         {
-            GameManager.Inventory.Save(ref _saveData.inventoryData);
+            GameManager.Inventory.Save(ref _saveData.inventoryData, clearInventory);
         }
 
+        if (GameManager.MasterCanvas == null)
+        {
+            Debug.LogError("Cannot save Journal. Gamemanager.MasterCanvas is null");
+            return;
+        }
+        else
+        {
+            if (_gameUi == null) {
+                _gameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
+            }
+
+            _gameUi.Journal.NPC.Save(ref _saveData.knownNPCsData);
+        }
     }
 
     private static void HandleLoadData()
@@ -82,13 +102,20 @@ public class SaveSystem
             GameManager.Inventory.Load(_saveData.inventoryData);
         }
 
-        // REWORK ClearExceptType in inventory. Cannot delete items and loop
+        if (GameManager.MasterCanvas == null)
+        {
+            Debug.LogError("Cannot load Journal. Gamemanager.MasterCanvas is null");
+            return;
+        }
+        else
+        {
+            if (_gameUi == null)
+            {
+                _gameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
+            }
 
-        // Journal Access: Gamemanager -> MasterCanvas.getcomponent -> InGameUI -> JournalNavCore -> NPC
-        // KnownNPCs is in JournalNPC
-        // Tone Card Preferences is in NPCData
-        // Known Trades is in NPCData
-        // not saving data for NPC's you don't know, because its in KnownNPCs
+            _gameUi.Journal.NPC.Load(_saveData.knownNPCsData);
+        }
     }
 
     #endregion

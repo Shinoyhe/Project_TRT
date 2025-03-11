@@ -1,10 +1,12 @@
+using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
+using static GameEnums;
 
-[CreateAssetMenu(fileName = "New NPCData", menuName = "ScriptableObjects/NPCData")]
-public class NPCData : ScriptableObject
+[Serializable]
+public class NPC
 {
     #region ======== [ CLASSES ] ========
 
@@ -30,17 +32,54 @@ public class NPCData : ScriptableObject
 
     #region ======== [ VARIABLES ] ========
 
-    public string Name;
-    public Sprite Icon;
-    [TextArea] public string Bio;
+    [SerializeField, ReadOnly]
+    public NPCData Data;
 
-    // I'm thinking that the BarterResponseMatrix could be referenced and called from here instead. Maybe this script could combine with it?
-    public BarterResponseMatrix Matrix;
-
-    [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalTonePreferences;
-    [ReadOnly] [SerializeField] private Dictionary<InventoryCardData, InventoryCardData> journalKnownTrades;
+    [ReadOnly][SerializeField] public Dictionary<PlayingCard, CardPreference> journalTonePreferences;
+    [ReadOnly][SerializeField] public Dictionary<InventoryCardData, InventoryCardData> journalKnownTrades;
 
     #endregion
+
+    #region ======== [ NPCData Accessors ] ========
+
+    public string Name
+    {
+        get
+        {
+            if (Data == null) { Debug.LogError("NPC has not been set"); throw new System.Exception("Accessing NPC Name that has not been set"); }
+            return Data.Name;
+        }
+    }
+
+    public Sprite Icon
+    {
+        get
+        {
+            if (Data == null) { Debug.LogError("NPC has not been set"); throw new System.Exception("Accessing NPC Icon that has not been set"); }
+            return Data.Icon;
+        }
+    }
+
+    public string Bio
+    {
+        get
+        {
+            if (Data == null) { Debug.LogError("NPC has not been set"); throw new System.Exception("Accessing NPC Bio that has not been set"); }
+            return Data.Bio;
+        }
+    }
+
+    public BarterResponseMatrix Matrix
+    {
+        get
+        {
+            if (Data == null) { Debug.LogError("NPC has not been set"); throw new System.Exception("Accessing NPC Matrix that has not been set"); }
+            return Data.Matrix;
+        }
+    }
+
+    #endregion
+
 
     #region ======== [ PUBLIC METHODS ] ========
 
@@ -53,7 +92,7 @@ public class NPCData : ScriptableObject
     public void ChangeJournalTonePreference(PlayingCard opponentCard, PlayingCard playerCard, BarterResponseMatrix.State state)
     {
         journalTonePreferences.TryAdd(opponentCard, new CardPreference());
-        
+
         switch (state)
         {
             case BarterResponseMatrix.State.POSITIVE:
@@ -107,7 +146,7 @@ public class NPCData : ScriptableObject
             journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
         }
 
-        if (playerCard == null || !journalKnownTrades.ContainsKey(playerCard)) 
+        if (playerCard == null || !journalKnownTrades.ContainsKey(playerCard))
             return null;
 
         return journalKnownTrades[playerCard];
@@ -126,6 +165,16 @@ public class NPCData : ScriptableObject
     /// Returns the possible Cards that the NPC may play
     /// </summary>
     public PlayingCard[] Cards => Matrix.OppCards;
+
+    public void LoadTonePrefs(Dictionary<PlayingCard, CardPreference> newPrefs)
+    {
+        journalTonePreferences = newPrefs;
+    }
+
+    public void LoadKnownTrades(Dictionary<InventoryCardData, InventoryCardData> newTrades)
+    {
+        journalKnownTrades = newTrades;
+    }
 
     #endregion
 

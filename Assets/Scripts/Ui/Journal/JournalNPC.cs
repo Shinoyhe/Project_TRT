@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static GameEnums;
+using System.Linq;
 
 public class JournalNPC : InventoryAction
 {
@@ -21,7 +23,7 @@ public class JournalNPC : InventoryAction
     [SerializeField] private Image oppItem;
     [SerializeField] private Sprite oppItemNoTradeKnown;
 
-    private HashSet<NPCData> _knownNPCs = new HashSet<NPCData>();
+    public HashSet<NPCData> KnownNPCs = new HashSet<NPCData>();
     private NPCData _npcData;
 
     #endregion
@@ -34,13 +36,13 @@ public class JournalNPC : InventoryAction
     /// <param name="npcData"></param>
     public void AddNPC(NPCData npcData)
     {
-        _knownNPCs.Add(npcData);
+        KnownNPCs.Add(npcData);
     }
 
 
     public bool IsKnown(NPCData npcData)
     {
-        return _knownNPCs.Contains(npcData);
+        return KnownNPCs.Contains(npcData);
     }
 
 
@@ -104,4 +106,52 @@ public class JournalNPC : InventoryAction
     }
 
     #endregion
+
+    #region ======== [ SAVE AND LOAD ] ========
+
+    public void Save(ref KnownNPCsSaveData data)
+    {
+        data.KnownNPCs = KnownNPCs.ToList();
+        Dictionary<NPCData, NPCSaveData> tempPerNPCData = new Dictionary<NPCData, NPCSaveData>();
+
+        foreach (NPCData npcData in KnownNPCs.ToList())
+        {
+            NPCSaveData thisNPCsData;
+            thisNPCsData.journalKnownTrades = Serialize.FromDict(npcData.journalKnownTrades);
+            thisNPCsData.journalTonePrefs = Serialize.FromDict(npcData.journalTonePreferences);
+
+
+        }
+
+        data.PerNPCData = Serialize.FromDict(tempPerNPCData);
+    }
+
+    public void Load(KnownNPCsSaveData data)
+    {
+        KnownNPCs = data.KnownNPCs.ToHashSet();
+
+        foreach (NPCData npcData in KnownNPCs)
+        {
+            Dictionary<NPCData, NPCSaveData> perNPCDataDict = Serialize.ToDict(data.PerNPCData);
+
+            npcData.LoadKnownTrades(Serialize.ToDict(perNPCDataDict[npcData].journalKnownTrades));
+            npcData.LoadTonePrefs(Serialize.ToDict(perNPCDataDict[npcData].journalTonePrefs));
+        }
+    }
+
+    #endregion
+}
+
+[System.Serializable]
+public struct KnownNPCsSaveData
+{
+    public List<NPCData> KnownNPCs;
+    public List<Pair<NPCData, NPCSaveData>> PerNPCData;
+}
+
+[System.Serializable]
+public struct NPCSaveData
+{
+    public List<Pair<PlayingCard, NPC.CardPreference>> journalTonePrefs;
+    public List<Pair<InventoryCardData, InventoryCardData>> journalKnownTrades;
 }

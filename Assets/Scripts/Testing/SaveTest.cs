@@ -18,7 +18,7 @@ public class SaveTest : MonoBehaviour
 
     public void Save()
     {
-        SaveSystem.Save();
+        SaveSystem.Save(true);
     }
 
     public void Load()

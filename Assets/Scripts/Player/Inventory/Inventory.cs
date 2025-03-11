@@ -70,7 +70,9 @@ public class Inventory : MonoBehaviour
         }
 
         // Cache refs.
-        _notificationUi = GameManager.MasterCanvas.GetComponent<InGameUi>().Notification;
+        if (GameManager.Instance != null && GameManager.MasterCanvas != null) {
+            _notificationUi = GameManager.MasterCanvas.GetComponent<InGameUi>().Notification;
+        }
     }
 
     #region ---------- Public Methods ----------

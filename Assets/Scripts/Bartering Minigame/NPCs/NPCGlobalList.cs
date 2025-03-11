@@ -67,33 +67,28 @@ public class NPCGlobalList : MonoBehaviour
 
     #region ======== [ SAVE AND LOAD ] ========
 
-    public void Save(ref KnownNPCsSaveData data)
+    public void Save(ref NPCSaveData data)
     {
+        data.NPCs = AllNPCs;
         data.KnownNPCs = KnownNPCs;
-        Dictionary<string, NPCSaveData> tempPerNPCData = new Dictionary<string, NPCSaveData>();
-
-        foreach (NPC npcData in KnownNPCs.ToList())
-        {
-            NPCSaveData thisNPCsData;
-            thisNPCsData.journalKnownTrades = Serialize.FromDict(npcData.journalKnownTrades);
-            thisNPCsData.journalTonePrefs = Serialize.FromDict(npcData.journalTonePreferences);
-
-            tempPerNPCData.Add(npcData.Name, thisNPCsData);
-        }
-
-        data.PerNPCData = Serialize.FromDict(tempPerNPCData);
     }
 
-    public void Load(KnownNPCsSaveData data)
+    public void Load(NPCSaveData data)
     {
-        foreach (NPC npcData in data.KnownNPCs)
-        {
-            Dictionary<string, NPCSaveData> perNPCDataDict = Serialize.ToDict(data.PerNPCData);
+        AllNPCs = data.NPCs;
 
+        foreach (NPC npc in AllNPCs)
+        {
+            npc.LoadFromSerialized();
+        }
+
+        foreach (NPC npc in data.KnownNPCs)
+        {
             InGameUi inGameUi = GameManager.MasterCanvas.GetComponent<InGameUi>();
+
             if (inGameUi != null)
             {
-                inGameUi.Journal.AddNPC(npcData.Data);
+                inGameUi.Journal.AddNPC(npc.Data);
             }
         }
     }
@@ -102,15 +97,8 @@ public class NPCGlobalList : MonoBehaviour
 }
 
 [System.Serializable]
-public struct KnownNPCsSaveData
-{
-    public List<NPC> KnownNPCs;
-    public List<Pair<string, NPCSaveData>> PerNPCData;
-}
-
-[System.Serializable]
 public struct NPCSaveData
 {
-    public List<Pair<PlayingCard, CardPreference>> journalTonePrefs;
-    public List<Pair<InventoryCardData, InventoryCardData>> journalKnownTrades;
+    public List<NPC> NPCs;
+    public List<NPC> KnownNPCs;
 }

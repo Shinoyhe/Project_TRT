@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static GameEnums;
 
@@ -146,6 +147,12 @@ public class NPC
     /// Returns the possible Cards that the NPC may play
     /// </summary>
     public PlayingCard[] Cards => Matrix.OppCards;
+
+    public void LoadFromSerialized()
+    {
+        journalTonePreferences = Serialize.ToDict(SerializedTonePrefs);
+        journalKnownTrades = Serialize.ToDict(SerializedKnownTrades);
+    }
 
     #endregion
 

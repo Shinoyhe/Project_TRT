@@ -14,7 +14,7 @@ public class SaveSystem
     public struct SaveData
     {
         public InventorySaveData inventoryData;
-        public KnownNPCsSaveData knownNPCsData;
+        public NPCSaveData npcSaveData;
     }
 
     #region ========== [ PUBLIC METHODS ] ===========
@@ -77,7 +77,7 @@ public class SaveSystem
         }
         else
         {
-            GameManager.NPCGlobalList.Save(ref _saveData.knownNPCsData);
+            GameManager.NPCGlobalList.Save(ref _saveData.npcSaveData);
         }
     }
 
@@ -104,7 +104,7 @@ public class SaveSystem
             return;
         } else
         {
-            GameManager.NPCGlobalList.Load(_saveData.knownNPCsData);
+            GameManager.NPCGlobalList.Load(_saveData.npcSaveData);
         }
     }
 

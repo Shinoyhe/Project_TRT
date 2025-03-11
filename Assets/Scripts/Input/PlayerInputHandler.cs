@@ -25,6 +25,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         {"_reject", false},
         {"_menu1", false},
         {"_menu2", false},
+        {"_click", false},
         {"_debug0", false},
         {"_debug1", false},
         {"_debug2", false}
@@ -98,9 +99,15 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     public void OnRejectButton(InputAction.CallbackContext context) { SetDown(context, "_reject"); }
     public void OnMenuButton1(InputAction.CallbackContext context) { SetDown(context, "_menu1"); }
     public void OnMenuButton2(InputAction.CallbackContext context) { SetDown(context, "_menu2"); }
+    public void OnClick(InputAction.CallbackContext context) { SetDown(context, "_click"); }
     public void OnDebug0(InputAction.CallbackContext context) { SetDown(context, "_debug0"); }
     public void OnDebug1(InputAction.CallbackContext context) { SetDown(context, "_debug1"); }
     public void OnDebug2(InputAction.CallbackContext context) { SetDown(context, "_debug2"); }
+
+    // OnPointer and OnScroll are used only by the event system. 
+    // Don't do anything with it manually, at least for now.
+    public void OnPointer(InputAction.CallbackContext context) { return; } 
+    public void OnScroll(InputAction.CallbackContext context) { return; }
 
     // Public Accessor Methods ====================================================================
 
@@ -124,6 +131,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     public bool GetMenu1Down() { return _getDown["_menu1"]; }
     public bool GetMenu1() { return _get["_menu1"]; }
     public bool GetMenu2Down() { return _getDown["_menu2"]; }
+    public bool GetClickDown() { return _getDown["_click"]; }
     public bool GetDebug0Down() { return _getDown["_debug0"]; }
     public bool GetDebug1Down() { return _getDown["_debug1"]; }
     public bool GetDebug2Down() { return _getDown["_debug2"]; }

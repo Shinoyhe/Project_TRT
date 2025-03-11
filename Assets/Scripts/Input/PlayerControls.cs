@@ -98,6 +98,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""833f1c77-cb84-44fd-b8e3-c3b277ee4c7f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pointer"",
+                    ""type"": ""Value"",
+                    ""id"": ""9584aea4-909e-4d3f-ae64-56554acf123f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""6c4f7f97-e178-44ea-bf14-902752b7d330"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -298,6 +325,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ControlAxis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86e9fe5b-df6a-47dd-b943-2a61db875506"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55b6817c-51d9-4a4e-a30f-f29ff12f1a5d"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""Pointer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d498bf60-7cb4-4107-926f-fb428db91ab5"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -410,6 +470,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_MainControls_RejectButton = m_MainControls.FindAction("RejectButton", throwIfNotFound: true);
         m_MainControls_MenuButton1 = m_MainControls.FindAction("MenuButton1", throwIfNotFound: true);
         m_MainControls_MenuButton2 = m_MainControls.FindAction("MenuButton2", throwIfNotFound: true);
+        m_MainControls_Click = m_MainControls.FindAction("Click", throwIfNotFound: true);
+        m_MainControls_Pointer = m_MainControls.FindAction("Pointer", throwIfNotFound: true);
+        m_MainControls_Scroll = m_MainControls.FindAction("Scroll", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_Debug0 = m_Debug.FindAction("Debug0", throwIfNotFound: true);
@@ -490,6 +553,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_MainControls_RejectButton;
     private readonly InputAction m_MainControls_MenuButton1;
     private readonly InputAction m_MainControls_MenuButton2;
+    private readonly InputAction m_MainControls_Click;
+    private readonly InputAction m_MainControls_Pointer;
+    private readonly InputAction m_MainControls_Scroll;
     public struct MainControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -502,6 +568,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @RejectButton => m_Wrapper.m_MainControls_RejectButton;
         public InputAction @MenuButton1 => m_Wrapper.m_MainControls_MenuButton1;
         public InputAction @MenuButton2 => m_Wrapper.m_MainControls_MenuButton2;
+        public InputAction @Click => m_Wrapper.m_MainControls_Click;
+        public InputAction @Pointer => m_Wrapper.m_MainControls_Pointer;
+        public InputAction @Scroll => m_Wrapper.m_MainControls_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_MainControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -535,6 +604,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MenuButton2.started += instance.OnMenuButton2;
             @MenuButton2.performed += instance.OnMenuButton2;
             @MenuButton2.canceled += instance.OnMenuButton2;
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
+            @Pointer.started += instance.OnPointer;
+            @Pointer.performed += instance.OnPointer;
+            @Pointer.canceled += instance.OnPointer;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
         }
 
         private void UnregisterCallbacks(IMainControlsActions instance)
@@ -563,6 +641,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MenuButton2.started -= instance.OnMenuButton2;
             @MenuButton2.performed -= instance.OnMenuButton2;
             @MenuButton2.canceled -= instance.OnMenuButton2;
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
+            @Pointer.started -= instance.OnPointer;
+            @Pointer.performed -= instance.OnPointer;
+            @Pointer.canceled -= instance.OnPointer;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
         }
 
         public void RemoveCallbacks(IMainControlsActions instance)
@@ -670,6 +757,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRejectButton(InputAction.CallbackContext context);
         void OnMenuButton1(InputAction.CallbackContext context);
         void OnMenuButton2(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
+        void OnPointer(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {

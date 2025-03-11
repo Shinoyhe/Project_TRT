@@ -4,6 +4,13 @@
 		<WorkUnit Name="SettingsUI" ID="{373CD9AD-DC2B-4BCE-9BB6-9C4270206DD9}" OwnerID="{FA3D3862-1B73-4691-AADA-BC295B658906}" PersistMode="Nested">
 			<ChildrenList>
 				<Sound Name="Menu_ButtonDown" ID="{04527E04-99FF-4CE8-856E-5E3904ED5B79}" ShortID="226871250">
+					<PropertyList>
+						<Property Name="OutputBusVolume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
@@ -14,6 +21,11 @@
 					</ReferenceList>
 					<ChildrenList>
 						<AudioFileSource Name="Menu_ButtonDown" ID="{3A35B79C-FA86-40FB-B82E-69DE70AA03CB}">
+							<PropertyList>
+								<Property Name="FadeOutDuration" Type="Real64" Value="0.172277227722772"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimEnd" Type="Real64" Value="0.332673267326733"/>
+							</PropertyList>
 							<Language>SFX</Language>
 							<AudioFile>Menu_ButtonDown.wav</AudioFile>
 							<MediaIDList>
@@ -26,6 +38,13 @@
 					</ActiveSourceList>
 				</Sound>
 				<Sound Name="Menu_ButtonUp" ID="{A3A25F69-F286-4E7A-9340-ACB9AED2EF61}" ShortID="203070980">
+					<PropertyList>
+						<Property Name="OutputBusVolume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
@@ -36,6 +55,12 @@
 					</ReferenceList>
 					<ChildrenList>
 						<AudioFileSource Name="Menu_ButtonUp" ID="{0CFC7CE3-0E21-48EC-8088-27E9A074C6B7}">
+							<PropertyList>
+								<Property Name="FadeOutDuration" Type="Real64" Value="0.283168316831683"/>
+								<Property Name="FadeOutShape" Type="int16" Value="7"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimEnd" Type="Real64" Value="0.487128712871287"/>
+							</PropertyList>
 							<Language>SFX</Language>
 							<AudioFile>Menu_ButtonUp.wav</AudioFile>
 							<MediaIDList>

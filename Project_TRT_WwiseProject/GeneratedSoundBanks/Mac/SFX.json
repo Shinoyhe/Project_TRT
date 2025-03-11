@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{335496CC-45EA-4922-B9FA-C65217B7662E}",
     "Language": "SFX",
-    "Hash": "{37926F22-C770-3905-DBD7-AB4CFDE4FE5C}",
+    "Hash": "{69913850-E701-B013-5B74-937B47727699}",
     "ObjectPath": "\\SoundBanks\\SFX\\SFX",
     "ShortName": "SFX",
     "Path": "SFX.bnk",
@@ -69,7 +69,7 @@
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "Menu_ButtonDown.wav",
-      "CachePath": "18/{18E9704B-0DDB-DB8E-FD2B-91926F52F20B}.wem"
+      "CachePath": "33/{336CC2D7-8BF3-1321-AC8A-7832F9B06E40}.wem"
      },
      {
       "Id": "743462201",
@@ -77,7 +77,7 @@
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "Menu_ButtonUp.wav",
-      "CachePath": "87/{87BAE0A1-E314-4DAF-234C-27BC3FEF1DE7}.wem"
+      "CachePath": "7F/{7F56AB1E-957C-2CEE-689D-751406605D61}.wem"
      },
      {
       "Id": "874945742",
@@ -143,8 +143,8 @@
       "ObjectPath": "\\Events\\UI\\SettingsUI\\Play_Menu_ButtonDown",
       "GUID": "{EBECFF1B-B886-49CC-9461-CD7752DD9198}",
       "DurationType": "OneShot",
-      "DurationMin": "2",
-      "DurationMax": "2",
+      "DurationMin": "0.33267328",
+      "DurationMax": "0.33267328",
       "MediaRefs": [
        {
         "Id": "630183003"
@@ -157,8 +157,8 @@
       "ObjectPath": "\\Events\\UI\\SettingsUI\\Play_Menu_ButtonUp",
       "GUID": "{0327DC0C-0064-442E-9E37-D3097A1EA4FD}",
       "DurationType": "OneShot",
-      "DurationMin": "2",
-      "DurationMax": "2",
+      "DurationMin": "0.4871287",
+      "DurationMax": "0.4871287",
       "MediaRefs": [
        {
         "Id": "743462201"
@@ -196,6 +196,6 @@
     ]
    }
   ],
-  "FileHash": "{AD51F28A-9D5E-2F8C-668F-4C16C4F5F862}"
+  "FileHash": "{57C1E119-DFD7-7930-5F71-F3F8425AB50A}"
  }
 }

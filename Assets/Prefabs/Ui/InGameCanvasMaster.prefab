@@ -1576,6 +1576,7 @@ GameObject:
   - component: {fileID: 837961958174819109}
   - component: {fileID: 7519650928092952732}
   - component: {fileID: 2308090062487654560}
+  - component: {fileID: 8033182666425453055}
   m_Layer: 5
   m_Name: InGameCanvasMaster
   m_TagString: MasterCanvas
@@ -1634,6 +1635,16 @@ MonoBehaviour:
   Bartering: {fileID: 5771083917161067956}
   Dialogue: {fileID: 810870351080456582}
   _currentCanvasState: 0
+  pauseOpen:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 596f9ecfac97e9a42b35c4ee619f488c,
+      type: 2}
+  pauseClose:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 04d9d6a8e7429c44da96020ce7b159e2,
+      type: 2}
 --- !u!223 &837961958174819109
 Canvas:
   m_ObjectHideFlags: 0
@@ -1697,6 +1708,32 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8033182666425453055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5761779680460996703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e699a8c540eee98439418a908e76ecc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: ecb40a8b1f36de74ebe76cf6310a46b1,
+      type: 2}
+  decodeBank: 0
+  overrideLoadSetting: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &6122763546633230471
 GameObject:
   m_ObjectHideFlags: 0

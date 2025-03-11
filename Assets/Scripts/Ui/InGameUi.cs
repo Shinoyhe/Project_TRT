@@ -36,6 +36,11 @@ public class InGameUi : MonoBehaviour
 
     [SerializeField, ReadOnly] private UiStates _currentCanvasState;
     public System.Action<UiStates, UiStates> CanvasStateChanged;
+
+    [Header("Audio")]
+    [SerializeField] private AK.Wwise.Event pauseOpen;
+    [SerializeField] private AK.Wwise.Event pauseClose;
+
     public UiStates CurrentCanvasState {
         get { 
             return _currentCanvasState; 
@@ -68,6 +73,7 @@ public class InGameUi : MonoBehaviour
                 MoveToDefault();
             } else {
                 MoveToInventory();
+                pauseOpen.Post(this.gameObject);
             }
         }
 
@@ -76,6 +82,7 @@ public class InGameUi : MonoBehaviour
                 MoveToDefault();
             } else {
                 MoveToJournal();
+                pauseOpen.Post(this.gameObject);
             }
         }
 
@@ -84,6 +91,7 @@ public class InGameUi : MonoBehaviour
                 MoveToDefault();
             } else {
                 MoveToPause();
+                pauseOpen.Post(this.gameObject);
             }
         }
     }
@@ -101,7 +109,11 @@ public class InGameUi : MonoBehaviour
     }
 
     // Used for button OnClick calls as they don't let enums to be passed through :|
-    public void MoveToDefault() => MoveTo(UiStates.Default);
+    public void MoveToDefault()
+    {
+        MoveTo(UiStates.Default);
+        pauseClose.Post(this.gameObject); // play menu close sound only on unpause
+    }
     public void MoveToPause() => MoveTo(UiStates.Pause);
     public void MoveToOptions() => MoveTo(UiStates.Options);
     public void MoveToTitle() => MoveTo(UiStates.MoveToTitle);

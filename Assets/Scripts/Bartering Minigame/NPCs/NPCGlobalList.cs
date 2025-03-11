@@ -92,7 +92,7 @@ public class NPCGlobalList : MonoBehaviour
         {
             Dictionary<NPC, NPCSaveData> perNPCDataDict = Serialize.ToDict(data.PerNPCData);
 
-            npcData.LoadKnownTrades(Serialize.ToDict(perNPCDataDict[npcData].journalKnownTrades));
+            npcData.LoadKnownTrades(Serialize.ToDict(perNPCDataDict[npcData].journalKnownTrades)); // ERROR ON THIS LINE
             npcData.LoadTonePrefs(Serialize.ToDict(perNPCDataDict[npcData].journalTonePrefs));
         }
     }

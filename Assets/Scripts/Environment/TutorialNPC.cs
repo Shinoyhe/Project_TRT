@@ -18,7 +18,14 @@ public class TutorialNPC : MonoBehaviour
             GameManager.BarterStarter.OnLose += () => StartCoroutine(TransitionToGame());
         }
 
-        if (npcInteractable == null) { return; }
+        StartCoroutine(StartTutorial());
+    }
+    
+    private IEnumerator StartTutorial()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        
+        if (npcInteractable == null) { yield break; }
         npcInteractable.Interaction();
     }
 
@@ -30,6 +37,7 @@ public class TutorialNPC : MonoBehaviour
 
     private IEnumerator TransitionToGame()
     {
+        npcInteractable.enabled = false;
         foreach (InventoryCardData inventoryCardData in postTutorialCards)
         {
             if (inventoryCardData != null)

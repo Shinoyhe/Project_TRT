@@ -206,6 +206,8 @@ public class HandController : MonoBehaviour
         foreach (DisplayCard card in _hand) {
             card.SetInteractable(true);
         }
+
+        _hand[0].Selectable.Select();
     }
 
     // DisplayCard Callbacks ======================================================================

@@ -32,6 +32,9 @@ public class PlayerCardSlot : MonoBehaviour
 
     private void Update()
     {
+        // We use update to set our color to selected or not.
+        // ================
+        
         // TODO: Make this visualization nicer and not placeholder.
 
         if (_image != null) {

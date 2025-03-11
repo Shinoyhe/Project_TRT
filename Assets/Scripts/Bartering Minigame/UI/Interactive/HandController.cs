@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class HandController : MonoBehaviour
 {
@@ -196,6 +197,10 @@ public class HandController : MonoBehaviour
         foreach (DisplayCard card in _hand) {
             card.SetInteractable(false);
         }
+
+        submissionUI.SetLocked(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     /// <summary>
@@ -206,6 +211,8 @@ public class HandController : MonoBehaviour
         foreach (DisplayCard card in _hand) {
             card.SetInteractable(true);
         }
+
+        submissionUI.SetLocked(false);
 
         _hand[0].Selectable.Select();
     }

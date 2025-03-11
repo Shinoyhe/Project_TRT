@@ -30,6 +30,9 @@ public class BarterCardSubmissionUI : MonoBehaviour
     
     // Misc Internal Variables ====================================================================
 
+    // Whether or not these slots can be selected.
+    private bool _locked;
+
     // Player CardSlots =======================
     // Array of AutoPlayerCardSlotUI components, one for each Player card submitted.
     private PlayerCardSlot[] _playerCardSlots = null;
@@ -122,29 +125,74 @@ public class BarterCardSubmissionUI : MonoBehaviour
 
         // Detect slot index inputs. ============
 
-        bool dirty = false;
-        int newIndex = -1;
+        if (!_locked) {
+            bool dirty = false;
+            int newIndex = -1;
 
-        if (GameManager.PlayerInput.GetPrimaryTriggerDown()) {
-            newIndex = (_selectedSlotIndex+1) % _playerCardSlots.Length;
-            dirty = true;
-        } else if (GameManager.PlayerInput.GetSecondaryTriggerDown()) {
-            newIndex = _selectedSlotIndex-1;
-            if (newIndex < 0) newIndex += _playerCardSlots.Length;
-            dirty = true;
-        }
+            if (GameManager.PlayerInput.GetPrimaryTriggerDown()) {
+                newIndex = (_selectedSlotIndex+1) % _playerCardSlots.Length;
+                dirty = true;
+            } else if (GameManager.PlayerInput.GetSecondaryTriggerDown()) {
+                newIndex = _selectedSlotIndex-1;
+                if (newIndex < 0) newIndex += _playerCardSlots.Length;
+                dirty = true;
+            }
 
-        if (dirty) {
-            _playerCardSlots[_selectedSlotIndex].SetSelected(false);
-            _playerCardSlots[newIndex].SetSelected(true);
+            if (dirty) {
+                _playerCardSlots[_selectedSlotIndex].SetSelected(false);
+                _playerCardSlots[newIndex].SetSelected(true);
 
-            _selectedSlotIndex = newIndex;
+                _selectedSlotIndex = newIndex;
+            }
         }
     }
 
     // Public accessors ===========================================================================
 
     public PlayerCardSlot[] GetPlayerCardSlots() { return _playerCardSlots; }
+
+    // Public manipulators ========================================================================
+
+    /// <summary>
+    /// Sets the value of _locked. If _locked, deselects all slots, if not _locked, selects the 
+    /// 0th slot.
+    /// </summary>
+    /// <param name="value">bool - whether or not we're locked.</param>
+    public void SetLocked(bool value)
+    {
+        _locked = value;
+
+        if (_locked) {
+            DeselectAllPlayerSlots();
+        } else {
+            SelectPlayerSlot(0);
+        }
+    }
+
+    /// <summary>
+    /// Deselects all player slots.
+    /// </summary>
+    public void DeselectAllPlayerSlots()
+    {
+        foreach (PlayerCardSlot slot in _playerCardSlots) {
+            slot.SetSelected(false);
+        }
+    }
+
+    /// <summary>
+    /// Sets _selectedSlotIndex to some value.
+    /// </summary>
+    /// <param name="index">int - the value to set _selectedSlotIndex to.</param>
+    public void SelectPlayerSlot(int index)
+    {
+        if (index < 0 || index >= _playerCardSlots.Length) {
+            Debug.Log($"BarterCardSubmissionUI Error: SelectPlayerSlot failed. index ({index}) was "
+                    + $"outside the range of _playerCardSlots (length {_playerCardSlots.Length})");
+        }
+
+        _selectedSlotIndex = index;
+        _playerCardSlots[_selectedSlotIndex].SetSelected(true);
+    }
 
     // Callback functions =========================================================================
 

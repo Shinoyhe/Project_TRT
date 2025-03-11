@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -22,13 +23,17 @@ public class PlayerMovement : MonoBehaviour
 
 	private const float _gravity = 9.81f;
 	private float _downwardForce = 0;
-	private bool _canMove = true;
+	[SerializeField, ReadOnly] private bool _canMove = true;
 
     #endregion
 
     #region ======== [ PUBLIC METHODS ] ========
 
-	public void TogglePlayerMovement(bool canMove) {
+    /// <summary>
+    /// Public setter for _canMove.
+    /// </summary>
+    /// <param name="canMove">bool - whether or not the player can move.</param>
+	public void SetCanMove(bool canMove) {
 		_canMove = canMove;
 	}
 
@@ -52,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 		// Get Input
 		Vector3 input = GameManager.PlayerInput.GetControlInput();
 
-		if (_canMove == false) {
+		if (!_canMove) {
 			input = Vector3.zero;
 		}
 

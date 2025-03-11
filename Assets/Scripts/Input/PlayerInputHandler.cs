@@ -57,10 +57,6 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
             _controls.Debug.SetCallbacks(this);
         }
 
-        foreach (var scheme in _controls.asset.controlSchemes) {
-            Debug.Log(scheme.name);
-        }
-
         // Initialize the _get dict from the _getDown dict
         foreach (string key in _getDown.Keys) {
             _get[key] = false;
@@ -100,9 +96,7 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         _controlAxisVector = context.ReadValue<Vector2>();
 
         if (context.started) {
-            if (context.started) {
-                UpdateLastUsedScheme(context);
-            }
+            UpdateLastUsedScheme(context);
         }
     }
 

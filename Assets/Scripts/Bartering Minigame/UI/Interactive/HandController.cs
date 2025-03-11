@@ -52,6 +52,8 @@ public class HandController : MonoBehaviour
     private readonly Dictionary<DisplayCard, Vector3> _baseCardPositions = new();
     // The amount of our anchored line we're allowed to place cards in.
     private float _usableRange;
+    // Whether or not this object is locked from input, theoretically.
+    private bool _locked = false;
     // Whether or not we are actively dragging a displayCard.
     private bool _alreadyDragging = false;
 
@@ -194,6 +196,8 @@ public class HandController : MonoBehaviour
     /// </summary>
     public void Lock()
     {
+        _locked = true;
+
         foreach (DisplayCard card in _hand) {
             card.SetInteractable(false);
         }
@@ -208,6 +212,8 @@ public class HandController : MonoBehaviour
     /// </summary>
     public void Unlock()
     {
+        _locked = false;
+
         foreach (DisplayCard card in _hand) {
             card.SetInteractable(true);
         }
@@ -263,8 +269,7 @@ public class HandController : MonoBehaviour
 
                     // If the slot is already filled, kick the old card out.
                     if (slot.Card != null) {
-                        slot.Card.SetSubmitted(null);
-                        slot.SetCard(null);
+                        Evict(slot);
                     }
 
                     targetSlot = slot;
@@ -274,19 +279,7 @@ public class HandController : MonoBehaviour
 
             // After we've checked everything, if we have a target slot...
             if (targetSlot != null) {
-                // Play all submitting card SFX
-                
-                // GARRETT: Commented following line out because it was causing errors
-                // cardPlaceSFX.Play(this.gameObject);
-
-                // Find the position of the slot in OUR localspace.
-                Vector3 localSlotPosition = card.transform.parent.InverseTransformPoint(targetSlot.transform.position);
-                // Snap the display card to the slot's position.
-                card.TransformTo(localSlotPosition, 1, snapTime);
-                // Note that the display card is submitted (don't animate it back into the hand).
-                card.SetSubmitted(targetSlot);
-                // Tell the slot that it's holding a new PlayingCard.
-                targetSlot.SetCard(card);
+                SubmitToSlot(card, targetSlot);
             }
 
             // Move cards back into position.
@@ -294,5 +287,85 @@ public class HandController : MonoBehaviour
             
             _alreadyDragging = false;
         }
+    }
+
+    // Non-Pointer Control Methods ================================================================
+
+    /// <summary>
+    /// Returns the index of the current selected DisplayCard in the EventSystem.
+    /// </summary>
+    /// <returns>int - the index in _hand of the currently selected card, or -1 if none.</returns>
+    public DisplayCard GetSelectedCard()
+    {
+        // Kinda hacky, but it works!
+        foreach (DisplayCard card in _hand) {
+            if (EventSystem.current.currentSelectedGameObject == card.gameObject) {
+                return card;
+            }
+        }
+
+        return null;
+    }
+
+    private void Update()
+    {
+        // Used for input polling.
+        // ================
+
+        if (_locked) {
+            return;
+        }
+
+        if (GameManager.PlayerInput.GetAffirmDown()) {
+            Evict(submissionUI.SelectedPlayerSlot);
+            SubmitToSlot(GetSelectedCard(), submissionUI.SelectedPlayerSlot);
+            GoToViewPosition();
+            _alreadyDragging = false;
+        } else if (GameManager.PlayerInput.GetRejectDown()) {
+            Evict(submissionUI.SelectedPlayerSlot);
+            GoToViewPosition();
+            _alreadyDragging = false;
+        }
+    }
+
+    // Misc Control Methods =======================================================================
+
+    /// <summary>
+    /// Removes the card from a slot. Does NOT repaint.
+    /// </summary>
+    /// <param name="slot">PlayerCardSlot - the slot to evict from.</param>
+    private void Evict(PlayerCardSlot slot)
+    {
+        if (slot == null || slot.Card == null) return;
+        
+        slot.Card.SetSubmitted(null);
+        slot.SetCard(null);
+    }
+
+    /// <summary>
+    /// Submits a DisplayCard to a PlayerCardSlot. Does NOT repaint.
+    /// </summary>
+    /// <param name="card">DisplayCard - the card to submit.</param>
+    /// <param name="targetSlot">PlayerCardSlot - where to submit it to.</param>
+    private void SubmitToSlot(DisplayCard card, PlayerCardSlot targetSlot)
+    {
+        // Play all submitting card SFX
+
+        // GARRETT: Commented following line out because it was causing errors
+        // cardPlaceSFX.Play(this.gameObject);
+
+        // Remove the card from its old slot, if it exists.
+        if (card.SubmitSlot != null) {
+            card.SubmitSlot.SetCard(null);
+        }
+
+        // Find the position of the slot in OUR localspace.
+        Vector3 localSlotPosition = card.transform.parent.InverseTransformPoint(targetSlot.transform.position);
+        // Snap the display card to the slot's position.
+        card.TransformTo(localSlotPosition, 1, snapTime);
+        // Note that the display card is submitted (don't animate it back into the hand).
+        card.SetSubmitted(targetSlot);
+        // Tell the slot that it's holding a new PlayingCard.
+        targetSlot.SetCard(card);
     }
 }

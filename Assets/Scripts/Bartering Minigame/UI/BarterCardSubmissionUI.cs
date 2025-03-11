@@ -15,6 +15,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
     private GameObject playerCardSlotPrefab;
     [SerializeField, Tooltip("A RectTransform used as the area where we can spawn player card slots.")]
     private RectTransform playerCardSlotZone;
+    public PlayerCardSlot SelectedPlayerSlot => _playerCardSlots?[_selectedSlotIndex];
 
     [Header("Opp Card Region")]
     [SerializeField, Tooltip("The UI prefab consisting of a single opp card slot.")]

@@ -166,6 +166,8 @@ public class BarterStarter : MonoBehaviour
     {
         Destroy(_barterInstance);
 
+        // Insert Win and Lose Screen
+
         if (openJournal) {
             OpenJournal(callback, won);
         } else {

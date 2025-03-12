@@ -1,4 +1,6 @@
+using Ink.Runtime;
 using NaughtyAttributes;
+using System.Collections;
 using UnityEngine;
 
 public class BarterStarter : MonoBehaviour
@@ -6,6 +8,7 @@ public class BarterStarter : MonoBehaviour
     // Parameters =================================================================================
     [SerializeField] private GameObject barterContainerPrefab;
     [SerializeField] private GameObject presentItemPrefab;
+    [SerializeField] private GameObject winScreenPrefab;
 
     [BoxGroup("Barter Settings"), ReadOnly] public NPCData NpcData;
     [BoxGroup("Barter Settings"), ReadOnly] public BarterResponseMatrix BarterResponseMatrix;
@@ -19,6 +22,7 @@ public class BarterStarter : MonoBehaviour
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerFail = -5;
     [BoxGroup("Barter Settings"), ReadOnly] public float StartingWillingness = 50;
+    [BoxGroup("Barter Settings"), ReadOnly] public float WinScreenDurationSeconds = 2;
 
     // Win/Lose Actions
     public System.Action OnWin;
@@ -166,17 +170,13 @@ public class BarterStarter : MonoBehaviour
     {
         Destroy(_barterInstance);
 
-        // Insert Win and Lose Screen
 
-        if (openJournal) {
-            OpenJournal(callback, won);
-        } else {
-            ExchangeCards(won);
+        EndSequenceParams parameters = new EndSequenceParams();
+        parameters.openJournal = openJournal;
+        parameters.callback = callback;
+        parameters.won = won;
 
-            // TODO: Take us back to the conversation. In the meantime...
-            _inGameUi.MoveToDefault();
-            callback?.Invoke();
-        }
+        StartCoroutine(BarterEndSequence(parameters));
     }
 
     /// <summary>
@@ -224,5 +224,43 @@ public class BarterStarter : MonoBehaviour
         } else {
             Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }
+    }
+
+    /// <summary>
+    /// Displays the winScreen, and then does the EndBarter operations
+    /// </summary>
+    private IEnumerator BarterEndSequence(EndSequenceParams parameters) 
+    {
+        bool openJournal = parameters.openJournal;
+        System.Action callback = parameters.callback;
+        bool won = parameters.won;
+
+        GameObject winScreenObj = Instantiate(winScreenPrefab, Vector3.zero, Quaternion.identity,
+                                      GameManager.MasterCanvas.transform);
+        winScreenObj.GetComponent<BarterWinScreen>().Initialize(won);
+
+        yield return new WaitForSeconds(WinScreenDurationSeconds);
+
+        if (openJournal)
+        {
+            OpenJournal(callback, won);
+        }
+        else
+        {
+            ExchangeCards(won);
+
+            // TODO: Take us back to the conversation. In the meantime...
+            _inGameUi.MoveToDefault();
+            callback?.Invoke();
+        }
+
+        Destroy(winScreenObj);
+    }
+
+    private struct EndSequenceParams
+    {
+        public bool openJournal;
+        public System.Action callback;
+        public bool won;
     }
 }

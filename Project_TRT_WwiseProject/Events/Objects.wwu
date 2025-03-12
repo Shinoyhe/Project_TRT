@@ -25,6 +25,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="ElevatorStartup" ID="{8BB12D43-A70B-4BB3-B0EC-00C660953AC8}">
+					<ChildrenList>
+						<Action Name="" ID="{9C7AFBF0-8476-4818-9615-64DC06FEA3E2}" ShortID="199980150">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Elevator_Startup" ID="{599F94AC-C926-49B2-9E02-604529E46AF8}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="ElevatorHum" ID="{E5FDB948-698F-455D-AD92-E6D6F1BB2ACA}">
+					<ChildrenList>
+						<Action Name="" ID="{EF0AACFF-D98B-473B-AC36-5A8FD88A1037}" ShortID="597131059">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Elevator_Hum" ID="{9647516D-06A2-4901-B09F-AC36C57D8720}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="DoorOpen" ID="{41105AE4-9062-4DF4-A2DD-9AFD2F2AFA3D}">
+					<ChildrenList>
+						<Action Name="" ID="{67D0FF69-A701-406D-9A3B-D53F14C83575}" ShortID="375125726">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Door_Open" ID="{59C63FE8-3887-4685-B33D-BF70E1A80914}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

@@ -223,6 +223,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftDoor: {fileID: 4181256490260368416}
   rightDoor: {fileID: 5324917124048469604}
+  IsOpen: 0
+  doorOpenSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 11400000, guid: 7b981f89666917046b44e89d38ce5e92,
+          type: 2}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!114 &2710463135279531178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +294,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  HideIcon: 0
 --- !u!65 &8984207114656806297
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -47,6 +47,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="BART_Barter_Win" ID="{11511687-E996-45D0-B235-D7D3AFB6105F}">
+					<ChildrenList>
+						<Action Name="" ID="{01E5D8B2-9025-428D-9027-737B840C2C16}" ShortID="489437814">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BART_Barter_Win" ID="{C0171027-9735-4C28-BE2B-41581D0AEEAF}" WorkUnitID="{7C65D6C1-222E-48DF-8415-47416B8AB09F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="BART_Barter_Lose" ID="{20AC5538-5BDE-4D63-9AD1-E66C511FB4B5}">
+					<ChildrenList>
+						<Action Name="" ID="{7726DE4D-5420-448E-978F-CD49035BEC1E}" ShortID="514336163">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BART_Barter_Lose" ID="{33E57C92-BFC7-485A-8D83-488AB609EA86}" WorkUnitID="{7C65D6C1-222E-48DF-8415-47416B8AB09F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

@@ -13,10 +13,15 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID BART_BARTER_LOSE = 3302900089U;
+        static const AkUniqueID BART_BARTER_WIN = 2602999364U;
         static const AkUniqueID BART_CARD_HIGHLIGHT = 2034897212U;
         static const AkUniqueID BART_CARD_PLACE = 3630843069U;
         static const AkUniqueID BART_CARD_SELECT = 349408092U;
         static const AkUniqueID BART_CARD_SHUFFLE = 362751767U;
+        static const AkUniqueID DOOROPEN = 1404805401U;
+        static const AkUniqueID ELEVATORHUM = 1344299683U;
+        static const AkUniqueID ELEVATORSTARTUP = 1220165926U;
         static const AkUniqueID ENV_INTERACTION_ARROW_HIDE = 3804709036U;
         static const AkUniqueID ENV_INTERACTION_ARROW_SHOW = 1995159183U;
         static const AkUniqueID ITEMPICKUP = 1851462748U;
@@ -31,6 +36,8 @@ namespace AK
         static const AkUniqueID RESUMEMUSIC = 2170724709U;
         static const AkUniqueID STARTMUSIC = 3827058668U;
         static const AkUniqueID STOPMUSIC = 1917263390U;
+        static const AkUniqueID UI_MENU_CLOSE = 3226991506U;
+        static const AkUniqueID UI_MENU_OPEN = 4083126854U;
     } // namespace EVENTS
 
     namespace STATES

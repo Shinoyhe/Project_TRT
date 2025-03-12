@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{254EED3C-1ABC-47A4-A545-ADCE0CA03F95}" SchemaVersion="123" RootDocumentID="{DC67F875-991A-4906-8DF4-975D819BEC40}" ParentDocumentID="{DC67F875-991A-4906-8DF4-975D819BEC40}">
+	<Events>
+		<WorkUnit Name="MenuUI" ID="{254EED3C-1ABC-47A4-A545-ADCE0CA03F95}" OwnerID="{DC67F875-991A-4906-8DF4-975D819BEC40}" PersistMode="Nested">
+			<ChildrenList>
+				<Event Name="UI_Menu_Open" ID="{251A7A09-B6FF-4866-BE79-BF0E9A7C9A3C}">
+					<ChildrenList>
+						<Action Name="" ID="{A79CCEF8-2F6D-4F14-B1A1-982F767AD225}" ShortID="1029802110">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="UI_Menu_Open" ID="{0577EDAF-0109-4E03-9C57-0CF7EE2A26F7}" WorkUnitID="{6B1DDE5B-BB42-443C-87DB-C411C4026485}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="UI_Menu_Close" ID="{32288C43-AAB6-4528-AB36-655FE26F9B55}">
+					<ChildrenList>
+						<Action Name="" ID="{DE58161E-F92B-43D0-9A27-EDCDCC2274F9}" ShortID="475196786">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="UI_Menu_Close" ID="{68DAA680-0B02-457C-AB40-37E51379241B}" WorkUnitID="{6B1DDE5B-BB42-443C-87DB-C411C4026485}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

@@ -24,6 +24,10 @@ public class BarterStarter : MonoBehaviour
     public System.Action OnWin;
     public System.Action OnLose;
 
+    // SFX For winning and losing a barter (i gotta find a more appropriate place for this)
+    [SerializeField] AudioEvent barterWinSFX;
+    [SerializeField] AudioEvent barterLoseSFX;
+
     // Misc Internal Variables ====================================================================
 
     private InGameUi _inGameUi;
@@ -136,6 +140,8 @@ public class BarterStarter : MonoBehaviour
         GameManager.PlayerInput.IsActive = false;
         //MusicManager.play
 
+        MusicActionsManager.ChangeMusicState("Barter");
+
         return _barterInstance;
     }
 
@@ -146,6 +152,7 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void WinBarter()
     {
+        barterWinSFX.Play(gameObject);
         EndBarter(JournalOnWin, OnWin);
     }
 
@@ -154,6 +161,7 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void LoseBarter()
     {
+        barterLoseSFX.Play(gameObject);
         EndBarter(JournalOnLose, OnLose);
     }
 
@@ -166,6 +174,8 @@ public class BarterStarter : MonoBehaviour
     {
         Destroy(_barterInstance);
         GameManager.PlayerInput.IsActive = true;
+
+        MusicActionsManager.ChangeToPreviousMusicState();
 
         if (openJournal) {
             OpenJournal(callback);

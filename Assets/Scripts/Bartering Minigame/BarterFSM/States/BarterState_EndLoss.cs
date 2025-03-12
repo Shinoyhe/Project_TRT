@@ -20,7 +20,7 @@ public class BarterState_EndLoss : BarterBaseState
         _machine.Dir.TriggerLose();
 
         // Triggers music manager to return to previously playing music
-        MusicActionsManager.ChangeToPreviousMusicState();
+        //MusicActionsManager.ChangeToPreviousMusicState();
         
         //_machine.Dir.StartCoroutine(DEBUG_Reload());
     }

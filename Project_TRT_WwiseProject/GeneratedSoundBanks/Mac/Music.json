@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{2CAF7C27-18E4-40A7-871C-C075A9250659}",
     "Language": "SFX",
-    "Hash": "{FFA124A7-E5A4-D501-A73B-832441075462}",
+    "Hash": "{87F82293-2B13-467F-EC46-364FF0CACDB8}",
     "ObjectPath": "\\SoundBanks\\Music\\Music",
     "ShortName": "Music",
     "Path": "Music.bnk",
@@ -30,6 +30,14 @@
       "Location": "Memory",
       "ShortName": "EnvAttempt4.2.wav",
       "CachePath": "85/{8568FB55-E3E0-AF9D-E18B-7D6E2C4A9A5B}.wem"
+     },
+     {
+      "Id": "655550078",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MUSC_Barter_1.wav",
+      "CachePath": "C4/{C4C924ED-1A28-17FE-EC05-8B6AB40B936C}.wem"
      },
      {
       "Id": "879061896",
@@ -205,6 +213,19 @@
           "Id": "38607711"
          }
         ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "644073513",
+         "GUID": "{4BF7E3F5-3CAA-4531-B914-D1278D66757C}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "655550078"
+         }
+        ]
        }
       ]
      },
@@ -269,6 +290,19 @@
           "Id": "38607711"
          }
         ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "644073513",
+         "GUID": "{4BF7E3F5-3CAA-4531-B914-D1278D66757C}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "655550078"
+         }
+        ]
        }
       ]
      },
@@ -328,6 +362,19 @@
         "MediaRefs": [
          {
           "Id": "38607711"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "644073513",
+         "GUID": "{4BF7E3F5-3CAA-4531-B914-D1278D66757C}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "655550078"
          }
         ]
        }
@@ -394,6 +441,19 @@
           "Id": "38607711"
          }
         ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "State",
+         "GroupId": "1021618141",
+         "Id": "644073513",
+         "GUID": "{4BF7E3F5-3CAA-4531-B914-D1278D66757C}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "655550078"
+         }
+        ]
        }
       ]
      }
@@ -446,6 +506,6 @@
     ]
    }
   ],
-  "FileHash": "{7DD30363-7A20-E8AD-C281-EFB57818711F}"
+  "FileHash": "{0887B19A-DB1C-0A70-F3BD-91B209371FDC}"
  }
 }

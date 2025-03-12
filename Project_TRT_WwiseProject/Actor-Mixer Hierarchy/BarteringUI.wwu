@@ -5,9 +5,15 @@
 			<ChildrenList>
 				<BlendContainer Name="BART_card_shuffle" ID="{65817C17-528E-46C2-B5BE-C13E445B4C18}" ShortID="6253352">
 					<PropertyList>
+						<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
 						<Property Name="MaxSoundPerInstance" Type="int16">
 							<ValueList>
 								<Value>5</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseMaxSoundPerInstance" Type="bool">
+							<ValueList>
+								<Value>True</Value>
 							</ValueList>
 						</Property>
 						<Property Name="Volume" Type="Real64">
@@ -292,6 +298,63 @@
 					</ChildrenList>
 					<ActiveSourceList>
 						<ActiveSource Name="BART_Card_Highlight" ID="{EBE8BD78-8630-462D-B126-FF4CDC57DB65}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="BART_Barter_Win" ID="{C0171027-9735-4C28-BE2B-41581D0AEEAF}" ShortID="1054346163">
+					<PropertyList>
+						<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+						<Property Name="MaxSoundPerInstance" Type="int16">
+							<ValueList>
+								<Value>3</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseMaxSoundPerInstance" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="BART_Barter_Win" ID="{1A6EB957-AD2C-43DE-A3C9-A4E7329A256E}">
+							<Language>SFX</Language>
+							<AudioFile>BART_Barter_Win.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="797347420"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="BART_Barter_Win" ID="{1A6EB957-AD2C-43DE-A3C9-A4E7329A256E}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="BART_Barter_Lose" ID="{33E57C92-BFC7-485A-8D83-488AB609EA86}" ShortID="515354529">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="BART_Barter_Lose" ID="{DE0B5CA0-9878-4330-B105-CB4B0588280A}">
+							<Language>SFX</Language>
+							<AudioFile>BART_Barter_Lose.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="451262019"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="BART_Barter_Lose" ID="{DE0B5CA0-9878-4330-B105-CB4B0588280A}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

@@ -521,7 +521,7 @@
 							<ChildrenList>
 								<MusicSegment Name="MUSC_Player_Spawn" ID="{DBA8740D-48C0-443C-AFD1-675A87D75CF1}" ShortID="141129864">
 									<PropertyList>
-										<Property Name="EndPosition" Type="Real64" Value="61440"/>
+										<Property Name="EndPosition" Type="Real64" Value="68920.3828697361"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -568,11 +568,70 @@
 																			<Local>
 																				<MusicClip Name="MUSC_Player_Spawn" ID="{B9015D1E-131A-4BD6-9503-5DF95C13BE6A}">
 																					<PropertyList>
+																						<Property Name="BeginTrimOffset" Type="Real64" Value="5.22959453519434E-12"/>
 																						<Property Name="EndTrimOffset" Type="Real64" Value="61440"/>
-																						<Property Name="FadeInMode" Type="int16" Value="0"/>
 																						<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																					</PropertyList>
 																					<AudioSourceRef Name="MUSC_Player_Spawn" ID="{C1D3F2A0-8600-4802-8CBB-84EF1DD2B4BD}"/>
+																					<PropertyCurveList>
+																						<PropertyCurve PropertyName="Highpass">
+																							<Curve Name="" ID="{1C6C01EA-7639-4C6F-8957-24464664AA71}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="1"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>61.44</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																						<PropertyCurve PropertyName="Lowpass">
+																							<Curve Name="" ID="{66002DC8-59BC-46F0-987F-A0FB6BF40BFE}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="1"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>61.44</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																						<PropertyCurve PropertyName="Volume">
+																							<Curve Name="" ID="{D377B2A4-D8F9-4501-B914-C33B10D89292}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="3"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>61.44</XPos>
+																										<YPos>0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																					</PropertyCurveList>
 																				</MusicClip>
 																			</Local>
 																		</Reference>
@@ -845,6 +904,24 @@
 											<ObjectList Name="EntryPath">
 												<Reference>
 													<ObjectRef Name="MailbotBarter" ID="{220970BA-3873-4295-B08E-35E3D335D7F9}" WorkUnitID="{5295B7E6-B0B8-4F63-8A96-7D61276F57FA}"/>
+												</Reference>
+											</ObjectList>
+										</ObjectLists>
+									</MultiSwitchEntry>
+								</Local>
+							</Reference>
+							<Reference>
+								<Local>
+									<MultiSwitchEntry Name="" ID="{909673C1-3938-4DC4-8906-61F1B31C3C29}">
+										<ReferenceList>
+											<Reference Name="AudioNode">
+												<ObjectRef Name="Barter" ID="{376F61C9-C6E5-41FE-A7E8-4C334196C1C4}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+											</Reference>
+										</ReferenceList>
+										<ObjectLists>
+											<ObjectList Name="EntryPath">
+												<Reference>
+													<ObjectRef Name="Barter" ID="{4BF7E3F5-3CAA-4531-B914-D1278D66757C}" WorkUnitID="{5295B7E6-B0B8-4F63-8A96-7D61276F57FA}"/>
 												</Reference>
 											</ObjectList>
 										</ObjectLists>

@@ -7,7 +7,7 @@ public class BarterTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.UiInput.GetDebugDown()) {
+        if (GameManager.PlayerInput.GetDebug0Down()) {
            Instantiate(BarterContainer, Vector3.zero,Quaternion.identity);
         }
     }

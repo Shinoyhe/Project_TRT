@@ -21,6 +21,11 @@ public class PlayerInteractionHandler : MonoBehaviour {
     [ReadOnly] [SerializeField] private List<Interactable> _accessibleInteractables;
 
     /// <summary>
+    /// Whether or not the player can currently interact with Interactables.
+    /// </summary>
+    [ReadOnly] [SerializeField] private bool _canInteract = true;
+
+    /// <summary>
     /// SFX that plays when interaction icon appears
     /// </summary>
     [SerializeField] private AudioEvent interactionIconEnterSFX;
@@ -40,10 +45,19 @@ public class PlayerInteractionHandler : MonoBehaviour {
     {
         CheckHighlight();
 
-        if (GameManager.PlayerInput.GetPrimaryTriggerDown() || GameManager.PlayerInput.GetAffirmDown())
-        {
+        if (GameManager.PlayerInput.GetPrimaryTriggerDown() || 
+            GameManager.PlayerInput.GetAffirmDown() || GameManager.PlayerInput.GetClickDown()) {
             Interact();
         }
+    }
+
+    /// <summary>
+    /// Public setter for _canInteract.
+    /// </summary>
+    /// <param name="canInteract">bool - whether or not the player can use Interactables.</param>
+    public void SetCanInteract(bool canInteract)
+    {
+        _canInteract = canInteract;
     }
 
     /// <summary>
@@ -51,10 +65,10 @@ public class PlayerInteractionHandler : MonoBehaviour {
     /// </summary>
     public void Interact() 
     {
-        if (highlightedInteractable == null) 
-        {
+        if (!_canInteract || highlightedInteractable == null) {
             return;
         }
+
         highlightedInteractable.GetComponent<Interactable>().Interaction();
     }
 

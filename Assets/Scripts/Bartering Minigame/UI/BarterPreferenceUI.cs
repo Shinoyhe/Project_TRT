@@ -42,14 +42,22 @@ public class BarterPreferenceUI : MonoBehaviour
             return;
         }
 
-        if (_entries.Length < data.Cards.Length) {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("Cannot Initialize BarterPreferenceUI without GameManager");
+        }
+
+        NPC npcWrapper = GameManager.NPCGlobalList.GetNPCFromData(data);
+
+
+        if (_entries.Length < npcWrapper.Cards.Length) {
             Debug.LogError("BarterPreferenceUI Error: Awake failed. We needed to display matches "
-                        + $"for {data.Cards.Length} cards, but only have enough "
+                        + $"for {npcWrapper.Cards.Length} cards, but only have enough "
                         + $"children with JournalPreferenceEntry to show {_entries.Length}");
         }
 
-        for (int i = 0; i < data.Cards.Length; i++) {
-            _entries[i].Load(data, data.Cards[i]);
+        for (int i = 0; i < npcWrapper.Cards.Length; i++) {
+            _entries[i].Load(npcWrapper, npcWrapper.Cards[i]);
         }
     }
 

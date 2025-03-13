@@ -1,48 +1,78 @@
+using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using NaughtyAttributes;
+using static GameEnums;
 
-[CreateAssetMenu(fileName = "New NPCData", menuName = "ScriptableObjects/NPCData")]
-public class NPCData : ScriptableObject
+[Serializable]
+public class NPC
 {
-    #region ======== [ CLASSES ] ========
+    #region ======== [ VARIABLES ] ========
 
-    public class CardPreference
+    [SerializeField, ReadOnly]
+    public NPCData Data;
+
+    [NonSerialized] public Dictionary<PlayingCard, CardPreference> journalTonePreferences;
+    [NonSerialized] public Dictionary<InventoryCardData, InventoryCardData> journalKnownTrades;
+
+    [ReadOnly] public List<Pair<PlayingCard, CardPreference>> SerializedTonePrefs;
+    [ReadOnly] public List<Pair<InventoryCardData, InventoryCardData>> SerializedKnownTrades;
+
+    #endregion
+
+    #region ======== [ NPCData Accessors ] ========
+
+    public string Name
     {
-        public PlayingCard Positive;
-        public PlayingCard Negative;
-
-        public CardPreference()
+        get
         {
-            Positive = null;
-            Negative = null;
+            if (Data == null) { Debug.LogError("NPC has not been set"); throw new System.Exception("Accessing NPC Name that has not been set"); }
+            return Data.Name;
         }
+    }
 
-        public CardPreference(PlayingCard positive, PlayingCard negative)
+    public Sprite Icon
+    {
+        get
         {
-            Positive = positive;
-            Negative = negative;
+            if (Data == null) { Debug.LogError("NPC has not been set"); throw new System.Exception("Accessing NPC Icon that has not been set"); }
+            return Data.Icon;
+        }
+    }
+
+    public string Bio
+    {
+        get
+        {
+            if (Data == null) { Debug.LogError("NPC has not been set"); throw new System.Exception("Accessing NPC Bio that has not been set"); }
+            return Data.Bio;
+        }
+    }
+
+    public BarterResponseMatrix Matrix
+    {
+        get
+        {
+            if (Data == null) { Debug.LogError("NPC has not been set"); throw new System.Exception("Accessing NPC Matrix that has not been set"); }
+            return Data.Matrix;
         }
     }
 
     #endregion
 
-    #region ======== [ VARIABLES ] ========
-
-    public string Name;
-    public Sprite Icon;
-    [TextArea] public string Bio;
-
-    // I'm thinking that the BarterResponseMatrix could be referenced and called from here instead. Maybe this script could combine with it?
-    public BarterResponseMatrix Matrix;
-
-    [ReadOnly] [SerializeField] private Dictionary<PlayingCard, CardPreference> journalTonePreferences;
-    [ReadOnly] [SerializeField] private Dictionary<InventoryCardData, InventoryCardData> journalKnownTrades;
-
-    #endregion
-
     #region ======== [ PUBLIC METHODS ] ========
+
+    public NPC(NPCData data)
+    {
+        Data = data;
+
+        InitalizePreferences();
+        
+        journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
+        UpdatedKnownTrades();
+    }
 
     /// <summary>
     /// Changes the Player's Assumed Preferences in the journal
@@ -53,7 +83,7 @@ public class NPCData : ScriptableObject
     public void ChangeJournalTonePreference(PlayingCard opponentCard, PlayingCard playerCard, BarterResponseMatrix.State state)
     {
         journalTonePreferences.TryAdd(opponentCard, new CardPreference());
-        
+
         switch (state)
         {
             case BarterResponseMatrix.State.POSITIVE:
@@ -63,6 +93,8 @@ public class NPCData : ScriptableObject
                 journalTonePreferences[opponentCard].Negative = playerCard;
                 break;
         }
+
+        UpdatedTonePrefs();
     }
 
 
@@ -73,12 +105,9 @@ public class NPCData : ScriptableObject
     /// <param name="oppCard">Inventory Card that the NPC trades for the playerCard</param>
     public void AddJournalKnownTrade(InventoryCardData playerCard, InventoryCardData oppCard)
     {
-        if (journalKnownTrades == null)
-        {
-            journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
-        }
-
         journalKnownTrades.TryAdd(playerCard, oppCard);
+
+        UpdatedKnownTrades();
     }
 
 
@@ -89,11 +118,6 @@ public class NPCData : ScriptableObject
     /// <returns>Prefence class includes the PlayingCards marked as positive and negative.</returns>
     public CardPreference GetPreference(PlayingCard opponentCard)
     {
-        if (journalTonePreferences == null)
-        {
-            InitalizePreferences();
-        }
-
         return journalTonePreferences[opponentCard];
     }
 
@@ -102,12 +126,7 @@ public class NPCData : ScriptableObject
     /// <returns>Card the NPC is know to give in exchange for playerCard</returns>
     public InventoryCardData GetKnownTrade(InventoryCardData playerCard)
     {
-        if (journalKnownTrades == null)
-        {
-            journalKnownTrades = new Dictionary<InventoryCardData, InventoryCardData>();
-        }
-
-        if (playerCard == null || !journalKnownTrades.ContainsKey(playerCard)) 
+        if (playerCard == null || !journalKnownTrades.ContainsKey(playerCard))
             return null;
 
         return journalKnownTrades[playerCard];
@@ -120,12 +139,20 @@ public class NPCData : ScriptableObject
     public void ResetJournalPreferences()
     {
         journalTonePreferences = new Dictionary<PlayingCard, CardPreference>();
+
+        UpdatedTonePrefs();
     }
 
     /// <summary>
     /// Returns the possible Cards that the NPC may play
     /// </summary>
     public PlayingCard[] Cards => Matrix.OppCards;
+
+    public void LoadFromSerialized()
+    {
+        journalTonePreferences = Serialize.ToDict(SerializedTonePrefs);
+        journalKnownTrades = Serialize.ToDict(SerializedKnownTrades);
+    }
 
     #endregion
 
@@ -143,5 +170,34 @@ public class NPCData : ScriptableObject
         }
     }
 
+    private void UpdatedTonePrefs()
+    {
+        SerializedTonePrefs = Serialize.FromDict(journalTonePreferences);
+    }
+
+    private void UpdatedKnownTrades()
+    {
+        SerializedKnownTrades = Serialize.FromDict(journalKnownTrades);
+    }
+
     #endregion
+}
+
+[Serializable]
+public class CardPreference
+{
+    public PlayingCard Positive;
+    public PlayingCard Negative;
+
+    public CardPreference()
+    {
+        Positive = null;
+        Negative = null;
+    }
+
+    public CardPreference(PlayingCard positive, PlayingCard negative)
+    {
+        Positive = positive;
+        Negative = negative;
+    }
 }

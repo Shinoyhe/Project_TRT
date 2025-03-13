@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7739117665189127466}
   - component: {fileID: 7792286873378010446}
   - component: {fileID: 639220916484171591}
+  - component: {fileID: 4739607633261228437}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -58,6 +59,7 @@ MonoBehaviour:
   masterCanvasTag: MasterCanvas
   _masterCanvas: {fileID: 0}
   barterStarter: {fileID: 7792286873378010446}
+  flagTracker: {fileID: 4739607633261228437}
 --- !u!114 &7198147195480083390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +72,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c458e1f588f88942a756ebd6a7f861f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LastUsedScheme:
+    m_Name: 
+    m_BindingGroup: 
+    m_DeviceRequirements: []
   AllowNavbar: 0
 --- !u!114 &2334186633066417863
 MonoBehaviour:
@@ -137,7 +143,8 @@ MonoBehaviour:
   CurrentTrade:
     AcceptedCard: {fileID: 0}
     RewardCard: {fileID: 0}
-    TradeIsPossible: 1
+    TradeIsPossible:
+      id: 
   JournalOnWin: 1
   JournalOnLose: 1
   BaseDecay: 1
@@ -157,6 +164,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9b6f3ce9da96b49b39693de4bf1e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4739607633261228437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056866332689036431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841a6b9ffbced294aadff0e35ba9aa30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagIndex: {fileID: 11400000, guid: 423fbe10be32f9d47a54a4b9e3433b97, type: 2}
 --- !u!1 &8203694426375556501
 GameObject:
   m_ObjectHideFlags: 0

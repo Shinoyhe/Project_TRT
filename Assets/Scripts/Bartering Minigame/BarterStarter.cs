@@ -22,7 +22,7 @@ public class BarterStarter : MonoBehaviour
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), ReadOnly] public float WillingnessPerFail = -5;
     [BoxGroup("Barter Settings"), ReadOnly] public float StartingWillingness = 50;
-    [BoxGroup("Barter Settings"), ReadOnly] public float WinScreenDurationSeconds = 2;
+    [BoxGroup("Barter Settings")] public float WinScreenDurationSeconds = 2;
 
     // Win/Lose Actions
     public System.Action OnWin;
@@ -237,7 +237,7 @@ public class BarterStarter : MonoBehaviour
 
         GameObject winScreenObj = Instantiate(winScreenPrefab, Vector3.zero, Quaternion.identity,
                                       GameManager.MasterCanvas.transform);
-        winScreenObj.GetComponent<BarterWinScreen>().Initialize(won);
+        winScreenObj.GetComponent<BarterWinScreen>().Initialize(won, CurrentTrade.AcceptedCard, CurrentTrade.RewardCard, NpcData);
 
         yield return new WaitForSeconds(WinScreenDurationSeconds);
 

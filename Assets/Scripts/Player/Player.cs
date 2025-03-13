@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
 {
     [Header("Controller References")]
     [Required] public PlayerMovement Movement;
+    [Required] public PlayerInteractionHandler InteractionHandler;
     [Required] public GameObject Object;
     [Required] public Transform Transform;
 

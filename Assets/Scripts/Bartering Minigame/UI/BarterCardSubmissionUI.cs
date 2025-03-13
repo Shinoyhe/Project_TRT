@@ -15,6 +15,7 @@ public class BarterCardSubmissionUI : MonoBehaviour
     private GameObject playerCardSlotPrefab;
     [SerializeField, Tooltip("A RectTransform used as the area where we can spawn player card slots.")]
     private RectTransform playerCardSlotZone;
+    public PlayerCardSlot SelectedPlayerSlot => _playerCardSlots?[_selectedSlotIndex];
 
     [Header("Opp Card Region")]
     [SerializeField, Tooltip("The UI prefab consisting of a single opp card slot.")]
@@ -30,11 +31,16 @@ public class BarterCardSubmissionUI : MonoBehaviour
     
     // Misc Internal Variables ====================================================================
 
+    // Whether or not these slots can be selected.
+    private bool _locked;
+
     // Player CardSlots =======================
     // Array of AutoPlayerCardSlotUI components, one for each Player card submitted.
     private PlayerCardSlot[] _playerCardSlots = null;
     // The horizontal range of our PlayerCardSlotZone, used to position the AutoPlayerCardSlotUI objects.
     private Vector2 _playerCardSlotBounds;
+    // The slot that's currently 'selected' by the player, when not using mouse.
+    private int _selectedSlotIndex = 0;
 
     // Opp CardSlots =======================
     // Array of AutoPlayerCardSlotUI components, one for each Opp card submitted.
@@ -117,11 +123,77 @@ public class BarterCardSubmissionUI : MonoBehaviour
         // TODO: Replace this with an action-based implementation, that only switches the string
         // when we enter a new state.
         DEBUG_StateDisplay.text = "Current State:\n" + director.GetCurrentStateName();
+
+        // Detect slot index inputs. ============
+
+        if (!_locked) {
+            bool dirty = false;
+            int newIndex = -1;
+
+            if (GameManager.PlayerInput.GetPrimaryTriggerDown()) {
+                newIndex = (_selectedSlotIndex+1) % _playerCardSlots.Length;
+                dirty = true;
+            } else if (GameManager.PlayerInput.GetSecondaryTriggerDown()) {
+                newIndex = _selectedSlotIndex-1;
+                if (newIndex < 0) newIndex += _playerCardSlots.Length;
+                dirty = true;
+            }
+
+            if (dirty) {
+                _playerCardSlots[_selectedSlotIndex].SetSelected(false);
+                _playerCardSlots[newIndex].SetSelected(true);
+
+                _selectedSlotIndex = newIndex;
+            }
+        }
     }
 
     // Public accessors ===========================================================================
 
     public PlayerCardSlot[] GetPlayerCardSlots() { return _playerCardSlots; }
+
+    // Public manipulators ========================================================================
+
+    /// <summary>
+    /// Sets the value of _locked. If _locked, deselects all slots, if not _locked, selects the 
+    /// 0th slot.
+    /// </summary>
+    /// <param name="value">bool - whether or not we're locked.</param>
+    public void SetLocked(bool value)
+    {
+        _locked = value;
+
+        if (_locked) {
+            DeselectAllPlayerSlots();
+        } else {
+            SelectPlayerSlot(0);
+        }
+    }
+
+    /// <summary>
+    /// Deselects all player slots.
+    /// </summary>
+    public void DeselectAllPlayerSlots()
+    {
+        foreach (PlayerCardSlot slot in _playerCardSlots) {
+            slot.SetSelected(false);
+        }
+    }
+
+    /// <summary>
+    /// Sets _selectedSlotIndex to some value.
+    /// </summary>
+    /// <param name="index">int - the value to set _selectedSlotIndex to.</param>
+    public void SelectPlayerSlot(int index)
+    {
+        if (index < 0 || index >= _playerCardSlots.Length) {
+            Debug.Log($"BarterCardSubmissionUI Error: SelectPlayerSlot failed. index ({index}) was "
+                    + $"outside the range of _playerCardSlots (length {_playerCardSlots.Length})");
+        }
+
+        _selectedSlotIndex = index;
+        _playerCardSlots[_selectedSlotIndex].SetSelected(true);
+    }
 
     // Callback functions =========================================================================
 

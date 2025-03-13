@@ -37,8 +37,6 @@ public class NpcInteractable : Interactable
             return;
         }
 
-        GameManager.PlayerInput.IsActive = false;
-
         InitBarterStarter();
     }
 

@@ -55,8 +55,6 @@ public class BarterStarter : MonoBehaviour
         presentItem.OnAccepted += AcceptTrade;
         presentItem.OnClosed += CloseTrade;
 
-        GameManager.PlayerInput.IsActive = false;
-
         if (TimeLoopManager.Instance != null) {
             TimeLoopManager.SetLoopPaused(true);
         }
@@ -73,10 +71,13 @@ public class BarterStarter : MonoBehaviour
         CleanupPresentationCanvas(true);
     }
 
-    private void CleanupPresentationCanvas(bool enablePlayerInput)
+    private void CleanupPresentationCanvas(bool backToDefault)
     {
         Destroy(_itemPresentInstance);
-        GameManager.PlayerInput.IsActive = enablePlayerInput;
+        
+        if (backToDefault) {
+            _inGameUi.MoveToDefault();
+        }
 
         if (TimeLoopManager.Instance != null) {
             TimeLoopManager.SetLoopPaused(false);
@@ -133,7 +134,6 @@ public class BarterStarter : MonoBehaviour
         _barterDirector.WillingnessPerMatch = WillingnessPerMatch;
         _barterDirector.WillingnessPerFail = WillingnessPerFail;
 
-        GameManager.PlayerInput.IsActive = false;
         //MusicManager.play
 
         return _barterInstance;
@@ -146,17 +146,7 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void WinBarter()
     {
-        if (CurrentTrade != null) {
-            GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
-
-            if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM) {
-                GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
-            }
-        } else {
-            Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
-        }
-
-        EndBarter(JournalOnWin, OnWin);
+        EndBarter(JournalOnWin, OnWin, true);
     }
 
     /// <summary>
@@ -164,7 +154,7 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void LoseBarter()
     {
-        EndBarter(JournalOnLose, OnLose);
+        EndBarter(JournalOnLose, OnLose, false);
     }
 
     /// <summary>
@@ -172,14 +162,16 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     /// <param name="openJournal">bool - whether to open the journal.</param>
     /// <param name="callback">System.Action - invoked to announce a win/loss.</param>
-    private void EndBarter(bool openJournal, System.Action callback)
+    private void EndBarter(bool openJournal, System.Action callback, bool won)
     {
         Destroy(_barterInstance);
-        GameManager.PlayerInput.IsActive = true;
 
         if (openJournal) {
-            OpenJournal(callback);
+            OpenJournal(callback, won);
         } else {
+            ExchangeCards(won);
+
+            // TODO: Take us back to the conversation. In the meantime...
             _inGameUi.MoveToDefault();
             callback?.Invoke();
         }
@@ -190,14 +182,45 @@ public class BarterStarter : MonoBehaviour
     /// callback function when the UiStates returns to the Default state.
     /// </summary>
     /// <param name="closeCallback">System.Action - invoked when the Journal is closed.</param>
-    private void OpenJournal(System.Action closeCallback)
+    private void OpenJournal(System.Action closeCallback, bool won)
     {
+        _inGameUi.SetLastNonMenuState(InGameUi.UiStates.Default);
         _inGameUi.MoveToJournal(NpcData);
 
-        _inGameUi.CanvasStateChanged += (oldState, newState) => {
-            if (newState == InGameUi.UiStates.Default){
+        _inGameUi.CanvasStateChanged += OnJournalClose;
+
+        void OnJournalClose(InGameUi.UiStates oldState, InGameUi.UiStates newState)
+        {
+            // A named delegate function for CanvasStateChanged. 
+            // Named and not anonymous so that we can unsubscribe ourselves.
+            // ================
+            
+            if (newState == InGameUi.UiStates.Default || newState == InGameUi.UiStates.Dialogue)
+            {
+                ExchangeCards(won);
                 closeCallback?.Invoke();
+                _inGameUi.CanvasStateChanged -= OnJournalClose;
             }
-        };
+        }
+    }
+
+    /// <summary>
+    /// Gives the player the prize card promised, and removes the card they gave away.
+    /// </summary>
+    private void ExchangeCards(bool won)
+    {
+        if (!won) {
+            return;
+        }
+        
+        if (CurrentTrade != null) {
+            GameManager.Inventory.AddCard(CurrentTrade.RewardCard);
+
+            if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM) {
+                GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
+            }
+        } else {
+            Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
+        }
     }
 }

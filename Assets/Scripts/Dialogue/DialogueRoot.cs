@@ -15,7 +15,7 @@ public class DialogueRoot : MonoBehaviour
     private void Update() {
 
         // Check for Player Input
-        if (GameManager.UiInput.GetDebugDown()) {
+        if (GameManager.PlayerInput.GetDebug0Down()) {
             OnInteract();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

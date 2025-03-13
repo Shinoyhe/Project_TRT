@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8480042010274908795}
   - component: {fileID: 3546394063840808889}
-  - component: {fileID: 297495919439177883}
   - component: {fileID: 7198147195480083390}
   - component: {fileID: 2334186633066417863}
   - component: {fileID: 7739117665189127466}
   - component: {fileID: 7792286873378010446}
+  - component: {fileID: 639220916484171591}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -52,26 +52,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 2334186633066417863}
   playerInput: {fileID: 7198147195480083390}
-  uiInput: {fileID: 297495919439177883}
   inventory: {fileID: 7739117665189127466}
   playerTag: Player
   _player: {fileID: 0}
   masterCanvasTag: MasterCanvas
   _masterCanvas: {fileID: 0}
   barterStarter: {fileID: 7792286873378010446}
---- !u!114 &297495919439177883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056866332689036431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2a5b1ba4aefb146960abf6d7d90e76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsActive: 0
 --- !u!114 &7198147195480083390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c458e1f588f88942a756ebd6a7f861f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsActive: 0
+  AllowNavbar: 0
 --- !u!114 &2334186633066417863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,8 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d535c4894ae9647a4e59cf79b2364b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueUiPrefab: {fileID: 8005697584356534663, guid: a43636c37c7551c4a9708853bd50a584,
-    type: 3}
+  DialogueUiManager: {fileID: 0}
 --- !u!114 &7739117665189127466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,11 +146,25 @@ MonoBehaviour:
     AcceptedCard: {fileID: 0}
     RewardCard: {fileID: 0}
     TradeIsPossible: 1
+  JournalOnWin: 1
+  JournalOnLose: 1
   BaseDecay: 1
   DecayAcceleration: 0.025
   WillingnessPerMatch: 5
   WillingnessPerFail: -5
   StartingWillingness: 50
+--- !u!114 &639220916484171591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056866332689036431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9b6f3ce9da96b49b39693de4bf1e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8203694426375556501
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,29 +229,25 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_ActionsAsset: {fileID: -944628639613478452, guid: c029887f7c95f08458a54a468ef0edbc,
     type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_PointAction: {fileID: 5283334592261471422, guid: c029887f7c95f08458a54a468ef0edbc,
     type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_MoveAction: {fileID: 6462356301467837586, guid: c029887f7c95f08458a54a468ef0edbc,
     type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_SubmitAction: {fileID: -395488893398687205, guid: c029887f7c95f08458a54a468ef0edbc,
     type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_CancelAction: {fileID: -3863776515682813176, guid: c029887f7c95f08458a54a468ef0edbc,
     type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_LeftClickAction: {fileID: -120722655803992492, guid: c029887f7c95f08458a54a468ef0edbc,
     type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 8734773528529033027, guid: c029887f7c95f08458a54a468ef0edbc,
     type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6

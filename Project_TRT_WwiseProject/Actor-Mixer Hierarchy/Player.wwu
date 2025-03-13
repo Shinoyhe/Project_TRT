@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{D67F5C82-FEA0-4A61-8BF8-2549EC3EE1F6}" SchemaVersion="123" RootDocumentID="{490A6BD7-9E90-4EAC-8AA0-F95595B3E6ED}" ParentDocumentID="{490A6BD7-9E90-4EAC-8AA0-F95595B3E6ED}">
+	<AudioObjects>
+		<WorkUnit Name="Player" ID="{D67F5C82-FEA0-4A61-8BF8-2549EC3EE1F6}" OwnerID="{490A6BD7-9E90-4EAC-8AA0-F95595B3E6ED}" PersistMode="Nested">
+			<ChildrenList>
+				<RandomSequenceContainer Name="ENV_Player_Footstep_Wood" ID="{9CFE7BAE-E125-433B-A540-75575CBD6778}" ShortID="499648444">
+					<PropertyList>
+						<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+						<Property Name="MaxSoundPerInstance" Type="int16">
+							<ValueList>
+								<Value>2</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseMaxSoundPerInstance" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-8</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="Footstep01" ID="{7BC4EE32-E716-4C41-8061-208475988F2B}" ShortID="269353499">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Footstep01" ID="{ED68AC8A-C4C1-4659-B445-3F968E52D76E}">
+									<Language>SFX</Language>
+									<AudioFile>ENV_Player_Footstep_Wood\Footstep01.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="84044283"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Footstep01" ID="{ED68AC8A-C4C1-4659-B445-3F968E52D76E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Footstep02" ID="{E5A870AD-A087-47F4-8C6D-5069D517809F}" ShortID="641883306">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Footstep02" ID="{FD701390-746A-4FBB-90FB-50451676EEF5}">
+									<Language>SFX</Language>
+									<AudioFile>ENV_Player_Footstep_Wood\Footstep02.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="1019905703"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Footstep02" ID="{FD701390-746A-4FBB-90FB-50451676EEF5}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Footstep03" ID="{8E4FBCF4-A998-4FB2-9D2C-42FA9FA7F11B}" ShortID="592150991">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Footstep03" ID="{AB513B1C-9A73-46F9-9406-A127E01820FD}">
+									<Language>SFX</Language>
+									<AudioFile>ENV_Player_Footstep_Wood\Footstep03.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="29287396"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Footstep03" ID="{AB513B1C-9A73-46F9-9406-A127E01820FD}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

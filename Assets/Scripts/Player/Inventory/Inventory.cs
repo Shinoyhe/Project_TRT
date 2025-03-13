@@ -15,8 +15,6 @@ public class Inventory : MonoBehaviour
     public List<InventoryCardData> StartingCards;
     [SerializeField, ReadOnly] private List<InventoryCard> Cards;
 
-    [SerializeField, ReadOnly] private HashSet<InventoryCard> KnownCards;
-
     [Header("Tone Cards")]
     [Tooltip("The list of tone cards that the player uses in Bartering. Because tone card "
            + "implementation is not final, neither is the implementation of this list.")]
@@ -56,7 +54,6 @@ public class Inventory : MonoBehaviour
     {
         AllCards = new List<InventoryCard>();
         Cards = new List<InventoryCard>();
-        KnownCards = new HashSet<InventoryCard>();
         
         // Fill the AllCards list using AllCardDatas
         foreach (InventoryCardData cardData in AllCardDatas)
@@ -99,17 +96,6 @@ public class Inventory : MonoBehaviour
         return returnList;
     }
 
-    public List<InventoryCardData> GetKnownDatas()
-    {
-        List<InventoryCardData> returnList = new List<InventoryCardData>();
-        if (Cards == null) return returnList;
-
-        foreach (InventoryCard card in KnownCards) {
-            returnList.Add(card.Data);
-        }
-        return returnList;
-    }
-
     public void AddCard(InventoryCardData card)
     {
         if (card == null) return;
@@ -136,7 +122,6 @@ public class Inventory : MonoBehaviour
         newCard.HaveOwned = true;
 
         Cards.Add(newCard);
-        KnownCards.Add(newCard);
         OnInventoryUpdated?.Invoke();
         inventoryLastUpdateTime = Time.time;
         GameManager.FlagTracker.SetFlag(card, true);
@@ -198,10 +183,19 @@ public class Inventory : MonoBehaviour
 
     public void ClearExceptType(CardTypes type)
     {
-        foreach (InventoryCard card in Cards) {
-            if (type != card.Type) {
-                RemoveCard(card.Data);
+        List<InventoryCard> cardsToRemove = new List<InventoryCard>();
+
+        foreach (InventoryCard card in Cards)
+        {
+            if (type != card.Type)
+            {
+                cardsToRemove.Add(card);
             }
+        }
+
+        foreach (InventoryCard card in cardsToRemove)
+        {
+            RemoveCard(card.Data);
         }
     }
 
@@ -333,4 +327,31 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
+
+    #region ---------- Save and Load ----------
+
+    public void Save(ref InventorySaveData data, bool clearInventory)
+    {
+        if (clearInventory) {
+            ClearExceptType(CardTypes.INFO);
+        }
+
+        data.AllCards = AllCards;
+        data.Cards = Cards;
+    }
+
+    public void Load(InventorySaveData data)
+    {
+        AllCards = data.AllCards;
+        Cards = data.Cards;
+    }
+
+    #endregion
+}
+
+[System.Serializable]
+public struct InventorySaveData
+{
+    public List<InventoryCard> AllCards;
+    public List<InventoryCard> Cards;
 }

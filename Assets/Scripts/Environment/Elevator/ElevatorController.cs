@@ -18,6 +18,10 @@ public class ElevatorController : MonoBehaviour
     [BoxGroup("Setup"), SerializeField] private Transform startingWaypoint;
     [BoxGroup("Setup"), SerializeField, Range(0f, 10f)] private float movementDurationSeconds;
     [BoxGroup("Setup"), SerializeField] private GameObject door;
+
+    [Header("SFX")]
+    [SerializeField] private AudioEvent elevatorStartSFX;
+    [SerializeField] private AudioEvent elevatorHumSFX;
     #endregion
 
     #region ========== [ PRIVATE PROPERTIES ] ==========
@@ -39,6 +43,10 @@ public class ElevatorController : MonoBehaviour
     {
         if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
         if (_moving) { return; }
+
+        // Start playing elevator sfx upon move
+        elevatorStartSFX.Play(gameObject);
+        elevatorHumSFX.Play(gameObject);
 
         SetMoving(true);
 
@@ -64,6 +72,10 @@ public class ElevatorController : MonoBehaviour
     {
         if (requiredCard != null && !GameManager.Inventory.HasCard(requiredCard)) return;
         if (_moving) return;
+
+        // Start playing elevator sfx upon move
+        elevatorStartSFX.Play(gameObject);
+        elevatorHumSFX.Play(gameObject);
 
         int targetIndex = GetWaypointIndex(targetWaypoint);
 

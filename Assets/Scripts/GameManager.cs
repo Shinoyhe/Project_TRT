@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
     public static DialogueManager DialogueManager { get { return Instance.dialogueManager; } }
     public static PlayerInputHandler PlayerInput { get { return Instance.playerInput; } }
     public static Inventory Inventory { get { return Instance.inventory; } }
+    public static NPCGlobalList NPCGlobalList { get { return Instance.npcGlobalList; } }
     public static Player Player { get { return Instance._player; } }
     public static Canvas MasterCanvas { get { return Instance._masterCanvas; } }
     public static BarterStarter BarterStarter { get { return Instance.barterStarter; } }
@@ -18,6 +19,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private PlayerInputHandler playerInput;
     [SerializeField] private Inventory inventory;
+    [SerializeField] private NPCGlobalList npcGlobalList;
     [SerializeField, Tag] private string playerTag;
     [SerializeField, ReadOnly] private Player _player;
     [SerializeField, Tag] private string masterCanvasTag;

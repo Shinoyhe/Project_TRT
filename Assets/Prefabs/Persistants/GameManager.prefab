@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 7739117665189127466}
   - component: {fileID: 7792286873378010446}
   - component: {fileID: 639220916484171591}
-  - component: {fileID: 4739607633261228437}
+  - component: {fileID: 8496181008868060448}
+  - component: {fileID: 4734971854915153274}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -54,12 +55,13 @@ MonoBehaviour:
   dialogueManager: {fileID: 2334186633066417863}
   playerInput: {fileID: 7198147195480083390}
   inventory: {fileID: 7739117665189127466}
+  npcGlobalList: {fileID: 8496181008868060448}
   playerTag: Player
   _player: {fileID: 0}
   masterCanvasTag: MasterCanvas
   _masterCanvas: {fileID: 0}
   barterStarter: {fileID: 7792286873378010446}
-  flagTracker: {fileID: 4739607633261228437}
+  flagTracker: {fileID: 0}
 --- !u!114 &7198147195480083390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +154,78 @@ MonoBehaviour:
   WillingnessPerMatch: 5
   WillingnessPerFail: -5
   StartingWillingness: 50
+  barterWinSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []
+  barterLoseSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!114 &639220916484171591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +238,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9b6f3ce9da96b49b39693de4bf1e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4739607633261228437
+--- !u!114 &8496181008868060448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056866332689036431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227107f81a2cf8e40b313458bc194b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllNPCDatas: []
+  AllNPCs: []
+  KnownNPCs: []
+--- !u!114 &4734971854915153274
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

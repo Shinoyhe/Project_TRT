@@ -8,7 +8,11 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Object References")]
 	[SerializeField] private Transform forwardTransform;
 	[SerializeField] private Animator animator;
-	private CharacterController _characterController;
+	[SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite spriteIdle;
+    [SerializeField] private Sprite spriteWalk;
+	[SerializeField] private PlayerSFX playerSFX;
+    private CharacterController _characterController;
 
 	#endregion
 
@@ -68,9 +72,23 @@ public class PlayerMovement : MonoBehaviour
 		// Move character
 		Vector3 direction = targetRotation * input;
 		_characterController.Move(speed * Time.deltaTime * direction);
-		
+
+		//animator.speed = Mathf.Min(1,(direction * speed).magnitude);
+
+
+		if(input == Vector3.zero) {
+			spriteRenderer.sprite = spriteIdle;
+		} else {
+			spriteRenderer.sprite = spriteWalk;
+
+			if (direction.x > 0) {
+				spriteRenderer.flipX = false;
+			} else {
+				spriteRenderer.flipX = true;
+			}
+		}
 		animator.SetBool("IsWalking", (direction * speed).magnitude > 0);
-	}
+    }
 
 	private void UpdateGravity()
 	{

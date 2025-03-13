@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{6DBF4580-954D-4819-8DE3-31A967B3F104}" SchemaVersion="123" RootDocumentID="{FA3D3862-1B73-4691-AADA-BC295B658906}" ParentDocumentID="{FA3D3862-1B73-4691-AADA-BC295B658906}">
+	<AudioObjects>
+		<WorkUnit Name="EnvironmentUI" ID="{6DBF4580-954D-4819-8DE3-31A967B3F104}" OwnerID="{FA3D3862-1B73-4691-AADA-BC295B658906}" PersistMode="Nested">
+			<ChildrenList>
+				<Sound Name="ENV_Interaction_Arrow_Show" ID="{FE13E885-A586-4256-9864-F1528E99B570}" ShortID="11147764">
+					<PropertyList>
+						<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+						<Property Name="MaxSoundPerInstance" Type="int16">
+							<ValueList>
+								<Value>1</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseMaxSoundPerInstance" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="ENV_Interaction_Arrow_Show" ID="{30898ECE-409C-4CAF-82F9-9F9C4782E979}">
+							<Language>SFX</Language>
+							<AudioFile>ENV_Interaction_Arrow_Show.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="446356882"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="ENV_Interaction_Arrow_Show" ID="{30898ECE-409C-4CAF-82F9-9F9C4782E979}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="ENV_Interaction_Arrow_Hide" ID="{DCD11DCB-E04E-4F29-8B52-7A72BC0BAECA}" ShortID="783516184">
+					<PropertyList>
+						<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+						<Property Name="MaxSoundPerInstance" Type="int16">
+							<ValueList>
+								<Value>1</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseMaxSoundPerInstance" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="ENV_Interaction_Arrow_Hide" ID="{E0468880-6C61-436C-A131-85C01386D41A}">
+							<Language>SFX</Language>
+							<AudioFile>ENV_Interaction_Arrow_Hide.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="867121991"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="ENV_Interaction_Arrow_Hide" ID="{E0468880-6C61-436C-A131-85C01386D41A}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

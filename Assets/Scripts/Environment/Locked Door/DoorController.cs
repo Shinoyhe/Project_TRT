@@ -11,6 +11,8 @@ public class DoorController : MonoBehaviour
     [SerializeField, BoxGroup("Doors")] private HingeJoint rightDoor;
 
     [ReadOnly] public bool IsOpen = false;
+
+    [SerializeField] private AudioEvent doorOpenSFX;
     #endregion
 
     #region ========== [ PRIVATE PROPERTIES ] ==========
@@ -28,6 +30,8 @@ public class DoorController : MonoBehaviour
         rightDoor.useMotor = true;
 
         IsOpen = true;
+
+        doorOpenSFX.Play(gameObject);
 
         LockedInteractable lockedInteractable = GetComponent<LockedInteractable>();
         if (lockedInteractable != null)

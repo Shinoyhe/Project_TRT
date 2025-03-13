@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: d2e647656401fa48b0d64a886d907446
     GuidInternal: 
-    m_lastTime: -8584616603804391232
+    m_lastTime: -8584617669444020918
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -39,6 +39,7 @@ MonoBehaviour:
     guid: 587ca0226052be4e9b8540a22c4f2092
     GuidInternal: 
     m_lastTime: -8584601075519907300
+    m_lastTime: -8584599538167181166
     List:
     - name: Ambience Bus
       guid: b98c6c284c7de7449139c8391e920f9c
@@ -117,7 +118,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 04fe062a3bbc02478aebf9ed87255f35
     GuidInternal: 
-    m_lastTime: -8584616603804511337
+    m_lastTime: -8584617669444040755
     List: []
   - PhysicalPath: SoundBanks\Music.wwu
     PathAndIcons:
@@ -131,6 +132,7 @@ MonoBehaviour:
     guid: 5f5c2e836df59d41833026f7bc293cab
     GuidInternal: 
     m_lastTime: -8584601075518867932
+    m_lastTime: -8584599538243924027
     List:
     - name: Music
       guid: 277caf2ce418a740871cc075a9250659
@@ -158,6 +160,7 @@ MonoBehaviour:
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
     m_lastTime: -8584601075518858008
+    m_lastTime: -8584598745606566915
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -189,7 +192,48 @@ MonoBehaviour:
     guid: 40c947321f41084491c4b5b163ca6270
     GuidInternal: 
     m_lastTime: -8584601075522047339
+    m_lastTime: -8584599454836865316
     List:
+    - name: BART_Barter_Win
+      guid: 8716511196e9d045b235d7d3afb6105f
+      id: 2602999364
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Barter_Win
+        ObjectType: 3
+        guid: 8716511196e9d045b235d7d3afb6105f
+      Path: Events\UI\BarteringUI\BART_Barter_Win
+      maxAttenuation: 0
+      maxDuration: 5.6959863
+      minDuration: 5.6959863
+    - name: BART_Card_Highlight
+      guid: 1f67dee5ae9fef46af0060bf6c4b6c39
+      id: 2034897212
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Card_Highlight
+        ObjectType: 3
+        guid: 1f67dee5ae9fef46af0060bf6c4b6c39
+      Path: Events\UI\BarteringUI\BART_Card_Highlight
+      maxAttenuation: 0
+      maxDuration: 1.4641732
+      minDuration: 1.3044299
     - name: BART_Card_Place
       guid: 70703cae49201248868554261706e95e
       id: 3630843069
@@ -210,6 +254,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.36506742
       minDuration: 0.2205631
+    - name: BART_Card_Select
+      guid: 964730994bfd4f4798fd562f78c0b029
+      id: 349408092
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: BarteringUI
+        ObjectType: 12
+        guid: 40c947321f41084491c4b5b163ca6270
+      - ElementName: BART_Card_Select
+        ObjectType: 3
+        guid: 964730994bfd4f4798fd562f78c0b029
+      Path: Events\UI\BarteringUI\BART_Card_Select
+      maxAttenuation: 0
+      maxDuration: 0.10825397
+      minDuration: 0.10825397
     - name: BART_Card_Shuffle
       guid: b449ce3c4af3804489b557b99f3ceb39
       id: 362751767
@@ -242,7 +306,133 @@ MonoBehaviour:
     guid: 33316d7890aa87408e2af719ccc92cfd
     GuidInternal: 
     m_lastTime: -8584601075522047339
+    m_lastTime: -8584617595952268450
     List: []
+  - PhysicalPath: Events\Environment.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Environment
+      ObjectType: 12
+      guid: 851bf5aefe549d489c25241343bb6f59
+    ParentPath: Events\Environment
+    guid: 851bf5aefe549d489c25241343bb6f59
+    GuidInternal: 
+    m_lastTime: -8584599538249886150
+    List: []
+  - PhysicalPath: Events\EnvironmentUI.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: UI
+      ObjectType: 12
+      guid: 75f867dc1a9906498df4975d819bec40
+    - ElementName: EnvironmentUI
+      ObjectType: 12
+      guid: 4be82f8af05f9c4bb20ac0e39bad8dae
+    ParentPath: Events\UI\EnvironmentUI
+    guid: 4be82f8af05f9c4bb20ac0e39bad8dae
+    GuidInternal: 
+    m_lastTime: -8584599538249826444
+    List:
+    - name: ENV_Interaction_Arrow_Hide
+      guid: e67f97983d2b8d4198fae5033e8d4006
+      id: 3804709036
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: EnvironmentUI
+        ObjectType: 12
+        guid: 4be82f8af05f9c4bb20ac0e39bad8dae
+      - ElementName: ENV_Interaction_Arrow_Hide
+        ObjectType: 3
+        guid: e67f97983d2b8d4198fae5033e8d4006
+      Path: Events\UI\EnvironmentUI\ENV_Interaction_Arrow_Hide
+      maxAttenuation: 0
+      maxDuration: 1.2314739
+      minDuration: 1.2314739
+    - name: ENV_Interaction_Arrow_Show
+      guid: 5199f32f1e65084188459b47f1cc9721
+      id: 1995159183
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: EnvironmentUI
+        ObjectType: 12
+        guid: 4be82f8af05f9c4bb20ac0e39bad8dae
+      - ElementName: ENV_Interaction_Arrow_Show
+        ObjectType: 3
+        guid: 5199f32f1e65084188459b47f1cc9721
+      Path: Events\UI\EnvironmentUI\ENV_Interaction_Arrow_Show
+      maxAttenuation: 0
+      maxDuration: 1.2314739
+      minDuration: 1.2314739
+  - PhysicalPath: Events\MenuUI.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: UI
+      ObjectType: 12
+      guid: 75f867dc1a9906498df4975d819bec40
+    - ElementName: MenuUI
+      ObjectType: 12
+      guid: 3ced4e25bc1aa447a545adce0ca03f95
+    ParentPath: Events\UI\MenuUI
+    guid: 3ced4e25bc1aa447a545adce0ca03f95
+    GuidInternal: 
+    m_lastTime: -8584599443031670527
+    List:
+    - name: UI_Menu_Close
+      guid: 438c2832b6aa2845ab36655fe26f9b55
+      id: 3226991506
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: MenuUI
+        ObjectType: 12
+        guid: 3ced4e25bc1aa447a545adce0ca03f95
+      - ElementName: UI_Menu_Close
+        ObjectType: 3
+        guid: 438c2832b6aa2845ab36655fe26f9b55
+      Path: Events\UI\MenuUI\UI_Menu_Close
+      maxAttenuation: 0
+      maxDuration: 2
+      minDuration: 2
+    - name: UI_Menu_Open
+      guid: 097a1a25ffb66648be79bf0e9a7c9a3c
+      id: 4083126854
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: UI
+        ObjectType: 12
+        guid: 75f867dc1a9906498df4975d819bec40
+      - ElementName: MenuUI
+        ObjectType: 12
+        guid: 3ced4e25bc1aa447a545adce0ca03f95
+      - ElementName: UI_Menu_Open
+        ObjectType: 3
+        guid: 097a1a25ffb66648be79bf0e9a7c9a3c
+      Path: Events\UI\MenuUI\UI_Menu_Open
+      maxAttenuation: 0
+      maxDuration: 2
+      minDuration: 2
   - PhysicalPath: Events\Music.wwu
     PathAndIcons:
     - ElementName: Events
@@ -255,6 +445,7 @@ MonoBehaviour:
     guid: 1baa49cfe5a4fe438cbe031c55500853
     GuidInternal: 
     m_lastTime: -8584601075522037336
+    m_lastTime: -8584599538249821670
     List:
     - name: MusicEvents
       guid: bb98cb8f8639c644980fd12d17cb9504
@@ -293,6 +484,46 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+    - name: MusicStateBarter
+      guid: 90fc9d181ef01244bd9d62d38c8e0814
+      id: 4269622689
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStateBarter
+        ObjectType: 3
+        guid: 90fc9d181ef01244bd9d62d38c8e0814
+      Path: Events\Music\MusicEvents\MusicStateBarter
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: MusicStateBartering
+      guid: 60d1ed9d2c9b6049a7a8726aa1c20465
+      id: 237747687
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Music
+        ObjectType: 12
+        guid: 1baa49cfe5a4fe438cbe031c55500853
+      - ElementName: MusicEvents
+        ObjectType: 4
+        guid: bb98cb8f8639c644980fd12d17cb9504
+      - ElementName: MusicStateBartering
+        ObjectType: 3
+        guid: 60d1ed9d2c9b6049a7a8726aa1c20465
+      Path: Events\Music\MusicEvents\MusicStateBartering
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - name: MusicStateCalm
       guid: d4d011b7ab20394ab4e982305ba67d38
       id: 821441420
@@ -313,9 +544,9 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: MusicStatePlayerSpawan
+    - name: MusicStatePlayerSpawn
       guid: c6fa5b6161d2484ca19683acaebf5061
-      id: 1764214806
+      id: 1031159975
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -326,16 +557,16 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: MusicStatePlayerSpawan
+      - ElementName: MusicStatePlayerSpawn
         ObjectType: 3
         guid: c6fa5b6161d2484ca19683acaebf5061
-      Path: Events\Music\MusicEvents\MusicStatePlayerSpawan
+      Path: Events\Music\MusicEvents\MusicStatePlayerSpawn
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: PauseEnvironmentMusic
+    - name: PauseMusic
       guid: 96326ae8227f6b49bd165fccbc20504e
-      id: 396180185
+      id: 1127073398
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -346,16 +577,16 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: PauseEnvironmentMusic
+      - ElementName: PauseMusic
         ObjectType: 3
         guid: 96326ae8227f6b49bd165fccbc20504e
-      Path: Events\Music\MusicEvents\PauseEnvironmentMusic
+      Path: Events\Music\MusicEvents\PauseMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: ResumeEnvironmentMusic
+    - name: ResumeMusic
       guid: 89d77c41053f404a836023e0159080af
-      id: 3562268364
+      id: 2170724709
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -366,16 +597,16 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: ResumeEnvironmentMusic
+      - ElementName: ResumeMusic
         ObjectType: 3
         guid: 89d77c41053f404a836023e0159080af
-      Path: Events\Music\MusicEvents\ResumeEnvironmentMusic
+      Path: Events\Music\MusicEvents\ResumeMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: StartEnvironmentMusic
+    - name: StartMusic
       guid: 0ad1de95faba17459eb73e06ddba7b76
-      id: 1918643091
+      id: 3827058668
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -386,16 +617,16 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: StartEnvironmentMusic
+      - ElementName: StartMusic
         ObjectType: 3
         guid: 0ad1de95faba17459eb73e06ddba7b76
-      Path: Events\Music\MusicEvents\StartEnvironmentMusic
+      Path: Events\Music\MusicEvents\StartMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-    - name: StopEnvironmentMusic
+    - name: StopMusic
       guid: ec06eeef3d4ab24198832e17938f0ef1
-      id: 2557824689
+      id: 1917263390
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -406,13 +637,165 @@ MonoBehaviour:
       - ElementName: MusicEvents
         ObjectType: 4
         guid: bb98cb8f8639c644980fd12d17cb9504
-      - ElementName: StopEnvironmentMusic
+      - ElementName: StopMusic
         ObjectType: 3
         guid: ec06eeef3d4ab24198832e17938f0ef1
-      Path: Events\Music\MusicEvents\StopEnvironmentMusic
+      Path: Events\Music\MusicEvents\StopMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+  - PhysicalPath: Events\Objects.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Environment
+      ObjectType: 12
+      guid: 851bf5aefe549d489c25241343bb6f59
+    - ElementName: Objects
+      ObjectType: 12
+      guid: f53d68a94c6e354d9f4eeee3b0dcd364
+    ParentPath: Events\Environment\Objects
+    guid: f53d68a94c6e354d9f4eeee3b0dcd364
+    GuidInternal: 
+    m_lastTime: -8584598723947370760
+    List:
+    - name: DoorOpen
+      guid: e45a10416290f44da2dd9afd2f2afa3d
+      id: 1404805401
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Objects
+        ObjectType: 12
+        guid: f53d68a94c6e354d9f4eeee3b0dcd364
+      - ElementName: DoorOpen
+        ObjectType: 3
+        guid: e45a10416290f44da2dd9afd2f2afa3d
+      Path: Events\Environment\Objects\DoorOpen
+      maxAttenuation: 40
+      maxDuration: 1.4501814
+      minDuration: 1.4501814
+    - name: ElevatorHum
+      guid: 48b9fde58f695d45ad92e6d6f1bb2aca
+      id: 1344299683
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Objects
+        ObjectType: 12
+        guid: f53d68a94c6e354d9f4eeee3b0dcd364
+      - ElementName: ElevatorHum
+        ObjectType: 3
+        guid: 48b9fde58f695d45ad92e6d6f1bb2aca
+      Path: Events\Environment\Objects\ElevatorHum
+      maxAttenuation: 20
+      maxDuration: 8.326916
+      minDuration: 8.326916
+    - name: ElevatorStartup
+      guid: 432db18b0ba7b34bb0ec00c660953ac8
+      id: 1220165926
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Objects
+        ObjectType: 12
+        guid: f53d68a94c6e354d9f4eeee3b0dcd364
+      - ElementName: ElevatorStartup
+        ObjectType: 3
+        guid: 432db18b0ba7b34bb0ec00c660953ac8
+      Path: Events\Environment\Objects\ElevatorStartup
+      maxAttenuation: 0
+      maxDuration: 0.87827665
+      minDuration: 0.87827665
+    - name: ItemPickup
+      guid: a49014c5961d434a9e487d2d5ea73295
+      id: 1851462748
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Objects
+        ObjectType: 12
+        guid: f53d68a94c6e354d9f4eeee3b0dcd364
+      - ElementName: ItemPickup
+        ObjectType: 3
+        guid: a49014c5961d434a9e487d2d5ea73295
+      Path: Events\Environment\Objects\ItemPickup
+      maxAttenuation: 0
+      maxDuration: 3.0508883
+      minDuration: 3.0508883
+    - name: LightAmbience
+      guid: e06736cc10dfac4cbb2a090285b6de58
+      id: 2186217851
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Objects
+        ObjectType: 12
+        guid: f53d68a94c6e354d9f4eeee3b0dcd364
+      - ElementName: LightAmbience
+        ObjectType: 3
+        guid: e06736cc10dfac4cbb2a090285b6de58
+      Path: Events\Environment\Objects\LightAmbience
+      maxAttenuation: 20
+      maxDuration: 0
+      minDuration: 0
+  - PhysicalPath: Events\Player.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Environment
+      ObjectType: 12
+      guid: 851bf5aefe549d489c25241343bb6f59
+    - ElementName: Player
+      ObjectType: 12
+      guid: d5f674957249a840bcf4382b6f3925ec
+    ParentPath: Events\Environment\Player
+    guid: d5f674957249a840bcf4382b6f3925ec
+    GuidInternal: 
+    m_lastTime: -8584599538249757191
+    List:
+    - name: PlayerFootsteps
+      guid: 84795c876ed0ab43a382ca7872053bb8
+      id: 1681012287
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Environment
+        ObjectType: 12
+        guid: 851bf5aefe549d489c25241343bb6f59
+      - ElementName: Player
+        ObjectType: 12
+        guid: d5f674957249a840bcf4382b6f3925ec
+      - ElementName: PlayerFootsteps
+        ObjectType: 3
+        guid: 84795c876ed0ab43a382ca7872053bb8
+      Path: Events\Environment\Player\PlayerFootsteps
+      maxAttenuation: 0
+      maxDuration: 0.34805208
+      minDuration: 0.2416875
   - PhysicalPath: Events\UI.wwu
     PathAndIcons:
     - ElementName: Events
@@ -425,6 +808,7 @@ MonoBehaviour:
     guid: 75f867dc1a9906498df4975d819bec40
     GuidInternal: 
     m_lastTime: -8584601075522037336
+    m_lastTime: -8584599443031759811
     List: []
   RtpcWwu:
   - PhysicalPath: Game Parameters\Ambience.wwu
@@ -439,6 +823,7 @@ MonoBehaviour:
     guid: 1364dfa97885f64c975561aade985960
     GuidInternal: 
     m_lastTime: -8584601075522037336
+    m_lastTime: -8584599538167819512
     List:
     - name: AmbienceVolume
       guid: 01dd239d2ba1e14984ac00064dd75e62
@@ -466,6 +851,7 @@ MonoBehaviour:
     guid: be288e71c0cc3c439b7b4bfb6a1a4c72
     GuidInternal: 
     m_lastTime: -8584601075522027324
+    m_lastTime: -8584599538167814546
     List:
     - name: MasterVolume
       guid: 59d20be76f82c04d9077f7a3d88c2dfc
@@ -493,6 +879,7 @@ MonoBehaviour:
     guid: d5202f5c1fdb7e4592a92fb8427c1e09
     GuidInternal: 
     m_lastTime: -8584601075522027324
+    m_lastTime: -8584599538167814546
     List:
     - name: MusicVolume
       guid: 4d5e195f502dd74ead8860aef95d5310
@@ -520,6 +907,7 @@ MonoBehaviour:
     guid: b76be0652aa2144ca2f1c95ef14073c4
     GuidInternal: 
     m_lastTime: -8584601075522027324
+    m_lastTime: -8584599538167809592
     List:
     - name: SFXVolume
       guid: 3afe647cb3b54f438d068914ab1c8a1f
@@ -548,6 +936,7 @@ MonoBehaviour:
     guid: e6b79552b8b0634f8a967d61276f57fa
     GuidInternal: 
     m_lastTime: -8584601075518858008
+    m_lastTime: -8584599538243914466
     List:
     - name: MusicState
       guid: 5df940ae313415468d9b77fe40be0b6c
@@ -580,6 +969,22 @@ MonoBehaviour:
         - ElementName: Active
           ObjectType: 8
           guid: b58baea42db1fe49889416968c8d3d71
+      - name: Barter
+        guid: f5e3f74baa3c3145b914d1278d66757c
+        id: 644073513
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e6b79552b8b0634f8a967d61276f57fa
+        - ElementName: MusicState
+          ObjectType: 9
+          guid: 5df940ae313415468d9b77fe40be0b6c
+        - ElementName: Barter
+          ObjectType: 8
+          guid: f5e3f74baa3c3145b914d1278d66757c
       - name: Calm
         guid: 2c6f914aa7fe72419c63fc5255a5ba9d
         id: 3753286132
@@ -659,7 +1064,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: 4106411ba585644787ebc92dd1cdc4ca
     GuidInternal: 
-    m_lastTime: -8584616603804441278
+    m_lastTime: -8584617669444025876
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -673,7 +1078,7 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 9df9aa54af8cab4ea76b42f4ee8eaa58
     GuidInternal: 
-    m_lastTime: -8584616603804421256
+    m_lastTime: -8584617669444020918
     List:
     - name: Test
       guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
@@ -690,7 +1095,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 01000000050000000600000007000000090000000a0000000c0000000e00000012000000170000001f00000020000000210000002200000024000000
+  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000a0000000c0000000d0000000e0000001000000012000000140000001600000017000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

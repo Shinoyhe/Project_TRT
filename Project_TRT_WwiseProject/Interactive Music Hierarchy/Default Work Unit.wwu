@@ -4,6 +4,13 @@
 		<WorkUnit Name="Default Work Unit" ID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}" PersistMode="Standalone">
 			<ChildrenList>
 				<MusicPlaylistContainer Name="EnviromentSequence" ID="{1FF7DC03-7415-4276-8283-4018BA65C84E}" ShortID="287503037">
+					<PropertyList>
+						<Property Name="OutputBusVolume" Type="Real64">
+							<ValueList>
+								<Value>-12</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
@@ -161,6 +168,13 @@
 					</ObjectLists>
 				</MusicPlaylistContainer>
 				<MusicSwitchContainer Name="EnvironmentSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" ShortID="437975712">
+					<PropertyList>
+						<Property Name="OutputBusVolume" Type="Real64">
+							<ValueList>
+								<Value>-12</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>

@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -7,7 +8,10 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Object References")]
 	[SerializeField] private Transform forwardTransform;
 	[SerializeField] private Animator animator;
-	private CharacterController _characterController;
+	[SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite spriteIdle;
+    [SerializeField] private Sprite spriteWalk;
+    private CharacterController _characterController;
 
 	#endregion
 
@@ -22,13 +26,17 @@ public class PlayerMovement : MonoBehaviour
 
 	private const float _gravity = 9.81f;
 	private float _downwardForce = 0;
-	private bool _canMove = true;
+	[SerializeField, ReadOnly] private bool _canMove = true;
 
     #endregion
 
     #region ======== [ PUBLIC METHODS ] ========
 
-	public void TogglePlayerMovement(bool canMove) {
+    /// <summary>
+    /// Public setter for _canMove.
+    /// </summary>
+    /// <param name="canMove">bool - whether or not the player can move.</param>
+	public void SetCanMove(bool canMove) {
 		_canMove = canMove;
 	}
 
@@ -52,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 		// Get Input
 		Vector3 input = GameManager.PlayerInput.GetControlInput();
 
-		if (_canMove == false) {
+		if (!_canMove) {
 			input = Vector3.zero;
 		}
 
@@ -63,9 +71,23 @@ public class PlayerMovement : MonoBehaviour
 		// Move character
 		Vector3 direction = targetRotation * input;
 		_characterController.Move(speed * Time.deltaTime * direction);
-		
+
+		//animator.speed = Mathf.Min(1,(direction * speed).magnitude);
+
+
+		if(input == Vector3.zero) {
+			spriteRenderer.sprite = spriteIdle;
+		} else {
+			spriteRenderer.sprite = spriteWalk;
+
+			if (direction.x > 0) {
+				spriteRenderer.flipX = false;
+			} else {
+				spriteRenderer.flipX = true;
+			}
+		}
 		animator.SetBool("IsWalking", (direction * speed).magnitude > 0);
-	}
+    }
 
 	private void UpdateGravity()
 	{

@@ -17,8 +17,17 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	1502772432	SFX Bus			\Default Work Unit\Master Audio Bus\SFX Bus	
 	3127962312	Music Bus			\Default Work Unit\Master Audio Bus\Music Bus	
+	3545700988	Reverbs			\Default Work Unit\Master Audio Bus\Reverbs	
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 	4202237879	Ambience Bus			\Default Work Unit\Master Audio Bus\Ambience Bus	
+
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	2568407992	Church			\Default Work Unit\Master Audio Bus\Reverbs\Church	
+	2730119150	Outdoors			\Default Work Unit\Master Audio Bus\Reverbs\Outdoors	
+
+Effect plug-ins	ID	Name	Type				Notes
+	48620415	Have_U_Ever_Been_Outside	Wwise RoomVerb			
+	484890516	Church_Small_Wood	Wwise RoomVerb			
 
 Audio Devices	ID	Name	Type				Notes
 	2317455096	No_Output	No Output			

@@ -129,7 +129,7 @@
 																	</Point>
 																	<Point>
 																		<XPos>50</XPos>
-																		<YPos>-0</YPos>
+																		<YPos>0</YPos>
 																		<Flags>0</Flags>
 																	</Point>
 																	<Point>
@@ -147,6 +147,44 @@
 									</Reference>
 								</ObjectList>
 							</ObjectLists>
+						</Bus>
+						<Bus Name="Reverbs" ID="{60D09061-AD4A-43D1-9B49-6042A98C2796}">
+							<ChildrenList>
+								<AuxBus Name="Outdoors" ID="{67BD6B9F-FC47-4579-A4B5-9FBB558C8815}">
+									<ObjectLists>
+										<ObjectList Name="Effects">
+											<Reference>
+												<Local>
+													<EffectSlot Name="" ID="{D10135CE-DA62-4519-A83F-9CD9A7B80CB6}" ShortID="207910638">
+														<ReferenceList>
+															<Reference Name="Effect" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+																<ObjectRef Name="Have_U_Ever_Been_Outside" ID="{FE29AE8D-FD86-4652-A95D-68D32F5760EC}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+															</Reference>
+														</ReferenceList>
+													</EffectSlot>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</AuxBus>
+								<AuxBus Name="Church" ID="{551A30C1-6B8C-4B66-97AB-F2B3572A46C0}">
+									<ObjectLists>
+										<ObjectList Name="Effects">
+											<Reference>
+												<Local>
+													<EffectSlot Name="" ID="{34D0F3B1-641F-4044-B0CD-94EB212D1AF1}" ShortID="34760780">
+														<ReferenceList>
+															<Reference Name="Effect" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+																<ObjectRef Name="Church_Small_Wood" ID="{940CCB47-F031-4C6A-B0E6-726CAC418C02}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+															</Reference>
+														</ReferenceList>
+													</EffectSlot>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</AuxBus>
+							</ChildrenList>
 						</Bus>
 					</ChildrenList>
 					<ObjectLists>

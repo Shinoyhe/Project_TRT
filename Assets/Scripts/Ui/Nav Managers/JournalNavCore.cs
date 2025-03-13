@@ -3,11 +3,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
+
+#if UNITY_EDITOR
 using UnityEditor.SceneManagement;
+#endif
+
 
 public class JournalNavCore : MonoBehaviour 
 {
-    #region ======== [ VARIABLES ] ========
+#region ======== [ VARIABLES ] ========
 
     [Header("Dependencies")]
     public JournalNPC NPC;
@@ -32,9 +36,9 @@ public class JournalNavCore : MonoBehaviour
     [SerializeField] private List<InventoryCardData> tradeQueue = new List<InventoryCardData>();
     private NPCData _lastDebugAddedNPC;
 
-    #endregion
+#endregion
 
-    #region ======== [ PUBLIC METHODS ] ========
+#region ======== [ PUBLIC METHODS ] ========
 
     /// <summary>
     /// Transition Start Ui to a new state.
@@ -97,9 +101,9 @@ public class JournalNavCore : MonoBehaviour
     public void MoveToInfoCards() => MoveTo(UiStates.InfoCards);
     public void MoveToItems() => MoveTo(UiStates.Items);
 
-    #endregion
+#endregion
 
-    #region ======== [ BUILT-IN UNITY METHODS ] ========
+#region ======== [ BUILT-IN UNITY METHODS ] ========
     void Start()
     {
         if (NPC == null)
@@ -117,9 +121,9 @@ public class JournalNavCore : MonoBehaviour
         // MoveToInfoCards();
     }
 
-    #endregion
+#endregion
 
-    #region ======== [ PRIVATE METHODS ] ========
+#region ======== [ PRIVATE METHODS ] ========
 
     /// <summary>
     /// Stop a currently running Ui state.
@@ -162,9 +166,11 @@ public class JournalNavCore : MonoBehaviour
 
     }
 
-    #endregion
+#endregion
 
-    #region ======== [ DEBUG METHODS ] ========
+#region ======== [ DEBUG METHODS ] ========
+
+    #if UNITY_EDITOR
 
     [Button("Add NPCData Button")]
     private void DebugAddNPCData()
@@ -215,5 +221,7 @@ public class JournalNavCore : MonoBehaviour
         }
     }
 
-    #endregion
+    #endif
+
+#endregion
 }

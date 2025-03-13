@@ -1,0 +1,169 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "85412153",
+    "Type": "User",
+    "GUID": "{52F8B286-BABD-4F9B-A5A8-00A04824FFE7}",
+    "Language": "SFX",
+    "Hash": "{7C2125D9-A6EA-6BFD-23FF-4716472A52D3}",
+    "ObjectPath": "\\SoundBanks\\Ambience\\Ambience",
+    "ShortName": "Ambience",
+    "Path": "Ambience.bnk",
+    "Media": [
+     {
+      "Id": "31547046",
+      "Language": "SFX",
+      "Streaming": "true",
+      "Location": "Loose",
+      "ShortName": "AMB_Waterfall_Base.wav",
+      "Path": "Media/31547046.wem",
+      "CachePath": "0D/{0DFC706F-029F-DA67-858D-63F23E7FCBFE}.wem"
+     },
+     {
+      "Id": "360502257",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Machine_Hum2.wav",
+      "CachePath": "04/{04CD1EF7-2BE8-DF7E-01A2-3E092601434C}.wem"
+     },
+     {
+      "Id": "417504426",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Nature_Birds3.wav",
+      "CachePath": "29/{296FB0B4-1E81-21F2-BB2C-3E07D35CD303}.wem"
+     },
+     {
+      "Id": "429838942",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Nature_Birds1.wav",
+      "CachePath": "D8/{D8D8564F-7506-9D17-4465-03F5BA3E287F}.wem"
+     },
+     {
+      "Id": "677398068",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Waterfall_CloseSparkle.wav",
+      "CachePath": "24/{245FA8FE-6839-E888-8230-494140CC1925}.wem"
+     },
+     {
+      "Id": "934940429",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Machine_Hum1.wav",
+      "CachePath": "49/{49DFCAF6-8D7B-AC0F-38B9-6BDA449CD2A6}.wem"
+     },
+     {
+      "Id": "1041211660",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "AMB_Nature_Birds2.wav",
+      "CachePath": "1D/{1D62BD7C-BB3A-4B9B-84D7-D65B0435DE7C}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3943065624",
+      "Name": "BirdStart",
+      "ObjectPath": "\\Events\\Ambience\\BirdStart",
+      "GUID": "{AB632C93-8EF0-48A4-9F51-F773BA1E5C74}",
+      "MaxAttenuation": "100",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "417504426"
+       },
+       {
+        "Id": "429838942"
+       },
+       {
+        "Id": "1041211660"
+       }
+      ]
+     },
+     {
+      "Id": "30480848",
+      "Name": "Play_MachineHum1_LoopContainer",
+      "ObjectPath": "\\Events\\Ambience\\Play_MachineHum1_LoopContainer",
+      "GUID": "{46922CFE-2F19-4B76-85F3-F11B509CB105}",
+      "MaxAttenuation": "50",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "934940429"
+       }
+      ]
+     },
+     {
+      "Id": "1929638735",
+      "Name": "Play_MachineHum2_LoopContainer",
+      "ObjectPath": "\\Events\\Ambience\\Play_MachineHum2_LoopContainer",
+      "GUID": "{715485DE-B13B-43E2-9B4D-C1C5781FE1AC}",
+      "MaxAttenuation": "50",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "360502257"
+       }
+      ]
+     },
+     {
+      "Id": "2874767734",
+      "Name": "Play_Waterfall_Base_LoopContainer",
+      "ObjectPath": "\\Events\\Ambience\\Play_Waterfall_Base_LoopContainer",
+      "GUID": "{432EBF60-3B5B-40E6-B688-58830C63E8B1}",
+      "MaxAttenuation": "100",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "31547046"
+       }
+      ]
+     },
+     {
+      "Id": "3296751295",
+      "Name": "Play_Waterfall_CloseSparkle_LoopContainer",
+      "ObjectPath": "\\Events\\Ambience\\Play_Waterfall_CloseSparkle_LoopContainer",
+      "GUID": "{3FAF916E-C621-45D9-868C-CE150C154978}",
+      "MaxAttenuation": "50",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "677398068"
+       }
+      ]
+     },
+     {
+      "Id": "664772623",
+      "Name": "TestAmbienceStart",
+      "ObjectPath": "\\Events\\Ambience\\TestAmbienceStart",
+      "GUID": "{E4076E7D-47F0-4B40-97F8-E4AFB7CF1D45}",
+      "MaxAttenuation": "100",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "31547046"
+       },
+       {
+        "Id": "677398068"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{A2A0BAEC-A797-FB98-84E6-B653313925D8}"
+ }
+}

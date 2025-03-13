@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{68F60401-270C-40BF-8FD7-C64816EE8C87}" SchemaVersion="123">
+	<SoundBanks>
+		<WorkUnit Name="Ambience" ID="{68F60401-270C-40BF-8FD7-C64816EE8C87}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="Ambience" ID="{52F8B286-BABD-4F9B-A5A8-00A04824FFE7}">
+					<ObjectInclusionList>
+						<ObjectRef Name="SynthBirds_RandomContainer" ID="{9E473AF7-9486-40AB-9724-AEE6AFDA7116}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="MachineHum1_LoopContainer" ID="{A1086679-5F65-4305-8E29-581975315AC5}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="MachineHum2_LoopContainer" ID="{8A7EC6BD-A2F2-43A2-AED7-331438DE63AF}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="AMB_Waterfall_Base" ID="{3FA62479-B607-480D-90FE-E5987AE006B6}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="TestAmbienceStart" ID="{E4076E7D-47F0-4B40-97F8-E4AFB7CF1D45}" WorkUnitID="{820C2978-AC29-4858-84ED-86C3BABA619D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Waterfall_Base_LoopContainer" ID="{11294004-03E5-4C04-8109-C235D0C57479}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Waterfall_CloseSparkle_LoopContainer" ID="{A3780EEB-D81D-4C45-8455-3CFCA15FEC28}" WorkUnitID="{CE81F9B9-3C10-48A1-BCAC-AD370571CF7D}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

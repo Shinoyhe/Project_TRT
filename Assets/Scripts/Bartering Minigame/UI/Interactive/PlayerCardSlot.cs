@@ -1,23 +1,50 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
 public class PlayerCardSlot : MonoBehaviour 
 {
     // Parameters and Publics =====================================================================
 
+    [SerializeField, Tooltip("The color this is when not selected.\n\nDefault: FFFFFF-80")]
+    private Color baseColor = new(1,1,1,0.5f);
+    [SerializeField, Tooltip("The color this is when selected.\n\nDefault: 00AFFF-FF")]
+    private Color selectedColor = new(0/256f, 175/256f, 255/256f, 1);
     public DisplayCard Card => _card;
     public System.Action<PlayerCardSlot, DisplayCard> OnSetCard;
 
     // Misc Internal Variables ====================================================================
 
     private RectTransform _rectTransform;
+    private Image _image;
     private DisplayCard _card = null;
+    private bool _selected = false;
 
     // Initializers ===============================================================================
 
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
+    }
+
+    // Update methods =============================================================================
+
+    private void Update()
+    {
+        // We use update to set our color to selected or not.
+        // ================
+        
+        // TODO: Make this visualization nicer and not placeholder.
+
+        if (_image != null) {
+            // Only show the selection visuals if we're not actively using the mouse.
+            if (_selected && !GameManager.PlayerInput.MouseLastUsed) {
+                _image.color = selectedColor;
+            } else {
+                _image.color = baseColor;
+            }
+        }
     }
 
     // Public accessors ===========================================================================
@@ -49,5 +76,14 @@ public class PlayerCardSlot : MonoBehaviour
 
         _card = card;
         OnSetCard?.Invoke(this, card);
+    }
+
+    /// <summary>
+    /// Whether or not this card slot is 'selected' by the Gamepad/Keyboard inputs.
+    /// </summary>
+    /// <param name="selected"></param>
+    public void SetSelected(bool selected)
+    {
+        _selected = selected;
     }
 }

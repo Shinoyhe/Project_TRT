@@ -15,6 +15,8 @@ public class DisplayCard : MonoBehaviour
 
     // The PlayerCardSlot, if any, that this DisplayCard is held by.
     public PlayerCardSlot SubmitSlot => _submitSlot;
+    // Public accessor for the _selectable field.
+    public Selectable Selectable => _selectable;
     [HideInInspector] // The index of this DisplayCard in the HandController.
     // Alternatively, the index of this card's PlayingCard data in the CardUser hand.
     public int IndexInHand;
@@ -29,6 +31,8 @@ public class DisplayCard : MonoBehaviour
     // Misc Internal Variables ====================================================================
 
     // Objects ================
+    // The Selectable on this DisplayCard.
+    private Selectable _selectable;
     // The RectTransform on this DisplayCard.
     private RectTransform _rectTransform;
     // The CanvasGroup on this DisplayCard object.
@@ -55,6 +59,7 @@ public class DisplayCard : MonoBehaviour
 
     private void Awake()
     {
+        _selectable = GetComponent<Selectable>();
         _rectTransform = GetComponent<RectTransform>();
         _canvasGroup = GetComponent<CanvasGroup>();
         _baseLocalScale = transform.localScale;
@@ -83,8 +88,6 @@ public class DisplayCard : MonoBehaviour
         if (PlayingCard) {
             mainImage.sprite = PlayingCard.MainSprite;
             mainImage.color = Color.white;
-
-            // mainText.text = PlayingCard.Id;
         } else {
             mainImage.sprite = null;
             mainImage.color = _nullColor;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,13 +8,18 @@ using UnityEngine.InputSystem;
 /// Class which manages inputs from the new input system, via PlayerControls.
 /// Modded from the input handler from the Unity FPS Microgame.
 /// </summary>
-public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsActions 
+public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsActions, PlayerControls.IDebugActions
 {
+    [ReadOnly] public InputControlScheme LastUsedScheme;
+    public InputControlScheme KeyboardScheme => _controls.KeyboardMouseScheme;
+    public InputControlScheme GamepadScheme => _controls.GamepadScheme;
+    public bool MouseLastUsed => _mouseLastUsed;
+    public bool AllowNavbar;
+
     // Misc Internal Variables ====================================================================
 
     // Object references
     PlayerControls _controls;
-    public bool IsActive;
 
     // Input states: set by InputAction callbacks, read by accessors
     private Vector2 _controlAxisVector;
@@ -24,19 +30,30 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         {"_affirm", false},
         {"_reject", false},
         {"_menu1", false},
-        {"_menu2", false}
+        {"_menu2", false},
+        {"_click", false},
+        {"_debug0", false},
+        {"_debug1", false},
+        {"_debug2", false}
     };
 
     private Dictionary<string, bool> _get = new() {};
+
+    // Misc
+
+    private bool _mouseLastUsed;
    
     // Initializers and Finalizers ================================================================
 
-    private void OnEnable() {
+    private void OnEnable() 
+    {
         if (_controls == null) {
             _controls = new PlayerControls();
-            // Tell the "gameplay" action map that we want to get told about
+            // Tell the "MainControls" action map that we want to get told about
             // when actions get triggered.
             _controls.MainControls.SetCallbacks(this);
+            // Likewise for the "Debug" action map.
+            _controls.Debug.SetCallbacks(this);
         }
 
         // Initialize the _get dict from the _getDown dict
@@ -45,19 +62,19 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
         }
 
         _controls.MainControls.Enable();
-        IsActive = true;
+        _controls.Debug.Enable();
+        AllowNavbar = true;
     }
 
-    private void OnDisable() {
-        if (_controls != null) {
-            _controls.MainControls.Disable();
-            IsActive = false;
-        }
+    private void OnDisable() 
+    {
+        _controls?.MainControls.Disable();
     }
 
     // InputAction Callbacks and Methods ==========================================================
 
-    private void LateUpdate() {
+    private void LateUpdate() 
+    {
         // LateUpdate is called at the END of every frame, after all Update() calls.
         
         // ==============================================================================
@@ -76,12 +93,32 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     public void OnControlAxis(InputAction.CallbackContext context) 
     {
         _controlAxisVector = context.ReadValue<Vector2>();
+
+        if (context.started) {
+            UpdateLastUsedScheme(context);
+        }
     }
 
     private void SetDown(InputAction.CallbackContext context, string input)
     {
         if (context.started) _getDown[input] = _get[input] = true; 
         if (context.canceled) _getDown[input] = _get[input] = false;
+
+        if (context.started) {
+            UpdateLastUsedScheme(context);
+        }
+    }
+
+    private void UpdateLastUsedScheme(InputAction.CallbackContext context)
+    {
+        _mouseLastUsed = context.control.device is Mouse;
+
+        foreach (InputControlScheme scheme in _controls.controlSchemes) {
+            if (scheme.SupportsDevice(context.control.device)) {
+                LastUsedScheme = scheme;
+                return;
+            }
+        }
     }
 
     public void OnPrimaryTrigger(InputAction.CallbackContext context) { SetDown(context, "_primaryTrigger"); }
@@ -91,6 +128,15 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     public void OnRejectButton(InputAction.CallbackContext context) { SetDown(context, "_reject"); }
     public void OnMenuButton1(InputAction.CallbackContext context) { SetDown(context, "_menu1"); }
     public void OnMenuButton2(InputAction.CallbackContext context) { SetDown(context, "_menu2"); }
+    public void OnClick(InputAction.CallbackContext context) { SetDown(context, "_click"); }
+    public void OnDebug0(InputAction.CallbackContext context) { SetDown(context, "_debug0"); }
+    public void OnDebug1(InputAction.CallbackContext context) { SetDown(context, "_debug1"); }
+    public void OnDebug2(InputAction.CallbackContext context) { SetDown(context, "_debug2"); }
+
+    // OnPointer and OnScroll are used only by the event system. 
+    // Don't do anything with it manually, at least for now.
+    public void OnPointer(InputAction.CallbackContext context) { return; } 
+    public void OnScroll(InputAction.CallbackContext context) { return; }
 
     // Public Accessor Methods ====================================================================
 
@@ -100,22 +146,22 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControls.IMainControlsAct
     /// <returns>Vector3 - last known move input.</returns>
     public Vector3 GetControlInput() 
     {
-        if (!IsActive) {
-            return Vector3.zero;
-        }
-
         Vector3 move = new(_controlAxisVector.x, 0f, _controlAxisVector.y);
 
         // 'Normalize' move vector but allow for sub-one values.
         return Vector3.ClampMagnitude(move, 1);
     }
 
-    public bool GetPrimaryTriggerDown() { return IsActive && _getDown["_primaryTrigger"]; }
-    public bool GetSecondaryTriggerDown() { return IsActive && _getDown["_secondaryTrigger"]; }
-    public bool GetStartDown() { return IsActive && _getDown["_start"]; }
-    public bool GetAffirmDown() { return IsActive && _getDown["_affirm"]; }
-    public bool GetRejectDown() { return IsActive && _getDown["_reject"]; }
-    public bool GetMenu1Down() { return IsActive && _getDown["_menu1"]; }
-    public bool GetMenu1() { return IsActive && _get["_menu1"]; }
-    public bool GetMenu2Down() { return IsActive && _getDown["_menu2"]; }
+    public bool GetPrimaryTriggerDown() { return _getDown["_primaryTrigger"]; }
+    public bool GetSecondaryTriggerDown() { return _getDown["_secondaryTrigger"]; }
+    public bool GetStartDown() { return _getDown["_start"]; }
+    public bool GetAffirmDown() { return _getDown["_affirm"]; }
+    public bool GetRejectDown() { return _getDown["_reject"]; }
+    public bool GetMenu1Down() { return _getDown["_menu1"]; }
+    public bool GetMenu1() { return _get["_menu1"]; }
+    public bool GetMenu2Down() { return _getDown["_menu2"]; }
+    public bool GetClickDown() { return _getDown["_click"]; }
+    public bool GetDebug0Down() { return _getDown["_debug0"]; }
+    public bool GetDebug1Down() { return _getDown["_debug1"]; }
+    public bool GetDebug2Down() { return _getDown["_debug2"]; }
 }

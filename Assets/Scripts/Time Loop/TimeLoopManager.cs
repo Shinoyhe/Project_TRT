@@ -72,12 +72,14 @@ public class TimeLoopManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene _, LoadSceneMode __)
     {
-        GameManager.PlayerInput.IsActive = true;
-        GameManager.UiInput.IsActive = true;
-
         GameManager.Instance.FindPlayer();
         GameManager.Instance.FindMasterCanvas();
-        InitializeTimer();
+        InitializeTimer(); 
+
+        // TODO: Port this code over into InGameUi, using a MoveToDefault() call
+        GameManager.Player.Movement.SetCanMove(true);
+        GameManager.Player.InteractionHandler.SetCanInteract(true);
+        GameManager.PlayerInput.AllowNavbar = true;
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -86,8 +88,6 @@ public class TimeLoopManager : MonoBehaviour
 
     void Update()
     {
-        // Adding a test comment.
-        
         if (_loopDone || _loopPaused) return;
 
         DEBUG_timeLeft = $"{Mathf.Floor(_secondsLeft/60f):00}:{Mathf.Floor(_secondsLeft%60):00}";
@@ -96,8 +96,10 @@ public class TimeLoopManager : MonoBehaviour
         if (_secondsLeft <= 0) {
             _loopDone = true;
 
-            GameManager.PlayerInput.IsActive = false;
-            GameManager.UiInput.IsActive = false;
+            // TODO: Port this code over into InGameUi, using a MoveTo???() call
+            GameManager.Player.Movement.SetCanMove(false);
+            GameManager.Player.InteractionHandler.SetCanInteract(false);
+            GameManager.PlayerInput.AllowNavbar = false;
 
             // LoopElapsed is null with 0 subscribers, and non-null otherwise.
             if (LoopElapsed != null) {

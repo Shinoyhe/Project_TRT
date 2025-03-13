@@ -10,11 +10,29 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{7B93E15A-543A-B738-0869-C843272E86BE}",
+    "Hash": "{A1F38CCF-E6A4-BC33-90C4-197EDDE73C56}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
     "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "48620415",
+       "Name": "Have_U_Ever_Been_Outside",
+       "ObjectPath": "\\Effects\\Factory Effects\\RoomVerb\\Exteriors\\Have_U_Ever_Been_Outside",
+       "GUID": "{FE29AE8D-FD86-4652-A95D-68D32F5760EC}",
+       "LibName": "Wwise RoomVerb",
+       "LibId": "7733251"
+      },
+      {
+       "Id": "484890516",
+       "Name": "Church_Small_Wood",
+       "ObjectPath": "\\Effects\\Factory Effects\\RoomVerb\\Cathedrals\\Church_Small_Wood",
+       "GUID": "{940CCB47-F031-4C6A-B0E6-726CAC418C02}",
+       "LibName": "Wwise RoomVerb",
+       "LibId": "7733251"
+      }
+     ],
      "AudioDevices": [
       {
        "Id": "2317455096",
@@ -48,6 +66,12 @@
       "GUID": "{AD563688-23B7-45A9-B273-CD51079AE47A}"
      },
      {
+      "Id": "3545700988",
+      "Name": "Reverbs",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\Reverbs",
+      "GUID": "{60D09061-AD4A-43D1-9B49-6042A98C2796}"
+     },
+     {
       "Id": "3803692087",
       "Name": "Master Audio Bus",
       "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus",
@@ -58,6 +82,34 @@
       "Name": "Ambience Bus",
       "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\Ambience Bus",
       "GUID": "{286C8CB9-7D4C-44E7-9139-C8391E920F9C}"
+     }
+    ],
+    "AuxBusses": [
+     {
+      "Id": "2568407992",
+      "Name": "Church",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\Reverbs\\Church",
+      "GUID": "{551A30C1-6B8C-4B66-97AB-F2B3572A46C0}",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "484890516"
+        }
+       ]
+      }
+     },
+     {
+      "Id": "2730119150",
+      "Name": "Outdoors",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\Reverbs\\Outdoors",
+      "GUID": "{67BD6B9F-FC47-4579-A4B5-9FBB558C8815}",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "48620415"
+        }
+       ]
+      }
      }
     ],
     "GameParameters": [
@@ -128,6 +180,6 @@
     ]
    }
   ],
-  "FileHash": "{B5D9E5F9-E515-498F-A3AD-29BDB6FFFF80}"
+  "FileHash": "{AD94AE0D-AB39-09B9-D02C-FD942934C7BD}"
  }
 }

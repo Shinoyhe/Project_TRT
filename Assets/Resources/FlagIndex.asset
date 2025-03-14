@@ -20,19 +20,19 @@ MonoBehaviour:
     Value: 0
   - ID: IC_info_card_1
     Type: 0
-    Card: {fileID: 0}
+    Card: {fileID: 11400000, guid: 7c965fd18e37c4f43b7fe8a49c38b93f, type: 2}
     DefaultValue: 0
-    Value: 0
+    Value: 1
   - ID: IC_info_card_2
     Type: 0
-    Card: {fileID: 0}
+    Card: {fileID: 11400000, guid: 5562485a150e16d449a78897a85cc098, type: 2}
     DefaultValue: 0
-    Value: 0
+    Value: 1
   - ID: IC_solar_panel
     Type: 0
-    Card: {fileID: 0}
+    Card: {fileID: 11400000, guid: ad8e6a92f388f7b499a3c6f6cb32d9bf, type: 2}
     DefaultValue: 0
-    Value: 0
+    Value: 1
   - ID: solar_for_grove
     Type: 1
     Card: {fileID: 0}
@@ -45,12 +45,12 @@ MonoBehaviour:
     Value: 0
   - ID: IC_info_card_4
     Type: 0
-    Card: {fileID: 0}
+    Card: {fileID: 11400000, guid: ab323581bf49a9741951338cb42823af, type: 2}
     DefaultValue: 0
-    Value: 0
+    Value: 1
   - ID: IC_date_note
     Type: 0
-    Card: {fileID: 0}
+    Card: {fileID: 11400000, guid: b3ce713d5e03399499b7f5df33e92dcc, type: 2}
     DefaultValue: 0
     Value: 0
   - ID: key_for_USB
@@ -65,42 +65,42 @@ MonoBehaviour:
     Value: 0
   - ID: IC_grove_key
     Type: 0
-    Card: {fileID: 0}
+    Card: {fileID: 11400000, guid: a942cf1638829df488725379b2d4fab7, type: 2}
     DefaultValue: 0
     Value: 0
-  - ID: flag_1
+  - ID: IC_starting_card
+    Type: 0
+    Card: {fileID: 11400000, guid: 3dd2a051f01547a42b80909c641b96cd, type: 2}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_info_card_6
+    Type: 0
+    Card: {fileID: 11400000, guid: a072bbab54e22d14f9258db69fc354d6, type: 2}
+    DefaultValue: 0
+    Value: 1
+  - ID: IC_info_card_7
+    Type: 0
+    Card: {fileID: 11400000, guid: d0e47fadd857c1c47b5fb396462252ca, type: 2}
+    DefaultValue: 0
+    Value: 1
+  - ID: IC_rare_fruit
+    Type: 0
+    Card: {fileID: 11400000, guid: 081c2b4ca1f4c724e9f3ae2ecedc03c3, type: 2}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_facility_usb
+    Type: 0
+    Card: {fileID: 11400000, guid: 5b5349cb0746d7c46b8b4b37dafc297e, type: 2}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_key_card
+    Type: 0
+    Card: {fileID: 11400000, guid: b3f6500aede711c489da950e7409d09b, type: 2}
+    DefaultValue: 0
+    Value: 1
+  - ID: bartered_once
     Type: 1
     Card: {fileID: 0}
-    DefaultValue: 0
-    Value: 0
-  - ID: flag_2
-    Type: 1
-    Card: {fileID: 0}
-    DefaultValue: 0
-    Value: 0
-  - ID: flag_3
-    Type: 1
-    Card: {fileID: 0}
-    DefaultValue: 0
-    Value: 0
-  - ID: IC_goal_card_0
-    Type: 0
-    Card: {fileID: 11400000, guid: b8c6dc56fc044494484eb69e03fa03ca, type: 2}
-    DefaultValue: 0
-    Value: 0
-  - ID: IC_goal_card_1
-    Type: 0
-    Card: {fileID: 11400000, guid: ba23e1d137456c74e819fed69c459ed6, type: 2}
-    DefaultValue: 0
-    Value: 0
-  - ID: IC_goal_card_2
-    Type: 0
-    Card: {fileID: 11400000, guid: d88b25fd5b9a8ce4f9639cb08dccbd27, type: 2}
-    DefaultValue: 0
-    Value: 0
-  - ID: IC_goal_card_3
-    Type: 0
-    Card: {fileID: 11400000, guid: db55080b26bb6f34c8d908483436f960, type: 2}
     DefaultValue: 0
     Value: 0
   inkFiles:
@@ -108,11 +108,14 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 835a2fb2cb8f98a4295b3738a9846efb, type: 3}
   - {fileID: 4900000, guid: 3ef11f047d6c3b54aba69c65ae5233d0, type: 3}
   - {fileID: 4900000, guid: 7f157b2b23b981749affa0ad6bf2e0f3, type: 3}
-  - {fileID: 4900000, guid: 51c9eaa08ecf8234bbf3c960b70f42a7, type: 3}
   cardIndex:
-  - {fileID: 11400000, guid: b8c6dc56fc044494484eb69e03fa03ca, type: 2}
-  - {fileID: 11400000, guid: ba23e1d137456c74e819fed69c459ed6, type: 2}
-  - {fileID: 11400000, guid: d88b25fd5b9a8ce4f9639cb08dccbd27, type: 2}
-  - {fileID: 11400000, guid: db55080b26bb6f34c8d908483436f960, type: 2}
-  - {fileID: 11400000, guid: c3b9882adafbedb40a1c5bfb0a3ac1a9, type: 2}
-  - {fileID: 11400000, guid: ddc774a1490457443a8d7181c31fc4d9, type: 2}
+  - {fileID: 11400000, guid: b3ce713d5e03399499b7f5df33e92dcc, type: 2}
+  - {fileID: 11400000, guid: 5b5349cb0746d7c46b8b4b37dafc297e, type: 2}
+  - {fileID: 11400000, guid: a942cf1638829df488725379b2d4fab7, type: 2}
+  - {fileID: 11400000, guid: 081c2b4ca1f4c724e9f3ae2ecedc03c3, type: 2}
+  - {fileID: 11400000, guid: ad8e6a92f388f7b499a3c6f6cb32d9bf, type: 2}
+  - {fileID: 11400000, guid: 7c965fd18e37c4f43b7fe8a49c38b93f, type: 2}
+  - {fileID: 11400000, guid: 5562485a150e16d449a78897a85cc098, type: 2}
+  - {fileID: 11400000, guid: ab323581bf49a9741951338cb42823af, type: 2}
+  - {fileID: 11400000, guid: a072bbab54e22d14f9258db69fc354d6, type: 2}
+  - {fileID: 11400000, guid: d0e47fadd857c1c47b5fb396462252ca, type: 2}

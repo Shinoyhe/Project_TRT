@@ -246,6 +246,78 @@ MonoBehaviour:
   hoverTime: 0.15
   dragAlpha: 0.5
   snapTime: 0.15
+  cardSelectSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []
+  cardHoverSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []
   cardPlaceSFX:
     name: 
     playOnInit: 0
@@ -915,7 +987,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Y (Hold) \nShow Preferences"
+  m_text: "E (Hold) \nShow Preferences"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38a4173e5d84703438959bb5cca50377, type: 2}
   m_sharedMaterial: {fileID: 484691237190804879, guid: 38a4173e5d84703438959bb5cca50377,

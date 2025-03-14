@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: 5542756859814751344, guid: 7dfdb806454c46e40a5dc2abdfe2f1f2,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.74
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5542756859814751344, guid: 7dfdb806454c46e40a5dc2abdfe2f1f2,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.74
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5542756859814751344, guid: 7dfdb806454c46e40a5dc2abdfe2f1f2,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.4933333
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5542756859814751344, guid: 7dfdb806454c46e40a5dc2abdfe2f1f2,
         type: 3}
@@ -31,7 +31,7 @@ PrefabInstance:
     - target: {fileID: 5542756859814751344, guid: 7dfdb806454c46e40a5dc2abdfe2f1f2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.02
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5542756859814751344, guid: 7dfdb806454c46e40a5dc2abdfe2f1f2,
         type: 3}
@@ -76,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 5542756859814751344, guid: 7dfdb806454c46e40a5dc2abdfe2f1f2,
         type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9008049021146201883, guid: 7dfdb806454c46e40a5dc2abdfe2f1f2,
         type: 3}
@@ -165,10 +165,75 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
         type: 3}
+      propertyPath: npcConversation
+      value: 
+      objectReference: {fileID: 4900000, guid: 047a17dc772f2b143a17b7a04f1a9335, type: 3}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: DecayAcceleration
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: WillingnessPerFail
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: IconLocalPosition.y
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: BarterResponseMatrix
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ea28b58150b95e4b85db63cf1ba747c,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
       propertyPath: BarterNeutralBehaviour
       value: 
       objectReference: {fileID: 11400000, guid: d5da7a0cc6260ac499f7b5f8e6536442,
         type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: ab323581bf49a9741951338cb42823af,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: a072bbab54e22d14f9258db69fc354d6,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: ad8e6a92f388f7b499a3c6f6cb32d9bf,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: 081c2b4ca1f4c724e9f3ae2ecedc03c3,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].TradeIsPossible.id
+      value: Solar_for_IC_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[1].TradeIsPossible.id
+      value: IC_rare_fruit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8154059828239661575, guid: 88134a33d61852146b7f14c112d0389b, type: 3}

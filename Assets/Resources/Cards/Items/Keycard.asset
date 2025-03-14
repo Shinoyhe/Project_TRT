@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf5943d399a0e540a80a0341cd79c25, type: 3}
+  m_Name: Keycard
+  m_EditorClassIdentifier: 
+  CardName: Key Card
+  Type: 1
+  ID: key_card
+  Description: Old relic
+  Sprite: {fileID: 21300000, guid: 5317868d9e970bb4eb4406dd91348797, type: 3}
+  StartingLocation: Player
+  ContextData:
+  - origin: 0
+    contextInfo:
+      relevant: 0
+      context: 
+  - origin: 1
+    contextInfo:
+      relevant: 0
+      context: 
+  - origin: 2
+    contextInfo:
+      relevant: 0
+      context: 

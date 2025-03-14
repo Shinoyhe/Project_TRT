@@ -285,7 +285,7 @@ public class InGameUi : MonoBehaviour
                 break;
             case UiStates.MoveToTitle:
                 // Insert animation!
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                SceneManager.LoadScene(0);
                 break;
             case UiStates.Controls:
                 // Insert animation!

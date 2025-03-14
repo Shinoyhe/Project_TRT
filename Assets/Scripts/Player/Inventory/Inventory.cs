@@ -199,6 +199,14 @@ public class Inventory : MonoBehaviour
         {
             RemoveCard(card.Data);
         }
+        
+        if (AllCards.Count <= 0) return;
+        foreach (InventoryCardData card in StartingCards)
+        {
+            if (HasCard(card)) { continue; }
+
+            AddCard(card);
+        }
     }
 
     public void Print()

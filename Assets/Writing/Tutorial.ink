@@ -1,5 +1,5 @@
 // NOTE: The Shady Merchant is the one who's gonna say this. Rewrite the upbeat tone completely plz.
-~ temp bartered_once = false
+VAR bartered_once = false
 
 -> Start
 
@@ -11,14 +11,14 @@ Never seen this kinda tech around here. You must be new huh? The name's F1X. #NP
     ** Business.
         Business ey'? Then I presume you know how to barter? #NPC
         *** Couldn't hurt to learn.
-            Great! <> #NPC
+            Great! #NPC
             -> Tutorial
         *** Of course I do. 
             -> NoRefusal
     ** Here to do some research on a rumor.
         Oh? Something around these parts catch your pointy lil' ears? To get anything around here you're gonna have to know how to barter. I can give you a few pointers if ya' want. #NPC
         *** Couldn't hurt to learn.
-            Great! <> #NPC
+            Great! #NPC
             -> Tutorial
         *** Of course I know how to barter.
             ->NoRefusal

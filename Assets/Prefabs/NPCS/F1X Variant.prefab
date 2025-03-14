@@ -63,6 +63,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: F1X Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: npcConversation
+      value: 
+      objectReference: {fileID: 4900000, guid: 3ef11f047d6c3b54aba69c65ae5233d0, type: 3}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: DecayAcceleration
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: WillingnessPerFail
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: IconLocalPosition.y
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: BarterResponseMatrix
+      value: 
+      objectReference: {fileID: 11400000, guid: 320e3f22c53633d44b587612b7142366,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b5349cb0746d7c46b8b4b37dafc297e,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: a942cf1638829df488725379b2d4fab7,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].TradeIsPossible.id
+      value: key_for_USB
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

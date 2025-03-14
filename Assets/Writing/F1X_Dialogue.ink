@@ -13,11 +13,10 @@ VAR IC_date_note = false
 ->Intro
 
 === Intro ===
-Welcome to the best decision you'll make all day.
+Welcome to the best decision you'll make all day. #NPC
 ->Start
 
 === Start ===
-Welcome to the best decision you'll make all day. #NPC
 * I would like to Barter. 
     -> Barter
 * {IC_info_card_2 and IC_info_card_4} Got some great news for you F1X!

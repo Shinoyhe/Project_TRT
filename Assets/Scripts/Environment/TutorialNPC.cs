@@ -12,14 +12,9 @@ public class TutorialNPC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameManager.Instance != null)
-        {
-            GameManager.BarterStarter.OnWin += () => StartCoroutine(TransitionToGame());
-            GameManager.BarterStarter.OnLose += () => StartCoroutine(TransitionToGame());
-        }
 
-        if (npcInteractable == null) { return; }
-        npcInteractable.Interaction();
+        // if (npcInteractable == null) { return; }
+        // npcInteractable.Interaction();
     }
 
     // Update is called once per frame
@@ -27,9 +22,15 @@ public class TutorialNPC : MonoBehaviour
     {
         
     }
+    
+    public void SetUpTutorial(){
+        StartCoroutine(TransitionToGame());
+    }
 
     private IEnumerator TransitionToGame()
     {
+        GameManager.Player.Movement.SetCanMove(false);
+        GameManager.Player.InteractionHandler.SetCanInteract(false);
         foreach (InventoryCardData inventoryCardData in postTutorialCards)
         {
             if (inventoryCardData != null)
@@ -39,7 +40,9 @@ public class TutorialNPC : MonoBehaviour
         }
 
         yield return fadeToBlack.StartFadeIn();
-
-        SceneManager.LoadScene("EnvInteractables");
+        
+        GameManager.Player.Movement.SetCanMove(true);
+        GameManager.Player.InteractionHandler.SetCanInteract(true);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }

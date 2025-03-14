@@ -35,9 +35,9 @@ RectTransform:
   - {fileID: 2267521994576648806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -284}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 40, y: 796}
   m_SizeDelta: {x: 50, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &794701876304840855
@@ -106,8 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039e2d2c906c06e4da3ddcc8e4dd34fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerTalking: {fileID: 21300000, guid: 159eb5db795beb145af50a790e211165, type: 3}
-  NPCTalking: {fileID: 21300000, guid: e22b63c43b24c5d4488f69756cd0fcdd, type: 3}
   Text: {fileID: 27500488730552972}
   Image: {fileID: 5964885186165802060}
 --- !u!1 &6019361162553141836

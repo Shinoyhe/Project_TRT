@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a94a4cc4b6a2c945bdc589bbb60d782, type: 3}
-  m_Name: Echo_Shift
+  m_Name: '!Fruit_Direct'
   m_EditorClassIdentifier: 
-  id: Echo_Shift
+  id: fruit_direct
   oppCards:
   - {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
   - {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
@@ -22,22 +22,22 @@ MonoBehaviour:
   _editorMatchList:
   - OppCard: {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
     PlayerCard: {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
-    Match: 2
+    Match: 1
   - OppCard: {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
     PlayerCard: {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
-    Match: 1
+    Match: 2
   - OppCard: {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
     PlayerCard: {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
     Match: 0
   - OppCard: {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
     PlayerCard: {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
-    Match: 2
+    Match: 1
   - OppCard: {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
     PlayerCard: {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
-    Match: 1
+    Match: 0
   - OppCard: {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
     PlayerCard: {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
-    Match: 1
+    Match: 2
   - OppCard: {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
     PlayerCard: {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
     Match: 1
@@ -49,22 +49,22 @@ MonoBehaviour:
     Match: 2
   - OppCard: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
     PlayerCard: {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
-    Match: 0
+    Match: 1
   - OppCard: {fileID: 11400000, guid: afebfc78652003240bb60362f4680b45, type: 2}
     PlayerCard: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
     Match: 1
   - OppCard: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
     PlayerCard: {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
-    Match: 1
+    Match: 2
   - OppCard: {fileID: 11400000, guid: f4df71f369cac3344afae12eb1d57cce, type: 2}
     PlayerCard: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
     Match: 1
   - OppCard: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
     PlayerCard: {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
-    Match: 1
+    Match: 0
   - OppCard: {fileID: 11400000, guid: e9763989c55c4d94b8a44b8e4f914bb4, type: 2}
     PlayerCard: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
-    Match: 0
+    Match: 1
   - OppCard: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
     PlayerCard: {fileID: 11400000, guid: 0002ab67a8afe4d429a414f4676dc3e2, type: 2}
-    Match: 2
+    Match: 1

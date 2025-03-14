@@ -127,7 +127,7 @@ public class StartUi : MonoBehaviour {
             case UiState.ContinueGame:
                 // Continue game
                 // -- TEMP --
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
                 // -- TEMP --
                 break;
             case UiState.Quit:

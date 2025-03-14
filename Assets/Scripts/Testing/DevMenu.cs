@@ -81,5 +81,17 @@ public class DevMenu : Singleton<DevMenu> {
         }
         SceneManager.LoadScene(0);
     }
+    
+    public void GiveAllItems()
+    {
+        if (GameManager.Inventory != null)
+        {
+            foreach (InventoryCardData data in GameManager.Inventory.AllCardDatas)
+            {
+                if (GameManager.Inventory.HasCard(data)) continue;
+                GameManager.Inventory.AddCard(data);
+            }
+        }
+    }
     #endregion
 }

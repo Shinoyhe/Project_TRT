@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NpcInteractable : Interactable
 {
@@ -18,6 +19,8 @@ public class NpcInteractable : Interactable
     [BoxGroup("Barter Settings"), Range(0, 50)] public float WillingnessPerMatch = 5;
     [BoxGroup("Barter Settings"), Range(0, -50)] public float WillingnessPerFail = -5;
     [BoxGroup("Barter Settings"), Range(0, 100)] public float StartingWillingness = 50;
+    
+    [SerializeField] UnityEvent BarterWinEvent;
 
     public override void Highlight()
     {
@@ -77,7 +80,8 @@ public class NpcInteractable : Interactable
         barterStarter.WillingnessPerFail = WillingnessPerFail;
         barterStarter.StartingWillingness = StartingWillingness;
         
-        barterStarter.OnWin = () => GameManager.DialogueManager.StartConversation(npcConversation, NpcData.Name, NpcData.Icon, "BarterWin");
+        // Messy Code
+        barterStarter.OnWin = () => {GameManager.DialogueManager.StartConversation(npcConversation, NpcData.Name, NpcData.Icon, "BarterWin"); GameManager.DialogueManager.EndCallback = () => {BarterWinEvent?.Invoke();};};
         barterStarter.OnLose = () => GameManager.DialogueManager.StartConversation(npcConversation, NpcData.Name, NpcData.Icon, "BarterLose");
     }
 

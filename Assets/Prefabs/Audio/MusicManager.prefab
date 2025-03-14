@@ -45,85 +45,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e55bb5fa9b173d49812c5b09c72aa5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicEvents:
-  - name: Start Music
-    playOnInit: 1
-    _events:
-      startEvent:
-        idInternal: 0
-        valueGuidInternal: 
-        WwiseObjectReference: {fileID: 11400000, guid: f0c5872dd07b7634e8cd6ac5b0a7d6c3,
-          type: 2}
-      pauseEvent:
-        idInternal: 0
-        valueGuidInternal: 
-        WwiseObjectReference: {fileID: 11400000, guid: e9a2d8df8b939844da4c84d9a95c8a2f,
-          type: 2}
-      resumeEvent:
-        idInternal: 0
-        valueGuidInternal: 
-        WwiseObjectReference: {fileID: 11400000, guid: 1444bc706fde0a148b0498cae8f62c9f,
-          type: 2}
-      stopEvent:
-        idInternal: 0
-        valueGuidInternal: 
-        WwiseObjectReference: {fileID: 11400000, guid: f8b283a7895b78343b5b55ddcc08c4f4,
-          type: 2}
-    _callbacks:
-      onStart:
-        m_PersistentCalls:
-          m_Calls: []
-      onRestart:
-        m_PersistentCalls:
-          m_Calls: []
-      onCompleted:
-        m_PersistentCalls:
-          m_Calls: []
-      onBeat:
-        m_PersistentCalls:
-          m_Calls: []
-      onMarker:
-        m_PersistentCalls:
-          m_Calls: []
-  - name: Start Music
-    playOnInit: 1
-    _events:
-      startEvent:
-        idInternal: 0
-        valueGuidInternal: 
-        WwiseObjectReference: {fileID: 11400000, guid: f0c5872dd07b7634e8cd6ac5b0a7d6c3,
-          type: 2}
-      pauseEvent:
-        idInternal: 0
-        valueGuidInternal: 
-        WwiseObjectReference: {fileID: 11400000, guid: e9a2d8df8b939844da4c84d9a95c8a2f,
-          type: 2}
-      resumeEvent:
-        idInternal: 0
-        valueGuidInternal: 
-        WwiseObjectReference: {fileID: 11400000, guid: 1444bc706fde0a148b0498cae8f62c9f,
-          type: 2}
-      stopEvent:
-        idInternal: 0
-        valueGuidInternal: 
-        WwiseObjectReference: {fileID: 11400000, guid: f8b283a7895b78343b5b55ddcc08c4f4,
-          type: 2}
-    _callbacks:
-      onStart:
-        m_PersistentCalls:
-          m_Calls: []
-      onRestart:
-        m_PersistentCalls:
-          m_Calls: []
-      onCompleted:
-        m_PersistentCalls:
-          m_Calls: []
-      onBeat:
-        m_PersistentCalls:
-          m_Calls: []
-      onMarker:
-        m_PersistentCalls:
-          m_Calls: []
+  _events:
+    startEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: f0c5872dd07b7634e8cd6ac5b0a7d6c3,
+        type: 2}
+    pauseEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: e9a2d8df8b939844da4c84d9a95c8a2f,
+        type: 2}
+    resumeEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 1444bc706fde0a148b0498cae8f62c9f,
+        type: 2}
+    stopEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: f8b283a7895b78343b5b55ddcc08c4f4,
+        type: 2}
+  musicStateEventsList:
+  - stateName: Barter
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 017aab24b11786845ae1fc64b8be7bc9,
+        type: 2}
+  - stateName: Barter_Mail
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 5ac7455830fd48749a58b7efcebbb234,
+        type: 2}
+  - stateName: Active
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 19ddfb604d2939c48ba9bac278e34261,
+        type: 2}
+  - stateName: Calm
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: b47a8881f181327429fee8d15b2ebc96,
+        type: 2}
+  - stateName: PlayerSpawn
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 7e8bf312332fb6a45919873cbc424c6f,
+        type: 2}
+  - stateName: Pause
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: e9a2d8df8b939844da4c84d9a95c8a2f,
+        type: 2}
+  - stateName: Resume
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 1444bc706fde0a148b0498cae8f62c9f,
+        type: 2}
+  - stateName: Start
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: f0c5872dd07b7634e8cd6ac5b0a7d6c3,
+        type: 2}
+  - stateName: Stop
+    musicEvent:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: f8b283a7895b78343b5b55ddcc08c4f4,
+        type: 2}
+  startingMusicState: PlayerSpawn
 --- !u!114 &4006782332480119793
 MonoBehaviour:
   m_ObjectHideFlags: 0

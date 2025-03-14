@@ -24,6 +24,9 @@ public class DialogueManager : MonoBehaviour
             IsBarterTrigger = isBarterTrigger;
         }
     }
+    
+    // Messy code
+    public System.Action EndCallback; 
 
     // Misc Internal Variables ====================================================================
 
@@ -116,7 +119,7 @@ public class DialogueManager : MonoBehaviour
                 _currentStory.ObserveVariable(id, (string varName, object newValue) => GameManager.FlagTracker.SetFlag(varName, (bool)newValue));
             };
         }
-        inkyVars();
+        inkyVars?.Invoke();
         inkyVars = null;
         
         if (knot != "NONE"){
@@ -304,5 +307,6 @@ public class DialogueManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
         _onDelay = false;
+        EndCallback?.Invoke(); // Messy code
     }
 }

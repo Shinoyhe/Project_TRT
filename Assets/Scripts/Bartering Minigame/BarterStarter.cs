@@ -144,7 +144,8 @@ public class BarterStarter : MonoBehaviour
 
         //MusicManager.play
 
-        MusicActionsManager.ChangeMusicState("Barter");
+        if (NpcData.Name == "B4rn3y") MusicActionsManager.ChangeMusicState("Barter_Mail");
+        else MusicActionsManager.ChangeMusicState("Barter");
 
         return _barterInstance;
     }

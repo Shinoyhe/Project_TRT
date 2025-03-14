@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: d2e647656401fa48b0d64a886d907446
     GuidInternal: 
-    m_lastTime: -8584616603804391232
+    m_lastTime: -8584610564298867843
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 587ca0226052be4e9b8540a22c4f2092
     GuidInternal: 
-    m_lastTime: -8584598831953546725
+    m_lastTime: -8584596926715615912
     List:
     - name: Ambience Bus
       guid: b98c6c284c7de7449139c8391e920f9c
@@ -174,7 +174,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Ambience
     guid: 0104f6680c27bf408fd7c64816ee8c87
     GuidInternal: 
-    m_lastTime: -8584598831935006104
+    m_lastTime: -8584596926702670470
     List:
     - name: Ambience
       guid: 86b2f852bdba9b4fa5a800a04824ffe7
@@ -201,7 +201,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 04fe062a3bbc02478aebf9ed87255f35
     GuidInternal: 
-    m_lastTime: -8584616603804511337
+    m_lastTime: -8584610564298937844
     List: []
   - PhysicalPath: SoundBanks\Music.wwu
     PathAndIcons:
@@ -241,7 +241,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\SFX
     guid: f39c92e98d8cf14f9d79f84c53eb00b3
     GuidInternal: 
-    m_lastTime: -8584596873836077438
+    m_lastTime: -8584596755313911504
     List:
     - name: SFX
       guid: cc965433ea452249b9fac65217b7662e
@@ -269,7 +269,7 @@ MonoBehaviour:
     ParentPath: Events\Ambience
     guid: 78290c8229ac584884ed86c3baba619d
     GuidInternal: 
-    m_lastTime: -8584598829023879672
+    m_lastTime: -8584596926723784163
     List:
     - name: BirdStart
       guid: 932c63abf08ea4489f51f773ba1e5c74
@@ -1020,7 +1020,7 @@ MonoBehaviour:
     ParentPath: Events\SettingsUI
     guid: 1fb0d41104b6e84e81ed9ee770f55b1a
     GuidInternal: 
-    m_lastTime: -8584596873630596056
+    m_lastTime: -8584596755315676842
     List:
     - name: Play_Menu_ButtonDown
       guid: 1bffeceb86b8cc499461cd7752dd9198
@@ -1037,8 +1037,8 @@ MonoBehaviour:
         guid: 1bffeceb86b8cc499461cd7752dd9198
       Path: Events\SettingsUI\Play_Menu_ButtonDown
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.33267328
+      minDuration: 0.33267328
     - name: Play_Menu_ButtonUp
       guid: 0cdc270364002e449e37d3097a1ea4fd
       id: 1033222429
@@ -1054,8 +1054,8 @@ MonoBehaviour:
         guid: 0cdc270364002e449e37d3097a1ea4fd
       Path: Events\SettingsUI\Play_Menu_ButtonUp
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.4871287
+      minDuration: 0.4871287
     - name: Play_Menu_Close
       guid: 5c4638984c50504b90914c2b1d764b74
       id: 1357484874
@@ -1071,8 +1071,8 @@ MonoBehaviour:
         guid: 5c4638984c50504b90914c2b1d764b74
       Path: Events\SettingsUI\Play_Menu_Close
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 2
+      minDuration: 2
     - name: Play_Menu_Open
       guid: 44f599cbe9e94d44b0d4eead0b28a15f
       id: 2236734574
@@ -1088,8 +1088,8 @@ MonoBehaviour:
         guid: 44f599cbe9e94d44b0d4eead0b28a15f
       Path: Events\SettingsUI\Play_Menu_Open
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 2
+      minDuration: 2
   - PhysicalPath: Events\UI.wwu
     PathAndIcons:
     - ElementName: Events
@@ -1352,7 +1352,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: 4106411ba585644787ebc92dd1cdc4ca
     GuidInternal: 
-    m_lastTime: -8584616603804441278
+    m_lastTime: -8584610564298887835
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -1366,7 +1366,7 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 9df9aa54af8cab4ea76b42f4ee8eaa58
     GuidInternal: 
-    m_lastTime: -8584616603804421256
+    m_lastTime: -8584610564298877839
     List:
     - name: Test
       guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
@@ -1383,7 +1383,7 @@ MonoBehaviour:
         guid: 23c0f7a154fe4f4dbb4cbb0e19d72476
       Path: Triggers\Default Work Unit\Test
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000a0000000c0000000d0000000e0000001000000012000000140000001600000017000000
+  ExpandedWaapiItemIds: 05000000060000000700000008000000090000000a0000000c0000000d0000000e0000001000000011000000120000001300000014000000160000001700000018000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

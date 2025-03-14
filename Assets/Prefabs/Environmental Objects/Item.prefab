@@ -154,7 +154,43 @@ MonoBehaviour:
   UseTransform: 0
   IconTransformPosition: {fileID: 0}
   IconLocalPosition: {x: 0, y: 1, z: 0}
-  CardToGive: {fileID: 11400000, guid: 13100b441a1588f45adb35dfe5f4cc1a, type: 2}
+  CardToGive: {fileID: 11400000, guid: 081c2b4ca1f4c724e9f3ae2ecedc03c3, type: 2}
+  itemPickupSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!1 &6708539141458140541
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   Mode: 1
-  FlipOrientation: 1
+  FlipOrientation: 0
   lerpSpeed: 3
 --- !u!1 &7948727247433978980
 GameObject:

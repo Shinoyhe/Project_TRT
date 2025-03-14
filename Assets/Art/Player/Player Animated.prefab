@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1409599481511966280}
   - component: {fileID: 5671967985181747439}
-  - component: {fileID: 3061377502946962351}
+  - component: {fileID: 5039439904803669930}
+  - component: {fileID: 2933849082744453684}
   m_Layer: 0
   m_Name: Player Animated
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.250938, y: 8.7787895, z: -41.218113}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 09bdade988d3fd44ba90bedf45b58716, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 230149827, guid: bddd3236508aef24db217281ab60b091, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 14abc705a7a0dee4686274340092ade1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &3061377502946962351
+--- !u!95 &5039439904803669930
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -95,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 2616370967543034599}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d9b4673c6e5a75a4d95279a1420df768, type: 2}
+  m_Controller: {fileID: 9100000, guid: 794f1691bd6eb110a87dbe9e4e802cfa, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -106,3 +107,52 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2933849082744453684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2616370967543034599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499a9be3516b7a3428071f0174e9495a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerFootstepSFX:
+    name: 
+    playOnInit: 0
+    _events:
+      startEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 11400000, guid: e6ecafc1a75bc294583305ba9f1565be,
+          type: 2}
+      pauseEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      resumeEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+      stopEvent:
+        idInternal: 0
+        valueGuidInternal: 
+        WwiseObjectReference: {fileID: 0}
+    _callbacks:
+      onStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onRestart:
+        m_PersistentCalls:
+          m_Calls: []
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      onBeat:
+        m_PersistentCalls:
+          m_Calls: []
+      onMarker:
+        m_PersistentCalls:
+          m_Calls: []

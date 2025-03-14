@@ -71,10 +71,58 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
         type: 3}
+      propertyPath: npcConversation
+      value: 
+      objectReference: {fileID: 4900000, guid: 835a2fb2cb8f98a4295b3738a9846efb, type: 3}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: DecayAcceleration
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: WillingnessPerFail
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: IconLocalPosition.y
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: BarterResponseMatrix
+      value: 
+      objectReference: {fileID: 11400000, guid: cf63845b70a10d646a47d7fa24699b20,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
       propertyPath: BarterNeutralBehaviour
       value: 
       objectReference: {fileID: 11400000, guid: b077fa0b0cb19b34a81d5ec924611cec,
         type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].RewardCard
+      value: 
+      objectReference: {fileID: 11400000, guid: a942cf1638829df488725379b2d4fab7,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].AcceptedCard
+      value: 
+      objectReference: {fileID: 11400000, guid: ad8e6a92f388f7b499a3c6f6cb32d9bf,
+        type: 2}
+    - target: {fileID: 8421605022798657179, guid: 88134a33d61852146b7f14c112d0389b,
+        type: 3}
+      propertyPath: PossibleTrades.trades.Array.data[0].TradeIsPossible.id
+      value: solar_for_grove
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8154059828239661575, guid: 88134a33d61852146b7f14c112d0389b, type: 3}
@@ -107,17 +155,17 @@ PrefabInstance:
     - target: {fileID: 8067267451576653408, guid: d1d98802c69c790419dea924bf296976,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.03
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8067267451576653408, guid: d1d98802c69c790419dea924bf296976,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.03
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8067267451576653408, guid: d1d98802c69c790419dea924bf296976,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.02
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8067267451576653408, guid: d1d98802c69c790419dea924bf296976,
         type: 3}
@@ -127,12 +175,12 @@ PrefabInstance:
     - target: {fileID: 8067267451576653408, guid: d1d98802c69c790419dea924bf296976,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.77
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8067267451576653408, guid: d1d98802c69c790419dea924bf296976,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8067267451576653408, guid: d1d98802c69c790419dea924bf296976,
         type: 3}

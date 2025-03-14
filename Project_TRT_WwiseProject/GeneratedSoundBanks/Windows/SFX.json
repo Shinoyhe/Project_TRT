@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{335496CC-45EA-4922-B9FA-C65217B7662E}",
     "Language": "SFX",
-    "Hash": "{59ABFB1A-95CA-8E52-1549-4CE12F90CBB2}",
+    "Hash": "{71189D3C-D22F-9C09-5BAF-582F1F349F94}",
     "ObjectPath": "\\SoundBanks\\SFX\\SFX",
     "ShortName": "SFX",
     "Path": "SFX.bnk",
@@ -54,6 +54,14 @@
       "Location": "Memory",
       "ShortName": "ChestOpenEmpty.wav",
       "CachePath": "CD/{CD6028BE-E313-3E4E-DA02-4312A97EDA95}.wem"
+     },
+     {
+      "Id": "173604301",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Menu_Open.wav",
+      "CachePath": "66/{66F23618-91D4-F23F-72B6-2708D13AFF49}.wem"
      },
      {
       "Id": "189639555",
@@ -112,6 +120,14 @@
       "CachePath": "28/{284F5E22-F38D-32C3-30C9-11C6A37C9BB2}.wem"
      },
      {
+      "Id": "540618060",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Menu_Close.wav",
+      "CachePath": "1B/{1BE1A56E-C960-43B9-D0B9-36E6C6AF414C}.wem"
+     },
+     {
       "Id": "613268131",
       "Language": "SFX",
       "Streaming": "false",
@@ -120,12 +136,28 @@
       "CachePath": "A9/{A92FFD3E-E46E-D16F-0192-671BE9B4E2D8}.wem"
      },
      {
+      "Id": "630183003",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Menu_ButtonDown.wav",
+      "CachePath": "A2/{A2C8F10B-EAD5-C7D8-210E-0DE11B8271FF}.wem"
+     },
+     {
       "Id": "734873575",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "BART_Card_Highlight.wav",
       "CachePath": "99/{99717639-10BA-5ED9-4484-DD49698199DA}.wem"
+     },
+     {
+      "Id": "743462201",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Menu_ButtonUp.wav",
+      "CachePath": "A9/{A9B789F2-4472-1AB8-8383-99964FA48500}.wem"
      },
      {
       "Id": "797347420",
@@ -389,6 +421,62 @@
       ]
      },
      {
+      "Id": "1536324566",
+      "Name": "Play_Menu_ButtonDown",
+      "ObjectPath": "\\Events\\SettingsUI\\Play_Menu_ButtonDown",
+      "GUID": "{EBECFF1B-B886-49CC-9461-CD7752DD9198}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.33267328",
+      "DurationMax": "0.33267328",
+      "MediaRefs": [
+       {
+        "Id": "630183003"
+       }
+      ]
+     },
+     {
+      "Id": "1033222429",
+      "Name": "Play_Menu_ButtonUp",
+      "ObjectPath": "\\Events\\SettingsUI\\Play_Menu_ButtonUp",
+      "GUID": "{0327DC0C-0064-442E-9E37-D3097A1EA4FD}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.4871287",
+      "DurationMax": "0.4871287",
+      "MediaRefs": [
+       {
+        "Id": "743462201"
+       }
+      ]
+     },
+     {
+      "Id": "1357484874",
+      "Name": "Play_Menu_Close",
+      "ObjectPath": "\\Events\\SettingsUI\\Play_Menu_Close",
+      "GUID": "{9838465C-504C-4B50-9091-4C2B1D764B74}",
+      "DurationType": "OneShot",
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "540618060"
+       }
+      ]
+     },
+     {
+      "Id": "2236734574",
+      "Name": "Play_Menu_Open",
+      "ObjectPath": "\\Events\\SettingsUI\\Play_Menu_Open",
+      "GUID": "{CB99F544-E9E9-444D-B0D4-EEAD0B28A15F}",
+      "DurationType": "OneShot",
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "173604301"
+       }
+      ]
+     },
+     {
       "Id": "1681012287",
       "Name": "PlayerFootsteps",
       "ObjectPath": "\\Events\\Environment\\Player\\PlayerFootsteps",
@@ -439,6 +527,6 @@
     ]
    }
   ],
-  "FileHash": "{C7428D31-05C1-CD88-0C2F-F5AE1B529F66}"
+  "FileHash": "{E32CA60C-3385-5B07-A047-E89A9C8A5910}"
  }
 }

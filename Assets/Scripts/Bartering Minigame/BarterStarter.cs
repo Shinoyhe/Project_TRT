@@ -28,6 +28,10 @@ public class BarterStarter : MonoBehaviour
     public System.Action OnWin;
     public System.Action OnLose;
 
+    // SFX For winning and losing a barter (i gotta find a more appropriate place for this)
+    [SerializeField] AudioEvent barterWinSFX;
+    [SerializeField] AudioEvent barterLoseSFX;
+
     // Misc Internal Variables ====================================================================
 
     private InGameUi _inGameUi;
@@ -140,6 +144,8 @@ public class BarterStarter : MonoBehaviour
 
         //MusicManager.play
 
+        MusicActionsManager.ChangeMusicState("Barter");
+
         return _barterInstance;
     }
 
@@ -150,6 +156,7 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void WinBarter()
     {
+        barterWinSFX.Play(gameObject);
         EndBarter(JournalOnWin, OnWin, true);
     }
 
@@ -158,6 +165,7 @@ public class BarterStarter : MonoBehaviour
     /// </summary>
     private void LoseBarter()
     {
+        barterLoseSFX.Play(gameObject);
         EndBarter(JournalOnLose, OnLose, false);
     }
 
@@ -169,6 +177,8 @@ public class BarterStarter : MonoBehaviour
     private void EndBarter(bool openJournal, System.Action callback, bool won)
     {
         Destroy(_barterInstance);
+
+        MusicActionsManager.ChangeToPreviousMusicState();
 
 
         EndSequenceParams parameters = new EndSequenceParams();
@@ -221,6 +231,8 @@ public class BarterStarter : MonoBehaviour
             if (CurrentTrade.AcceptedCard.Type == GameEnums.CardTypes.ITEM) {
                 GameManager.Inventory.RemoveCard(CurrentTrade.AcceptedCard);
             }
+
+            GameManager.NPCGlobalList.GetNPCFromData(NpcData).AddJournalKnownTrade(CurrentTrade.AcceptedCard, CurrentTrade.RewardCard);
         } else {
             Debug.LogError("Failed to reward card after win, CurrentTrade was not set");
         }

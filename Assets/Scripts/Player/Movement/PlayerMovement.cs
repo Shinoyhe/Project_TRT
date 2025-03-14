@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite spriteIdle;
     [SerializeField] private Sprite spriteWalk;
+	[SerializeField] private PlayerSFX playerSFX;
     private CharacterController _characterController;
 
 	#endregion

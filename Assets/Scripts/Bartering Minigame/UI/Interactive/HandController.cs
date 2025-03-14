@@ -40,6 +40,10 @@ public class HandController : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField]
+    private AudioEvent cardSelectSFX;
+    [SerializeField]
+    private AudioEvent cardHoverSFX;
+    [SerializeField]
     private AudioEvent cardPlaceSFX;
     [SerializeField]
     private AudioEvent cardShuffleSFX;
@@ -66,7 +70,7 @@ public class HandController : MonoBehaviour
 
         cardUser.OnHandUpdated += UpdateDisplayCards;
         // TODO: cardUser.OnDraw += play draw SFX;
-        // cardUser.OnShuffle += PlayShuffleSFX;
+        cardUser.OnShuffle += PlayShuffleSFX;
 
         _hand = new();
     }
@@ -233,7 +237,7 @@ public class HandController : MonoBehaviour
         // While under a Canvas, this makes this DisplayCard render on top of its siblings.
         card.transform.SetAsLastSibling();
 
-        // TODO: Play hover SFX
+        //cardHoverSFX.Play(gameObject);
     }
 
     private void OnCardDragStart(DisplayCard card)
@@ -248,6 +252,8 @@ public class HandController : MonoBehaviour
                 card.SubmitSlot.SetCard(null);
                 card.SetSubmitted(null);
             }
+
+            cardSelectSFX.Play(gameObject);
         }
     }
 
@@ -352,7 +358,7 @@ public class HandController : MonoBehaviour
         // Play all submitting card SFX
 
         // GARRETT: Commented following line out because it was causing errors
-        // cardPlaceSFX.Play(this.gameObject);
+        cardPlaceSFX.Play(gameObject);
 
         // Remove the card from its old slot, if it exists.
         if (card.SubmitSlot != null) {

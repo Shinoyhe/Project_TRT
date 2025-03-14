@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc0052783a47cb49891075b10ae3d1c, type: 3}
+  m_Name: FlagIndex
+  m_EditorClassIdentifier: 
+  flags:
+  - ID: Solar_for_IC_4
+    Type: 1
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_info_card_1
+    Type: 0
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_info_card_2
+    Type: 0
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_solar_panel
+    Type: 0
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: solar_for_grove
+    Type: 1
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: date_note
+    Type: 1
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_info_card_4
+    Type: 0
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_date_note
+    Type: 0
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: key_for_USB
+    Type: 1
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: gave_date_note
+    Type: 1
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_grove_key
+    Type: 0
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: flag_1
+    Type: 1
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: flag_2
+    Type: 1
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: flag_3
+    Type: 1
+    Card: {fileID: 0}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_goal_card_0
+    Type: 0
+    Card: {fileID: 11400000, guid: b8c6dc56fc044494484eb69e03fa03ca, type: 2}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_goal_card_1
+    Type: 0
+    Card: {fileID: 11400000, guid: ba23e1d137456c74e819fed69c459ed6, type: 2}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_goal_card_2
+    Type: 0
+    Card: {fileID: 11400000, guid: d88b25fd5b9a8ce4f9639cb08dccbd27, type: 2}
+    DefaultValue: 0
+    Value: 0
+  - ID: IC_goal_card_3
+    Type: 0
+    Card: {fileID: 11400000, guid: db55080b26bb6f34c8d908483436f960, type: 2}
+    DefaultValue: 0
+    Value: 0
+  inkFiles:
+  - {fileID: 4900000, guid: 047a17dc772f2b143a17b7a04f1a9335, type: 3}
+  - {fileID: 4900000, guid: 835a2fb2cb8f98a4295b3738a9846efb, type: 3}
+  - {fileID: 4900000, guid: 3ef11f047d6c3b54aba69c65ae5233d0, type: 3}
+  - {fileID: 4900000, guid: 7f157b2b23b981749affa0ad6bf2e0f3, type: 3}
+  - {fileID: 4900000, guid: 51c9eaa08ecf8234bbf3c960b70f42a7, type: 3}
+  cardIndex:
+  - {fileID: 11400000, guid: b8c6dc56fc044494484eb69e03fa03ca, type: 2}
+  - {fileID: 11400000, guid: ba23e1d137456c74e819fed69c459ed6, type: 2}
+  - {fileID: 11400000, guid: d88b25fd5b9a8ce4f9639cb08dccbd27, type: 2}
+  - {fileID: 11400000, guid: db55080b26bb6f34c8d908483436f960, type: 2}
+  - {fileID: 11400000, guid: c3b9882adafbedb40a1c5bfb0a3ac1a9, type: 2}
+  - {fileID: 11400000, guid: ddc774a1490457443a8d7181c31fc4d9, type: 2}

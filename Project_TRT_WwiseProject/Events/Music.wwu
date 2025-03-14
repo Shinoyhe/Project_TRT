@@ -33,18 +33,18 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="StartEnvironmentMusic" ID="{95DED10A-BAFA-4517-9EB7-3E06DDBA7B76}">
+						<Event Name="StartMusic" ID="{95DED10A-BAFA-4517-9EB7-3E06DDBA7B76}">
 							<ChildrenList>
 								<Action Name="" ID="{270CD915-047E-4F18-8E92-8D19304417A5}" ShortID="728333106">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="PlayerSpawn" ID="{3FC073F9-6EBD-4285-9702-06E6A2A90930}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+											<ObjectRef Name="MusicSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="PauseEnvironmentMusic" ID="{E86A3296-7F22-496B-BD16-5FCCBC20504E}">
+						<Event Name="PauseMusic" ID="{E86A3296-7F22-496B-BD16-5FCCBC20504E}">
 							<ChildrenList>
 								<Action Name="" ID="{7E55EEC8-4847-492F-B366-9D7FA4A3DAB4}" ShortID="941718113">
 									<PropertyList>
@@ -52,27 +52,29 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="EnviromentSequence" ID="{1FF7DC03-7415-4276-8283-4018BA65C84E}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+											<ObjectRef Name="MusicSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="StopEnvironmentMusic" ID="{EFEE06EC-4A3D-41B2-9883-2E17938F0EF1}">
+						<Event Name="StopMusic" ID="{EFEE06EC-4A3D-41B2-9883-2E17938F0EF1}">
 							<ChildrenList>
 								<Action Name="" ID="{6D4E7058-9235-479F-8C58-885CA5D477FB}" ShortID="1040242334">
 									<PropertyList>
 										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeOutCurve" Type="int16" Value="8"/>
+										<Property Name="Scope" Type="int16" Value="1"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="PlayerSpawn" ID="{3FC073F9-6EBD-4285-9702-06E6A2A90930}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+											<ObjectRef Name="MusicSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="ResumeEnvironmentMusic" ID="{417CD789-3F05-4A40-8360-23E0159080AF}">
+						<Event Name="ResumeMusic" ID="{417CD789-3F05-4A40-8360-23E0159080AF}">
 							<ChildrenList>
 								<Action Name="" ID="{9F397117-AEBE-48AC-8634-C6D5AFD1C946}" ShortID="482653556">
 									<PropertyList>
@@ -80,13 +82,13 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="PlayerSpawn" ID="{3FC073F9-6EBD-4285-9702-06E6A2A90930}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
+											<ObjectRef Name="MusicSwitch" ID="{156DF745-3C84-4423-930E-A66D9CA4354F}" WorkUnitID="{3CA207E9-88B7-4086-A56F-225EA88A4DFE}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="MusicStatePlayerSpawan" ID="{615BFAC6-D261-4C48-A196-83ACAEBF5061}">
+						<Event Name="MusicStatePlayerSpawn" ID="{615BFAC6-D261-4C48-A196-83ACAEBF5061}">
 							<ChildrenList>
 								<Action Name="" ID="{B02362C3-0616-4D6D-B306-CA6F7BF0FCBB}" ShortID="566654966">
 									<PropertyList>
@@ -95,6 +97,34 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="PlayerSpawn" ID="{34160084-965A-46DB-A8F6-BFA9644AC295}" WorkUnitID="{5295B7E6-B0B8-4F63-8A96-7D61276F57FA}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="MusicStateBartering" ID="{9DEDD160-9B2C-4960-A7A8-726AA1C20465}">
+							<ChildrenList>
+								<Action Name="" ID="{1919AD12-DBA4-44AC-8D60-0055C3D58CA2}" ShortID="1063063539">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="MailbotBarter" ID="{220970BA-3873-4295-B08E-35E3D335D7F9}" WorkUnitID="{5295B7E6-B0B8-4F63-8A96-7D61276F57FA}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="MusicStateBarter" ID="{189DFC90-F01E-4412-BD9D-62D38C8E0814}">
+							<ChildrenList>
+								<Action Name="" ID="{66DBBFF9-5F98-4BBD-995F-207FBBC92839}" ShortID="432984702">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Barter" ID="{4BF7E3F5-3CAA-4531-B914-D1278D66757C}" WorkUnitID="{5295B7E6-B0B8-4F63-8A96-7D61276F57FA}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

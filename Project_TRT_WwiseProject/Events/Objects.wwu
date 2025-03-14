@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{A9683DF5-6E4C-4D35-9F4E-EEE3B0DCD364}" SchemaVersion="123" RootDocumentID="{AEF51B85-54FE-489D-9C25-241343BB6F59}" ParentDocumentID="{AEF51B85-54FE-489D-9C25-241343BB6F59}">
+	<Events>
+		<WorkUnit Name="Objects" ID="{A9683DF5-6E4C-4D35-9F4E-EEE3B0DCD364}" OwnerID="{AEF51B85-54FE-489D-9C25-241343BB6F59}" PersistMode="Nested">
+			<ChildrenList>
+				<Event Name="ItemPickup" ID="{C51490A4-1D96-4A43-9E48-7D2D5EA73295}">
+					<ChildrenList>
+						<Action Name="" ID="{AB09647A-B7F9-491F-B832-4BB9152987BA}" ShortID="58555548">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Objects_Item_Pickup" ID="{65AF5CE5-431B-4330-93D2-4C5EF3852976}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="LightAmbience" ID="{CC3667E0-DF10-4CAC-BB2A-090285B6DE58}">
+					<ChildrenList>
+						<Action Name="" ID="{0A4B57B5-2DD5-488C-A67A-A749784F6C66}" ShortID="381138266">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Dummy_Fluorescent_Light" ID="{7111DF1D-D54F-42BC-BB9B-F74806589335}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="ElevatorStartup" ID="{8BB12D43-A70B-4BB3-B0EC-00C660953AC8}">
+					<ChildrenList>
+						<Action Name="" ID="{9C7AFBF0-8476-4818-9615-64DC06FEA3E2}" ShortID="199980150">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Elevator_Startup" ID="{599F94AC-C926-49B2-9E02-604529E46AF8}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="ElevatorHum" ID="{E5FDB948-698F-455D-AD92-E6D6F1BB2ACA}">
+					<ChildrenList>
+						<Action Name="" ID="{EF0AACFF-D98B-473B-AC36-5A8FD88A1037}" ShortID="597131059">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Elevator_Hum" ID="{9647516D-06A2-4901-B09F-AC36C57D8720}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="DoorOpen" ID="{41105AE4-9062-4DF4-A2DD-9AFD2F2AFA3D}">
+					<ChildrenList>
+						<Action Name="" ID="{67D0FF69-A701-406D-9A3B-D53F14C83575}" ShortID="375125726">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ENV_Door_Open" ID="{59C63FE8-3887-4685-B33D-BF70E1A80914}" WorkUnitID="{AE992F56-4ED0-44C3-B009-4F09454154AD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

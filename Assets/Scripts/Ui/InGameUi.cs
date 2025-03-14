@@ -49,12 +49,12 @@ public class InGameUi : MonoBehaviour
             return _currentCanvasState; 
         }
         private set { 
-            CanvasStateChanged?.Invoke(_currentCanvasState, value);
             _currentCanvasState = value;
 
             if (!UsesNavbar(value)) {
                 _lastNonNavbarState = value;
             }
+            CanvasStateChanged?.Invoke(_currentCanvasState, value);
         }
     }
 

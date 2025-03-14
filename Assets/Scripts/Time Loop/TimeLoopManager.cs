@@ -80,6 +80,8 @@ public class TimeLoopManager : MonoBehaviour
         GameManager.Player.Movement.SetCanMove(true);
         GameManager.Player.InteractionHandler.SetCanInteract(true);
         GameManager.PlayerInput.AllowNavbar = true;
+        GameManager.FlagTracker.ResetFlags();
+        GameManager.Inventory.ClearExceptType(GameEnums.CardTypes.INFO);
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }

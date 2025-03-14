@@ -18,6 +18,11 @@ public class BarterState_EndWin : BarterBaseState
     public override void Enter(BarterBaseState previousState)
     {
         _machine.Dir.TriggerWin();
+
+        // Triggers music manager to return to previously playing music
+        //MusicActionsManager.ChangeToPreviousMusicState();
+
+        //_machine.Dir.StartCoroutine(DEBUG_Reload());
     }
 
     public override void UpdateState() {}

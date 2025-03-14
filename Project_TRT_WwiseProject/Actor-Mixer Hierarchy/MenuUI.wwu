@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{6B1DDE5B-BB42-443C-87DB-C411C4026485}" SchemaVersion="123" RootDocumentID="{FA3D3862-1B73-4691-AADA-BC295B658906}" ParentDocumentID="{FA3D3862-1B73-4691-AADA-BC295B658906}">
+	<AudioObjects>
+		<WorkUnit Name="MenuUI" ID="{6B1DDE5B-BB42-443C-87DB-C411C4026485}" OwnerID="{FA3D3862-1B73-4691-AADA-BC295B658906}" PersistMode="Nested">
+			<ChildrenList>
+				<Sound Name="UI_Menu_Close" ID="{68DAA680-0B02-457C-AB40-37E51379241B}" ShortID="605276222">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="UI_Menu_Close" ID="{91A496A2-3024-4437-96B5-D3029256D5FA}">
+							<Language>SFX</Language>
+							<AudioFile>UI_Menu_Close.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="133687762"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="UI_Menu_Close" ID="{91A496A2-3024-4437-96B5-D3029256D5FA}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="UI_Menu_Open" ID="{0577EDAF-0109-4E03-9C57-0CF7EE2A26F7}" ShortID="879731311">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6F369F01-20CF-4EF6-8F07-43A3BB7F9B1E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{22A07C58-5260-4EBE-9B85-40A22C4F2092}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="UI_Menu_Open" ID="{18DEAFB3-71E4-4701-B47D-806B0AA493A4}">
+							<Language>SFX</Language>
+							<AudioFile>UI_Menu_Open.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="189639555"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="UI_Menu_Open" ID="{18DEAFB3-71E4-4701-B47D-806B0AA493A4}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

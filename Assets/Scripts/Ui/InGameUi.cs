@@ -137,11 +137,7 @@ public class InGameUi : MonoBehaviour
     }
 
     // Used for button OnClick calls as they don't let enums to be passed through :|
-    public void MoveToDefault()
-    {
-        MoveTo(UiStates.Default);
-        pauseClose.Post(this.gameObject); // play menu close sound only on unpause
-    }
+    public void MoveToDefault() => MoveTo(UiStates.Default);
     public void MoveToPause() => MoveTo(UiStates.Pause);
     public void MoveToOptions() => MoveTo(UiStates.Options);
     public void MoveToTitle() => MoveTo(UiStates.MoveToTitle);
@@ -258,6 +254,10 @@ public class InGameUi : MonoBehaviour
     /// <param name="stateToStart">State that will start.</param>
     void StartState(UiStates stateToStart) {
 
+        // Previous state
+        // this is mainly so the unpause sound doesn't play on startup lol
+        UiStates previousState = CurrentCanvasState; 
+
         // Set our new state
         CurrentCanvasState = stateToStart;
 
@@ -270,6 +270,7 @@ public class InGameUi : MonoBehaviour
                 GameManager.Player.Movement.SetCanMove(true);
                 GameManager.Player.InteractionHandler.SetCanInteract(true);
                 GameManager.PlayerInput.AllowNavbar = true;
+                if (previousState != UiStates.Default) pauseClose.Post(this.gameObject); // play menu close sound only on unpause
                 Default.gameObject.SetActive(true);
                 break;
             case UiStates.Pause:

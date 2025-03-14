@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{11D4B01F-B604-4EE8-81ED-9EE770F55B1A}" SchemaVersion="123" RootDocumentID="{DC67F875-991A-4906-8DF4-975D819BEC40}" ParentDocumentID="{DC67F875-991A-4906-8DF4-975D819BEC40}">
+	<Events>
+		<WorkUnit Name="SettingsUI" ID="{11D4B01F-B604-4EE8-81ED-9EE770F55B1A}" OwnerID="{DC67F875-991A-4906-8DF4-975D819BEC40}" PersistMode="Nested">
+			<ChildrenList>
+				<Event Name="Play_Menu_Open" ID="{CB99F544-E9E9-444D-B0D4-EEAD0B28A15F}">
+					<ChildrenList>
+						<Action Name="" ID="{94B4E72A-CBFB-4E8A-988E-CFBBFD6FFBD7}" ShortID="984243591">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Menu_Open" ID="{EB460DAE-18B0-43DA-A25A-67682DC2B12A}" WorkUnitID="{373CD9AD-DC2B-4BCE-9BB6-9C4270206DD9}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Menu_ButtonDown" ID="{EBECFF1B-B886-49CC-9461-CD7752DD9198}">
+					<ChildrenList>
+						<Action Name="" ID="{C7CCD2D3-EAFE-4595-B053-3D7765999D9C}" ShortID="959975108">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Menu_ButtonDown" ID="{04527E04-99FF-4CE8-856E-5E3904ED5B79}" WorkUnitID="{373CD9AD-DC2B-4BCE-9BB6-9C4270206DD9}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Menu_ButtonUp" ID="{0327DC0C-0064-442E-9E37-D3097A1EA4FD}">
+					<ChildrenList>
+						<Action Name="" ID="{85E468BE-A171-4045-8A1E-6E63259EA252}" ShortID="17474310">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Menu_ButtonUp" ID="{A3A25F69-F286-4E7A-9340-ACB9AED2EF61}" WorkUnitID="{373CD9AD-DC2B-4BCE-9BB6-9C4270206DD9}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Menu_Close" ID="{9838465C-504C-4B50-9091-4C2B1D764B74}">
+					<ChildrenList>
+						<Action Name="" ID="{617B2D34-255F-40B4-8099-2B989B41C2A6}" ShortID="641972144">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Menu_Close" ID="{B0382FDA-5CFA-4D08-8365-3CF12A39B5E3}" WorkUnitID="{373CD9AD-DC2B-4BCE-9BB6-9C4270206DD9}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

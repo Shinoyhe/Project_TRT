@@ -63,6 +63,8 @@ public class Inventory : MonoBehaviour
         }
 
         foreach (InventoryCardData card in StartingCards) {
+            if (HasCard(card)) { continue; }
+
             AddCard(card);
         }
 
@@ -115,7 +117,7 @@ public class Inventory : MonoBehaviour
             }
         }
         if (newCard == null) {
-            Debug.LogError("Could not find, card does not exist in AllCards");
+            Debug.LogError($"Could not find {card.ID}, card does not exist in AllCards");
             return;
         }
         newCard.CurrentlyOwn = true;

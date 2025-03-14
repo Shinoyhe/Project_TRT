@@ -210,8 +210,8 @@ public class BarterStarter : MonoBehaviour
             if (newState == InGameUi.UiStates.Default || newState == InGameUi.UiStates.Dialogue)
             {
                 ExchangeCards(won);
-                closeCallback?.Invoke();
                 _inGameUi.CanvasStateChanged -= OnJournalClose;
+                closeCallback?.Invoke();
             }
         }
     }

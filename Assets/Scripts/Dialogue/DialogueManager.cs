@@ -80,7 +80,7 @@ public class DialogueManager : MonoBehaviour
     /// <returns> True if conversation started successfully. </returns>
     /// <param name="inkJson"> Ink file conversation will use. </param>
     /// <param name="npcBubblePos"> Where we want a NPC speech bubble.</param>
-    public bool StartConversation(TextAsset inkJson, string NPCName, Sprite NPCProfilePic)
+    public bool StartConversation(TextAsset inkJson, string NPCName, Sprite NPCProfilePic, string knot = "NONE")
     {
         if (_inConversation) return false;
         if (_onDelay) return false;
@@ -105,6 +105,23 @@ public class DialogueManager : MonoBehaviour
 
         // Parse Ink File
         _currentStory = new Story(inkJson.text);
+        
+        System.Action inkyVars = null;
+        
+        foreach (string id in _currentStory.variablesState)
+        {
+            inkyVars += () =>
+            {
+                _currentStory.variablesState[id] = GameManager.FlagTracker.CheckFlag(id);
+                _currentStory.ObserveVariable(id, (string varName, object newValue) => GameManager.FlagTracker.SetFlag(varName, (bool)newValue));
+            };
+        }
+        inkyVars();
+        inkyVars = null;
+        
+        if (knot != "NONE"){
+            _currentStory.ChoosePathString(knot);
+        }
 
         // Show First Line
         ShowNextLine();

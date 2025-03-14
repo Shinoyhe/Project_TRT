@@ -76,6 +76,9 @@ public class NpcInteractable : Interactable
         barterStarter.WillingnessPerMatch = WillingnessPerMatch;
         barterStarter.WillingnessPerFail = WillingnessPerFail;
         barterStarter.StartingWillingness = StartingWillingness;
+        
+        barterStarter.OnWin = () => GameManager.DialogueManager.StartConversation(npcConversation, NpcData.Name, NpcData.Icon, "BarterWin");
+        barterStarter.OnLose = () => GameManager.DialogueManager.StartConversation(npcConversation, NpcData.Name, NpcData.Icon, "BarterLose");
     }
 
     private void OnDrawGizmos() 

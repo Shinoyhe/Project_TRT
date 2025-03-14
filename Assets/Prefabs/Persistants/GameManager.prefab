@@ -145,6 +145,8 @@ MonoBehaviour:
     type: 3}
   presentItemPrefab: {fileID: 3944621537521464737, guid: a10b593efd80c074098cf84a99729339,
     type: 3}
+  winScreenPrefab: {fileID: 3944621537521464737, guid: e942feb35cc0fec498b67c5f11daa1ca,
+    type: 3}
   NpcData: {fileID: 0}
   BarterResponseMatrix: {fileID: 0}
   BarterNeutralBehaviour: {fileID: 0}
@@ -162,6 +164,7 @@ MonoBehaviour:
   WillingnessPerMatch: 5
   WillingnessPerFail: -5
   StartingWillingness: 50
+  WinScreenDurationSeconds: 4
   barterWinSFX:
     name: 
     playOnInit: 0

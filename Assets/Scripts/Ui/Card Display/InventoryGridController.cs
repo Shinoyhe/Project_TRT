@@ -136,7 +136,8 @@ public class InventoryGridController : MonoBehaviour
         int indexTracker = 0;
 
         // Get Data
-        List<InventoryCardData> dataForAllCards = GameManager.Inventory.GetDatas();
+        List<InventoryCardData> dataForAllCards = 
+            AllKnownCards ? GameManager.Inventory.GetDatas() : GetAllKnownCardData();
 
         foreach (InventoryCardData card in dataForAllCards) {
 
@@ -152,6 +153,22 @@ public class InventoryGridController : MonoBehaviour
 
         // Mark update time
         _lastUpdateTime = GameManager.Inventory.inventoryLastUpdateTime;
+    }
+
+
+    private List<InventoryCardData> GetAllKnownCardData()
+    {
+        List<InventoryCardData> knownCardData = new List<InventoryCardData>();
+
+        foreach (var card in GameManager.Inventory.AllCards)
+        {
+            if (card.HaveOwned)
+            {
+                knownCardData.Add(card.Data);
+            }
+        }
+
+        return knownCardData;
     }
 
     #endregion

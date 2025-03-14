@@ -172,6 +172,7 @@ public class DialogueUiManager : MonoBehaviour {
     public void ChooseChoiceOne() => GameManager.DialogueManager.ProcessDialogueChoice(0);
     public void ChooseChoiceTwo() => GameManager.DialogueManager.ProcessDialogueChoice(1);
     public void ChooseChoiceThree() => GameManager.DialogueManager.ProcessDialogueChoice(2);
+    public void ChooseChoiceFour() => GameManager.DialogueManager.ProcessDialogueChoice(3);
 
     public bool IsLineFinished() {
 

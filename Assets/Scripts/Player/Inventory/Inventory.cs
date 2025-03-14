@@ -70,6 +70,8 @@ public class Inventory : MonoBehaviour
         if (GameManager.Instance != null && GameManager.MasterCanvas != null) {
             _notificationUi = GameManager.MasterCanvas.GetComponent<InGameUi>().Notification;
         }
+        
+        GameManager.FlagTracker.UpdateICFlags();
     }
 
     #region ---------- Public Methods ----------
@@ -122,6 +124,7 @@ public class Inventory : MonoBehaviour
         Cards.Add(newCard);
         OnInventoryUpdated?.Invoke();
         inventoryLastUpdateTime = Time.time;
+        GameManager.FlagTracker.SetFlag(card, true);
 
         // Finally, send a ping to our notificationUI.
 
@@ -144,6 +147,7 @@ public class Inventory : MonoBehaviour
 
         OnInventoryUpdated?.Invoke();
         inventoryLastUpdateTime = Time.time;
+        GameManager.FlagTracker.SetFlag(card, false);
 
         // Finally, send a ping to our notificationUI.
 
@@ -174,6 +178,7 @@ public class Inventory : MonoBehaviour
     {
         Cards.Clear();
         OnInventoryUpdated?.Invoke();
+        GameManager.FlagTracker.ResetFlags();
     }
 
     public void ClearExceptType(CardTypes type)

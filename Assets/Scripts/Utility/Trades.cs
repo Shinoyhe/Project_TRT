@@ -54,5 +54,5 @@ public class Trade
 {
     [SerializeField] public InventoryCardData AcceptedCard;
     [SerializeField] public InventoryCardData RewardCard;
-    [SerializeField] public bool TradeIsPossible = true;
+    [SerializeField] public FlagReference TradeIsPossible;
 }
